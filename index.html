@@ -58,69 +58,102 @@ footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14
 </footer>
 
 <script>
-const siteContent=document.getElementById("site-content");
+const siteContent = document.getElementById("site-content");
 
-const categorias={
-"roupas-masculinas":{titulo:"👔 Roupas Masculinas",produtos:gerarFake(20)},
-"roupas-femininas":{titulo:"👗 Roupas Femininas",produtos:gerarFake(30)},
-"plus-size":{titulo:"➕ Roupas Plus Size",produtos:gerarFake(20)},
-"moda-infantil":{titulo:"🧒 Moda Infantil",produtos:gerarFake(25)},
-"mae-bebe":{titulo:"🤱 Mãe e Bebê",produtos:gerarFake(25)},
-"acessorios":{titulo:"💎 Acessórios de Moda",produtos:gerarFake(30)},
+function gerarFake(qtd){
+  return Array.from({length:qtd},(_,i)=>({
+    nome:"Produto "+(i+1),
+    img:"https://via.placeholder.com/300",
+    link:"#"
+  }));
+}
+
+const categorias = {
+
+"roupas-masculinas":{
+titulo:"👔 Roupas Masculinas",
+produtos:[
+{
+nome:"Kit 3 Bermudas Jeans Masculinas",
+img:"https://down-br.img.susercontent.com/file/COLE_ID_IMAGEM_AQUI",
+link:"https://s.shopee.com.br/7Kr2CrUeZV"
+},
+{
+nome:"Kit 10 Cuecas Boxer Masculinas",
+img:"https://down-br.img.susercontent.com/file/COLE_ID_IMAGEM_AQUI",
+link:"https://s.shopee.com.br/7AXc0YVHuY"
+},
+{
+nome:"Camiseta Básica Algodão Masculina",
+img:"https://down-br.img.susercontent.com/file/COLE_ID_IMAGEM_AQUI",
+link:"https://s.shopee.com.br/3LKtRVjsgr"
+},
+{
+nome:"Camisa Social Masculina Slim",
+img:"https://down-br.img.susercontent.com/file/COLE_ID_IMAGEM_AQUI",
+link:"https://s.shopee.com.br/3B1TFCkW1u"
+}
+]
+},
+
+"roupas-femininas":{titulo:"👗 Roupas Femininas",produtos:gerarFake(20)},
+"plus-size":{titulo:"➕ Plus Size",produtos:gerarFake(20)},
+"moda-infantil":{titulo:"🧒 Moda Infantil",produtos:gerarFake(20)},
+"mae-bebe":{titulo:"🤱 Mãe & Bebê",produtos:gerarFake(20)},
+"acessorios":{titulo:"💎 Acessórios",produtos:gerarFake(20)},
 "bolsas-femininas":{titulo:"👝 Bolsas Femininas",produtos:gerarFake(20)},
-"bolsas-masculinas":{titulo:"🎒 Bolsas Masculinas",produtos:gerarFake(15)},
-"viagens-bagagens":{titulo:"🧳 Viagens e Bagagens",produtos:gerarFake(15)},
-"audio":{titulo:"🎧 Fones de Ouvido",produtos:gerarFake(15)},
-"beleza":{titulo:"💄 Beleza",produtos:gerarFake(30)},
+"bolsas-masculinas":{titulo:"🎒 Bolsas Masculinas",produtos:gerarFake(20)},
+"viagens-bagagens":{titulo:"🧳 Viagens",produtos:gerarFake(20)},
+"audio":{titulo:"🎧 Áudio",produtos:gerarFake(20)},
+"beleza":{titulo:"💄 Beleza",produtos:gerarFake(20)},
 "papelaria":{titulo:"✏️ Papelaria",produtos:gerarFake(20)},
-"casa-construcao":{titulo:"🏠 Casa e Construção",produtos:gerarFake(30)},
-"sapatos":{titulo:"👟 Sapatos",produtos:gerarFake(30)},
-"brinquedos":{titulo:"🧸 Brinquedos",produtos:gerarFake(25)},
-"pets":{titulo:"🐶 Espaço Pets",produtos:gerarFake(20)},
+"casa-construcao":{titulo:"🏠 Casa",produtos:gerarFake(20)},
+"sapatos":{titulo:"👟 Sapatos",produtos:gerarFake(20)},
+"brinquedos":{titulo:"🧸 Brinquedos",produtos:gerarFake(20)},
+"pets":{titulo:"🐶 Pets",produtos:gerarFake(20)},
 
 "relogios":{
 titulo:"⌚ Relógios",
 produtos:[
-{nome:"Relógio POEDAGAR",img:"https://cf.shopee.com.br/file/29200230546",link:"https://s.shopee.com.br/3VeJf1EwzR"},
-{nome:"Relógio Digital",img:"https://cf.shopee.com.br/file/25721342244",link:"https://s.shopee.com.br/2g5CfUI7gK"},
-{nome:"Relógio Feminino",img:"https://cf.shopee.com.br/file/23098245574",link:"https://s.shopee.com.br/20pVsGKf2G"}
-]},
+{
+nome:"Relógio POEDAGAR",
+img:"https://cf.shopee.com.br/file/29200230546",
+link:"https://s.shopee.com.br/3VeJf1EwzR"
+}
+]
+},
 
 "limpeza":{
 titulo:"🧼 Produtos de Limpeza",
 produtos:[
-{nome:"Toalha Microfibra",img:"https://down-br.img.susercontent.com/file/sg-11134201-8260u-mj6klllgxlon99.webp",link:"https://s.shopee.com.br/70EBsAm9jo"},
-{nome:"Aspirador Portátil",img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m4fqyduc1c1tf1.webp",link:"https://s.shopee.com.br/7AXc4TlWOr"},
-{nome:"Mini Mop",img:"https://down-br.img.susercontent.com/file/br-11134207-7r98p-lmeqj44j241i71.webp",link:"https://s.shopee.com.br/6pulfrmn4p"},
-{nome:"Removedor Chuva Ácida",img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-mdc5w07hm90y4c.webp",link:"https://s.shopee.com.br/2g5CiD2eX8"},
-{nome:"Mini Aspirador",img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-mchtrv2c6c5d0b.webp",link:"https://s.shopee.com.br/5AmXgnt8Sf"}
-]}
+{
+nome:"Toalha Microfibra",
+img:"https://down-br.img.susercontent.com/file/sg-11134201-8260u-mj6klllgxlon99.webp",
+link:"https://s.shopee.com.br/70EBsAm9jo"
+}
+]
+}
+
 };
 
-function gerarFake(qtd){
-return Array.from({length:qtd},(_,i)=>({
-nome:"Produto "+(i+1),
-img:"https://via.placeholder.com/200",
-link:"#"
-}));
-}
-
 function carregarCategoria(id){
-const c=categorias[id];
-let html=`<section><h2>${c.titulo}</h2><div class="products">`;
-c.produtos.forEach(p=>{
-html+=`
-<div class="card">
-<img src="${p.img}">
-<h3>${p.nome}</h3>
-<button onclick="window.open('${p.link}','_blank')">Adquirir</button>
-</div>`;
-});
-siteContent.innerHTML=html+"</div></section>";
-window.scrollTo(0,0);
+  const c = categorias[id];
+  let html = `<section><h2>${c.titulo}</h2><div class="products">`;
+
+  c.produtos.forEach(p=>{
+    html += `
+    <div class="card">
+      <img src="${p.img}" alt="${p.nome}">
+      <h3>${p.nome}</h3>
+      <button onclick="window.open('${p.link}','_blank')">Adquirir</button>
+    </div>`;
+  });
+
+  siteContent.innerHTML = html + "</div></section>";
+  window.scrollTo(0,0);
 }
 
-carregarCategoria("limpeza");
+carregarCategoria("roupas-masculinas");
 </script>
 
 </body>
