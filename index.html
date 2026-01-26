@@ -4,103 +4,208 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Central de Promoções</title>
+
   <style>
-    body {margin:0; font-family:Arial,sans-serif; background:#f9f9f9; color:#333;}
-    header {background:#4A90E2; color:white; text-align:center; padding:20px;}
-    nav {display:flex; flex-wrap:wrap; justify-content:center; gap:5px; margin-top:10px; font-weight:bold;}
-    nav a {color:white; text-decoration:none; padding:5px 8px; border-radius:5px; transition:0.3s;}
-    nav a:hover {background: rgba(255,255,255,0.2);}
-    section {padding:40px 20px;}
-    h2 {border-bottom:2px solid #4A90E2; padding-bottom:5px; margin-bottom:15px;}
-    .products {display:grid; gap:20px; grid-template-columns:repeat(auto-fit, minmax(200px,1fr));}
-    .card {background:white; border-radius:12px; padding:15px; box-shadow:0 2px 8px rgba(0,0,0,0.1); text-align:center; transition: transform 0.3s, box-shadow 0.3s;}
-    .card:hover {transform: translateY(-5px); box-shadow:0 8px 12px rgba(0,0,0,0.2);}
-    .card img {width:100%; border-radius:8px; margin-bottom:10px;}
-    .card h3 {font-size:16px; margin:10px 0; height:40px; overflow:hidden;}
-    .card button {margin-top:10px; background:#FF6A3D; color:white; border:none; padding:10px; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; transition: background-color 0.3s;}
-    .card button:hover {background:#e85a31;}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background: #4A90E2;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: 0.3s;
+      background: rgba(255,255,255,0.15);
+    }
+
+    nav a:hover {
+      background: rgba(255,255,255,0.35);
+    }
+
+    section {
+      padding: 40px 20px;
+    }
+
+    h2 {
+      border-bottom: 2px solid #4A90E2;
+      padding-bottom: 6px;
+      margin-bottom: 20px;
+    }
+
+    .products {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 16px rgba(0,0,0,0.2);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      font-size: 15px;
+      margin: 10px 0;
+      height: 42px;
+      overflow: hidden;
+    }
+
+    .card button {
+      margin-top: 10px;
+      background: #FF6A3D;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+    }
+
+    .card button:hover {
+      background: #e85a31;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #f0f0f0;
+      color: #555;
+      font-size: 14px;
+      margin-top: 40px;
+    }
   </style>
 </head>
+
 <body>
 
 <header>
   <h1>Central de Promoções</h1>
   <p>As melhores ofertas para você economizar!</p>
+
   <nav>
-    <a href="#roupas-masculinas">Roupas Masculinas</a>
-    <a href="#roupas-femininas">Roupas Femininas</a>
-    <a href="#plus-size">Roupas Plus Size</a>
-    <a href="#relogios">Relógios</a>
-    <a href="#esporte-lazer">Esporte e Lazer</a>
-    <a href="#moda-infantil">Moda Infantil</a>
-    <a href="#mae-bebe">Mãe e Bebê</a>
-    <a href="#acessorios">Acessórios de Moda</a>
-    <a href="#bolsas-femininas">Bolsas Femininas</a>
-    <a href="#bolsas-masculinas">Bolsas Masculinas</a>
-    <a href="#livros-revistas">Livros e Revistas</a>
-    <a href="#viagens-bagagens">Viagens e Bagagens</a>
-    <a href="#audio">Áudio</a>
-    <a href="#beleza">Beleza</a>
-    <a href="#papelaria">Papelaria</a>
-    <a href="#casa-construcao">Casa e Construção</a>
     <a href="#limpeza">Limpeza</a>
-    <a href="#sapatos">Sapatos</a>
-    <a href="#brinquedos">Brinquedos</a>
-    <a href="#pets">Espaço Pets</a>
+    <a href="#relogios">Relógios</a>
+    <a href="#plus-size">Roupas Plus Size</a>
   </nav>
 </header>
 
-<div id="site-content"></div>
+<!-- ================= LIMPEZA ================= -->
+<section id="limpeza">
+  <h2>🧼 Limpeza</h2>
 
-<footer style="text-align:center; padding:15px; background:#f0f0f0; color:#555; font-size:14px; margin-top:40px;">
-  <p>Este site participa de programas de afiliados. Ao comprar pelos links, podemos receber uma comissão sem custo extra para você.</p>
-</footer>
+  <div class="products">
 
-<script>
-  // Função para gerar produtos automaticamente
-  function gerarProdutos(categoria, quantidade, containerId) {
-    const container = document.getElementById(containerId);
-    let html = `<section id="${containerId}"><h2>${categoria}</h2><div class="products">`;
-    for (let i=1; i<=quantidade; i++) {
-      html += `
-        <div class="card">
-          <img src="https://via.placeholder.com/200" alt="Produto ${i}">
-          <h3>Produto ${i}</h3>
-          <button onclick="window.open('#','_blank')">Adquirir</button>
-        </div>
-      `;
-    }
-    html += `</div></section>`;
-    container.innerHTML += html;
-  }
+    <div class="card">
+      <img src="https://cf.shopee.com.br/file/23192681516" alt="Pano de Microfibra">
+      <h3>Toalha de Microfibra Multiuso</h3>
+      <button onclick="window.open('https://s.shopee.com.br/70EBsAm9jo','_blank')">
+        Adquirir
+      </button>
+    </div>
 
-  // Lista de categorias com quantidade de produtos
-  const categorias = [
-    {nome: "👔 Roupas Masculinas", id: "roupas-masculinas", qtd: 30},
-    {nome: "👗 Roupas Femininas", id: "roupas-femininas", qtd: 30},
-    {nome: "👚 Roupas Plus Size", id: "plus-size", qtd: 30},
-    {nome: "⌚ Relógios", id: "relogios", qtd: 10},
-    {nome: "🏀 Esporte e Lazer", id: "esporte-lazer", qtd: 10},
-    {nome: "🧒 Moda Infantil", id: "moda-infantil", qtd: 20},
-    {nome: "🤱 Mãe e Bebê", id: "mae-bebe", qtd: 20},
-    {nome: "👜 Acessórios de Moda", id: "acessorios", qtd: 30},
-    {nome: "👜 Bolsas Femininas", id: "bolsas-femininas", qtd: 15},
-    {nome: "🎒 Bolsas Masculinas", id: "bolsas-masculinas", qtd: 10},
-    {nome: "📚 Livros e Revistas", id: "livros-revistas", qtd: 10},
-    {nome: "🧳 Viagens e Bagagens", id: "viagens-bagagens", qtd: 20},
-    {nome: "🎧 Áudio", id: "audio", qtd: 12},
-    {nome: "💄 Beleza", id: "beleza", qtd: 40},
-    {nome: "✏️ Papelaria", id: "papelaria", qtd: 40},
-    {nome: "🏠 Casa e Construção", id: "casa-construcao", qtd: 20},
-    {nome: "🧼 Limpeza", id: "limpeza", qtd: 10},
-    {nome: "👟 Sapatos", id: "sapatos", qtd: 30},
-    {nome: "🧸 Brinquedos", id: "brinquedos", qtd: 48},
-    {nome: "🐶 Espaço Pets", id: "pets", qtd: 30}
-  ];
+    <div class="card">
+      <img src="https://cf.shopee.com.br/file/19297995043" alt="Aspirador Portátil">
+      <h3>Aspirador e Soprador Portátil 5 em 1</h3>
+      <button onclick="window.open('https://s.shopee.com.br/7AXc4TlWOr','_blank')">
+        Adquirir
+      </button>
+    </div>
 
-  // Gerar todas as categorias
-  categorias.forEach(cat => gerarProdutos(cat.nome, cat.qtd, cat.id));
-</script>
+    <div class="card">
+      <img src="https://cf.shopee.com.br/file/19598994223" alt="Mini Mop">
+      <h3>Mini Mop Portátil Retrátil</h3>
+      <button onclick="window.open('https://s.shopee.com.br/6pulfrmn4p','_blank')">
+        Adquirir
+      </button>
+    </div>
 
-</body>
-</html>
+  </div>
+</section>
+
+<!-- ================= RELÓGIOS ================= -->
+<section id="relogios">
+  <h2>⌚ Relógios</h2>
+
+  <div class="products">
+
+    <div class="card">
+      <img src="https://cf.shopee.com.br/file/29200230546" alt="Relógio Masculino Luxo">
+      <h3>Relógio Masculino Luxo POEDAGAR</h3>
+      <button onclick="window.open('https://s.shopee.com.br/3VeJf1EwzR','_blank')">
+        Adquirir
+      </button>
+    </div>
+
+    <div class="card">
+      <img src="https://cf.shopee.com.br/file/25721342244" alt="Relógio Digital">
+      <h3>Relógio Digital Esportivo à Prova D'água</h3>
+      <button onclick="window.open('https://s.shopee.com.br/2g5CfUI7gK','_blank')">
+        Adquirir
+      </button>
+    </div>
+
+    <div class="card">
+      <img src="https://cf.shopee.com.br/file/23098245574" alt="Relógio Feminino">
+      <h3>Kit Relógio Feminino + Pulseira</h3>
+      <button onclick="window.open('https://s.shopee.com.br/20pVsGKf2G','_blank')">
+        Adquirir
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= PLUS SIZE ================= -->
+<section id="plus-size">
+  <h2>👗 Roupas Plus Size</h2>
+
+  <div class="products">
+
+    <div class="card">
+      <img src="https://cf.shopee.com.br/file/6289297293" alt="Vestido Plus Size">
+      <h3>Vestido Plus Size Midi Viscolycra</h3>
+      <button onclick="window.open('https://s.shopee.com.br/6fbLQdU4pC','_blank')">
+        Adquirir
+      </button>
+    </div>
+
+    <div class="card">
+      <img src="https://cf.shopee.com.br/file/22998137276" alt="Calça Plus Size">
+      <h3>Calça Jeans Plus Size com Elastano</h3>
+      <button onclick="window.open('http
