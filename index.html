@@ -5,88 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Central de Promoções</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      color: #333;
-    }
-    header {
-      background: #4A90E2;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      cursor: pointer;
-      padding: 5px 10px;
-      border-radius: 5px;
-      transition: background 0.3s;
-    }
-    nav a:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    section {
-      padding: 40px 20px;
-    }
-    h2 {
-      border-bottom: 2px solid #4A90E2;
-      padding-bottom: 5px;
-      margin-bottom: 15px;
-    }
-    .products {
-      display: grid;
-      gap: 20px;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 12px rgba(0,0,0,0.2);
-    }
-    .card img {
-      width: 100%;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-    .card h3 {
-      font-size: 16px;
-      margin: 10px 0;
-      height: 40px;
-      overflow: hidden;
-    }
-    .card button {
-      margin-top: 10px;
-      background: #FF6A3D;
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      width: 100%;
-      transition: background-color 0.3s;
-    }
-    .card button:hover {
-      background: #e85a31;
-    }
+    body {margin:0; font-family:Arial,sans-serif; background:#f9f9f9; color:#333;}
+    header {background:#4A90E2; color:white; text-align:center; padding:20px;}
+    nav {display:flex; flex-wrap:wrap; justify-content:center; gap:5px; margin-top:10px; font-weight:bold;}
+    nav a {color:white; text-decoration:none; padding:5px 8px; border-radius:5px; transition:0.3s;}
+    nav a:hover {background: rgba(255,255,255,0.2);}
+    section {padding:40px 20px;}
+    h2 {border-bottom:2px solid #4A90E2; padding-bottom:5px; margin-bottom:15px;}
+    .products {display:grid; gap:20px; grid-template-columns:repeat(auto-fit, minmax(200px,1fr));}
+    .card {background:white; border-radius:12px; padding:15px; box-shadow:0 2px 8px rgba(0,0,0,0.1); text-align:center; transition: transform 0.3s, box-shadow 0.3s;}
+    .card:hover {transform: translateY(-5px); box-shadow:0 8px 12px rgba(0,0,0,0.2);}
+    .card img {width:100%; border-radius:8px; margin-bottom:10px;}
+    .card h3 {font-size:16px; margin:10px 0; height:40px; overflow:hidden;}
+    .card button {margin-top:10px; background:#FF6A3D; color:white; border:none; padding:10px; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; transition: background-color 0.3s;}
+    .card button:hover {background:#e85a31;}
   </style>
 </head>
 <body>
@@ -107,158 +39,68 @@
     <a href="#bolsas-masculinas">Bolsas Masculinas</a>
     <a href="#livros-revistas">Livros e Revistas</a>
     <a href="#viagens-bagagens">Viagens e Bagagens</a>
+    <a href="#audio">Áudio</a>
+    <a href="#beleza">Beleza</a>
+    <a href="#papelaria">Papelaria</a>
+    <a href="#casa-construcao">Casa e Construção</a>
+    <a href="#limpeza">Limpeza</a>
+    <a href="#sapatos">Sapatos</a>
+    <a href="#brinquedos">Brinquedos</a>
     <a href="#pets">Espaço Pets</a>
   </nav>
 </header>
 
-<!-- Seções de produtos -->
-<section id="roupas-masculinas">
-  <h2>👔 Roupas Masculinas</h2>
-  <div class="products">
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Camiseta Masculina">
-      <h3>Camiseta Casual</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
-    </div>
-  </div>
-</section>
+<div id="site-content"></div>
 
-<section id="roupas-femininas">
-  <h2>👗 Roupas Femininas</h2>
-  <div class="products">
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Vestido Feminino">
-      <h3>Vestido Elegante</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
-    </div>
-  </div>
-</section>
-
-<section id="plus-size">
-  <h2>💃 Roupas Plus Size</h2>
-  <div class="products">
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Blusa Plus Size">
-      <h3>Blusa Confortável</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
-    </div>
-  </div>
-</section>
-
-<section id="relogios">
-  <h2>⌚ Relógios</h2>
-  <div class="products">
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Relógio Masculino">
-      <h3>Relógio Moderno</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
-    </div>
-  </div>
-</section>
-
-<section id="esporte-lazer">
-  <h2>🏀 Esporte e Lazer</h2>
-  <div class="products">
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Bola de Futebol">
-      <h3>Bola de Futebol</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
-    </div>
-  </div>
-</section>
-
-<section id="moda-infantil">
-  <h2>🧸 Moda Infantil</h2>
-  <div class="products">
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Conjunto Infantil">
-      <h3>Conjunto Infantil</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
-    </div>
-  </div>
-</section>
-
-<section id="mae-bebe">
-  <h2>🤱 Mãe e Bebê</h2>
-  <div class="products">
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Carrinho de Bebê">
-      <h3>Carrinho de Bebê</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
-    </div>
-  </div>
-</section>
-
-<section id="acessorios">
-  <h2>👜 Acessórios de Moda</h2>
-  <div class="products">
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Cinto de Couro">
-      <h3>Cinto de Couro</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
-    </div>
-  </div>
-</section>
-
-<section id="bolsas-femininas">
-  <h2>👜 Bolsas Femininas</h2>
-  <div class="products">
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Bolsa Feminina">
-      <h3>Bolsa Elegante</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
-    </div>
-  </div>
-</section>
-
-<section id="bolsas-masculinas">
-  <h2>🎒 Bolsas Masculinas</h2>
-  <div class="products">
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Mochila Masculina">
-      <h3>Mochila Resistente</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
-    </div>
-  </div>
-</section>
-
-<section id="livros-revistas">
-  <h2>📚 Livros e Revistas</h2>
-  <div class="products">
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Livro de Romance">
-      <h3>Livro de Romance</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
-    </div>
-  </div>
-</section>
-
-<section id="viagens-bagagens">
-  <h2>🧳 Viagens e Bagagens</h2>
-  <div class="products">
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Mala de Viagem">
-      <h3>Mala de Viagem</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
-    </div>
-  </div>
-</section>
-
-<section id="pets">
-  <h2>🐾 Espaço Pets</h2>
-  <div class="products">
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Brinquedo para Pet">
-      <h3>Brinquedo para Pet</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
-    </div>
-  </div>
-</section>
-
-<footer style="text-align:center; padding: 15px; background: #f0f0f0; color: #555; font-size: 14px; margin-top: 40px;">
+<footer style="text-align:center; padding:15px; background:#f0f0f0; color:#555; font-size:14px; margin-top:40px;">
   <p>Este site participa de programas de afiliados. Ao comprar pelos links, podemos receber uma comissão sem custo extra para você.</p>
 </footer>
 
+<script>
+  // Função para gerar produtos automaticamente
+  function gerarProdutos(categoria, quantidade, containerId) {
+    const container = document.getElementById(containerId);
+    let html = `<section id="${containerId}"><h2>${categoria}</h2><div class="products">`;
+    for (let i=1; i<=quantidade; i++) {
+      html += `
+        <div class="card">
+          <img src="https://via.placeholder.com/200" alt="Produto ${i}">
+          <h3>Produto ${i}</h3>
+          <button onclick="window.open('#','_blank')">Adquirir</button>
+        </div>
+      `;
+    }
+    html += `</div></section>`;
+    container.innerHTML += html;
+  }
+
+  // Lista de categorias com quantidade de produtos
+  const categorias = [
+    {nome: "👔 Roupas Masculinas", id: "roupas-masculinas", qtd: 30},
+    {nome: "👗 Roupas Femininas", id: "roupas-femininas", qtd: 30},
+    {nome: "👚 Roupas Plus Size", id: "plus-size", qtd: 30},
+    {nome: "⌚ Relógios", id: "relogios", qtd: 10},
+    {nome: "🏀 Esporte e Lazer", id: "esporte-lazer", qtd: 10},
+    {nome: "🧒 Moda Infantil", id: "moda-infantil", qtd: 20},
+    {nome: "🤱 Mãe e Bebê", id: "mae-bebe", qtd: 20},
+    {nome: "👜 Acessórios de Moda", id: "acessorios", qtd: 30},
+    {nome: "👜 Bolsas Femininas", id: "bolsas-femininas", qtd: 15},
+    {nome: "🎒 Bolsas Masculinas", id: "bolsas-masculinas", qtd: 10},
+    {nome: "📚 Livros e Revistas", id: "livros-revistas", qtd: 10},
+    {nome: "🧳 Viagens e Bagagens", id: "viagens-bagagens", qtd: 20},
+    {nome: "🎧 Áudio", id: "audio", qtd: 12},
+    {nome: "💄 Beleza", id: "beleza", qtd: 40},
+    {nome: "✏️ Papelaria", id: "papelaria", qtd: 40},
+    {nome: "🏠 Casa e Construção", id: "casa-construcao", qtd: 20},
+    {nome: "🧼 Limpeza", id: "limpeza", qtd: 10},
+    {nome: "👟 Sapatos", id: "sapatos", qtd: 30},
+    {nome: "🧸 Brinquedos", id: "brinquedos", qtd: 48},
+    {nome: "🐶 Espaço Pets", id: "pets", qtd: 30}
+  ];
+
+  // Gerar todas as categorias
+  categorias.forEach(cat => gerarProdutos(cat.nome, cat.qtd, cat.id));
+</script>
+
 </body>
 </html>
-
