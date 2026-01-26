@@ -1,243 +1,126 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Central de Promoções</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central de Promoções</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      color: #333;
-    }
-
-    header {
-      background: #4A90E2;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 10px;
-    }
-
-    nav button {
-      background: rgba(255,255,255,0.15);
-      border: none;
-      color: white;
-      padding: 6px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    nav button:hover {
-      background: rgba(255,255,255,0.3);
-    }
-
-    section {
-      padding: 30px 20px;
-    }
-
-    h2 {
-      border-bottom: 2px solid #4A90E2;
-      padding-bottom: 6px;
-      margin-bottom: 20px;
-    }
-
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .card img {
-      width: 100%;
-      border-radius: 8px;
-    }
-
-    .card h3 {
-      font-size: 15px;
-      margin: 10px 0;
-    }
-
-    .card button {
-      background: #FF6A3D;
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      width: 100%;
-    }
-
-    .card button:hover {
-      background: #e85a31;
-    }
-
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #f0f0f0;
-      color: #555;
-      font-size: 14px;
-      margin-top: 40px;
-    }
-  </style>
+<style>
+body{margin:0;font-family:Arial;background:#f9f9f9}
+header{background:#4A90E2;color:#fff;text-align:center;padding:20px}
+nav{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:10px}
+nav button{background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 10px;border-radius:6px;cursor:pointer;font-weight:bold}
+nav button:hover{background:rgba(255,255,255,.3)}
+section{padding:30px 20px}
+h2{border-bottom:2px solid #4A90E2;padding-bottom:6px}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+.card{background:#fff;border-radius:12px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,.1);text-align:center}
+.card img{width:100%;border-radius:8px}
+.card h3{font-size:15px}
+.card button{background:#FF6A3D;color:#fff;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%}
+.card button:hover{background:#e85a31}
+footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14px}
+</style>
 </head>
+
 <body>
 
 <header>
-  <h1>Central de Promoções</h1>
-  <p>As melhores ofertas para você economizar!</p>
+<h1>Central de Promoções</h1>
+<p>As melhores ofertas para você economizar!</p>
 
-  <nav>
-    <button onclick="carregarCategoria('roupas-femininas')">👗 Femininas</button>
-    <button onclick="carregarCategoria('roupas-masculinas')">👔 Masculinas</button>
-    <button onclick="carregarCategoria('relogios')">⌚ Relógios</button>
-    <button onclick="carregarCategoria('limpeza')">🧼 Limpeza</button>
-    <button onclick="carregarCategoria('pets')">🐶 Pets</button>
-  </nav>
+<nav>
+<button onclick="carregarCategoria('roupas-masculinas')">👔 Masculinas</button>
+<button onclick="carregarCategoria('roupas-femininas')">👗 Femininas</button>
+<button onclick="carregarCategoria('plus-size')">➕ Plus Size</button>
+<button onclick="carregarCategoria('relogios')">⌚ Relógios</button>
+<button onclick="carregarCategoria('moda-infantil')">🧒 Infantil</button>
+<button onclick="carregarCategoria('mae-bebe')">🤱 Mãe & Bebê</button>
+<button onclick="carregarCategoria('acessorios')">💎 Acessórios</button>
+<button onclick="carregarCategoria('bolsas-femininas')">👝 Bolsas Fem.</button>
+<button onclick="carregarCategoria('bolsas-masculinas')">🎒 Bolsas Masc.</button>
+<button onclick="carregarCategoria('viagens-bagagens')">🧳 Viagens</button>
+<button onclick="carregarCategoria('audio')">🎧 Áudio</button>
+<button onclick="carregarCategoria('beleza')">💄 Beleza</button>
+<button onclick="carregarCategoria('papelaria')">✏️ Papelaria</button>
+<button onclick="carregarCategoria('casa-construcao')">🏠 Casa</button>
+<button onclick="carregarCategoria('limpeza')">🧼 Limpeza</button>
+<button onclick="carregarCategoria('sapatos')">👟 Sapatos</button>
+<button onclick="carregarCategoria('brinquedos')">🧸 Brinquedos</button>
+<button onclick="carregarCategoria('pets')">🐶 Pets</button>
+</nav>
 </header>
 
 <div id="site-content"></div>
 
 <footer>
-  <p>Este site participa de programas de afiliados. Podemos receber comissão sem custo extra para você.</p>
+<p>Este site participa de programas de afiliados.</p>
 </footer>
 
 <script>
-  const siteContent = document.getElementById("site-content");
+const siteContent=document.getElementById("site-content");
 
-  const categorias = {
-    "roupas-femininas": {
-      titulo: "👗 Roupas Femininas",
-      produtos: [
-        { nome: "Vestido Casual", link: "#" },
-        { nome: "Blusa Moderna", link: "#" },
-        { nome: "Calça Jeans", link: "#" }
-      ]
-    },
+const categorias={
+"roupas-masculinas":{titulo:"👔 Roupas Masculinas",produtos:gerarFake(20)},
+"roupas-femininas":{titulo:"👗 Roupas Femininas",produtos:gerarFake(30)},
+"plus-size":{titulo:"➕ Roupas Plus Size",produtos:gerarFake(20)},
+"moda-infantil":{titulo:"🧒 Moda Infantil",produtos:gerarFake(25)},
+"mae-bebe":{titulo:"🤱 Mãe e Bebê",produtos:gerarFake(25)},
+"acessorios":{titulo:"💎 Acessórios de Moda",produtos:gerarFake(30)},
+"bolsas-femininas":{titulo:"👝 Bolsas Femininas",produtos:gerarFake(20)},
+"bolsas-masculinas":{titulo:"🎒 Bolsas Masculinas",produtos:gerarFake(15)},
+"viagens-bagagens":{titulo:"🧳 Viagens e Bagagens",produtos:gerarFake(15)},
+"audio":{titulo:"🎧 Fones de Ouvido",produtos:gerarFake(15)},
+"beleza":{titulo:"💄 Beleza",produtos:gerarFake(30)},
+"papelaria":{titulo:"✏️ Papelaria",produtos:gerarFake(20)},
+"casa-construcao":{titulo:"🏠 Casa e Construção",produtos:gerarFake(30)},
+"sapatos":{titulo:"👟 Sapatos",produtos:gerarFake(30)},
+"brinquedos":{titulo:"🧸 Brinquedos",produtos:gerarFake(25)},
+"pets":{titulo:"🐶 Espaço Pets",produtos:gerarFake(20)},
 
-    "roupas-masculinas": {
-      titulo: "👔 Roupas Masculinas",
-      produtos: [
-        { nome: "Camisa Polo", link: "#" },
-        { nome: "Camiseta Básica", link: "#" },
-        { nome: "Bermuda Jeans", link: "#" }
-      ]
-    },
+"relogios":{
+titulo:"⌚ Relógios",
+produtos:[
+{nome:"Relógio POEDAGAR",img:"https://cf.shopee.com.br/file/29200230546",link:"https://s.shopee.com.br/3VeJf1EwzR"},
+{nome:"Relógio Digital",img:"https://cf.shopee.com.br/file/25721342244",link:"https://s.shopee.com.br/2g5CfUI7gK"},
+{nome:"Relógio Feminino",img:"https://cf.shopee.com.br/file/23098245574",link:"https://s.shopee.com.br/20pVsGKf2G"}
+]},
 
-    "relogios": {
-      titulo: "⌚ Relógios",
-      produtos: [
-        {
-          nome: "Relógio Masculino Luxo POEDAGAR",
-          imagem: "https://cf.shopee.com.br/file/29200230546",
-          link: "https://s.shopee.com.br/3VeJf1EwzR"
-        },
-        {
-          nome: "Relógio Digital Esportivo",
-          imagem: "https://cf.shopee.com.br/file/25721342244",
-          link: "https://s.shopee.com.br/2g5CfUI7gK"
-        },
-        {
-          nome: "Kit Relógio Feminino + Pulseira",
-          imagem: "https://cf.shopee.com.br/file/23098245574",
-          link: "https://s.shopee.com.br/20pVsGKf2G"
-        }
-      ]
-    },
+"limpeza":{
+titulo:"🧼 Produtos de Limpeza",
+produtos:[
+{nome:"Toalha Microfibra",img:"https://down-br.img.susercontent.com/file/sg-11134201-8260u-mj6klllgxlon99.webp",link:"https://s.shopee.com.br/70EBsAm9jo"},
+{nome:"Aspirador Portátil",img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m4fqyduc1c1tf1.webp",link:"https://s.shopee.com.br/7AXc4TlWOr"},
+{nome:"Mini Mop",img:"https://down-br.img.susercontent.com/file/br-11134207-7r98p-lmeqj44j241i71.webp",link:"https://s.shopee.com.br/6pulfrmn4p"},
+{nome:"Removedor Chuva Ácida",img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-mdc5w07hm90y4c.webp",link:"https://s.shopee.com.br/2g5CiD2eX8"},
+{nome:"Mini Aspirador",img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-mchtrv2c6c5d0b.webp",link:"https://s.shopee.com.br/5AmXgnt8Sf"}
+]}
+};
 
-    "limpeza": {
-      titulo: "🧼 Produtos de Limpeza",
-      produtos: [
-        {
-          nome: "Toalha Pano de Limpeza Microfibra",
-          imagem: "https://down-br.img.susercontent.com/file/sg-11134201-8260u-mj6klllgxlon99.webp",
-          link: "https://s.shopee.com.br/70EBsAm9jo"
-        },
-        {
-          nome: "Aspirador e Soprador Portátil 5 em 1",
-          imagem: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m4fqyduc1c1tf1.webp",
-          link: "https://s.shopee.com.br/7AXc4TlWOr"
-        },
-        {
-          nome: "Mini Mop Portátil Retrátil",
-          imagem: "https://down-br.img.susercontent.com/file/br-11134207-7r98p-lmeqj44j241i71.webp",
-          link: "https://s.shopee.com.br/6pulfrmn4p"
-        },
-        {
-          nome: "Removedor de Chuva Ácida Automotivo",
-          imagem: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mdc5w07hm90y4c.webp",
-          link: "https://s.shopee.com.br/2g5CiD2eX8"
-        },
-        {
-          nome: "Mini Aspirador de Pó Portátil Automotivo",
-          imagem: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mchtrv2c6c5d0b.webp",
-          link: "https://s.shopee.com.br/5AmXgnt8Sf"
-        }
-      ]
-    },
+function gerarFake(qtd){
+return Array.from({length:qtd},(_,i)=>({
+nome:"Produto "+(i+1),
+img:"https://via.placeholder.com/200",
+link:"#"
+}));
+}
 
-    "pets": {
-      titulo: "🐶 Espaço Pets",
-      produtos: [
-        { nome: "Cama Pet", link: "#" },
-        { nome: "Brinquedo para Cachorro", link: "#" }
-      ]
-    }
-  };
+function carregarCategoria(id){
+const c=categorias[id];
+let html=`<section><h2>${c.titulo}</h2><div class="products">`;
+c.produtos.forEach(p=>{
+html+=`
+<div class="card">
+<img src="${p.img}">
+<h3>${p.nome}</h3>
+<button onclick="window.open('${p.link}','_blank')">Adquirir</button>
+</div>`;
+});
+siteContent.innerHTML=html+"</div></section>";
+window.scrollTo(0,0);
+}
 
-  function carregarCategoria(id) {
-    const categoria = categorias[id];
-    if (!categoria) return;
-
-    let html = `
-      <section>
-        <h2>${categoria.titulo}</h2>
-        <div class="products">
-    `;
-
-    categoria.produtos.forEach(produto => {
-      html += `
-        <div class="card">
-          <img src="${produto.imagem || 'https://via.placeholder.com/200'}" alt="${produto.nome}">
-          <h3>${produto.nome}</h3>
-          <button onclick="window.open('${produto.link}','_blank')">
-            Adquirir
-          </button>
-        </div>
-      `;
-    });
-
-    html += `
-        </div>
-      </section>
-    `;
-
-    siteContent.innerHTML = html;
-    window.scrollTo(0, 0);
-  }
-
-  // Categoria inicial
-  carregarCategoria("limpeza");
+carregarCategoria("limpeza");
 </script>
 
 </body>
