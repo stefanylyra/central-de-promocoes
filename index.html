@@ -12,13 +12,14 @@
       color: #333;
     }
     header {
-      background: #4A90E2; /* azul de confiança */
+      background: #4A90E2;
       color: white;
       text-align: center;
       padding: 20px;
     }
     nav {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       gap: 15px;
       margin-top: 10px;
@@ -28,6 +29,12 @@
       color: white;
       text-decoration: none;
       cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.2);
     }
     section {
       padding: 40px 20px;
@@ -44,24 +51,38 @@
     }
     .card {
       background: white;
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 15px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 12px rgba(0,0,0,0.2);
     }
     .card img {
       width: 100%;
       border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .card h3 {
+      font-size: 16px;
+      margin: 10px 0;
+      height: 40px;
+      overflow: hidden;
     }
     .card button {
       margin-top: 10px;
-      background: #FF6A3D; /* laranja de ação */
+      background: #FF6A3D;
       color: white;
       border: none;
       padding: 10px;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
+      width: 100%;
+      transition: background-color 0.3s;
     }
     .card button:hover {
       background: #e85a31;
@@ -74,112 +95,165 @@
   <h1>Central de Promoções</h1>
   <p>As melhores ofertas para você economizar!</p>
   <nav>
-    <a href="#beleza">Beleza</a>
-    <a href="#papelaria">Papelaria</a>
-    <a href="#brinquedos">Brinquedos</a>
-    <a href="#limpeza">Limpeza</a>
-    <a href="#casa-construcao">Casa & Construção</a>
-    <a href="#sapatos">Sapatos</a>
+    <a href="#roupas-masculinas">Roupas Masculinas</a>
+    <a href="#roupas-femininas">Roupas Femininas</a>
+    <a href="#plus-size">Roupas Plus Size</a>
+    <a href="#relogios">Relógios</a>
+    <a href="#esporte-lazer">Esporte e Lazer</a>
+    <a href="#moda-infantil">Moda Infantil</a>
+    <a href="#mae-bebe">Mãe e Bebê</a>
+    <a href="#acessorios">Acessórios de Moda</a>
+    <a href="#bolsas-femininas">Bolsas Femininas</a>
+    <a href="#bolsas-masculinas">Bolsas Masculinas</a>
+    <a href="#livros-revistas">Livros e Revistas</a>
+    <a href="#viagens-bagagens">Viagens e Bagagens</a>
+    <a href="#pets">Espaço Pets</a>
   </nav>
 </header>
 
-<section id="beleza">
-  <h2>💄 Beleza</h2>
+<!-- Seções de produtos -->
+<section id="roupas-masculinas">
+  <h2>👔 Roupas Masculinas</h2>
   <div class="products">
     <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Produto exemplo">
-      <h3>Kit de Maquiagem Completo</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Ver Oferta na Shopee</button>
-    </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Produto exemplo">
-      <h3>Secador de Cabelo Profissional</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Ver Oferta na Shopee</button>
+      <img src="https://via.placeholder.com/200" alt="Camiseta Masculina">
+      <h3>Camiseta Casual</h3>
+      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
     </div>
   </div>
 </section>
 
-<section id="papelaria">
-  <h2>✏️ Papelaria</h2>
+<section id="roupas-femininas">
+  <h2>👗 Roupas Femininas</h2>
   <div class="products">
     <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Produto exemplo">
-      <h3>Canetas Coloridas</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Ver Oferta na Shopee</button>
-    </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Produto exemplo">
-      <h3>Agenda 2026</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Ver Oferta na Shopee</button>
+      <img src="https://via.placeholder.com/200" alt="Vestido Feminino">
+      <h3>Vestido Elegante</h3>
+      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
     </div>
   </div>
 </section>
 
-<section id="brinquedos">
-  <h2>🧸 Brinquedos</h2>
+<section id="plus-size">
+  <h2>💃 Roupas Plus Size</h2>
   <div class="products">
     <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Produto exemplo">
-      <h3>Quebra-cabeça 1000 Peças</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Ver Oferta na Shopee</button>
-    </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Produto exemplo">
-      <h3>Boneca de Ação</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Ver Oferta na Shopee</button>
+      <img src="https://via.placeholder.com/200" alt="Blusa Plus Size">
+      <h3>Blusa Confortável</h3>
+      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
     </div>
   </div>
 </section>
 
-<section id="limpeza">
-  <h2>🧼 Limpeza</h2>
+<section id="relogios">
+  <h2>⌚ Relógios</h2>
   <div class="products">
     <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Produto exemplo">
-      <h3>Kit de Limpeza Doméstica</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Ver Oferta na Shopee</button>
-    </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Produto exemplo">
-      <h3>Desinfetante Multiuso</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Ver Oferta na Shopee</button>
+      <img src="https://via.placeholder.com/200" alt="Relógio Masculino">
+      <h3>Relógio Moderno</h3>
+      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
     </div>
   </div>
 </section>
 
-<section id="casa-construcao">
-  <h2>🏠 Casa & Construção</h2>
+<section id="esporte-lazer">
+  <h2>🏀 Esporte e Lazer</h2>
   <div class="products">
     <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Produto exemplo">
-      <h3>Ferramenta Multifuncional</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Ver Oferta na Shopee</button>
-    </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Produto exemplo">
-      <h3>Luz LED para Casa</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Ver Oferta na Shopee</button>
+      <img src="https://via.placeholder.com/200" alt="Bola de Futebol">
+      <h3>Bola de Futebol</h3>
+      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
     </div>
   </div>
 </section>
 
-<section id="sapatos">
-  <h2>👟 Sapatos</h2>
+<section id="moda-infantil">
+  <h2>🧸 Moda Infantil</h2>
   <div class="products">
     <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Produto exemplo">
-      <h3>Tênis Esportivo</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Ver Oferta na Shopee</button>
-    </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/200" alt="Produto exemplo">
-      <h3>Sapato Casual</h3>
-      <button onclick="window.open('https://shopee.com', '_blank')">Ver Oferta na Shopee</button>
+      <img src="https://via.placeholder.com/200" alt="Conjunto Infantil">
+      <h3>Conjunto Infantil</h3>
+      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
     </div>
   </div>
 </section>
-  
-<!-- conteúdo do site aqui -->
+
+<section id="mae-bebe">
+  <h2>🤱 Mãe e Bebê</h2>
+  <div class="products">
+    <div class="card">
+      <img src="https://via.placeholder.com/200" alt="Carrinho de Bebê">
+      <h3>Carrinho de Bebê</h3>
+      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
+    </div>
+  </div>
+</section>
+
+<section id="acessorios">
+  <h2>👜 Acessórios de Moda</h2>
+  <div class="products">
+    <div class="card">
+      <img src="https://via.placeholder.com/200" alt="Cinto de Couro">
+      <h3>Cinto de Couro</h3>
+      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
+    </div>
+  </div>
+</section>
+
+<section id="bolsas-femininas">
+  <h2>👜 Bolsas Femininas</h2>
+  <div class="products">
+    <div class="card">
+      <img src="https://via.placeholder.com/200" alt="Bolsa Feminina">
+      <h3>Bolsa Elegante</h3>
+      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
+    </div>
+  </div>
+</section>
+
+<section id="bolsas-masculinas">
+  <h2>🎒 Bolsas Masculinas</h2>
+  <div class="products">
+    <div class="card">
+      <img src="https://via.placeholder.com/200" alt="Mochila Masculina">
+      <h3>Mochila Resistente</h3>
+      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
+    </div>
+  </div>
+</section>
+
+<section id="livros-revistas">
+  <h2>📚 Livros e Revistas</h2>
+  <div class="products">
+    <div class="card">
+      <img src="https://via.placeholder.com/200" alt="Livro de Romance">
+      <h3>Livro de Romance</h3>
+      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
+    </div>
+  </div>
+</section>
+
+<section id="viagens-bagagens">
+  <h2>🧳 Viagens e Bagagens</h2>
+  <div class="products">
+    <div class="card">
+      <img src="https://via.placeholder.com/200" alt="Mala de Viagem">
+      <h3>Mala de Viagem</h3>
+      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
+    </div>
+  </div>
+</section>
+
+<section id="pets">
+  <h2>🐾 Espaço Pets</h2>
+  <div class="products">
+    <div class="card">
+      <img src="https://via.placeholder.com/200" alt="Brinquedo para Pet">
+      <h3>Brinquedo para Pet</h3>
+      <button onclick="window.open('https://shopee.com', '_blank')">Adquirir</button>
+    </div>
+  </div>
+</section>
 
 <footer style="text-align:center; padding: 15px; background: #f0f0f0; color: #555; font-size: 14px; margin-top: 40px;">
   <p>Este site participa de programas de afiliados. Ao comprar pelos links, podemos receber uma comissão sem custo extra para você.</p>
@@ -187,3 +261,4 @@
 
 </body>
 </html>
+
