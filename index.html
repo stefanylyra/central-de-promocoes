@@ -20,6 +20,27 @@ h2{border-bottom:2px solid #4A90E2;padding-bottom:6px}
 .card button{background:#FF6A3D;color:#fff;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%}
 .card button:hover{background:#e85a31}
 footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14px}
+
+  
+.precos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.preco-antigo {
+  color: #e53935;
+  font-size: 13px;
+  text-decoration: line-through;
+}
+
+.preco-novo {
+  color: #111;
+  font-size: 18px;
+  font-weight: bold;
+}
 </style>
 </head>
 
@@ -67,25 +88,6 @@ function gerarFake(qtd){
     link:"#"
   }));
 }
-.precos {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.preco-antigo {
-  color: #e53935;
-  font-size: 13px;
-  text-decoration: line-through;
-}
-
-.preco-novo {
-  color: #111;
-  font-size: 18px;
-  font-weight: bold;
-}
 const categorias = {
 
 "roupas-masculinas":{
@@ -94,9 +96,8 @@ produtos:[
 {
 nome:"Kit 3 Bermudas Jeans Masculinas Lisa",
 img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp",
-  ],
-precoAntigo: R$200.00,
-preco: R$134.19,
+precoAntigo: 200.00,
+preco: 134.19,
 link:"https://s.shopee.com.br/7Kr2CrUeZV"
 },
 {
