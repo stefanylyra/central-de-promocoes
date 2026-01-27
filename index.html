@@ -68,15 +68,9 @@ padding: 30px 20px;
 }
 
 
-section h2 {
-text-align: center;
-margin-bottom: 20px;
-}
-
-
 .products {
 </div>
-
+  
   <nav class="menu-categorias">
 <button onclick="carregarCategoria('roupas-masculinas')">👕 Masculinas</button>
 <button onclick="carregarCategoria('roupas-femininas')">👗 Femininas</button>
@@ -98,6 +92,7 @@ margin-bottom: 20px;
 <button onclick="carregarCategoria('pets')">🐶 Espaço Pets</button>
   </nav>
 </header>
+
 
 <div id="site-content"></div>
 
@@ -126,8 +121,13 @@ Este site participa de programas de afiliados.
 <script>
 const siteContent = document.getElementById("site-content");
 const searchInput = document.getElementById("searchInput");
+const imagemPadrao = "https://via.placeholder.com/300x200?text=Produto";
+
+
 let categoriaAtual = "roupas-masculinas";
-const imgPadrao = "https://via.placeholder.com/300x200?text=Produto";
+
+
+const categorias = {
 
 "roupas-masculinas":{
 titulo:"👕 Roupas Masculinas",
@@ -4678,43 +4678,37 @@ produtos:[
   
 };
 
-function carregarCategoria(id){
-categoriaAtual = id;
-searchInput.value = "";
-renderizarProdutos(categorias[id]);
-}
 
 
-function renderizarProdutos(cat){
-if(cat.produtos.length === 0){
-siteContent.innerHTML = `<section><h2>${cat.titulo}</h2><p style="text-align:center;">Nenhum produto encontrado.</p></section>`;
-return;
-}
-
-
+function renderizar(cat) {
 let html = `<section><h2>${cat.titulo}</h2><div class="products">`;
 cat.produtos.forEach(p=>{
 html += `
 <div class="card">
-<img src="${p.img || imgPadrao}">
+<img src="${p.img || imagemPadrao}">
 <h3>${p.nome}</h3>
 <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-</div>`;
+</div>
+`;
 });
 siteContent.innerHTML = html + "</div></section>";
 }
 
 
-function filtrarProdutos(){
-const termo = searchInput.value.toLowerCase();
-if(termo === ""){
-renderizarProdutos(categorias[categoriaAtual]);
-return;
+function mudarCategoria(id){
+categoriaAtual = id;
+location.hash = id;
+searchInput.value = "";
+renderizar(categorias[id]);
 }
 
 
+function filtrarProdutos(){
+const termo = searchInput.value.toLowerCase();
 let resultados = [];
-for(let cat in categorias){
+
+
+for (let cat in categorias) {
 categorias[cat].produtos.forEach(p=>{
 if(p.nome.toLowerCase().includes(termo)){
 resultados.push(p);
@@ -4723,14 +4717,25 @@ resultados.push(p);
 }
 
 
-renderizarProdutos({
-titulo:`🔎 Resultados para "${termo}"`,
+renderizar({
+titulo: `🔎 Resultados para "${termo}"`,
 produtos: resultados
 });
 }
 
 
-carregarCategoria("roupas-masculinas");
+function carregarHash(){
+const hash = location.hash.replace("#","");
+if(categorias[hash]){
+mudarCategoria(hash);
+} else {
+mudarCategoria(categoriaAtual);
+}
+}
+
+
+window.addEventListener("load", carregarHash);
+window.addEventListener("hashchange", carregarHash);
 </script>
 
 
