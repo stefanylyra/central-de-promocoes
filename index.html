@@ -4755,43 +4755,39 @@ produtos:[
   
 };
 
- function carregarCategoria(id) {
-    categoriaAtual = id;
-    document.getElementById("searchInput").value = "";
-    renderizarProdutos(categorias[id].produtos, categorias[id].titulo);
-    window.scrollTo(0, 0);
-  }
+function carregarCategoria(id) {
+categoriaAtual = id;
+document.getElementById("searchInput").value = "";
+renderizarProdutos(categorias[id]);
+}
 
-  function renderizarProdutos(lista, titulo) {
-    let html = `<section><h2>${titulo}</h2><div class="products">`;
 
-    lista.forEach(p => {
-      html += `
-        <div class="card">
-          <img src="${p.img}" alt="${p.nome}">
-          <h3>${p.nome}</h3>
-          <button onclick="window.open('${p.link}','_blank')">
-            Adquirir Promoção
-          </button>
-        </div>`;
-    });
+function renderizarProdutos(cat) {
+let html = `<section><h2>${cat.titulo}</h2><div class="products">`;
+cat.produtos.forEach(p=>{
+html+=`<div class="card">
+<img src="${p.img || imagemPadrao}">
+<h3>${p.nome}</h3>
+<button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+</div>`;
+});
+siteContent.innerHTML = html+"</div></section>";
+}
 
-    siteContent.innerHTML = html + "</div></section>";
-  }
 
-  function filtrarProdutos() {
-    const termo = document.getElementById("searchInput").value.toLowerCase();
-    const produtos = categorias[categoriaAtual].produtos;
+function filtrarProdutos(){
+const t = searchInput.value.toLowerCase();
+const c = categorias[categoriaAtual];
+renderizarProdutos({
+titulo: c.titulo,
+produtos: c.produtos.filter(p=>p.nome.toLowerCase().includes(t))
+});
+}
 
-    const filtrados = produtos.filter(p =>
-      p.nome.toLowerCase().includes(termo)
-    );
 
-    renderizarProdutos(filtrados, categorias[categoriaAtual].titulo);
-  }
-
-  carregarCategoria("roupas-masculinas");
+carregarCategoria("roupas-masculinas");
 </script>
+
 
 </body>
 </html>
