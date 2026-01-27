@@ -1,64 +1,53 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <div class="search-box">
-  <input
-    type="text"
-    id="searchInput"
-    placeholder="🔍 Pesquisar produto..."
-    onkeyup="filtrarProdutos()"
-  >
-</div>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central de Promoções</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Central de Promoções</title>
+  <style>
+    body{margin:0;font-family:Arial;background:#f9f9f9}
+    header{background:#4A90E2;color:#fff;text-align:center;padding:20px}
+    nav{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:10px}
+    nav button{background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 10px;border-radius:6px;cursor:pointer;font-weight:bold}
+    nav button:hover{background:rgba(255,255,255,.3)}
+    section{padding:30px 20px}
+    h2{border-bottom:2px solid #4A90E2;padding-bottom:6px}
+    .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+    .card{background:#fff;border-radius:12px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,.1);text-align:center}
+    .card img{width:100%;border-radius:8px}
+    .card h3{font-size:15px}
+    .card button{background:#FF6A3D;color:#fff;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%}
+    .card button:hover{background:#e85a31}
+    footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14px}
 
-<style>
-body{margin:0;font-family:Arial;background:#f9f9f9}
-header{background:#4A90E2;color:#fff;text-align:center;padding:20px}
-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:10px}
-nav button{background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 10px;border-radius:6px;cursor:pointer;font-weight:bold}
-nav button:hover{background:rgba(255,255,255,.3)}
-section{padding:30px 20px}
-h2{border-bottom:2px solid #4A90E2;padding-bottom:6px}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
-.card{background:#fff;border-radius:12px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,.1);text-align:center}
-.card img{width:100%;border-radius:8px}
-.card h3{font-size:15px}
-.card button{background:#FF6A3D;color:#fff;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%}
-.card button:hover{background:#e85a31}
-footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14px}
-.search-box{
-  display:flex;
-  justify-content:center;
-  padding:20px;
-  background:#f9f9f9;
-}
-
-.search-box input{
-  width:100%;
-  max-width:420px;
-  padding:12px 16px;
-  border-radius:25px;
-  border:1px solid #ddd;
-  font-size:15px;
-  outline:none;
-  box-shadow:0 2px 6px rgba(0,0,0,.08);
-}
-
-.search-box input:focus{
-  border-color:#4A90E2;
-}
-
-</style>
+    .search-box{
+      display:flex;
+      justify-content:center;
+      padding:20px;
+      background:#f9f9f9;
+    }
+    .search-box input{
+      width:100%;
+      max-width:420px;
+      padding:12px 16px;
+      border-radius:25px;
+      border:1px solid #ddd;
+      font-size:15px;
+      outline:none;
+      box-shadow:0 2px 6px rgba(0,0,0,.08);
+    }
+    .search-box input:focus{
+      border-color:#4A90E2;
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-<h1>Central de Promoções</h1>
-<p>As melhores ofertas para você economizar!</p>
+  <h1>Central de Promoções</h1>
+  <p>As melhores ofertas para você economizar!</p>
 
 <nav>
 <button onclick="carregarCategoria('roupas-masculinas')">👔 Masculinas</button>
@@ -80,13 +69,23 @@ footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14
 <button onclick="carregarCategoria('brinquedos')">🧸 Brinquedos</button>
 <button onclick="carregarCategoria('pets')">🐶 Pets</button>
   
-</nav>
+  </nav>
 </header>
+
+<!-- BARRA DE PESQUISA -->
+<div class="search-box">
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="🔍 Pesquisar produto..."
+    onkeyup="filtrarProdutos()"
+  >
+</div>
 
 <div id="site-content"></div>
 
 <footer>
-<p>Este site participa de programas de afiliados.</p>
+  <p>Este site participa de programas de afiliados.</p>
 </footer>
 
 <script>
@@ -1206,11 +1205,12 @@ produtos:[
 nome:"Toalha Microfibra",
 img:"https://down-br.img.susercontent.com/file/sg-11134201-8260u-mj6klllgxlon99.webp",
 link:"https://s.shopee.com.br/70EBsAm9jo"
-}
-]
-}
-
+ }  
+ ]
+ }
+  
 };
+
 function carregarCategoria(id){
   categoriaAtual = id;
   document.getElementById("searchInput").value = "";
@@ -1223,13 +1223,13 @@ function renderizarProdutos(lista, titulo){
 
   lista.forEach(p=>{
     html += `
-    <div class="card">
-      <img src="${p.img}" alt="${p.nome}">
-      <h3>${p.nome}</h3>
-      <button onclick="window.open('${p.link}','_blank')">
-        Adquirir Promoção
-      </button>
-    </div>`;
+      <div class="card">
+        <img src="${p.img}" alt="${p.nome}">
+        <h3>${p.nome}</h3>
+        <button onclick="window.open('${p.link}','_blank')">
+          Adquirir Promoção
+        </button>
+      </div>`;
   });
 
   siteContent.innerHTML = html + "</div></section>";
@@ -1244,27 +1244,6 @@ function filtrarProdutos(){
   );
 
   renderizarProdutos(filtrados, categorias[categoriaAtual].titulo);
-}
-
-carregarCategoria("roupas-masculinas");
-</script>
-
-}
-function carregarCategoria(id){
-  const c = categorias[id];
-  let html = `<section><h2>${c.titulo}</h2><div class="products">`;
-
-  c.produtos.forEach(p=>{
-    html += `
-    <div class="card">
-      <img src="${p.img}" alt="${p.nome}">
-      <h3>${p.nome}</h3>
-      <button onclick="window.open('${p.link}','_blank')">Adquirir Promoção</button>
-    </div>`;
-  });
-
-  siteContent.innerHTML = html + "</div></section>";
-  window.scrollTo(0,0);
 }
 
 carregarCategoria("roupas-masculinas");
