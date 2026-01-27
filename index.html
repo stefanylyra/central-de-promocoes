@@ -5,8 +5,76 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Central de Promoções</title>
 
+
+
 <style>
-.whatsapp-card {
+body {
+margin: 0;
+font-family: Arial, sans-serif;
+background: #f5f5f5;
+}
+
+
+/* HEADER */
+header {
+background: #4A90E2;
+color: #fff;
+padding: 20px;
+text-align: center;
+}
+
+
+.search-box {
+margin: 15px 0;
+}
+
+
+.search-box input {
+width: 90%;
+max-width: 320px;
+padding: 10px 15px;
+border-radius: 25px;
+border: none;
+}
+
+
+/* MENU */
+.menu-categorias {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 8px;
+}
+
+
+.menu-categorias button {
+background: rgba(255,255,255,0.25);
+border: none;
+color: #fff;
+padding: 8px 14px;
+border-radius: 20px;
+cursor: pointer;
+font-size: 13px;
+}
+
+
+.menu-categorias button:hover {
+background: rgba(255,255,255,0.4);
+}
+
+
+/* PRODUTOS */
+section {
+padding: 30px 20px;
+}
+
+
+.products {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+gap: 20px;
+}
+  .whatsapp-card {
 background: #ffffff;
 max-width: 420px;
 margin: 40px auto;
@@ -79,19 +147,6 @@ transition: transform 0.2s ease, box-shadow 0.2s ease;
 .whatsapp-btn:hover {
 transform: translateY(-2px);
 box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-}
-
-
-/* MOBILE */
-@media (max-width: 600px) {
-.whatsapp-content {
-flex-direction: column;
-}
-
-
-.steps {
-text-align: center;
-}
 }
 </style>
 </head>
