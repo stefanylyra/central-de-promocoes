@@ -166,6 +166,7 @@
 
     .whatsapp-content img {
       width: 110px;
+      height: auto;
     }
 
     .whatsapp-btn {
@@ -198,6 +199,11 @@
       .search-box input {
         width: 90%;
       }
+
+      .whatsapp-content {
+        flex-direction: column;
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -209,8 +215,38 @@
   <p>As melhores ofertas para você economizar!</p>
 
   <div class="search-box">
-    <input id="searchInput" placeholder="🔍 Pesquisar produto..." onkeyup="filtrarProdutos()">
+    <input id="searchInput" placeholder="🔍 Pesquisar produto...">
   </div>
+</header>
+
+<!-- CARD WHATSAPP -->
+<div class="whatsapp-card">
+  <h3>📲 Entre no nosso grupo do WhatsApp</h3>
+
+  <div class="whatsapp-content">
+    <div class="steps">
+      <p><span>1</span> Escaneie o QR Code</p>
+      <p><span>2</span> Entre no grupo</p>
+      <p><span>3</span> Aproveite as ofertas</p>
+    </div>
+
+    <img src="qr-whatsapp.png.png" alt="QR Code do grupo WhatsApp">
+  </div>
+
+  <a 
+    class="whatsapp-btn"
+    href="https://chat.whatsapp.com/JgiOFb5n2CWKNzsoNADvWt"
+    target="_blank">
+    👉 Entrar no grupo do WhatsApp
+  </a>
+</div>
+
+<footer>
+  © 2026 - Central de Promoções
+</footer>
+
+</body>
+</html>
 
   <nav class="menu-categorias">
 <button onclick="carregarCategoria('roupas-masculinas')">👕 Masculinas</button>
