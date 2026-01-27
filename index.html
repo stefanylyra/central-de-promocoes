@@ -21,27 +21,6 @@ h2{border-bottom:2px solid #4A90E2;padding-bottom:6px}
 .card button:hover{background:#e85a31}
 footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14px}
 
-  
-<div className="card-produto">
-<img src={produto.imgs ? produto.imgs[0] : produto.img} />
-<h3>{produto.nome}</h3>
-
-
-{/* PREÇOS AQUI */}
-<div className="precos">
-<span className="preco-antigo">
-R$ {produto.precoAntigo.toFixed(2)}
-</span>
-<span className="preco-novo">
-R$ {produto.preco.toFixed(2)}
-</span>
-</div>
-
-
-<a href={produto.link}>
-<button>Adquirir</button>
-</a>
-</div>
 </style>
 </head>
 
@@ -70,6 +49,7 @@ R$ {produto.preco.toFixed(2)}
 <button onclick="carregarCategoria('sapatos')">👟 Sapatos</button>
 <button onclick="carregarCategoria('brinquedos')">🧸 Brinquedos</button>
 <button onclick="carregarCategoria('pets')">🐶 Pets</button>
+  
 </nav>
 </header>
 
@@ -97,8 +77,6 @@ produtos:[
 {
 nome:"Kit 3 Bermudas Jeans Masculinas Lisa",
 img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp",
-precoAntigo: 200.00,
-preco: 134.19,
 link:"https://s.shopee.com.br/7Kr2CrUeZV"
 },  
 {
