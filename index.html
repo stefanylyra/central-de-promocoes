@@ -22,25 +22,26 @@ h2{border-bottom:2px solid #4A90E2;padding-bottom:6px}
 footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14px}
 
   
-.precos {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-}
+<div className="card-produto">
+<img src={produto.imgs ? produto.imgs[0] : produto.img} />
+<h3>{produto.nome}</h3>
 
-.preco-antigo {
-  color: #e53935;
-  font-size: 13px;
-  text-decoration: line-through;
-}
 
-.preco-novo {
-  color: #111;
-  font-size: 18px;
-  font-weight: bold;
-}
+{/* PREÇOS AQUI */}
+<div className="precos">
+<span className="preco-antigo">
+R$ {produto.precoAntigo.toFixed(2)}
+</span>
+<span className="preco-novo">
+R$ {produto.preco.toFixed(2)}
+</span>
+</div>
+
+
+<a href={produto.link}>
+<button>Adquirir</button>
+</a>
+</div>
 </style>
 </head>
 
@@ -99,9 +100,7 @@ img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.
 precoAntigo: 200.00,
 preco: 134.19,
 link:"https://s.shopee.com.br/7Kr2CrUeZV"
-  }
- ]
-}  
+},  
 {
 nome:"3 Bermuda Masculina Adulto Mauricinho Plus Size",
 img:"https://down-br.img.susercontent.com/file/br-11134207-81z1k-mgs322pkjdolf3.webp",
