@@ -1,205 +1,148 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Central de Promoções</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central de Promoções</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+}
 
-    /* ===== HEADER ===== */
-    header {
-      background: #4A90E2;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-      position: relative;
-    }
+/* HEADER */
+header {
+  background: #4A90E2;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
 
-    /* 🔍 BUSCA */
-    .search-box {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-    }
+.search-box {
+  margin: 15px 0;
+}
 
-    .search-box input {
-      width: 220px;
-      padding: 8px 14px;
-      border-radius: 20px;
-      border: 1px solid #ddd;
-      font-size: 14px;
-      outline: none;
-    }
+.search-box input {
+  width: 90%;
+  max-width: 320px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: none;
+}
 
-    /* ===== CATEGORIAS ===== */
-    .categories {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
+/* MENU */
+.menu-categorias {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
 
-    .category-card {
-      width: 90px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 14px;
-      padding: 10px;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.2s, background 0.2s;
-    }
+.menu-categorias button {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+}
 
-    .category-card:hover {
-      transform: translateY(-4px);
-      background: rgba(255,255,255,0.35);
-    }
+.menu-categorias button:hover {
+  background: rgba(255,255,255,0.35);
+}
 
-    .category-card img {
-      width: 48px;
-      height: 48px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
+/* PRODUTOS */
+section {
+  padding: 30px 20px;
+}
 
-    .category-card span {
-      display: block;
-      margin-top: 6px;
-      font-size: 13px;
-      font-weight: bold;
-      color: #fff;
-    }
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
 
-    /* ===== PRODUTOS ===== */
-    section {
-      padding: 30px 20px;
-    }
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
 
-    h2 {
-      border-bottom: 2px solid #4A90E2;
-      padding-bottom: 6px;
-    }
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
 
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-    }
+.card h3 {
+  font-size: 14px;
+  margin: 10px 0;
+}
 
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      text-align: center;
-    }
+.card button {
+  background: #FF6A3D;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+}
 
-    .card img {
-      width: 100%;
-      border-radius: 8px;
-    }
+/* WHATSAPP */
+.whatsapp-card {
+  max-width: 360px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  margin: 40px auto;
+  text-align: center;
+}
 
-    .card h3 {
-      font-size: 15px;
-      margin: 10px 0;
-    }
+.whatsapp-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
 
-    .card button {
-      background: #FF6A3D;
-      color: #fff;
-      border: none;
-      padding: 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      width: 100%;
-    }
+.steps span {
+  background: #e8f7f0;
+  color: #25D366;
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  border-radius: 50%;
+  line-height: 22px;
+  font-weight: bold;
+}
 
-    /* ===== WHATSAPP CARD ===== */
-    .whatsapp-card {
-      max-width: 360px;
-      background: #fff;
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-      margin: 40px auto;
-    }
+.whatsapp-btn {
+  display: block;
+  margin-top: 15px;
+  background: #25D366;
+  color: #fff;
+  padding: 12px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+}
 
-    .whatsapp-card h3 {
-      margin: 0 0 6px;
-    }
-
-    .whatsapp-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 18px 0;
-      gap: 12px;
-    }
-
-    .steps p {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      margin: 6px 0;
-    }
-
-    .steps span {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: #e8f7f0;
-      color: #25D366;
-      font-weight: bold;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-    }
-
-    .whatsapp-content img {
-      width: 110px;
-    }
-
-    .whatsapp-btn {
-      display: block;
-      text-align: center;
-      background: #25D366;
-      color: #fff;
-      padding: 12px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    /* ===== FOOTER ===== */
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #eee;
-      font-size: 14px;
-      color: #555;
-    }
-
-    /* ===== MOBILE ===== */
-    @media (max-width: 600px) {
-      .search-box {
-        position: static;
-        margin-top: 15px;
-      }
-
-      .search-box input {
-        width: 90%;
-      }
-    }
-  </style>
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 15px;
+  background: #eee;
+  font-size: 14px;
+}
+</style>
 </head>
 
 <body>
@@ -208,17 +151,11 @@
   <h1>Central de Promoções</h1>
   <p>As melhores ofertas para você economizar!</p>
 
-  <!-- 🔍 BARRA DE PESQUISA -->
   <div class="search-box">
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="🔍 Pesquisar produto..."
-      onkeyup="filtrarProdutos()"
-    >
+    <input id="searchInput" placeholder="🔍 Pesquisar produto..." onkeyup="filtrarProdutos()">
   </div>
 
-<nav>
+  <nav class="menu-categorias">
 <button onclick="carregarCategoria('roupas-masculinas')">👕 Masculinas</button>
 <button onclick="carregarCategoria('roupas-femininas')">👗 Femininas</button>
 <button onclick="carregarCategoria('plus-size')">👚 Plus Size</button>
@@ -237,29 +174,35 @@
 <button onclick="carregarCategoria('sapatos')">👟 Sapatos</button>
 <button onclick="carregarCategoria('brinquedos')">🧸 Brinquedos</button>
 <button onclick="carregarCategoria('pets')">🐶 Espaço Pets</button>
-  
   </nav>
 </header>
 
-<!-- BARRA DE PESQUISA -->
-<div class="search-box">
-  <input
-    type="text"
-    id="searchInput"
-    placeholder="🔍 Pesquisar produto..."
-    onkeyup="filtrarProdutos()"
-  >
-</div>
-
 <div id="site-content"></div>
 
+<div class="whatsapp-card">
+  <h3>📲 Entre no nosso WhatsApp</h3>
+  <div class="whatsapp-content">
+    <div class="steps">
+      <p><span>1</span> Clique</p>
+      <p><span>2</span> Entre</p>
+      <p><span>3</span> Aproveite</p>
+    </div>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wa.me/5599999999999">
+  </div>
+  <a class="whatsapp-btn" href="https://wa.me/5599999999999" target="_blank">
+    👉 Entrar no WhatsApp
+  </a>
+</div>
+
 <footer>
-  <p>Este site participa de programas de afiliados.</p>
+  Este site participa de programas de afiliados.
 </footer>
 
 <script>
 const siteContent = document.getElementById("site-content");
 let categoriaAtual = "roupas-masculinas";
+const imagemPadrao = "https://via.placeholder.com/300x200?text=Imagem";
+  
 
 const categorias = {
 
