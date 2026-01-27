@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+  <div class="search-box">
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="🔍 Pesquisar produto..."
+    onkeyup="filtrarProdutos()"
+  >
+</div>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Central de Promoções</title>
@@ -20,6 +29,27 @@ h2{border-bottom:2px solid #4A90E2;padding-bottom:6px}
 .card button{background:#FF6A3D;color:#fff;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%}
 .card button:hover{background:#e85a31}
 footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14px}
+.search-box{
+  display:flex;
+  justify-content:center;
+  padding:20px;
+  background:#f9f9f9;
+}
+
+.search-box input{
+  width:100%;
+  max-width:420px;
+  padding:12px 16px;
+  border-radius:25px;
+  border:1px solid #ddd;
+  font-size:15px;
+  outline:none;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
+}
+
+.search-box input:focus{
+  border-color:#4A90E2;
+}
 
 </style>
 </head>
@@ -61,14 +91,8 @@ footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14
 
 <script>
 const siteContent = document.getElementById("site-content");
+let categoriaAtual = "roupas-masculinas";
 
-function gerarFake(qtd){
-  return Array.from({length:qtd},(_,i)=>({
-    nome:"Produto "+(i+1),
-    img:"https://via.placeholder.com/300",
-    link:"#"
-  }));
-}
 const categorias = {
 
 "roupas-masculinas":{
@@ -1187,7 +1211,45 @@ link:"https://s.shopee.com.br/70EBsAm9jo"
 }
 
 };
+function carregarCategoria(id){
+  categoriaAtual = id;
+  document.getElementById("searchInput").value = "";
+  renderizarProdutos(categorias[id].produtos, categorias[id].titulo);
+  window.scrollTo(0,0);
+}
 
+function renderizarProdutos(lista, titulo){
+  let html = `<section><h2>${titulo}</h2><div class="products">`;
+
+  lista.forEach(p=>{
+    html += `
+    <div class="card">
+      <img src="${p.img}" alt="${p.nome}">
+      <h3>${p.nome}</h3>
+      <button onclick="window.open('${p.link}','_blank')">
+        Adquirir Promoção
+      </button>
+    </div>`;
+  });
+
+  siteContent.innerHTML = html + "</div></section>";
+}
+
+function filtrarProdutos(){
+  const termo = document.getElementById("searchInput").value.toLowerCase();
+  const produtos = categorias[categoriaAtual].produtos;
+
+  const filtrados = produtos.filter(p =>
+    p.nome.toLowerCase().includes(termo)
+  );
+
+  renderizarProdutos(filtrados, categorias[categoriaAtual].titulo);
+}
+
+carregarCategoria("roupas-masculinas");
+</script>
+
+}
 function carregarCategoria(id){
   const c = categorias[id];
   let html = `<section><h2>${c.titulo}</h2><div class="products">`;
