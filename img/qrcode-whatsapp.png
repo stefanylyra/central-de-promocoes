@@ -1,0 +1,100 @@
+/central-de-promocoes
+ ├─ index.html
+<div class="whatsapp-card">
+  <h3>Receba no WhatsApp</h3>
+  <p>Não fique de fora! Entre agora no nosso grupo de promoções.</p>
+
+  <div class="whatsapp-content">
+    <div class="steps">
+      <p><span>1</span> Escaneie o QR Code 📲</p>
+      <p><span>2</span> Pronto! Já está no grupo 💚</p>
+    </div>
+
+    <img src="img/qrcode-whatsapp.png" alt="QR Code WhatsApp">
+  </div>
+
+  <a
+    href="https://chat.whatsapp.com/JgiOFb5n2CWKNzsoNADvWt"
+    target="_blank"
+    class="whatsapp-btn"
+  >
+    Entrar agora
+  </a>
+</div>
+
+ ├─ style.css
+.whatsapp-card {
+  max-width: 360px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  font-family: Arial, sans-serif;
+  margin: 30px auto;
+}
+
+.whatsapp-card h3 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  color: #222;
+}
+
+.whatsapp-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.whatsapp-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 18px 0;
+  gap: 12px;
+}
+
+.steps p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+.steps span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #e8f7f0;
+  color: #25D366;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.whatsapp-content img {
+  width: 110px;
+  height: auto;
+}
+
+.whatsapp-btn {
+  display: block;
+  text-align: center;
+  background: #25D366;
+  color: #ffffff;
+  padding: 12px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: background 0.2s ease;
+}
+
+.whatsapp-btn:hover {
+  background: #1ebe5d;
+}
+
+ └─ img/
+    └─ qrcode-whatsapp.png
