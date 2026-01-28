@@ -188,6 +188,21 @@
     display: none;
   }
 }
+.ofertas-wrapper {
+  overflow: hidden;
+  width: 100%;
+}
+
+.ofertas-track {
+  display: flex;
+  gap: 15px;
+  transition: transform 0.6s ease;
+}
+
+.ofertas-track .card {
+  min-width: 180px;
+  flex-shrink: 0;
+}
 
   </style>
 </head>
@@ -4956,6 +4971,26 @@ function rolarMaisClicados(direcao) {
   renderMaisClicados();
 renderMaisClicados();
 
+</script>
+<script>
+const track = document.querySelector(".ofertas-track");
+const cards = document.querySelectorAll(".ofertas-track .card");
+
+let index = 0;
+
+function moverCarrossel() {
+  const cardWidth = cards[0].offsetWidth + 15; // largura + gap
+  index++;
+
+  if (index > cards.length - 1) {
+    index = 0;
+  }
+
+  track.style.transform = `translateX(-${index * cardWidth}px)`;
+}
+
+// troca a cada 3 segundos
+setInterval(moverCarrossel, 3000);
 </script>
 
 </body>
