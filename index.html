@@ -1,284 +1,122 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Central de Promoções</title>
-  <style>
-    body {margin:0; font-family:Arial,sans-serif; background:#f9f9f9; color:#333;}
-    header {background:#4A90E2; color:white; text-align:center; padding:20px;}
-    nav {display:flex; flex-wrap:wrap; justify-content:center; gap:5px; margin-top:10px; font-weight:bold;}
-    nav button {color:white; background:transparent; border:1px solid white; padding:5px 8px; border-radius:5px; cursor:pointer; transition:0.3s;}
-    nav button:hover {background: rgba(255,255,255,0.2);}
-    section {padding:40px 20px;}
-    h2 {border-bottom:2px solid #4A90E2; padding-bottom:5px; margin-bottom:15px;}
-    .products {display:grid; gap:20px; grid-template-columns:repeat(auto-fit, minmax(200px,1fr));}
-    .card {background:white; border-radius:12px; padding:15px; box-shadow:0 2px 8px rgba(0,0,0,0.1); text-align:center; transition: transform 0.3s, box-shadow 0.3s;}
-    .card:hover {transform: translateY(-5px); box-shadow:0 8px 12px rgba(0,0,0,0.2);}
-    .card img {width:100%; border-radius:8px; margin-bottom:10px;}
-    .card h3 {font-size:16px; margin:10px 0; height:40px; overflow:hidden;}
-    .card button {margin-top:10px; background:#FF6A3D; color:white; border:none; padding:10px; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; transition: background-color 0.3s;}
-    .card button:hover {background:#e85a31;}
-    .search-bar {text-align:center; margin:20px 0;}
-    .search-bar input {padding:8px; width:250px; border-radius:6px; border:1px solid #ccc;}
-    footer {text-align:center; padding:15px; background:#f0f0f0; color:#555; font-size:14px; margin-top:40px;}
-    
-    header {
-  position: relative;
-}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central de Promoções</title>
+<style>
+  body {margin:0; font-family:Arial,sans-serif; background:#f9f9f9; color:#333;}
+  a{text-decoration:none;}
+  button{font-family:inherit;}
 
-.search-bar {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  align-items: center;
-  background: white;
-  padding: 6px 10px;
-  border-radius: 20px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
+  /* HEADER FIXO */
+  header{position:fixed;top:0;left:0;width:100%;background:#4A90E2;color:white;padding:15px 20px;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+  header h1{margin:0;font-size:22px;}
+  header p{margin:4px 0 0 0;font-size:14px;}
 
-.search-bar span {
-  font-size: 16px;
-  margin-right: 6px;
-}
+  /* MENU CATEGORIAS */
+  .menu-categorias{margin-top:10px;text-align:center;}
+  .btn-categorias{background:#ffffff;color:#4A90E2;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.15);margin-bottom:8px;}
+  .categorias{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:10px;}
+  .categorias button{background:#4A90E2;color:white;border:none;padding:6px 10px;border-radius:12px;cursor:pointer;font-size:14px;transition:background 0.3s;}
+  .categorias button:hover{background:#3672b0;}
+  .oculto{display:none;}
 
-.search-bar input {
-  border: none;
-  outline: none;
-  font-size: 14px;
-  width: 180px;
-}
-@media (max-width: 768px) {
-  .search-bar {
-    position: static;
-    margin: 15px auto 0;
-    width: fit-content;
-  }
+  /* SEARCH BAR */
+  .search-bar{margin:15px auto 0;display:flex;align-items:center;justify-content:center;}
+  .search-bar input{padding:8px;width:250px;border-radius:6px;border:1px solid #ccc;outline:none;}
 
-  header {
-    padding-bottom: 30px;
-  }
+  /* SECTIONS */
+  section{padding:100px 20px 40px 20px;}
+  h2{border-bottom:2px solid #4A90E2;padding-bottom:5px;margin-bottom:15px;color:#333;}
 
-  .search-bar input {
-    width: 160px;
-  }
-}
+  /* CARDS PRODUTOS */
+  .products,.ofertas-track,.carrossel{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+  .card{background:white;border-radius:12px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,0.1);text-align:center;transition:transform 0.3s,box-shadow 0.3s;position:relative;}
+  .card:hover{transform:translateY(-5px);box-shadow:0 8px 12px rgba(0,0,0,0.2);}
+  .card img{width:100%;border-radius:8px;margin-bottom:10px;}
+  .card h3{font-size:16px;margin:10px 0;height:40px;overflow:hidden;}
+  .card button{margin-top:10px;background:#FF6A3D;color:white;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%;transition:background-color 0.3s;}
+  .card button:hover{background:#e85a31;}
+  .card p.oferta{font-size:12px;color:#28a745;margin:5px 0;}
+  .card p.estrelas{font-size:12px;color:#FFC107;margin:5px 0;}
 
-    .menu-categorias {
-  margin-top: 15px;
-  text-align: center;
-}
+  /* OFERTAS DO DIA */
+  .ofertas-wrapper{overflow:hidden;width:100%;}
+  #lista-ofertas{display:flex;gap:15px;transition:transform 0.6s ease;}
+  .ofertas-track .card img{height:140px;object-fit:cover;}
 
-.btn-categorias {
-  background: #ffffff;
-  color: #4A90E2;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
+  /* CARROSSEL MAIS CLICADOS */
+  .carrossel-wrapper{display:flex;align-items:center;gap:10px;}
+  .carrossel-btn{background:#4A90E2;color:white;border:none;padding:10px;border-radius:50%;cursor:pointer;}
+  .carrossel{display:flex;gap:15px;overflow-x:auto;scroll-behavior:smooth;padding:10px 0;}
+  .carrossel::-webkit-scrollbar{display:none;}
+  @media(max-width:768px){.carrossel-btn{display:none;}}
 
-.categorias {
-  margin-top: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 6px;
-}
+  /* FOOTER */
+  footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14px;margin-top:40px;}
 
-.categorias button {
-  background: #4A90E2;
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.oculto {
-  display: none;
-}
-    
-.ofertas-dia {
-  background: #fff3eb;
-  padding: 25px 20px; /* ↓ diminui altura */
-  margin: 20px 0;     /* ↓ menos espaço fora */
-  border-radius: 20px;
-}
-
-
-#ofertas-dia h2 {
-  text-align: center;
-  border: none;
-  color: #e85a31;
-}
-/* Ofertas do Dia - layout menor */
-
-
-.ofertas-grid .card {
-  padding: 12px;
-}
-
-.ofertas-grid .card img {
-  height: 130px;
-  object-fit: cover;
-}
-
-.ofertas-grid .card h3 {
-  font-size: 14px;
-  height: 36px;
-}
-@media (max-width: 768px) {
-  .ofertas-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .ofertas-grid .card img {
-    height: 120px;
-  }
-}
-/* ===== CARROSSEL MAIS CLICADOS ===== */
-
-.carrossel-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.carrossel {
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 10px 0;
-}
-
-.carrossel::-webkit-scrollbar {
-  display: none;
-}
-
-.carrossel .card {
-  min-width: 200px;
-  flex-shrink: 0;
-}
-
-.carrossel-btn {
-  background: #4A90E2;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .carrossel-btn {
-    display: none;
-  }
-}
-.ofertas-wrapper {
-  overflow: hidden;
-  width: 100%;
-
-}
-/* =========================
-   AJUSTE DAS OFERTAS DO DIA
-========================= */
-
-#lista-ofertas {
-  overflow: hidden;
-  max-width: 100%;
-}
-
-.ofertas-track {
-  display: flex;
-  gap: 15px;
-  transition: transform 0.6s ease;
-}
-
-.ofertas-track .card {
-  min-width: 180px;
-  max-width: 180px;
-  flex-shrink: 0;
-}
-
-/* AQUI É O MAIS IMPORTANTE */
-.ofertas-track .card img {
-  width: 100%;
-  height: 140px;        /* controla o tamanho */
-  object-fit: cover;   /* corta sem distorcer */
-  border-radius: 8px;
-}
-
-  </style>
+  /* WHATSAPP FLUTUANTE */
+  .whatsapp-container{position:fixed;bottom:20px;right:20px;z-index:1000;display:flex;flex-direction:column;align-items:center;text-align:center;animation:pulse-container 2s infinite;}
+  .whatsapp-text{background-color:#25D366;color:white;font-weight:bold;padding:5px 10px;border-radius:20px;margin-bottom:8px;font-size:14px;box-shadow:0 4px 8px rgba(0,0,0,0.2);animation:pulse-text 2s infinite;}
+  .whatsapp-float{width:60px;height:60px;border-radius:50%;background-color:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 8px rgba(0,0,0,0.2);transition:transform 0.2s;cursor:pointer;animation:pulse-button 2s infinite;}
+  .whatsapp-float img{width:35px;height:35px;}
+  .whatsapp-float:hover{transform:scale(1.1);}
+  @keyframes pulse-button{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+  @keyframes pulse-text{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+  @keyframes pulse-container{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+  @media(max-width:768px){.whatsapp-container{bottom:15px;right:15px;}.whatsapp-text{font-size:12px;padding:4px 8px;}.whatsapp-float{width:50px;height:50px;}.whatsapp-float img{width:28px;height:28px;}}
+</style>
 </head>
 <body>
 
 <header>
   <h1>Central de Promoções</h1>
   <p>As melhores ofertas para você economizar!</p>
- <div class="menu-categorias">
-  <button class="btn-categorias" onclick="toggleCategorias()">☰ Categorias</button>
-  <div id="lista-categorias" class="categorias oculto"></div>
-</div>
 
+  <div class="menu-categorias">
+    <button class="btn-categorias" onclick="toggleCategorias()">☰ Categorias</button>
+    <div id="lista-categorias" class="categorias oculto"></div>
+  </div>
+
+  <div class="search-bar">
+    <span>🔎</span>
+    <input type="text" id="search" placeholder="Buscar produtos..." oninput="buscar()">
+  </div>
 </header>
+
 <section id="ofertas-dia">
   <h2>🔥 Ofertas do Dia</h2>
-
   <div class="ofertas-wrapper">
     <div id="lista-ofertas" class="ofertas-track"></div>
   </div>
 </section>
-  
+
 <section id="mais-clicados">
   <h2>❤️ Mais clicados</h2>
-
   <div class="carrossel-wrapper">
     <button class="carrossel-btn" onclick="rolarMaisClicados(-1)">⬅️</button>
-
     <div class="carrossel" id="lista-mais-clicados"></div>
-
     <button class="carrossel-btn" onclick="rolarMaisClicados(1)">➡️</button>
   </div>
 </section>
 
-
-  
-<div class="search-bar">
-  <span>🔎</span>
-  <input 
-    type="text" 
-    id="search" 
-    placeholder="Buscar produtos..." 
-    oninput="buscar()"
-  >
-</div>
-
 <div id="conteudo"></div>
 
 <footer>
-  <p>Somos um site de afiliados. Ao comprar pelos links você nos ajuda a continuar trazendo promoções e ofertas imperdíveis — sem nenhum tipo de custo extra ❤️.</p>
+  <p>Somos um site de afiliados. Ao comprar pelos links você nos ajuda a continuar trazendo promoções e ofertas imperdíveis — sem nenhum custo extra ❤️.</p>
   <p>Site afiliado • Central de Promoções</p>
 </footer>
 
-<script>
-  const maisClicados = [
-  {
-    nome: "Relógio Masculino Digital",
-    img: "https://via.placeholder.com/200",
-    link: "#"
-  }
-  // depois você pode adicionar mais produtos aqui
-];
+<!-- BOTÃO WHATSAPP -->
+<div class="whatsapp-container">
+  <div class="whatsapp-text">💬 Entre no nosso grupo do WhatsApp!</div>
+  <a href="https://chat.whatsapp.com/JgiOFb5n2CWKNzsoNADvWt" target="_blank" class="whatsapp-float" onclick="return avisoWhatsApp()">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+  </a>
+</div>
 
-  // Lista de categorias
+<script>
   const categorias = [
     {id: "roupas-masculinas", nome: "👕 Masculinas"},
     {id: "roupas-femininas", nome: "👗 Femininas"},
@@ -4845,326 +4683,120 @@ produtos:[
       nome: "Kit 44 Lápis de Cor (24 CORES + 10 Cores Tom Pastel +10 Cores Tons de Pele) Escolar Sextavado",
       img: "",
       link: "https://shopee.com.br/product/761647073/23993398101"
+    }
+    ]
+    }
+  };
+
+  const maisClicados = [
+    {nome:"Relógio Masculino Digital", img:"https://via.placeholder.com/200", link:"#"}
+  ];
+
+  let atual = "roupas-masculinas";
+
+  // BOTÕES DE CATEGORIA
+  const nav = document.getElementById('lista-categorias');
+  categorias.forEach(cat=>{
+    const btn = document.createElement('button');
+    btn.textContent = cat.nome;
+    btn.onclick = ()=> carregar(cat.id);
+    nav.appendChild(btn);
+  });
+
+  function carregar(cat){
+    atual = cat;
+    render(dados[cat]);
   }
-  ]
-}
 
- };
-
- let atual = "roupas-masculinas";
-
-/* ===============================
-   GERAR BOTÕES DE CATEGORIA
-================================ */
-const nav = document.getElementById('lista-categorias');
-
-categorias.forEach(cat => {
-  const btn = document.createElement('button');
-  btn.textContent = cat.nome;
-  btn.onclick = () => carregar(cat.id);
-  nav.appendChild(btn);
-});
-
-/* ===============================
-   OFERTAS DO DIA (CARROSSEL)
-================================ */
-const ofertasDia = [
-  {
-    nome: "Kit 3 Bermudas Jeans Masculinas",
-    img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp",
-    link: "https://s.shopee.com.br/7Kr2CrUeZV"
-  },
-  {
-    nome: "Compre 1 E Ganhe 1 Fone De Ouvido Sem Fio Bluetooth À Prova D'água Com Microfone",
-    img: "https://down-br.img.susercontent.com/file/sg-11134301-7rd6s-m7i0c05kwmwf29.webp",
-    link: "https://s.shopee.com.br/1gCfVYVSc9"
-  },
-  {
-    nome: "Bolsa Mala Mochila Academia e Viagem Feminina com Alça Transversal",
-    img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mcnkdgnxh9flb9.webp",
-    link: "https://s.shopee.com.br/LhHuyzYpU"
+  function render(categoriaObj){
+    if(!categoriaObj) return;
+    const lista = categoriaObj.produtos;
+    let html = `<section><h2>${categoriaObj.titulo}</h2><div class="products">`;
+    lista.forEach(p=>{
+      html += `<div class="card">
+        <img src="${p.img}" alt="${p.nome}">
+        <h3>${p.nome}</h3>
+        <p class="oferta">🔥 Oferta imperdível</p>
+        <p class="estrelas">⭐⭐⭐⭐☆</p>
+        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+      </div>`;
+    });
+    html += `</div></section>`;
+    document.getElementById('conteudo').innerHTML = html;
   }
-];
 
-function renderOfertas() {
-  const track = document.getElementById("lista-ofertas");
-  track.innerHTML = "";
+  function toggleCategorias(){nav.classList.toggle("oculto");}
+  function buscar(){
+    const termo=document.getElementById("search").value.toLowerCase();
+    if(termo===""){carregar(atual);return;}
+    let resultados=[];
+    for(const cat in dados){dados[cat].produtos.forEach(p=>{if(p.nome.toLowerCase().includes(termo)) resultados.push(p);});}
+    if(resultados.length===0){
+      document.getElementById("conteudo").innerHTML=`<section><h2>🔎 Resultados da busca</h2><p style="text-align:center;font-size:18px;color:#777;">Nenhum produto encontrado 😕</p></section>`;
+      return;
+    }
+    render({titulo:"🔎 Resultados da busca",produtos:resultados});
+  }
 
-  ofertasDia.forEach(p => {
-    track.innerHTML += `
-      <div class="card">
+  // OFERTAS DO DIA
+  const ofertasDia=[
+    {nome:"Kit 3 Bermudas Jeans Masculinas", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp", link:"https://s.shopee.com.br/7Kr2CrUeZV"},
+    {nome:"Fone Bluetooth À Prova D'água", img:"https://down-br.img.susercontent.com/file/sg-11134301-7rd6s-m7i0c05kwmwf29.webp", link:"https://s.shopee.com.br/1gCfVYVSc9"},
+    {nome:"Bolsa Mochila Feminina", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-mcnkdgnxh9flb9.webp", link:"https://s.shopee.com.br/LhHuyzYpU"}
+  ];
+
+  function renderOfertas(){
+    const track=document.getElementById("lista-ofertas");
+    track.innerHTML="";
+    ofertasDia.forEach(p=>{
+      track.innerHTML+=`<div class="card">
         <img src="${p.img}" loading="lazy">
         <h3>${p.nome}</h3>
-        <p style="font-size:12px;color:#28a745;">🔥 Oferta imperdível</p>
-        <button onclick="window.open('${p.link}','_blank')">
-          Ver oferta
-        </button>
-      </div>
-    `;
-  });
-
-  iniciarCarrosselOfertas();
-}
-
-
-/* ===============================
-   CARREGAR CATEGORIA
-================================ */
-function carregar(cat) {
-  atual = cat;
-  render(dados[cat]);
-}
-
-/* ===============================
-   RENDERIZAR PRODUTOS
-================================ */
-function render(categoriaObj) {
-  if (!categoriaObj) return;
-
-  const lista = categoriaObj.produtos;
-  let html = `
-    <section>
-      <h2>${categoriaObj.titulo}</h2>
-      <div class="products">
-  `;
-
-  lista.forEach(p => {
-    html += `
-      <div class="card">
-        <img src="${p.img}" alt="${p.nome}">
-        <h3>${p.nome}</h3>
-        <button onclick="window.open('${p.link}','_blank')">
-          Ver oferta
-        </button>
-      </div>
-    `;
-  });
-
-  html += `
-      </div>
-    </section>
-  `;
-
-  document.getElementById('conteudo').innerHTML = html;
-}
-
-/* ===============================
-   TOGGLE CATEGORIAS (MOBILE)
-================================ */
-function toggleCategorias() {
-  document.getElementById("lista-categorias")
-    .classList.toggle("oculto");
-}
-
-/* ===============================
-   MAIS CLICADOS
-================================ */
-function renderMaisClicados() {
-  const container = document.getElementById("lista-mais-clicados");
-  let html = "";
-
-  maisClicados.forEach(p => {
-    html += `
-      <div class="card">
-        <img src="${p.img}" alt="${p.nome}">
-        <h3>${p.nome}</h3>
-        <p style="font-size:12px;">❤️ Favorito do público</p>
-        <button onclick="window.open('${p.link}','_blank')">
-          Ver oferta
-        </button>
-      </div>
-    `;
-  });
-
-  container.innerHTML = html;
-}
-
-function rolarMaisClicados(direcao) {
-  const carrossel = document.getElementById("lista-mais-clicados");
-  const larguraCard = 220;
-  carrossel.scrollLeft += direcao * larguraCard;
-}
-
-/* ===============================
-   BUSCA
-================================ */
-function buscar() {
-  const termo = document
-    .getElementById("search")
-    .value
-    .toLowerCase();
-
-  if (termo === "") {
-    carregar(atual);
-    return;
+        <p class="oferta">🔥 Oferta imperdível</p>
+        <p class="estrelas">⭐⭐⭐⭐☆</p>
+        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+      </div>`;
+    });
+    iniciarCarrosselOfertas();
   }
 
-  let resultados = [];
-
-  for (const cat in dados) {
-    dados[cat].produtos.forEach(p => {
-      if (p.nome.toLowerCase().includes(termo)) {
-        resultados.push(p);
-      }
+  function renderMaisClicados(){
+    const container=document.getElementById("lista-mais-clicados");
+    container.innerHTML="";
+    maisClicados.forEach(p=>{
+      container.innerHTML+=`<div class="card">
+        <img src="${p.img}" alt="${p.nome}">
+        <h3>${p.nome}</h3>
+        <p class="estrelas">⭐⭐⭐⭐☆</p>
+        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+      </div>`;
     });
   }
 
-  if (resultados.length === 0) {
-    document.getElementById("conteudo").innerHTML = `
-      <section>
-        <h2>🔎 Resultados da busca</h2>
-        <p style="text-align:center;font-size:18px;color:#777;">
-          Nenhum produto encontrado 😕
-        </p>
-      </section>
-    `;
-    return;
+  function rolarMaisClicados(direcao){
+    const carrossel=document.getElementById("lista-mais-clicados");
+    const larguraCard=220;
+    carrossel.scrollLeft+=direcao*larguraCard;
   }
 
-  render({
-    titulo: "🔎 Resultados da busca",
-    produtos: resultados
-  });
-}
+  function iniciarCarrosselOfertas(){
+    const track=document.getElementById("lista-ofertas");
+    let index=0;
+    setInterval(()=>{
+      const cards=track.querySelectorAll(".card");
+      if(cards.length===0) return;
+      const cardWidth=cards[0].offsetWidth+15;
+      index++;
+      if(index>=cards.length) index=0;
+      track.style.transform=`translateX(-${index*cardWidth}px)`;
+    },3000);
+  }
 
-/* ===============================
-   INICIALIZAÇÃO
-================================ */
-renderOfertas();
-carregar(atual);
-renderMaisClicados();
-  
-let indexOferta = 0;
-let cardWidth = 0;
-let intervaloOfertas = null;
+  renderOfertas();
+  carregar(atual);
+  renderMaisClicados();
 
-function iniciarCarrosselOfertas() {
-  const track = document.getElementById("lista-ofertas");
-  let index = 0;
-
-  setInterval(() => {
-    const cards = track.querySelectorAll(".card");
-    if (cards.length === 0) return;
-
-    const cardWidth = cards[0].offsetWidth + 15;
-    index++;
-
-    if (index >= cards.length) {
-      index = 0;
-    }
-
-    track.style.transform = `translateX(-${index * cardWidth}px)`;
-  }, 3000);
-}
-
+  function avisoWhatsApp(){return confirm("Você será redirecionado para o grupo do WhatsApp. Deseja continuar?");}
 </script>
-<!-- Botão WhatsApp flutuante com frase animada -->
-<div class="whatsapp-container">
-  <div class="whatsapp-text">💬 Entre no nosso grupo do WhatsApp!</div>
-  <a href="https://chat.whatsapp.com/JgiOFb5n2CWKNzsoNADvWt" 
-     target="_blank" 
-     class="whatsapp-float" 
-     onclick="return avisoWhatsApp()">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
-  </a>
-</div>
-
-<script>
-  function avisoWhatsApp() {
-    return confirm("Você será redirecionado para o grupo do WhatsApp. Deseja continuar?");
-  }
-</script>
-
-<style>
-/* Container do botão e texto */
-.whatsapp-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  animation: pulse-container 2s infinite;
-}
-
-/* Texto acima do botão */
-.whatsapp-text {
-  background-color: #25D366;
-  color: white;
-  font-weight: bold;
-  padding: 5px 10px;
-  border-radius: 20px;
-  margin-bottom: 8px;
-  font-size: 14px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  animation: pulse-text 2s infinite;
-}
-
-/* Botão flutuante WhatsApp */
-.whatsapp-float {
-  width: 60px;   
-  height: 60px;
-  border-radius: 50%; 
-  background-color: #25D366;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: transform 0.2s;
-  cursor: pointer;
-  animation: pulse-button 2s infinite;
-}
-
-.whatsapp-float img {
-  width: 35px;
-  height: 35px;
-}
-
-.whatsapp-float:hover {
-  transform: scale(1.1);
-}
-
-/* Pulsar animação */
-@keyframes pulse-button {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
-@keyframes pulse-text {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-@keyframes pulse-container {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
-}
-
-/* Responsivo para celular */
-@media (max-width: 768px) {
-  .whatsapp-container {
-    bottom: 15px;
-    right: 15px;
-  }
-
-  .whatsapp-text {
-    font-size: 12px;
-    padding: 4px 8px;
-  }
-
-  .whatsapp-float {
-    width: 50px;
-    height: 50px;
-  }
-  
-  .whatsapp-float img {
-    width: 28px;
-    height: 28px;
-  }
-}
-</style>
-
 </body>
 </html>
