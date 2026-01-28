@@ -1,92 +1,55 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Central de Promoções</title>
-
-
-<style>
-body {
-margin: 0;
-font-family: Arial, sans-serif;
-background: #f5f5f5;
 }
 
 
-/* HEADER */
-header {
-background: #4A90E2;
+.steps span {
+background: #e8f7f0;
+color: #25D366;
+width: 22px;
+height: 22px;
+display: inline-block;
+border-radius: 50%;
+line-height: 22px;
+font-weight: bold;
+}
+
+
+.whatsapp-btn {
+display: block;
+margin-top: 15px;
+background: #25D366;
 color: #fff;
-padding: 20px;
+padding: 12px;
+border-radius: 30px;
+text-decoration: none;
+font-weight: bold;
+}
+
+
+/* FOOTER */
+footer {
 text-align: center;
-}
-
-
-.search-box {
-margin: 15px 0;
-}
-
-
-.search-box input {
-width: 90%;
-max-width: 320px;
-padding: 10px 15px;
-border-radius: 25px;
-border: none;
-}
-
-
-/* MENU */
-.menu-categorias {
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
-gap: 8px;
-}
-
-
-.menu-categorias button {
-background: rgba(255,255,255,0.25);
-border: none;
-color: #fff;
-padding: 8px 14px;
-border-radius: 20px;
-cursor: pointer;
-font-size: 13px;
-}
-
-
-.menu-categorias button:hover {
-background: rgba(255,255,255,0.4);
-}
-
-
-/* PRODUTOS */
-section {
-padding: 30px 20px;
-}
-
-
-section h2 {
-text-align: center;
-margin-bottom: 20px;
-}
-
-
-.products {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-gap: 20px;
-}
-
-
-.card {
-background: #fff;
-border-radius: 14px;
 padding: 15px;
-box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-text-align: center;
+background: #eee;
+font-size: 14px;
+}
+</style>
+</head>
+
+
+<body>
+
+
+<header>
+<h1>Central de Promoções</h1>
+<p>As melhores ofertas para você economizar!</p>
+
+
+<div class="search-box">
+<input id="searchInput" placeholder="🔍 Pesquisar produto..." onkeyup="filtrarProdutos()">
+</div>
+
+
 <nav class="menu-categorias">
 <button onclick="carregarCategoria('roupas-masculinas')">👕 Masculinas</button>
 <button onclick="carregarCategoria('roupas-femininas')">👗 Femininas</button>
@@ -113,25 +76,32 @@ text-align: center;
 <div id="site-content"></div>
 
 
-<!-- WHATSAPP -->
+<!-- CARD WHATSAPP -->
 <div class="whatsapp-card">
 <h3>📲 Entre no nosso grupo do WhatsApp</h3>
+<p>Receba promoções exclusivas direto no seu celular</p>
 
 
 <div class="whatsapp-content">
 <div class="steps">
-<p><span>1</span> Escaneie</p>
-<p><span>2</span> Entre</p>
-<p><span>3</span> Aproveite</p>
+<p><span>1</span> Escaneie o QR Code</p>
+<p><span>2</span> Entre no grupo</p>
+<p><span>3</span> Aproveite as ofertas</p>
 </div>
 
 
-<img src="qr-whatsapp.png.png" alt="QR Code WhatsApp">
+<!-- QR CODE LOCAL -->
+<img src="qr-whatsapp.png" alt="QR Code do grupo WhatsApp">
 </div>
 
 
-<a class="whatsapp-btn" href="https://chat.whatsapp.com/JgiOFb5n2CWKNzsoNADvWt" target="_blank">
-👉 Entrar no grupo
+<!-- BOTÃO CORRETO PARA GRUPO -->
+<a
+class="whatsapp-btn"
+href="https://chat.whatsapp.com/JgiOFb5n2CWKNzsoNADvWt"
+target="_blank"
+>
+👉 Entrar no grupo do WhatsApp
 </a>
 </div>
 
@@ -142,12 +112,15 @@ Este site participa de programas de afiliados.
 
 
 <script>
-const siteContent=document.getElementById("site-content");
-const searchInput=document.getElementById("searchInput");
-let categoriaAtual="papelaria";
+const siteContent = document.getElementById("site-content");
+const searchInput = document.getElementById("searchInput");
+const imagemPadrao = "https://via.placeholder.com/300x200?text=Produto";
 
 
-const categorias={
+let categoriaAtual = "roupas-masculinas";
+
+
+const categorias = {
 
 "roupas-masculinas":{
 titulo:"👕 Roupas Masculinas",
@@ -4697,43 +4670,35 @@ produtos:[
     },
   
 };
-function carregarCategoria(id){
-categoriaAtual = id;
-searchInput.value = "";
-renderizarProdutos(categorias[id]);
-}
-
-
-function renderizarProdutos(cat){
-if(cat.produtos.length === 0){
-siteContent.innerHTML = `<section><h2>${cat.titulo}</h2><p style="text-align:center;">Nenhum produto encontrado.</p></section>`;
-return;
-}
-
-
+function renderizar(cat) {
 let html = `<section><h2>${cat.titulo}</h2><div class="products">`;
 cat.produtos.forEach(p=>{
 html += `
 <div class="card">
-<img src="${p.img || imgPadrao}">
+<img src="${p.img || imagemPadrao}">
 <h3>${p.nome}</h3>
 <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-</div>`;
+</div>
+`;
 });
 siteContent.innerHTML = html + "</div></section>";
 }
 
 
-function filtrarProdutos(){
-const termo = searchInput.value.toLowerCase();
-if(termo === ""){
-renderizarProdutos(categorias[categoriaAtual]);
-return;
+function mudarCategoria(id){
+categoriaAtual = id;
+location.hash = id;
+searchInput.value = "";
+renderizar(categorias[id]);
 }
 
 
+function filtrarProdutos(){
+const termo = searchInput.value.toLowerCase();
 let resultados = [];
-for(let cat in categorias){
+
+
+for (let cat in categorias) {
 categorias[cat].produtos.forEach(p=>{
 if(p.nome.toLowerCase().includes(termo)){
 resultados.push(p);
@@ -4742,14 +4707,25 @@ resultados.push(p);
 }
 
 
-renderizarProdutos({
-titulo:`🔎 Resultados para "${termo}"`,
+renderizar({
+titulo: `🔎 Resultados para "${termo}"`,
 produtos: resultados
 });
 }
 
 
-carregarCategoria("roupas-masculinas");
+function carregarHash(){
+const hash = location.hash.replace("#","");
+if(categorias[hash]){
+mudarCategoria(hash);
+} else {
+mudarCategoria(categoriaAtual);
+}
+}
+
+
+window.addEventListener("load", carregarHash);
+window.addEventListener("hashchange", carregarHash);
 </script>
 
 
