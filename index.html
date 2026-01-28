@@ -4697,43 +4697,59 @@ produtos:[
     },
   
 };
-
 function carregarCategoria(id){
-categoriaAtual=id;
-searchInput.value="";
+categoriaAtual = id;
+searchInput.value = "";
 renderizarProdutos(categorias[id]);
 }
 
 
 function renderizarProdutos(cat){
-let html=`<section><h2>${cat.titulo}</h2><div class="products">`;
+if(cat.produtos.length === 0){
+siteContent.innerHTML = `<section><h2>${cat.titulo}</h2><p style="text-align:center;">Nenhum produto encontrado.</p></section>`;
+return;
+}
+
+
+let html = `<section><h2>${cat.titulo}</h2><div class="products">`;
 cat.produtos.forEach(p=>{
-html+=`
+html += `
 <div class="card">
-<img src="${p.img||'https://via.placeholder.com/300x200?text=Produto'}">
+<img src="${p.img || imgPadrao}">
 <h3>${p.nome}</h3>
 <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
 </div>`;
 });
-siteContent.innerHTML=html+"</div></section>";
+siteContent.innerHTML = html + "</div></section>";
 }
 
 
 function filtrarProdutos(){
-const termo=searchInput.value.toLowerCase();
-let resultados=[];
-for(let c in categorias){
-categorias[c].produtos.forEach(p=>{
+const termo = searchInput.value.toLowerCase();
+if(termo === ""){
+renderizarProdutos(categorias[categoriaAtual]);
+return;
+}
+
+
+let resultados = [];
+for(let cat in categorias){
+categorias[cat].produtos.forEach(p=>{
 if(p.nome.toLowerCase().includes(termo)){
 resultados.push(p);
 }
 });
 }
-renderizarProdutos({titulo:`🔎 Resultados para "${termo}"`,produtos:resultados});
+
+
+renderizarProdutos({
+titulo:`🔎 Resultados para "${termo}"`,
+produtos: resultados
+});
 }
 
 
-carregarCategoria("papelaria");
+carregarCategoria("roupas-masculinas");
 </script>
 
 
