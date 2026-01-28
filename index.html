@@ -1,56 +1,79 @@
 <!DOCTYPE html>
-}
-
-
-.steps span {
-background: #e8f7f0;
-color: #25D366;
-width: 22px;
-height: 22px;
-display: inline-block;
-border-radius: 50%;
-line-height: 22px;
-font-weight: bold;
-}
-
-
-.whatsapp-btn {
-display: block;
-margin-top: 15px;
-background: #25D366;
-color: #fff;
-padding: 12px;
-border-radius: 30px;
-text-decoration: none;
-font-weight: bold;
-}
-
-
-/* FOOTER */
-footer {
-text-align: center;
-padding: 15px;
-background: #eee;
-font-size: 14px;
-}
-</style>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central de Promoções</title>
+  <style>
+    body {margin:0; font-family:Arial,sans-serif; background:#f9f9f9; color:#333;}
+    header {background:#4A90E2; color:white; text-align:center; padding:20px;}
+    nav {display:flex; flex-wrap:wrap; justify-content:center; gap:5px; margin-top:10px; font-weight:bold;}
+    nav a {color:white; text-decoration:none; padding:5px 8px; border-radius:5px; transition:0.3s;}
+    nav a:hover {background: rgba(255,255,255,0.2);}
+    section {padding:40px 20px;}
+    h2 {border-bottom:2px solid #4A90E2; padding-bottom:5px; margin-bottom:15px;}
+    .products {display:grid; gap:20px; grid-template-columns:repeat(auto-fit, minmax(200px,1fr));}
+    .card {background:white; border-radius:12px; padding:15px; box-shadow:0 2px 8px rgba(0,0,0,0.1); text-align:center; transition: transform 0.3s, box-shadow 0.3s;}
+    .card:hover {transform: translateY(-5px); box-shadow:0 8px 12px rgba(0,0,0,0.2);}
+    .card img {width:100%; border-radius:8px; margin-bottom:10px;}
+    .card h3 {font-size:16px; margin:10px 0; height:40px; overflow:hidden;}
+    .card button {margin-top:10px; background:#FF6A3D; color:white; border:none; padding:10px; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; transition: background-color 0.3s;}
+    .card button:hover {background:#e85a31;}
+  </style>
 </head>
-
-
 <body>
 
-
 <header>
-<h1>Central de Promoções</h1>
-<p>As melhores ofertas para você economizar!</p>
+  <h1>Central de Promoções</h1>
+  <p>As melhores ofertas para você economizar!</p>
+  <nav>
+    <a href="#roupas-masculinas">Roupas Masculinas</a>
+    <a href="#roupas-femininas">Roupas Femininas</a>
+    <a href="#plus-size">Roupas Plus Size</a>
+    <a href="#relogios">Relógios</a>
+    <a href="#moda-infantil">Moda Infantil</a>
+    <a href="#mae-bebe">Mãe e Bebê</a>
+    <a href="#acessorios">Acessórios de Moda</a>
+    <a href="#bolsas-femininas">Bolsas Femininas</a>
+    <a href="#bolsas-masculinas">Bolsas Masculinas</a>
+    <a href="#viagens-bagagens">Viagens e Bagagens</a>
+    <a href="#fones">Fones de Ouvido</a>
+    <a href="#beleza">Beleza</a>
+    <a href="#papelaria">Papelaria</a>
+    <a href="#casa-construcao">Casa e Construção</a>
+    <a href="#limpeza">Limpeza</a>
+    <a href="#sapatos">Sapatos</a>
+    <a href="#brinquedos">Brinquedos</a>
+    <a href="#pets">Espaço Pets</a>
+  </nav>
+</header>
 
+<div id="site-content"></div>
 
-<div class="search-box">
-<input id="searchInput" placeholder="🔍 Pesquisar produto..." onkeyup="filtrarProdutos()">
-</div>
+<footer style="text-align:center; padding:15px; background:#f0f0f0; color:#555; font-size:14px; margin-top:40px;">
+  <p>Este site participa de programas de afiliados. Ao comprar pelos links, podemos receber uma comissão sem custo extra para você.</p>
+</footer>
 
+<script>
+  // Função para gerar produtos automaticamente
+  function gerarProdutos(categoria, quantidade, containerId) {
+    const container = document.getElementById(containerId);
+    let html = `<section id="${containerId}"><h2>${categoria}</h2><div class="products">`;
+    for (let i=1; i<=quantidade; i++) {
+      html += `
+        <div class="card">
+          <img src="https://via.placeholder.com/200" alt="Produto ${i}">
+          <h3>Produto ${i}</h3>
+          <button onclick="window.open('#','_blank')">Adquirir</button>
+        </div>
+      `;
+    }
+    html += `</div></section>`;
+    container.innerHTML += html;
+  }
 
-<nav class="menu-categorias">
+  // Lista de categorias com quantidade de produtos
+  const categorias = [
 <button onclick="carregarCategoria('roupas-masculinas')">👕 Masculinas</button>
 <button onclick="carregarCategoria('roupas-femininas')">👗 Femininas</button>
 <button onclick="carregarCategoria('plus-size')">👚 Plus Size</button>
