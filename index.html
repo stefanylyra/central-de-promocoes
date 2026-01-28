@@ -103,6 +103,19 @@
 .oculto {
   display: none;
 }
+    
+#ofertas-dia {
+  background: #fff4ee;
+  margin: 30px 20px;
+  border-radius: 16px;
+  padding: 30px 20px;
+}
+
+#ofertas-dia h2 {
+  text-align: center;
+  border: none;
+  color: #e85a31;
+}
 
   </style>
 </head>
@@ -117,7 +130,12 @@
 </div>
 
 </header>
+<section id="ofertas-dia">
+  <h2>🔥 Ofertas do Dia</h2>
+  <div class="products" id="lista-ofertas"></div>
+</section>
 
+  
 <div class="search-bar">
   <span>🔎</span>
   <input 
@@ -131,7 +149,7 @@
 <div id="conteudo"></div>
 
 <footer>
-  <p>Somos um site de afiliados. Ao comprar pelos links você nos ajuda a continuar trazendo promoções e ofertas imperdiveis — sem nenhum tipo de custo extra ❤️.</p>
+  <p>Somos um site de afiliados. Ao comprar pelos links você nos ajuda a continuar trazendo promoções e ofertas imperdíveis — sem nenhum tipo de custo extra ❤️.</p>
   <p>Site afiliado • Central de Promoções</p>
 </footer>
 
@@ -4720,6 +4738,31 @@ produtos:[
     btn.onclick = () => carregar(cat.id);
     nav.appendChild(btn);
   });
+const ofertasDia = [
+  {
+    nome: "Kit 3 Bermudas Jeans Masculinas",
+    img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp",
+    link: "https://s.shopee.com.br/7Kr2CrUeZV"
+  }
+  // você vai adicionando aqui
+];
+function renderOfertas() {
+  const container = document.getElementById("lista-ofertas");
+  let html = "";
+  ofertasDia.forEach(p => {
+    html += `
+      <div class="card">
+        <img src="${p.img}">
+        <h3>${p.nome}</h3>
+        <p style="font-size:13px;color:#28a745;">🔥 Oferta imperdível</p>
+        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
+
+renderOfertas();
 
   // Carregar categoria
   function carregar(cat) {
