@@ -1,129 +1,73 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Central de Promoções</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central de Promoções</title>
+  <style>
+    body {margin:0; font-family:Arial,sans-serif; background:#f9f9f9; color:#333;}
+    header {background:#4A90E2; color:white; text-align:center; padding:20px;}
+    nav {display:flex; flex-wrap:wrap; justify-content:center; gap:5px; margin-top:10px; font-weight:bold;}
+    nav button {color:white; background:transparent; border:1px solid white; padding:5px 8px; border-radius:5px; cursor:pointer; transition:0.3s;}
+    nav button:hover {background: rgba(255,255,255,0.2);}
+    section {padding:40px 20px;}
+    h2 {border-bottom:2px solid #4A90E2; padding-bottom:5px; margin-bottom:15px;}
+    .products {display:grid; gap:20px; grid-template-columns:repeat(auto-fit, minmax(200px,1fr));}
+    .card {background:white; border-radius:12px; padding:15px; box-shadow:0 2px 8px rgba(0,0,0,0.1); text-align:center; transition: transform 0.3s, box-shadow 0.3s;}
+    .card:hover {transform: translateY(-5px); box-shadow:0 8px 12px rgba(0,0,0,0.2);}
+    .card img {width:100%; border-radius:8px; margin-bottom:10px;}
+    .card h3 {font-size:16px; margin:10px 0; height:40px; overflow:hidden;}
+    .card button {margin-top:10px; background:#FF6A3D; color:white; border:none; padding:10px; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; transition: background-color 0.3s;}
+    .card button:hover {background:#e85a31;}
+    .search-bar {text-align:center; margin:20px 0;}
+    .search-bar input {padding:8px; width:250px; border-radius:6px; border:1px solid #ccc;}
+    footer {text-align:center; padding:15px; background:#f0f0f0; color:#555; font-size:14px; margin-top:40px;}
+  </style>
+</head>
+<body>
 
-
-<style>
-body {
-margin: 0;
-font-family: Arial, sans-serif;
-background: #f4f4f4;
-}
-
-
-header {
-background: #4A90E2;
-color: white;
-padding: 20px;
-text-align: center;
-}
-
-
-.search-box input {
-width: 90%;
-max-width: 320px;
-padding: 10px;
-border-radius: 25px;
-border: none;
-margin-top: 10px;
-}
-
-
-nav {
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
-gap: 8px;
-margin-top: 15px;
-}
-
-
-nav button {
-background: rgba(255,255,255,0.25);
-border: none;
-color: white;
-padding: 8px 14px;
-border-radius: 20px;
-cursor: pointer;
-}
-
-
-section {
-padding: 20px;
-}
-
-
-.products {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-gap: 15px;
-}
-
-
-.card {
-background: white;
-border-radius: 12px;
-padding: 10px;
-text-align: center;
-}
-
-
-.card img {
-width: 100%;
-height: 160px;
-object-fit: cover;
-border-radius: 8px;
-}
-
-
-.card button {
-background: #FF6A3D;
-border: none;
-color: white;
-padding: 10px;
-<nav>
-<button onclick="carregarCategoria('roupas-masculinas')">👕 Masculinas</button>
-<button onclick="carregarCategoria('roupas-femininas')">👗 Femininas</button>
-<button onclick="carregarCategoria('plus-size')">👚 Plus Size</button>
-<button onclick="carregarCategoria('relogios')">⌚ Relógios</button>
-<button onclick="carregarCategoria('moda-infantil')">🧒 Infantil</button>
-<button onclick="carregarCategoria('mae-bebe')">🤱 Mãe & Bebê</button>
-<button onclick="carregarCategoria('acessorios')">💎 Acessórios</button>
-<button onclick="carregarCategoria('bolsas-femininas')">👝 Bolsas Fem.</button>
-<button onclick="carregarCategoria('bolsas-masculinas')">🎒 Bolsas Masc.</button>
-<button onclick="carregarCategoria('viagens-bagagens')">🧳Itens de Viagem</button>
-<button onclick="carregarCategoria('audio')">🎧 Fones de Ouvido</button>
-<button onclick="carregarCategoria('beleza')">💄 Beleza</button>
-<button onclick="carregarCategoria('papelaria')">✏️ Papelaria</button>
-<button onclick="carregarCategoria('casa-construcao')">🏠 Casa e Construção</button>
-<button onclick="carregarCategoria('limpeza')">🧼 Limpeza</button>
-<button onclick="carregarCategoria('sapatos')">👟 Sapatos</button>
-<button onclick="carregarCategoria('brinquedos')">🧸 Brinquedos</button>
-<button onclick="carregarCategoria('pets')">🐶 Espaço Pets</button>
-</nav>
+<header>
+  <h1>Central de Promoções</h1>
+  <p>As melhores ofertas para você economizar!</p>
+  <nav id="nav-categorias"></nav>
 </header>
 
+<div class="search-bar">
+  <input type="text" id="search" placeholder="Buscar produtos..." oninput="buscar()">
+</div>
 
 <div id="conteudo"></div>
 
-
-<div class="whatsapp-card">
-<h3>Promoções no WhatsApp</h3>
-<img src="qr-whatsapp.png" alt="QR WhatsApp">
-<p>Escaneie e entre no grupo</p>
-</div>
-
-
 <footer>
-<p>Site afiliado • Central de Promoções</p>
+  <p>Este site participa de programas de afiliados. Ao comprar pelos links, podemos receber uma comissão sem custo extra para você.</p>
+  <p>Site afiliado • Central de Promoções</p>
 </footer>
 
-
 <script>
-const dados = {
+  // Lista de categorias
+  const categorias = [
+    {id: "roupas-masculinas", nome: "👕 Masculinas"},
+    {id: "roupas-femininas", nome: "👗 Femininas"},
+    {id: "plus-size", nome: "👚 Plus Size"},
+    {id: "relogios", nome: "⌚ Relógios"},
+    {id: "moda-infantil", nome: "🧒 Infantil"},
+    {id: "mae-bebe", nome: "🤱 Mãe & Bebê"},
+    {id: "acessorios", nome: "💎 Acessórios"},
+    {id: "bolsas-femininas", nome: "👝 Bolsas Fem."},
+    {id: "bolsas-masculinas", nome: "🎒 Bolsas Masc."},
+    {id: "viagens-bagagens", nome: "🧳 Viagem"},
+    {id: "fones", nome: "🎧 Fones"},
+    {id: "beleza", nome: "💄 Beleza"},
+    {id: "papelaria", nome: "✏️ Papelaria"},
+    {id: "casa-construcao", nome: "🏠 Casa"},
+    {id: "limpeza", nome: "🧼 Limpeza"},
+    {id: "sapatos", nome: "👟 Sapatos"},
+    {id: "brinquedos", nome: "🧸 Brinquedos"},
+    {id: "pets", nome: "🐶 Espaço Pets"}
+  ];
+
+  // Dados de produtos
+  const dados = {
 "roupas-masculinas":{
 titulo:"👕 Roupas Masculinas",
 produtos:[
@@ -4669,42 +4613,55 @@ produtos:[
       link: "https://shopee.com.br/product/761647073/23993398101"
   }
   ]
-};
-
-
-let atual = "masculino";
-
-
-function carregar(cat){
-atual = cat;
-render(dados[cat]);
 }
 
 
-function render(lista){
-let html = `<section><div class="products">`;
-lista.forEach(p=>{
-html += `
-<div class="card">
-<img src="${p.img}">
-<h4>${p.nome}</h4>
-<button onclick="window.open('${p.link}')">Ver oferta</button>
-</div>`;
-});
-html += `</div></section>`;
-document.getElementById("conteudo").innerHTML = html;
-}
+ };
 
+  let atual = "roupas-masculinas";
 
-function buscar(){
-const t = document.getElementById("search").value.toLowerCase();
-render(dados[atual].filter(p=>p.nome.toLowerCase().includes(t)));
-}
+  // Gerar botões de categoria
+  const nav = document.getElementById('nav-categorias');
+  categorias.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.textContent = cat.nome;
+    btn.onclick = () => carregar(cat.id);
+    nav.appendChild(btn);
+  });
 
+  // Carregar categoria
+  function carregar(cat) {
+    atual = cat;
+    render(dados[cat]);
+  }
 
-carregar("masculino");
+  // Renderizar produtos
+  function render(categoriaObj) {
+    if (!categoriaObj) return;
+    const lista = categoriaObj.produtos;
+    let html = `<section><h2>${categoriaObj.titulo}</h2><div class="products">`;
+    lista.forEach(p => {
+      html += `
+        <div class="card">
+          <img src="${p.img}" alt="${p.nome}">
+          <h3>${p.nome}</h3>
+          <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+        </div>`;
+    });
+    html += `</div></section>`;
+    document.getElementById('conteudo').innerHTML = html;
+  }
+
+  // Buscar produtos
+  function buscar() {
+    const t = document.getElementById("search").value.toLowerCase();
+    const produtosFiltrados = dados[atual].produtos.filter(p => p.nome.toLowerCase().includes(t));
+    render({titulo: dados[atual].titulo, produtos: produtosFiltrados});
+  }
+
+  // Carregar categoria inicial
+  carregar(atual);
 </script>
-
 
 </body>
 </html>
