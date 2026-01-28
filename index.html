@@ -1,47 +1,42 @@
 <!DOCTYPE html>
-margin: 40px auto;
+box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 text-align: center;
 }
 
 
-.whatsapp-content {
-display: flex;
-justify-content: space-between;
-align-items: center;
-gap: 10px;
+.card img {
+width: 100%;
+height: 180px;
+object-fit: cover;
+border-radius: 8px;
 }
 
 
-.steps span {
-background: #e8f7f0;
-color: #25D366;
-width: 22px;
-height: 22px;
-display: inline-block;
-border-radius: 50%;
-line-height: 22px;
-font-weight: bold;
+.card h3 {
+font-size: 15px;
+margin: 10px 0;
 }
 
 
-.whatsapp-btn {
-display: block;
-margin-top: 15px;
-background: #25D366;
+.card button {
+background: #FF6A3D;
 color: #fff;
-padding: 12px;
-border-radius: 30px;
-text-decoration: none;
+border: none;
+padding: 10px;
+border-radius: 6px;
+cursor: pointer;
 font-weight: bold;
+width: 100%;
 }
 
 
-/* FOOTER */
+/* ===== FOOTER ===== */
 footer {
 text-align: center;
 padding: 15px;
 background: #eee;
 font-size: 14px;
+color: #555;
 }
 </style>
 </head>
@@ -56,11 +51,16 @@ font-size: 14px;
 
 
 <div class="search-box">
-<input id="searchInput" placeholder="🔍 Pesquisar produto..." onkeyup="filtrarProdutos()">
+<input
+type="text"
+id="searchInput"
+placeholder="🔍 Pesquisar produto..."
+onkeyup="filtrarProdutos()"
+>
 </div>
 
 
-<nav class="menu-categorias">
+<nav>
 <button onclick="carregarCategoria('roupas-masculinas')">👕 Masculinas</button>
 <button onclick="carregarCategoria('roupas-femininas')">👗 Femininas</button>
 <button onclick="carregarCategoria('plus-size')">👚 Plus Size</button>
@@ -86,31 +86,14 @@ font-size: 14px;
 <div id="site-content"></div>
 
 
-<div class="whatsapp-card">
-<h3>📲 Entre no nosso WhatsApp</h3>
-<div class="whatsapp-content">
-<div class="steps">
-<p><span>1</span> Clique</p>
-<p><span>2</span> Entre</p>
-<p><span>3</span> Aproveite</p>
-</div>
-<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wa.me/5599999999999">
-</div>
-<a class="whatsapp-btn" href="https://wa.me/5599999999999" target="_blank">
-👉 Entrar no WhatsApp
-</a>
-</div>
-
-
 <footer>
-Este site participa de programas de afiliados.
+<p>Este site participa de programas de afiliados.</p>
 </footer>
 
 
 <script>
 const siteContent = document.getElementById("site-content");
 let categoriaAtual = "roupas-masculinas";
-const imagemPadrao = "https://via.placeholder.com/300x200?text=Imagem";
 
 
 const categorias = {
@@ -4659,37 +4642,51 @@ produtos:[
       link: "https://shopee.com.br/product/761647073/23993398101"
     }
     ]
-    },
- };
+    }
+};
 
 
 function carregarCategoria(id) {
 categoriaAtual = id;
 document.getElementById("searchInput").value = "";
-renderizarProdutos(categorias[id]);
+renderizarProdutos(categorias[id].produtos, categorias[id].titulo);
+window.scrollTo(0, 0);
 }
 
 
-function renderizarProdutos(cat) {
-let html = `<section><h2>${cat.titulo}</h2><div class="products">`;
-cat.produtos.forEach(p=>{
-html+=`<div class="card">
-<img src="${p.img || imagemPadrao}">
+function renderizarProdutos(lista, titulo) {
+let html = `<section>
+<h2>${titulo}</h2>
+<div class="products">`;
+
+
+lista.forEach(p => {
+html += `
+<div class="card">
+<img src="${p.img}" alt="${p.nome}">
 <h3>${p.nome}</h3>
-<button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+<button onclick="window.open('${p.link}','_blank')">
+Adquirir Promoção
+</button>
 </div>`;
 });
-siteContent.innerHTML = html+"</div></section>";
+
+
+siteContent.innerHTML = html + `</div></section>`;
 }
 
 
-function filtrarProdutos(){
-const t = searchInput.value.toLowerCase();
-const c = categorias[categoriaAtual];
-renderizarProdutos({
-titulo: c.titulo,
-produtos: c.produtos.filter(p=>p.nome.toLowerCase().includes(t))
-});
+function filtrarProdutos() {
+const termo = document.getElementById("searchInput").value.toLowerCase();
+const produtos = categorias[categoriaAtual].produtos;
+
+
+const filtrados = produtos.filter(p =>
+p.nome.toLowerCase().includes(termo)
+);
+
+
+renderizarProdutos(filtrados, categorias[categoriaAtual].titulo);
 }
 
 
