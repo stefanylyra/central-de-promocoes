@@ -8,77 +8,132 @@
 /* ===== BODY ===== */
 body {
   margin:0;
-  font-family:Arial,sans-serif;
-  background:#f9f9f9;
+  font-family: 'Arial', sans-serif;
+  background: #f2f4f8;
   color:#333;
   padding-top:140px;
 }
-a{text-decoration:none;}
-button{font-family:inherit;}
 
 /* ===== HEADER ===== */
 header {
   position:fixed;
-  top:0;
-  left:0;
+  top:0; left:0;
   width:100%;
   background:#4A90E2;
   color:white;
   padding:15px 20px;
   z-index:100;
-  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
-header h1{margin:0;font-size:22px;}
-header p{margin:4px 0 0 0;font-size:14px;}
+header h1{margin:0;font-size:26px;font-weight:bold;}
+header p{margin:4px 0 0 0;font-size:15px;}
 
 /* ===== MENU CATEGORIAS ===== */
 .menu-categorias{margin-top:10px;text-align:center;}
-.btn-categorias{background:#ffffff;color:#4A90E2;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.15);margin-bottom:8px;}
-.categorias{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:10px;}
-.categorias button{background:#4A90E2;color:white;border:none;padding:6px 10px;border-radius:12px;cursor:pointer;font-size:14px;transition:background 0.3s;}
-.categorias button:hover{background:#3672b0;}
+.btn-categorias{
+  background:#fff;
+  color:#4A90E2;
+  border:none;
+  padding:10px 18px;
+  border-radius:25px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 3px 8px rgba(0,0,0,0.18);
+  margin-bottom:8px;
+  transition:transform 0.2s;
+}
+.btn-categorias:hover{transform:scale(1.05);}
+.categorias{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:10px;}
+.categorias button{
+  background:#4A90E2;color:white;border:none;padding:8px 12px;border-radius:16px;cursor:pointer;font-size:14px;transition:all 0.3s;box-shadow:0 2px 6px rgba(0,0,0,0.15);
+}
+.categorias button:hover{background:#3672b0;transform:scale(1.05);}
 .oculto{display:none;}
 
 /* ===== SEARCH BAR ===== */
-.search-bar{margin:10px auto 0;display:flex;align-items:center;justify-content:center;}
-.search-bar input{padding:8px;width:250px;border-radius:6px;border:1px solid #ccc;outline:none;}
+.search-bar{margin:12px auto 0;display:flex;align-items:center;justify-content:center;}
+.search-bar input{padding:8px 12px;width:260px;border-radius:8px;border:1px solid #ccc;outline:none;transition:0.3s;}
+.search-bar input:focus{border-color:#4A90E2;box-shadow:0 0 8px rgba(74,144,226,0.3);}
 
 /* ===== SECTIONS ===== */
-section{padding:40px 20px;}
-h2{border-bottom:2px solid #4A90E2;padding-bottom:5px;margin-bottom:15px;color:#333;}
+section{padding:50px 20px; border-radius:12px; margin:20px auto; max-width:1200px; background: #fff; box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+h2{
+  border-bottom:3px solid #FF6A3D;
+  padding-bottom:8px;
+  margin-bottom:20px;
+  font-size:24px;
+  color:#333;
+}
 
 /* ===== CARDS PRODUTOS ===== */
-.products,.ofertas-track,.carrossel{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
-.card{background:white;border-radius:12px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,0.1);text-align:center;transition:transform 0.3s,box-shadow 0.3s;position:relative;}
-.card:hover{transform:translateY(-5px);box-shadow:0 8px 12px rgba(0,0,0,0.2);}
-.card img{width:100%;border-radius:8px;margin-bottom:10px;}
-.card h3{font-size:16px;margin:10px 0;height:40px;overflow:hidden;}
-.card button{margin-top:10px;background:#FF6A3D;color:white;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%;transition:background-color 0.3s;}
-.card button:hover{background:#e85a31;}
-.card p.oferta{font-size:12px;color:#28a745;margin:5px 0;}
-.card p.estrelas{font-size:12px;color:#FFC107;margin:5px 0;}
-.favorito{position:absolute;top:10px;right:10px;font-size:22px;cursor:pointer;transition:transform 0.2s;}
-.favorito.favorito-ativo{color:#FF6A3D;transform:scale(1.2);}
+.products,.ofertas-track,.carrossel{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+.card{
+  background:#fff;
+  border-radius:16px;
+  padding:15px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.1);
+  text-align:center;
+  transition:transform 0.3s,box-shadow 0.3s;
+  position:relative;
+}
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 12px 20px rgba(0,0,0,0.2);
+}
+.card img{
+  width:100%;
+  border-radius:12px;
+  margin-bottom:10px;
+  transition:transform 0.3s;
+}
+.card img:hover{transform:scale(1.05);}
+.card h3{font-size:16px;margin:10px 0;height:42px;overflow:hidden;}
+.card button{
+  margin-top:10px;
+  background:#FF6A3D;
+  color:white;
+  border:none;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+  width:100%;
+  transition:all 0.3s;
+}
+.card button:hover{background:#e85a31; transform:scale(1.05);}
+.card p.oferta{font-size:13px;color:#28a745;margin:5px 0;font-weight:bold;}
+.card p.estrelas{font-size:13px;color:#FFC107;margin:5px 0;}
+.favorito{
+  position:absolute;top:12px;right:12px;
+  font-size:22px;
+  cursor:pointer;
+  transition:transform 0.2s;
+}
+.favorito.favorito-ativo{color:#FF6A3D; transform:scale(1.2);}
 
 /* ===== OFERTAS DO DIA ===== */
 .ofertas-wrapper{overflow:hidden;width:100%;}
-#lista-ofertas{display:flex;gap:15px;transition:transform 0.6s ease;}
-.ofertas-track .card img{height:140px;object-fit:cover;}
+#lista-ofertas{display:flex;gap:18px;transition:transform 0.6s ease;}
+.ofertas-track .card img{height:150px;object-fit:cover; border-radius:12px;}
 
 /* ===== CARROSSEL MAIS CLICADOS ===== */
-.carrossel-wrapper{display:flex;align-items:center;gap:10px;}
-.carrossel-btn{background:#4A90E2;color:white;border:none;padding:10px;border-radius:50%;cursor:pointer;}
-.carrossel{display:flex;gap:15px;overflow-x:auto;scroll-behavior:smooth;padding:10px 0;}
+.carrossel-wrapper{display:flex;align-items:center;gap:12px;}
+.carrossel-btn{background:#4A90E2;color:white;border:none;padding:12px;border-radius:50%;cursor:pointer;transition:transform 0.2s;}
+.carrossel-btn:hover{transform:scale(1.1);}
+.carrossel{display:flex;gap:18px;overflow-x:auto;scroll-behavior:smooth;padding:10px 0;}
 .carrossel::-webkit-scrollbar{display:none;}
 @media(max-width:768px){.carrossel-btn{display:none;}}
 
 /* ===== FOOTER ===== */
-footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14px;margin-top:40px;}
+footer{text-align:center;padding:20px;background:#f0f0f0;color:#555;font-size:14px;margin-top:40px;border-top:1px solid #ddd;}
 
 /* ===== WHATSAPP FLUTUANTE ===== */
 .whatsapp-container{position:fixed;bottom:20px;right:20px;z-index:1000;display:flex;flex-direction:column;align-items:center;text-align:center;animation:pulse-container 2s infinite;}
-.whatsapp-text{background-color:#25D366;color:white;font-weight:bold;padding:5px 10px;border-radius:20px;margin-bottom:8px;font-size:14px;box-shadow:0 4px 8px rgba(0,0,0,0.2);animation:pulse-text 2s infinite;}
-.whatsapp-float{width:60px;height:60px;border-radius:50%;background-color:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 8px rgba(0,0,0,0.2);transition:transform 0.2s;cursor:pointer;animation:pulse-button 2s infinite;}
+.whatsapp-text{background-color:#25D366;color:white;font-weight:bold;padding:6px 12px;border-radius:20px;margin-bottom:8px;font-size:14px;box-shadow:0 4px 12px rgba(0,0,0,0.2);animation:pulse-text 2s infinite;}
+.whatsapp-float{width:60px;height:60px;border-radius:50%;background-color:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.2);transition:transform 0.2s;cursor:pointer;animation:pulse-button 2s infinite;}
 .whatsapp-float img{width:35px;height:35px;}
 .whatsapp-float:hover{transform:scale(1.1);}
 @keyframes pulse-button{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
@@ -97,25 +152,19 @@ footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14
 }
 #cookie-banner button:hover{background:#45a049;}
 
-/* ===== NEWSLETTER FIXA ===== */
-#newsletter-form{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:20px 0;}
-#newsletter-form input[type="email"]{padding:8px 10px;border-radius:6px;border:1px solid #ccc;outline:none;width:200px;}
-#newsletter-form button{background:#FF6A3D;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;font-weight:bold;}
-#newsletter-form button:hover{background:#e85a31;}
-#newsletter-msg{margin-top:5px;font-size:14px;text-align:center;}
-
 /* ===== POP-UP NEWSLETTER ===== */
 #newsletter-popup {
-  position:fixed;bottom:20px;right:20px;width:300px;background:white;border-radius:12px;
-  box-shadow:0 8px 16px rgba(0,0,0,0.2);padding:20px;z-index:10000;display:none;animation:popupIn 0.5s;font-family:Arial,sans-serif;
+  position:fixed;bottom:20px;right:20px;width:320px;background:white;border-radius:14px;
+  box-shadow:0 10px 24px rgba(0,0,0,0.25);padding:20px;z-index:10000;display:none;
+  animation:popupIn 0.5s;font-family:Arial,sans-serif;
 }
 #newsletter-popup .popup-content h3{margin:0 0 10px 0;font-size:18px;color:#4A90E2;}
 #newsletter-popup .popup-content p{margin:5px 0;font-size:14px;color:#333;}
 #newsletter-popup form{display:flex;flex-direction:column;gap:6px;}
-#newsletter-popup input[type="email"]{padding:8px;border:1px solid #ccc;border-radius:6px;outline:none;width:100%;}
-#newsletter-popup button{background:#FF6A3D;color:white;border:none;padding:8px;border-radius:6px;cursor:pointer;font-weight:bold;}
-#newsletter-popup button:hover{background:#e85a31;}
-#popup-close{position:absolute;top:8px;right:12px;cursor:pointer;font-size:18px;color:#999;transition:color 0.2s;}
+#newsletter-popup input[type="email"]{padding:10px;border:1px solid #ccc;border-radius:8px;outline:none;width:100%;}
+#newsletter-popup button{background:#FF6A3D;color:white;border:none;padding:10px;border-radius:8px;cursor:pointer;font-weight:bold;}
+#newsletter-popup button:hover{background:#e85a31; transform:scale(1.05);}
+#popup-close{position:absolute;top:8px;right:12px;cursor:pointer;font-size:20px;color:#999;transition:color 0.2s;}
 #popup-close:hover{color:#333;}
 @keyframes popupIn{0%{opacity:0;transform:translateY(50px);}100%{opacity:1;transform:translateY(0);}}
 </style>
@@ -153,18 +202,6 @@ footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14
 </div>
 </section>
 
-<!-- NEWSLETTER FIXA -->
-<section>
-<h2>💌 Receba novidades e promoções</h2>
-<form id="newsletter-form">
-  <input type="email" id="email" placeholder="Seu melhor e-mail" required>
-  <label><input type="checkbox" id="interesses"> Receber promoções segmentadas</label>
-  <button type="submit">Quero receber!</button>
-  <p id="newsletter-msg"></p>
-</form>
-<p style="text-align:center;font-size:12px;color:#555;">Seu e-mail será usado apenas para envio de promoções exclusivas. Nenhum spam.</p>
-</section>
-
 <div id="conteudo"></div>
 
 <footer>
@@ -190,6 +227,7 @@ footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14
 <!-- POP-UP NEWSLETTER -->
 <div id="newsletter-popup">
   <div class="popup-content">
+    <span id="popup-close">&times;</span>
     <h3>💌 Não perca nossas promoções!</h3>
     <p>Cadastre seu e-mail e receba ofertas exclusivas direto na sua caixa de entrada.</p>
     <form id="popup-newsletter-form">
@@ -198,12 +236,11 @@ footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14
       <button type="submit">Quero receber!</button>
     </form>
     <p id="popup-msg" style="font-size:12px;margin-top:5px;color:#555;">Seu e-mail será usado apenas para envio de promoções. Nenhum spam.</p>
-    <span id="popup-close">&times;</span>
   </div>
 </div>
 
 <script>
-// ================= CATEGORIAS =================
+// ================= CATEGORIAS E PRODUTOS =================
 const categorias = [
     {id: "roupas-masculinas", nome: "👕 Masculinas"},
     {id: "roupas-femininas", nome: "👗 Femininas"},
@@ -4835,6 +4872,7 @@ function renderOfertas(){
   iniciarCarrosselOfertas();
 }
 
+// ================= CARROSSEL MAIS CLICADOS =================
 function renderMaisClicados(){
   const container=document.getElementById("lista-mais-clicados");
   container.innerHTML="";
@@ -4847,43 +4885,45 @@ function renderMaisClicados(){
     </div>`;
   });
 }
-
 function rolarMaisClicados(direcao){const carrossel=document.getElementById("lista-mais-clicados"); const larguraCard=220; carrossel.scrollLeft+=direcao*larguraCard;}
-function iniciarCarrosselOfertas(){const track=document.getElementById("lista-ofertas"); let index=0; setInterval(()=>{const cards=track.querySelectorAll(".card"); if(cards.length===0) return; const cardWidth=cards[0].offsetWidth+15; index++; if(index>=cards.length) index=0; track.style.transform=`translateX(-${index*cardWidth}px)`;},3000);}
+function iniciarCarrosselOfertas(){const track=document
+Ofertas = document.getElementById("lista-ofertas");
+let index = 0;
+setInterval(() => {
+  const cards = track.querySelectorAll(".card");
+  if(cards.length === 0) return;
+  const cardWidth = cards[0].offsetWidth + 18;
+  index++;
+  if(index >= cards.length) index = 0;
+  track.style.transform = `translateX(-${index * cardWidth}px)`;
+}, 3000);
 
 // ================= FAVORITOS =================
+let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+
 function toggleFavorito(i){
-let favoritos=JSON.parse(localStorage.getItem('favoritos') || "[]");
+  const card = document.querySelector(`.card[data-id='${i}'] .favorito`);
   if(favoritos.includes(i)){
     favoritos = favoritos.filter(id => id !== i);
+    card.classList.remove("favorito-ativo");
   } else {
     favoritos.push(i);
+    card.classList.add("favorito-ativo");
   }
-  localStorage.setItem('favoritos', JSON.stringify(favoritos));
-  carregarFavoritos();
+  localStorage.setItem("favoritos", JSON.stringify(favoritos));
 }
 
 function carregarFavoritos(){
-  const favoritos = JSON.parse(localStorage.getItem('favoritos') || "[]");
-  document.querySelectorAll('.card').forEach((card, i) => {
-    const heart = card.querySelector('.favorito');
-    if(favoritos.includes(i)){
-      heart.classList.add('favorito-ativo');
-      heart.textContent = '❤️';
-    } else {
-      heart.classList.remove('favorito-ativo');
-      heart.textContent = '♡';
-    }
+  favoritos.forEach(i => {
+    const card = document.querySelector(`.card[data-id='${i}'] .favorito`);
+    if(card) card.classList.add("favorito-ativo");
   });
 }
 
-// ================= WHATSAPP =================
-function avisoWhatsApp(){return confirm("Você será redirecionado para o grupo do WhatsApp. Deseja continuar?");}
-
-// ================= COOKIES =================
+// ================= BANNER COOKIES =================
 const banner = document.getElementById('cookie-banner');
-const btnCookie = document.getElementById('cookie-ok');
-btnCookie.addEventListener('click', () => {
+const btn = document.getElementById('cookie-ok');
+btn.addEventListener('click', () => {
   banner.style.display = 'none';
   localStorage.setItem('cookiesAccepted', 'true');
 });
@@ -4891,42 +4931,38 @@ if(localStorage.getItem('cookiesAccepted') === 'true'){
   banner.style.display = 'none';
 }
 
-// ================= NEWSLETTER FIXA =================
-const newsletterForm = document.getElementById('newsletter-form');
-const newsletterMsg = document.getElementById('newsletter-msg');
-
-newsletterForm.addEventListener('submit', e=>{
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  const interesses = document.getElementById('interesses').checked;
-  // Aqui você enviaria o e-mail para um servidor ou API
-  newsletterMsg.textContent = `Obrigado! ${email} foi cadastrado com sucesso!`;
-  newsletterForm.reset();
-});
-
 // ================= POP-UP NEWSLETTER =================
 const popup = document.getElementById('newsletter-popup');
 const popupClose = document.getElementById('popup-close');
 const popupForm = document.getElementById('popup-newsletter-form');
 const popupMsg = document.getElementById('popup-msg');
 
-// Mostrar popup após 5 segundos
-setTimeout(()=>{if(!localStorage.getItem('popupClosed')) popup.style.display='block';},5000);
+// Mostrar popup após 5 segundos se ainda não fechou
+setTimeout(() => {
+  if(!localStorage.getItem('popupClosed')) popup.style.display = 'block';
+}, 5000);
 
-popupClose.addEventListener('click', ()=>{
-  popup.style.display='none';
-  localStorage.setItem('popupClosed','true');
+// Fechar popup
+popupClose.addEventListener('click', () => {
+  popup.style.display = 'none';
+  localStorage.setItem('popupClosed', 'true');
 });
 
-popupForm.addEventListener('submit', e=>{
+// Envio do formulário do popup
+popupForm.addEventListener('submit', e => {
   e.preventDefault();
   const email = document.getElementById('popup-email').value;
   const interesses = document.getElementById('popup-interesses').checked;
-  // Aqui você enviaria o e-mail para um servidor ou API
+  
   popupMsg.textContent = `Obrigado! ${email} foi cadastrado com sucesso!`;
   popupForm.reset();
 });
-  
+
+// ================= WHATSAPP =================
+function avisoWhatsApp(){
+  return confirm("Você será redirecionado para o grupo do WhatsApp. Deseja continuar?");
+}
+
 // ================= INICIALIZAÇÃO =================
 renderOfertas();
 carregar(atual);
