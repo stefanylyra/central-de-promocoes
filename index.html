@@ -4909,29 +4909,10 @@ function renderOfertas() {
   html += `</div>`;
   container.innerHTML = html;
 
-  iniciarCarrosselOfertas();
-}
+ container.innerHTML = html;
+iniciarCarrosselInfinito();
 
-function iniciarCarrosselOfertas() {
-  const track = document.querySelector(".ofertas-track");
-  const cards = document.querySelectorAll(".ofertas-track .card");
 
-  if (!track || cards.length <= 1) return;
-
-  const cardWidth = cards[0].offsetWidth + 15;
-
-  clearInterval(intervaloOfertas);
-
-  intervaloOfertas = setInterval(() => {
-    indexOferta++;
-
-    if (indexOferta >= cards.length) {
-      indexOferta = 0;
-    }
-
-    track.style.transform = `translateX(-${indexOferta * cardWidth}px)`;
-  }, 3000);
-}
 
 /* ===============================
    CARREGAR CATEGORIA
@@ -5059,6 +5040,35 @@ function buscar() {
 renderOfertas();
 carregar(atual);
 renderMaisClicados();
+  
+let indexOferta = 0;
+let cardWidth = 0;
+
+function iniciarCarrosselInfinito() {
+  const track = document.querySelector(".ofertas-track");
+  const cards = document.querySelectorAll(".ofertas-track .card");
+
+  if (!track || cards.length === 0) return;
+
+  // duplica os cards para efeito infinito
+  track.innerHTML += track.innerHTML;
+
+  cardWidth = cards[0].offsetWidth + 15;
+
+  setInterval(() => {
+    indexOferta++;
+    track.style.transition = "transform 0.6s ease";
+    track.style.transform = `translateX(-${indexOferta * cardWidth}px)`;
+
+    if (indexOferta >= cards.length) {
+      setTimeout(() => {
+        track.style.transition = "none";
+        indexOferta = 0;
+        track.style.transform = "translateX(0)";
+      }, 700);
+    }
+  }, 3000);
+}
 
 </script>
 </body>
