@@ -4893,7 +4893,7 @@ function renderOfertas() {
   ofertasDia.forEach(p => {
     track.innerHTML += `
       <div class="card">
-        <img src="${p.img}">
+        <img src="${p.img}" loading="lazy">
         <h3>${p.nome}</h3>
         <p style="font-size:12px;color:#28a745;">🔥 Oferta imperdível</p>
         <button onclick="window.open('${p.link}','_blank')">
@@ -4903,7 +4903,7 @@ function renderOfertas() {
     `;
   });
 
-  iniciarCarrosselInfinito();
+  iniciarCarrosselOfertas();
 }
 
 
@@ -5038,35 +5038,22 @@ let indexOferta = 0;
 let cardWidth = 0;
 let intervaloOfertas = null;
 
-function iniciarCarrosselInfinito() {
-  const track = document.querySelector(".ofertas-track");
-  const cards = track.children;
+function iniciarCarrosselOfertas() {
+  const track = document.getElementById("lista-ofertas");
+  let index = 0;
 
-  if (!track || cards.length === 0) return;
+  setInterval(() => {
+    const cards = track.querySelectorAll(".card");
+    if (cards.length === 0) return;
 
-  // evita duplicar mais de uma vez
-  if (track.dataset.duplicado) return;
-  track.dataset.duplicado = "true";
+    const cardWidth = cards[0].offsetWidth + 15;
+    index++;
 
-  track.innerHTML += track.innerHTML;
-
-  cardWidth = cards[0].offsetWidth + 15;
-  indexOferta = 0;
-
-  if (intervaloOfertas) clearInterval(intervaloOfertas);
-
-  intervaloOfertas = setInterval(() => {
-    indexOferta++;
-    track.style.transition = "transform 0.6s ease";
-    track.style.transform = `translateX(-${indexOferta * cardWidth}px)`;
-
-    if (indexOferta >= cards.length / 2) {
-      setTimeout(() => {
-        track.style.transition = "none";
-        indexOferta = 0;
-        track.style.transform = "translateX(0)";
-      }, 700);
+    if (index >= cards.length) {
+      index = 0;
     }
+
+    track.style.transform = `translateX(-${index * cardWidth}px)`;
   }, 3000);
 }
 
