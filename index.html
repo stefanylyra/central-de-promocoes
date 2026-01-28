@@ -97,13 +97,6 @@ footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14
 }
 #cookie-banner button:hover{background:#45a049;}
 
-/* ===== NEWSLETTER FIXA ===== */
-#newsletter-form{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:20px 0;}
-#newsletter-form input[type="email"]{padding:8px 10px;border-radius:6px;border:1px solid #ccc;outline:none;width:200px;}
-#newsletter-form button{background:#FF6A3D;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;font-weight:bold;}
-#newsletter-form button:hover{background:#e85a31;}
-#newsletter-msg{margin-top:5px;font-size:14px;text-align:center;}
-
 /* ===== POP-UP NEWSLETTER ===== */
 #newsletter-popup {
   position:fixed;bottom:20px;right:20px;width:300px;background:white;border-radius:12px;
@@ -178,6 +171,7 @@ footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14
 <!-- POP-UP NEWSLETTER -->
 <div id="newsletter-popup">
   <div class="popup-content">
+    <span id="popup-close">&times;</span>
     <h3>💌 Não perca nossas promoções!</h3>
     <p>Cadastre seu e-mail e receba ofertas exclusivas direto na sua caixa de entrada.</p>
     <form id="popup-newsletter-form">
@@ -186,13 +180,12 @@ footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14
       <button type="submit">Quero receber!</button>
     </form>
     <p id="popup-msg" style="font-size:12px;margin-top:5px;color:#555;">Seu e-mail será usado apenas para envio de promoções. Nenhum spam.</p>
-    <span id="popup-close">&times;</span>
   </div>
 </div>
 
 <script>
-// ================= CATEGORIAS =================
-const categorias = [
+// ================= CATEGORIAS E PRODUTOS =================
+const categorias =  [
     {id: "roupas-masculinas", nome: "👕 Masculinas"},
     {id: "roupas-femininas", nome: "👗 Femininas"},
     {id: "plus-size", nome: "👚 Plus Size"},
@@ -4842,7 +4835,7 @@ function iniciarCarrosselOfertas(){const track=document.getElementById("lista-of
 // ================= FAVORITOS =================
 function toggleFavorito(i){
   let favoritos=JSON.parse(localStorage.getItem('favoritos') || "[]");
-    if(favoritos.includes(i)){
+  if(favoritos.includes(i)){
     favoritos = favoritos.filter(id => id !== i);
   } else {
     favoritos.push(i);
