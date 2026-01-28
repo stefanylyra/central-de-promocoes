@@ -30,7 +30,24 @@ width: 100%;
 }
 
 
-/* ===== FOOTER ===== */
+/* WHATSAPP */
+.whatsapp-card {
+max-width: 320px;
+background: #fff;
+border-radius: 18px;
+padding: 20px;
+margin: 40px auto;
+box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+text-align: center;
+}
+
+
+.whatsapp-card img {
+width: 120px;
+margin: 15px 0;
+}
+
+
 footer {
 text-align: center;
 padding: 15px;
@@ -51,12 +68,7 @@ color: #555;
 
 
 <div class="search-box">
-<input
-type="text"
-id="searchInput"
-placeholder="🔍 Pesquisar produto..."
-onkeyup="filtrarProdutos()"
->
+<input type="text" id="searchInput" placeholder="🔍 Pesquisar produto..." onkeyup="filtrarProdutos()">
 </div>
 
 
@@ -86,6 +98,13 @@ onkeyup="filtrarProdutos()"
 <div id="site-content"></div>
 
 
+<div class="whatsapp-card">
+<h3>Receba promoções no WhatsApp</h3>
+<img src="qr-whatsapp.png" alt="QR Code WhatsApp">
+<p>Escaneie o QR Code e entre no grupo</p>
+</div>
+
+
 <footer>
 <p>Este site participa de programas de afiliados.</p>
 </footer>
@@ -93,7 +112,7 @@ onkeyup="filtrarProdutos()"
 
 <script>
 const siteContent = document.getElementById("site-content");
-let categoriaAtual = "roupas-masculinas";
+let categoriaAtual = "masculino";
 
 
 const categorias = {
@@ -4640,57 +4659,51 @@ produtos:[
       nome: "Kit 44 Lápis de Cor (24 CORES + 10 Cores Tom Pastel +10 Cores Tons de Pele) Escolar Sextavado",
       img: "",
       link: "https://shopee.com.br/product/761647073/23993398101"
-    }
-    ]
-    }
+  }
 };
 
 
-function carregarCategoria(id) {
-categoriaAtual = id;
+function carregarCategoria(cat) {
+categoriaAtual = cat;
 document.getElementById("searchInput").value = "";
-renderizarProdutos(categorias[id].produtos, categorias[id].titulo);
-window.scrollTo(0, 0);
+renderizar(categorias[cat]);
 }
 
 
-function renderizarProdutos(lista, titulo) {
-let html = `<section>
-<h2>${titulo}</h2>
-<div class="products">`;
+function renderizar(cat) {
+let html = `<section><h2>${cat.titulo}</h2><div class="products">`;
 
 
-lista.forEach(p => {
+if (cat.produtos.length === 0) {
+html += "<p>Em breve novas promoções.</p>";
+}
+
+
+cat.produtos.forEach(p => {
 html += `
 <div class="card">
-<img src="${p.img}" alt="${p.nome}">
+<img src="${p.img}">
 <h3>${p.nome}</h3>
-<button onclick="window.open('${p.link}','_blank')">
-Adquirir Promoção
-</button>
+<button onclick="window.open('${p.link}','_blank')">Ver Promoção</button>
 </div>`;
 });
 
 
-siteContent.innerHTML = html + `</div></section>`;
+html += "</div></section>";
+siteContent.innerHTML = html;
 }
 
 
 function filtrarProdutos() {
 const termo = document.getElementById("searchInput").value.toLowerCase();
-const produtos = categorias[categoriaAtual].produtos;
-
-
-const filtrados = produtos.filter(p =>
+const produtos = categorias[categoriaAtual].produtos.filter(p =>
 p.nome.toLowerCase().includes(termo)
 );
-
-
-renderizarProdutos(filtrados, categorias[categoriaAtual].titulo);
+renderizar({ titulo: categorias[categoriaAtual].titulo, produtos });
 }
 
 
-carregarCategoria("roupas-masculinas");
+carregarCategoria("masculino");
 </script>
 
 
