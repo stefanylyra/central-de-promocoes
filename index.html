@@ -22,6 +22,35 @@
     .search-bar {text-align:center; margin:20px 0;}
     .search-bar input {padding:8px; width:250px; border-radius:6px; border:1px solid #ccc;}
     footer {text-align:center; padding:15px; background:#f0f0f0; color:#555; font-size:14px; margin-top:40px;}
+    
+    header {
+  position: relative;
+}
+
+.search-bar {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 6px 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.search-bar span {
+  font-size: 16px;
+  margin-right: 6px;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  width: 180px;
+}
+
   </style>
 </head>
 <body>
@@ -33,7 +62,13 @@
 </header>
 
 <div class="search-bar">
-  <input type="text" id="search" placeholder="Buscar produtos..." oninput="buscar()">
+  <span>🔎</span>
+  <input 
+    type="text" 
+    id="search" 
+    placeholder="Buscar produtos..." 
+    oninput="buscar()"
+  >
 </div>
 
 <div id="conteudo"></div>
@@ -4654,10 +4689,22 @@ produtos:[
 
   // Buscar produtos
   function buscar() {
-    const t = document.getElementById("search").value.toLowerCase();
-    const produtosFiltrados = dados[atual].produtos.filter(p => p.nome.toLowerCase().includes(t));
-    render({titulo: dados[atual].titulo, produtos: produtosFiltrados});
+  const termo = document.getElementById("search").value.toLowerCase();
+  let resultados = [];
+
+  for (const cat in dados) {
+    dados[cat].produtos.forEach(p => {
+      if (p.nome.toLowerCase().includes(termo)) {
+        resultados.push(p);
+      }
+    });
   }
+
+  render({
+    titulo: `🔎 Resultados da busca`,
+    produtos: resultados
+  });
+}
 
   // Carregar categoria inicial
   carregar(atual);
