@@ -145,6 +145,46 @@
     height: 120px;
   }
 }
+/* ===== CARROSSEL MAIS CLICADOS ===== */
+
+.carrossel-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.carrossel {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 10px 0;
+}
+
+.carrossel::-webkit-scrollbar {
+  display: none;
+}
+
+.carrossel .card {
+  min-width: 200px;
+  flex-shrink: 0;
+}
+
+.carrossel-btn {
+  background: #4A90E2;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .carrossel-btn {
+    display: none;
+  }
+}
 
   </style>
 </head>
@@ -162,7 +202,21 @@
 <section id="ofertas-dia">
   <h2>🔥 Ofertas do Dia</h2>
   <div class="ofertas-grid" id="lista-ofertas"></div>
+  
 </section>
+  
+<section id="mais-clicados">
+  <h2>❤️ Mais clicados</h2>
+
+  <div class="carrossel-wrapper">
+    <button class="carrossel-btn" onclick="rolarMaisClicados(-1)">⬅️</button>
+
+    <div class="carrossel" id="lista-mais-clicados"></div>
+
+    <button class="carrossel-btn" onclick="rolarMaisClicados(1)">➡️</button>
+  </div>
+</section>
+
 
   
 <div class="search-bar">
@@ -183,6 +237,15 @@
 </footer>
 
 <script>
+  const maisClicados = [
+  {
+    nome: "Relógio Masculino Digital",
+    img: "https://via.placeholder.com/200",
+    link: "#"
+  }
+  // depois você pode adicionar mais produtos aqui
+];
+
   // Lista de categorias
   const categorias = [
     {id: "roupas-masculinas", nome: "👕 Masculinas"},
@@ -4832,6 +4895,30 @@ function toggleCategorias() {
     carregar(atual);
     return;
   }
+function renderMaisClicados() {
+  const container = document.getElementById("lista-mais-clicados");
+  let html = "";
+
+  maisClicados.forEach(p => {
+    html += `
+      <div class="card">
+        <img src="${p.img}" alt="${p.nome}">
+        <h3>${p.nome}</h3>
+        <p style="font-size:12px;">❤️ Favorito do público</p>
+        <button onclick="window.open('${p.link}','_blank')">
+          Ver oferta
+        </button>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+function rolarMaisClicados(direcao) {
+  const carrossel = document.getElementById("lista-mais-clicados");
+  const larguraCard = 220; // largura aproximada do card
+  carrossel.scrollLeft += direcao * larguraCard;
+}
 
   let resultados = [];
 
@@ -4863,6 +4950,9 @@ function toggleCategorias() {
 
   // Carregar categoria inicial
   carregar(atual);
+  renderMaisClicados();
+renderMaisClicados();
+
 </script>
 
 </body>
