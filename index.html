@@ -50,6 +50,21 @@
   font-size: 14px;
   width: 180px;
 }
+@media (max-width: 768px) {
+  .search-bar {
+    position: static;
+    margin: 15px auto 0;
+    width: fit-content;
+  }
+
+  header {
+    padding-bottom: 30px;
+  }
+
+  .search-bar input {
+    width: 160px;
+  }
+}
 
   </style>
 </head>
@@ -4688,8 +4703,15 @@ produtos:[
   }
 
   // Buscar produtos
-  function buscar() {
+ function buscar() {
   const termo = document.getElementById("search").value.toLowerCase();
+
+  // Se o campo estiver vazio, volta para a categoria atual
+  if (termo === "") {
+    carregar(atual);
+    return;
+  }
+
   let resultados = [];
 
   for (const cat in dados) {
@@ -4698,6 +4720,18 @@ produtos:[
         resultados.push(p);
       }
     });
+  }
+
+  if (resultados.length === 0) {
+    document.getElementById("conteudo").innerHTML = `
+      <section>
+        <h2>🔎 Resultados da busca</h2>
+        <p style="text-align:center; font-size:18px; color:#777;">
+          Nenhum produto encontrado 😕
+        </p>
+      </section>
+    `;
+    return;
   }
 
   render({
