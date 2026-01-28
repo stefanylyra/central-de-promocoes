@@ -5058,9 +5058,9 @@ function iniciarCarrosselOfertas() {
 }
 
 </script>
-<!-- Botão WhatsApp flutuante com frase -->
+<!-- Botão WhatsApp flutuante com frase animada -->
 <div class="whatsapp-container">
-  <div class="whatsapp-text">💬 Entre no nosso grupo de promoções!</div>
+  <div class="whatsapp-text">💬 Entre no nosso grupo do WhatsApp!</div>
   <a href="https://chat.whatsapp.com/JgiOFb5n2CWKNzsoNADvWt" 
      target="_blank" 
      class="whatsapp-float" 
@@ -5086,6 +5086,7 @@ function iniciarCarrosselOfertas() {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  animation: pulse-container 2s infinite;
 }
 
 /* Texto acima do botão */
@@ -5098,6 +5099,7 @@ function iniciarCarrosselOfertas() {
   margin-bottom: 8px;
   font-size: 14px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  animation: pulse-text 2s infinite;
 }
 
 /* Botão flutuante WhatsApp */
@@ -5112,6 +5114,7 @@ function iniciarCarrosselOfertas() {
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   transition: transform 0.2s;
   cursor: pointer;
+  animation: pulse-button 2s infinite;
 }
 
 .whatsapp-float img {
@@ -5121,6 +5124,22 @@ function iniciarCarrosselOfertas() {
 
 .whatsapp-float:hover {
   transform: scale(1.1);
+}
+
+/* Pulsar animação */
+@keyframes pulse-button {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes pulse-text {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes pulse-container {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
 }
 
 /* Responsivo para celular */
