@@ -4886,34 +4886,26 @@ const ofertasDia = [
   }
 ];
 
-let indexOferta = 0;
-let intervaloOfertas = null;
-
 function renderOfertas() {
-  const container = document.getElementById("lista-ofertas");
-  let html = "";
+  const track = document.getElementById("lista-ofertas");
+  track.innerHTML = "";
 
   ofertasDia.forEach(p => {
-    html += `
+    track.innerHTML += `
       <div class="card">
         <img src="${p.img}">
         <h3>${p.nome}</h3>
         <p style="font-size:12px;color:#28a745;">🔥 Oferta imperdível</p>
-        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+        <button onclick="window.open('${p.link}','_blank')">
+          Ver oferta
+        </button>
       </div>
     `;
   });
 
-  container.innerHTML = `
-    <div class="ofertas-wrapper">
-      <div class="ofertas-track">
-        ${html}
-      </div>
-    </div>
-  `;
-
-  iniciarCarrosselInfinito(); // 🔥 AQUI É O PONTO CRÍTICO
+  iniciarCarrosselInfinito();
 }
+
 
 /* ===============================
    CARREGAR CATEGORIA
@@ -5044,24 +5036,31 @@ renderMaisClicados();
   
 let indexOferta = 0;
 let cardWidth = 0;
+let intervaloOfertas = null;
 
 function iniciarCarrosselInfinito() {
   const track = document.querySelector(".ofertas-track");
-  const cards = document.querySelectorAll(".ofertas-track .card");
+  const cards = track.children;
 
   if (!track || cards.length === 0) return;
 
-  // duplica os cards para efeito infinito
+  // evita duplicar mais de uma vez
+  if (track.dataset.duplicado) return;
+  track.dataset.duplicado = "true";
+
   track.innerHTML += track.innerHTML;
 
   cardWidth = cards[0].offsetWidth + 15;
+  indexOferta = 0;
 
-  setInterval(() => {
+  if (intervaloOfertas) clearInterval(intervaloOfertas);
+
+  intervaloOfertas = setInterval(() => {
     indexOferta++;
     track.style.transition = "transform 0.6s ease";
     track.style.transform = `translateX(-${indexOferta * cardWidth}px)`;
 
-    if (indexOferta >= cards.length) {
+    if (indexOferta >= cards.length / 2) {
       setTimeout(() => {
         track.style.transition = "none";
         indexOferta = 0;
