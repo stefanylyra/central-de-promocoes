@@ -97,6 +97,13 @@ footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14
 }
 #cookie-banner button:hover{background:#45a049;}
 
+/* ===== NEWSLETTER FIXA ===== */
+#newsletter-form{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:20px 0;}
+#newsletter-form input[type="email"]{padding:8px 10px;border-radius:6px;border:1px solid #ccc;outline:none;width:200px;}
+#newsletter-form button{background:#FF6A3D;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;font-weight:bold;}
+#newsletter-form button:hover{background:#e85a31;}
+#newsletter-msg{margin-top:5px;font-size:14px;text-align:center;}
+
 /* ===== POP-UP NEWSLETTER ===== */
 #newsletter-popup {
   position:fixed;bottom:20px;right:20px;width:300px;background:white;border-radius:12px;
@@ -146,6 +153,18 @@ footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14
 </div>
 </section>
 
+<!-- NEWSLETTER FIXA -->
+<section>
+<h2>💌 Receba novidades e promoções</h2>
+<form id="newsletter-form">
+  <input type="email" id="email" placeholder="Seu melhor e-mail" required>
+  <label><input type="checkbox" id="interesses"> Receber promoções segmentadas</label>
+  <button type="submit">Quero receber!</button>
+  <p id="newsletter-msg"></p>
+</form>
+<p style="text-align:center;font-size:12px;color:#555;">Seu e-mail será usado apenas para envio de promoções exclusivas. Nenhum spam.</p>
+</section>
+
 <div id="conteudo"></div>
 
 <footer>
@@ -171,7 +190,6 @@ footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14
 <!-- POP-UP NEWSLETTER -->
 <div id="newsletter-popup">
   <div class="popup-content">
-    <span id="popup-close">&times;</span>
     <h3>💌 Não perca nossas promoções!</h3>
     <p>Cadastre seu e-mail e receba ofertas exclusivas direto na sua caixa de entrada.</p>
     <form id="popup-newsletter-form">
@@ -180,12 +198,13 @@ footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14
       <button type="submit">Quero receber!</button>
     </form>
     <p id="popup-msg" style="font-size:12px;margin-top:5px;color:#555;">Seu e-mail será usado apenas para envio de promoções. Nenhum spam.</p>
+    <span id="popup-close">&times;</span>
   </div>
 </div>
 
 <script>
-// ================= CATEGORIAS E PRODUTOS =================
-const categorias =  [
+// ================= CATEGORIAS =================
+const categorias = [
     {id: "roupas-masculinas", nome: "👕 Masculinas"},
     {id: "roupas-femininas", nome: "👗 Femininas"},
     {id: "plus-size", nome: "👚 Plus Size"},
@@ -4834,7 +4853,7 @@ function iniciarCarrosselOfertas(){const track=document.getElementById("lista-of
 
 // ================= FAVORITOS =================
 function toggleFavorito(i){
-  let favoritos=JSON.parse(localStorage.getItem('favoritos') || "[]");
+let favoritos=JSON.parse(localStorage.getItem('favoritos') || "[]");
   if(favoritos.includes(i)){
     favoritos = favoritos.filter(id => id !== i);
   } else {
@@ -4865,8 +4884,25 @@ function avisoWhatsApp(){return confirm("Você será redirecionado para o grupo 
 const banner = document.getElementById('cookie-banner');
 const btnCookie = document.getElementById('cookie-ok');
 btnCookie.addEventListener('click', () => {
- banner.style.display = 'none';
+  banner.style.display = 'none';
+  localStorage.setItem('cookiesAccepted', 'true');
+});
+if(localStorage.getItem('cookiesAccepted') === 'true'){
+  banner.style.display = 'none';
 }
+
+// ================= NEWSLETTER FIXA =================
+const newsletterForm = document.getElementById('newsletter-form');
+const newsletterMsg = document.getElementById('newsletter-msg');
+
+newsletterForm.addEventListener('submit', e=>{
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const interesses = document.getElementById('interesses').checked;
+  // Aqui você enviaria o e-mail para um servidor ou API
+  newsletterMsg.textContent = `Obrigado! ${email} foi cadastrado com sucesso!`;
+  newsletterForm.reset();
+});
 
 // ================= POP-UP NEWSLETTER =================
 const popup = document.getElementById('newsletter-popup');
@@ -4874,35 +4910,28 @@ const popupClose = document.getElementById('popup-close');
 const popupForm = document.getElementById('popup-newsletter-form');
 const popupMsg = document.getElementById('popup-msg');
 
-// Mostrar popup após 5 segundos se ainda não fechou
-setTimeout(() => {
-  if(!localStorage.getItem('popupClosed')) popup.style.display = 'block';
-}, 5000);
+// Mostrar popup após 5 segundos
+setTimeout(()=>{if(!localStorage.getItem('popupClosed')) popup.style.display='block';},5000);
 
-// Fechar popup e salvar no localStorage
-popupClose.addEventListener('click', () => {
-  popup.style.display = 'none';
-  localStorage.setItem('popupClosed', 'true');
+popupClose.addEventListener('click', ()=>{
+  popup.style.display='none';
+  localStorage.setItem('popupClosed','true');
 });
 
-// Envio do formulário do popup
-popupForm.addEventListener('submit', e => {
+popupForm.addEventListener('submit', e=>{
   e.preventDefault();
   const email = document.getElementById('popup-email').value;
   const interesses = document.getElementById('popup-interesses').checked;
-  
-  // Aqui você pode enviar o email para seu servidor ou serviço de newsletter
+  // Aqui você enviaria o e-mail para um servidor ou API
   popupMsg.textContent = `Obrigado! ${email} foi cadastrado com sucesso!`;
-  
   popupForm.reset();
 });
-
+  
 // ================= INICIALIZAÇÃO =================
 renderOfertas();
 carregar(atual);
 renderMaisClicados();
 carregarFavoritos();
-
 </script>
 </body>
 </html>
