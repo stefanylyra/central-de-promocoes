@@ -5058,5 +5058,94 @@ function iniciarCarrosselOfertas() {
 }
 
 </script>
+<!-- Botão WhatsApp flutuante com frase -->
+<div class="whatsapp-container">
+  <div class="whatsapp-text">💬 Entre no nosso grupo do WhatsApp!</div>
+  <a href="https://chat.whatsapp.com/JgiOFb5n2CWKNzsoNADvWt" 
+     target="_blank" 
+     class="whatsapp-float" 
+     onclick="return avisoWhatsApp()">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+  </a>
+</div>
+
+<script>
+  function avisoWhatsApp() {
+    return confirm("Você será redirecionado para o grupo do WhatsApp. Deseja continuar?");
+  }
+</script>
+
+<style>
+/* Container do botão e texto */
+.whatsapp-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Texto acima do botão */
+.whatsapp-text {
+  background-color: #25D366;
+  color: white;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Botão flutuante WhatsApp */
+.whatsapp-float {
+  width: 60px;   
+  height: 60px;
+  border-radius: 50%; 
+  background-color: #25D366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.whatsapp-float img {
+  width: 35px;
+  height: 35px;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+}
+
+/* Responsivo para celular */
+@media (max-width: 768px) {
+  .whatsapp-container {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .whatsapp-text {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .whatsapp-float {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .whatsapp-float img {
+    width: 28px;
+    height: 28px;
+  }
+}
+</style>
+
 </body>
 </html>
