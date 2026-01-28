@@ -4865,25 +4865,8 @@ function avisoWhatsApp(){return confirm("Você será redirecionado para o grupo 
 const banner = document.getElementById('cookie-banner');
 const btnCookie = document.getElementById('cookie-ok');
 btnCookie.addEventListener('click', () => {
-  banner.style.display = 'none';
-  localStorage.setItem('cookiesAccepted', 'true');
-});
-if(localStorage.getItem('cookiesAccepted') === 'true'){
-  banner.style.display = 'none';
+ banner.style.display = 'none';
 }
-
-// ================= NEWSLETTER FIXA =================
-const newsletterForm = document.getElementById('newsletter-form');
-const newsletterMsg = document.getElementById('newsletter-msg');
-
-newsletterForm.addEventListener('submit', e=>{
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  const interesses = document.getElementById('interesses').checked;
-  // Aqui você enviaria o e-mail para um servidor ou API
-  newsletterMsg.textContent = `Obrigado! ${email} foi cadastrado com sucesso!`;
-  newsletterForm.reset();
-});
 
 // ================= POP-UP NEWSLETTER =================
 const popup = document.getElementById('newsletter-popup');
@@ -4891,28 +4874,35 @@ const popupClose = document.getElementById('popup-close');
 const popupForm = document.getElementById('popup-newsletter-form');
 const popupMsg = document.getElementById('popup-msg');
 
-// Mostrar popup após 5 segundos
-setTimeout(()=>{if(!localStorage.getItem('popupClosed')) popup.style.display='block';},5000);
+// Mostrar popup após 5 segundos se ainda não fechou
+setTimeout(() => {
+  if(!localStorage.getItem('popupClosed')) popup.style.display = 'block';
+}, 5000);
 
-popupClose.addEventListener('click', ()=>{
-  popup.style.display='none';
-  localStorage.setItem('popupClosed','true');
+// Fechar popup e salvar no localStorage
+popupClose.addEventListener('click', () => {
+  popup.style.display = 'none';
+  localStorage.setItem('popupClosed', 'true');
 });
 
-popupForm.addEventListener('submit', e=>{
+// Envio do formulário do popup
+popupForm.addEventListener('submit', e => {
   e.preventDefault();
   const email = document.getElementById('popup-email').value;
   const interesses = document.getElementById('popup-interesses').checked;
-  // Aqui você enviaria o e-mail para um servidor ou API
+  
+  // Aqui você pode enviar o email para seu servidor ou serviço de newsletter
   popupMsg.textContent = `Obrigado! ${email} foi cadastrado com sucesso!`;
+  
   popupForm.reset();
 });
-  
+
 // ================= INICIALIZAÇÃO =================
 renderOfertas();
 carregar(atual);
 renderMaisClicados();
 carregarFavoritos();
+
 </script>
 </body>
 </html>
