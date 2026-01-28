@@ -5,160 +5,174 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Central de Promoções</title>
 <style>
-  /* ===== BODY ===== */
-  body {
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f9f9f9;
-    color:#333;
-    padding-top:140px;
-  }
-  a{text-decoration:none;}
-  button{font-family:inherit;}
+/* ===== BODY ===== */
+body {
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f9f9f9;
+  color:#333;
+  padding-top:140px;
+}
+a{text-decoration:none;}
+button{font-family:inherit;}
 
-  /* ===== HEADER ===== */
-  header {
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    background:#4A90E2;
-    color:white;
-    padding:15px 20px;
-    z-index:100;
-    box-shadow:0 2px 6px rgba(0,0,0,0.1);
-  }
-  header h1{margin:0;font-size:22px;}
-  header p{margin:4px 0 0 0;font-size:14px;}
+/* ===== HEADER ===== */
+header {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  background:#4A90E2;
+  color:white;
+  padding:15px 20px;
+  z-index:100;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+header h1{margin:0;font-size:22px;}
+header p{margin:4px 0 0 0;font-size:14px;}
 
-  /* ===== MENU CATEGORIAS ===== */
-  .menu-categorias{margin-top:10px;text-align:center;}
-  .btn-categorias{background:#ffffff;color:#4A90E2;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.15);margin-bottom:8px;}
-  .categorias{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:10px;}
-  .categorias button{background:#4A90E2;color:white;border:none;padding:6px 10px;border-radius:12px;cursor:pointer;font-size:14px;transition:background 0.3s;}
-  .categorias button:hover{background:#3672b0;}
-  .oculto{display:none;}
+/* ===== MENU CATEGORIAS ===== */
+.menu-categorias{margin-top:10px;text-align:center;}
+.btn-categorias{background:#ffffff;color:#4A90E2;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.15);margin-bottom:8px;}
+.categorias{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:10px;}
+.categorias button{background:#4A90E2;color:white;border:none;padding:6px 10px;border-radius:12px;cursor:pointer;font-size:14px;transition:background 0.3s;}
+.categorias button:hover{background:#3672b0;}
+.oculto{display:none;}
 
-  /* ===== SEARCH BAR ===== */
-  .search-bar{margin:10px auto 0;display:flex;align-items:center;justify-content:center;}
-  .search-bar input{padding:8px;width:250px;border-radius:6px;border:1px solid #ccc;outline:none;}
+/* ===== SEARCH BAR ===== */
+.search-bar{margin:10px auto 0;display:flex;align-items:center;justify-content:center;}
+.search-bar input{padding:8px;width:250px;border-radius:6px;border:1px solid #ccc;outline:none;}
 
-  /* ===== SECTIONS ===== */
-  section{padding:40px 20px;}
-  h2{border-bottom:2px solid #4A90E2;padding-bottom:5px;margin-bottom:15px;color:#333;}
+/* ===== SECTIONS ===== */
+section{padding:40px 20px;}
+h2{border-bottom:2px solid #4A90E2;padding-bottom:5px;margin-bottom:15px;color:#333;}
 
-  /* ===== CARDS PRODUTOS ===== */
-  .products,.ofertas-track,.carrossel{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
-  .card{background:white;border-radius:12px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,0.1);text-align:center;transition:transform 0.3s,box-shadow 0.3s;position:relative;}
-  .card:hover{transform:translateY(-5px);box-shadow:0 8px 12px rgba(0,0,0,0.2);}
-  .card img{width:100%;border-radius:8px;margin-bottom:10px;}
-  .card h3{font-size:16px;margin:10px 0;height:40px;overflow:hidden;}
-  .card button{margin-top:10px;background:#FF6A3D;color:white;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%;transition:background-color 0.3s;}
-  .card button:hover{background:#e85a31;}
-  .card p.oferta{font-size:12px;color:#28a745;margin:5px 0;}
-  .card p.estrelas{font-size:12px;color:#FFC107;margin:5px 0;}
-  .favorito{position:absolute;top:10px;right:10px;font-size:22px;cursor:pointer;transition:transform 0.2s;}
-  .favorito.favorito-ativo{color:#FF6A3D;transform:scale(1.2);}
+/* ===== CARDS PRODUTOS ===== */
+.products,.ofertas-track,.carrossel{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+.card{background:white;border-radius:12px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,0.1);text-align:center;transition:transform 0.3s,box-shadow 0.3s;position:relative;}
+.card:hover{transform:translateY(-5px);box-shadow:0 8px 12px rgba(0,0,0,0.2);}
+.card img{width:100%;border-radius:8px;margin-bottom:10px;}
+.card h3{font-size:16px;margin:10px 0;height:40px;overflow:hidden;}
+.card button{margin-top:10px;background:#FF6A3D;color:white;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%;transition:background-color 0.3s;}
+.card button:hover{background:#e85a31;}
+.card p.oferta{font-size:12px;color:#28a745;margin:5px 0;}
+.card p.estrelas{font-size:12px;color:#FFC107;margin:5px 0;}
+.favorito{position:absolute;top:10px;right:10px;font-size:22px;cursor:pointer;transition:transform 0.2s;}
+.favorito.favorito-ativo{color:#FF6A3D;transform:scale(1.2);}
 
-  /* ===== OFERTAS DO DIA ===== */
-  .ofertas-wrapper{overflow:hidden;width:100%;}
-  #lista-ofertas{display:flex;gap:15px;transition:transform 0.6s ease;}
-  .ofertas-track .card img{height:140px;object-fit:cover;}
+/* ===== OFERTAS DO DIA ===== */
+.ofertas-wrapper{overflow:hidden;width:100%;}
+#lista-ofertas{display:flex;gap:15px;transition:transform 0.6s ease;}
+.ofertas-track .card img{height:140px;object-fit:cover;}
 
-  /* ===== CARROSSEL MAIS CLICADOS ===== */
-  .carrossel-wrapper{display:flex;align-items:center;gap:10px;}
-  .carrossel-btn{background:#4A90E2;color:white;border:none;padding:10px;border-radius:50%;cursor:pointer;}
-  .carrossel{display:flex;gap:15px;overflow-x:auto;scroll-behavior:smooth;padding:10px 0;}
-  .carrossel::-webkit-scrollbar{display:none;}
-  @media(max-width:768px){.carrossel-btn{display:none;}}
+/* ===== CARROSSEL MAIS CLICADOS ===== */
+.carrossel-wrapper{display:flex;align-items:center;gap:10px;}
+.carrossel-btn{background:#4A90E2;color:white;border:none;padding:10px;border-radius:50%;cursor:pointer;}
+.carrossel{display:flex;gap:15px;overflow-x:auto;scroll-behavior:smooth;padding:10px 0;}
+.carrossel::-webkit-scrollbar{display:none;}
+@media(max-width:768px){.carrossel-btn{display:none;}}
 
-  /* ===== FOOTER ===== */
-  footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14px;margin-top:40px;}
+/* ===== FOOTER ===== */
+footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14px;margin-top:40px;}
 
-  /* ===== WHATSAPP FLUTUANTE ===== */
-  .whatsapp-container{position:fixed;bottom:20px;right:20px;z-index:1000;display:flex;flex-direction:column;align-items:center;text-align:center;animation:pulse-container 2s infinite;}
-  .whatsapp-text{background-color:#25D366;color:white;font-weight:bold;padding:5px 10px;border-radius:20px;margin-bottom:8px;font-size:14px;box-shadow:0 4px 8px rgba(0,0,0,0.2);animation:pulse-text 2s infinite;}
-  .whatsapp-float{width:60px;height:60px;border-radius:50%;background-color:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 8px rgba(0,0,0,0.2);transition:transform 0.2s;cursor:pointer;animation:pulse-button 2s infinite;}
-  .whatsapp-float img{width:35px;height:35px;}
-  .whatsapp-float:hover{transform:scale(1.1);}
-  @keyframes pulse-button{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
-  @keyframes pulse-text{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
-  @keyframes pulse-container{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
-  @media(max-width:768px){.whatsapp-container{bottom:15px;right:15px;}.whatsapp-text{font-size:12px;padding:4px 8px;}.whatsapp-float{width:50px;height:50px;}.whatsapp-float img{width:28px;height:28px;}}
+/* ===== WHATSAPP FLUTUANTE ===== */
+.whatsapp-container{position:fixed;bottom:20px;right:20px;z-index:1000;display:flex;flex-direction:column;align-items:center;text-align:center;animation:pulse-container 2s infinite;}
+.whatsapp-text{background-color:#25D366;color:white;font-weight:bold;padding:5px 10px;border-radius:20px;margin-bottom:8px;font-size:14px;box-shadow:0 4px 8px rgba(0,0,0,0.2);animation:pulse-text 2s infinite;}
+.whatsapp-float{width:60px;height:60px;border-radius:50%;background-color:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 8px rgba(0,0,0,0.2);transition:transform 0.2s;cursor:pointer;animation:pulse-button 2s infinite;}
+.whatsapp-float img{width:35px;height:35px;}
+.whatsapp-float:hover{transform:scale(1.1);}
+@keyframes pulse-button{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+@keyframes pulse-text{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+@keyframes pulse-container{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
 
-  /* ===== BANNER DE COOKIES ===== */
-  #cookie-banner{
-    position:fixed;bottom:0;left:0;width:100%;background:rgba(0,0,0,0.85);color:white;
-    text-align:center;padding:12px 20px;font-family:sans-serif;font-size:14px;z-index:9999;
-    display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:10px;
-  }
-  #cookie-banner a{color:#4CAF50;text-decoration:underline;}
-  #cookie-banner button{
-    background:#4CAF50;border:none;padding:6px 12px;color:white;border-radius:6px;cursor:pointer;font-weight:bold;transition:all 0.2s;
-  }
-  #cookie-banner button:hover{background:#45a049;}
+/* ===== BANNER COOKIES ===== */
+#cookie-banner{
+  position:fixed;bottom:0;left:0;width:100%;background:rgba(0,0,0,0.85);color:white;
+  text-align:center;padding:12px 20px;font-family:sans-serif;font-size:14px;z-index:9999;
+  display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:10px;
+}
+#cookie-banner a{color:#4CAF50;text-decoration:underline;}
+#cookie-banner button{
+  background:#4CAF50;border:none;padding:6px 12px;color:white;border-radius:6px;cursor:pointer;font-weight:bold;transition:all 0.2s;
+}
+#cookie-banner button:hover{background:#45a049;}
 
-  /* ===== NEWSLETTER ===== */
-  #newsletter-form{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:20px 0;}
-  #newsletter-form input[type="email"]{padding:8px 10px;border-radius:6px;border:1px solid #ccc;outline:none;width:200px;}
-  #newsletter-form button{background:#FF6A3D;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;font-weight:bold;}
-  #newsletter-form button:hover{background:#e85a31;}
-  #newsletter-msg{margin-top:5px;font-size:14px;text-align:center;}
+/* ===== NEWSLETTER FIXA ===== */
+#newsletter-form{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:20px 0;}
+#newsletter-form input[type="email"]{padding:8px 10px;border-radius:6px;border:1px solid #ccc;outline:none;width:200px;}
+#newsletter-form button{background:#FF6A3D;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;font-weight:bold;}
+#newsletter-form button:hover{background:#e85a31;}
+#newsletter-msg{margin-top:5px;font-size:14px;text-align:center;}
+
+/* ===== POP-UP NEWSLETTER ===== */
+#newsletter-popup {
+  position:fixed;bottom:20px;right:20px;width:300px;background:white;border-radius:12px;
+  box-shadow:0 8px 16px rgba(0,0,0,0.2);padding:20px;z-index:10000;display:none;animation:popupIn 0.5s;font-family:Arial,sans-serif;
+}
+#newsletter-popup .popup-content h3{margin:0 0 10px 0;font-size:18px;color:#4A90E2;}
+#newsletter-popup .popup-content p{margin:5px 0;font-size:14px;color:#333;}
+#newsletter-popup form{display:flex;flex-direction:column;gap:6px;}
+#newsletter-popup input[type="email"]{padding:8px;border:1px solid #ccc;border-radius:6px;outline:none;width:100%;}
+#newsletter-popup button{background:#FF6A3D;color:white;border:none;padding:8px;border-radius:6px;cursor:pointer;font-weight:bold;}
+#newsletter-popup button:hover{background:#e85a31;}
+#popup-close{position:absolute;top:8px;right:12px;cursor:pointer;font-size:18px;color:#999;transition:color 0.2s;}
+#popup-close:hover{color:#333;}
+@keyframes popupIn{0%{opacity:0;transform:translateY(50px);}100%{opacity:1;transform:translateY(0);}}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Central de Promoções</h1>
-  <p>As melhores ofertas para você economizar!</p>
+<h1>Central de Promoções</h1>
+<p>As melhores ofertas para você economizar!</p>
 
-  <div class="menu-categorias">
-    <button class="btn-categorias" onclick="toggleCategorias()">☰ Categorias</button>
-    <div id="lista-categorias" class="categorias oculto"></div>
-  </div>
+<div class="menu-categorias">
+  <button class="btn-categorias" onclick="toggleCategorias()">☰ Categorias</button>
+  <div id="lista-categorias" class="categorias oculto"></div>
+</div>
 
-  <div class="search-bar">
-    <span>🔎</span>
-    <input type="text" id="search" placeholder="Buscar produtos..." oninput="buscar()">
-  </div>
+<div class="search-bar">
+  <span>🔎</span>
+  <input type="text" id="search" placeholder="Buscar produtos..." oninput="buscar()">
+</div>
 </header>
 
 <section id="ofertas-dia">
-  <h2>🔥 Ofertas do Dia</h2>
-  <div class="ofertas-wrapper">
-    <div id="lista-ofertas" class="ofertas-track"></div>
-  </div>
+<h2>🔥 Ofertas do Dia</h2>
+<div class="ofertas-wrapper">
+<div id="lista-ofertas" class="ofertas-track"></div>
+</div>
 </section>
 
 <section id="mais-clicados">
-  <h2>❤️ Mais clicados</h2>
-  <div class="carrossel-wrapper">
-    <button class="carrossel-btn" onclick="rolarMaisClicados(-1)">⬅️</button>
-    <div class="carrossel" id="lista-mais-clicados"></div>
-    <button class="carrossel-btn" onclick="rolarMaisClicados(1)">➡️</button>
-  </div>
+<h2>❤️ Mais clicados</h2>
+<div class="carrossel-wrapper">
+  <button class="carrossel-btn" onclick="rolarMaisClicados(-1)">⬅️</button>
+  <div class="carrossel" id="lista-mais-clicados"></div>
+  <button class="carrossel-btn" onclick="rolarMaisClicados(1)">➡️</button>
+</div>
 </section>
 
-<!-- FORMULÁRIO NEWSLETTER -->
+<!-- NEWSLETTER FIXA -->
 <section>
-  <h2>💌 Receba novidades e promoções</h2>
-  <form id="newsletter-form">
-    <input type="email" id="email" placeholder="Seu melhor e-mail" required>
-    <label><input type="checkbox" id="interesses"> Receber promoções segmentadas</label>
-    <button type="submit">Quero receber!</button>
-    <p id="newsletter-msg"></p>
-  </form>
-  <p style="text-align:center;font-size:12px;color:#555;">Seu e-mail será usado apenas para envio de promoções exclusivas. Nenhum spam.</p>
+<h2>💌 Receba novidades e promoções</h2>
+<form id="newsletter-form">
+  <input type="email" id="email" placeholder="Seu melhor e-mail" required>
+  <label><input type="checkbox" id="interesses"> Receber promoções segmentadas</label>
+  <button type="submit">Quero receber!</button>
+  <p id="newsletter-msg"></p>
+</form>
+<p style="text-align:center;font-size:12px;color:#555;">Seu e-mail será usado apenas para envio de promoções exclusivas. Nenhum spam.</p>
 </section>
 
 <div id="conteudo"></div>
 
 <footer>
-  <p>Somos um site de afiliados. Ao comprar pelos links você nos ajuda a continuar trazendo promoções e ofertas imperdíveis — sem nenhum custo extra ❤️.</p>
-  <p>Site afiliado • Central de Promoções</p>
+<p>Somos um site de afiliados. Ao comprar pelos links você nos ajuda a continuar trazendo promoções e ofertas imperdíveis — sem nenhum custo extra ❤️.</p>
+<p>Site afiliado • Central de Promoções</p>
 </footer>
 
-<!-- BOTÃO WHATSAPP -->
+<!-- WHATSAPP FLUTUANTE -->
 <div class="whatsapp-container">
   <div class="whatsapp-text">💬 Entre no nosso grupo do WhatsApp!</div>
   <a href="https://chat.whatsapp.com/JgiOFb5n2CWKNzsoNADvWt" target="_blank" class="whatsapp-float" onclick="return avisoWhatsApp()">
@@ -166,16 +180,31 @@
   </a>
 </div>
 
-<!-- BANNER DE COOKIES -->
+<!-- BANNER COOKIES -->
 <div id="cookie-banner">
   Usamos cookies para melhorar sua experiência. 
   <a href="#" target="_blank">Saiba mais</a>.
   <button id="cookie-ok">Ok</button>
 </div>
 
+<!-- POP-UP NEWSLETTER -->
+<div id="newsletter-popup">
+  <div class="popup-content">
+    <h3>💌 Não perca nossas promoções!</h3>
+    <p>Cadastre seu e-mail e receba ofertas exclusivas direto na sua caixa de entrada.</p>
+    <form id="popup-newsletter-form">
+      <input type="email" id="popup-email" placeholder="Seu melhor e-mail" required>
+      <label><input type="checkbox" id="popup-interesses"> Receber promoções segmentadas</label>
+      <button type="submit">Quero receber!</button>
+    </form>
+    <p id="popup-msg" style="font-size:12px;margin-top:5px;color:#555;">Seu e-mail será usado apenas para envio de promoções. Nenhum spam.</p>
+    <span id="popup-close">&times;</span>
+  </div>
+</div>
+
 <script>
-  // ================= SCRIPT CATEGORIAS E PRODUTOS =================
-  const categorias = [
+// ================= CATEGORIAS =================
+const categorias = [
     {id: "roupas-masculinas", nome: "👕 Masculinas"},
     {id: "roupas-femininas", nome: "👗 Femininas"},
     {id: "plus-size", nome: "👚 Plus Size"},
@@ -4746,144 +4775,163 @@ produtos:[
     }
   };
 
-  const maisClicados = [
-    {nome:"Relógio Masculino Digital", img:"https://via.placeholder.com/200", link:"#"}
-  ];
+const maisClicados = [{nome:"Relógio Masculino Digital", img:"https://via.placeholder.com/200", link:"#"}];
+let atual="roupas-masculinas";
 
-  let atual = "roupas-masculinas";
+const nav=document.getElementById('lista-categorias');
+categorias.forEach(cat=>{
+  const btn=document.createElement('button');
+  btn.textContent=cat.nome;
+  btn.onclick=()=> carregar(cat.id);
+  nav.appendChild(btn);
+});
 
-  const nav = document.getElementById('lista-categorias');
-  categorias.forEach(cat=>{
-    const btn = document.createElement('button');
-    btn.textContent = cat.nome;
-    btn.onclick = ()=> carregar(cat.id);
-    nav.appendChild(btn);
+function carregar(cat){atual=cat; render(dados[cat]);}
+function render(categoriaObj){
+  if(!categoriaObj) return;
+  const lista=categoriaObj.produtos;
+  let html=`<section><h2>${categoriaObj.titulo}</h2><div class="products">`;
+  lista.forEach((p,i)=>{
+    html+=`<div class="card" data-id="${i}">
+      <div class="favorito" onclick="toggleFavorito(${i})">♡</div>
+      <img src="${p.img}" alt="${p.nome}">
+      <h3>${p.nome}</h3>
+      <p class="oferta">🔥 Oferta imperdível</p>
+      <p class="estrelas">⭐⭐⭐⭐☆</p>
+      <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+    </div>`;
   });
+  html+=`</div></section>`;
+  document.getElementById('conteudo').innerHTML=html;
+  carregarFavoritos();
+}
 
-  function carregar(cat){atual = cat; render(dados[cat]);}
-  function render(categoriaObj){
-    if(!categoriaObj) return;
-    const lista = categoriaObj.produtos;
-    let html = `<section><h2>${categoriaObj.titulo}</h2><div class="products">`;
-    lista.forEach((p,i)=>{
-      html += `<div class="card" data-id="${i}">
-        <div class="favorito" onclick="toggleFavorito(${i})">♡</div>
-        <img src="${p.img}" alt="${p.nome}">
-        <h3>${p.nome}</h3>
-        <p class="oferta">🔥 Oferta imperdível</p>
-        <p class="estrelas">⭐⭐⭐⭐☆</p>
-        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-      </div>`;
-    });
-    html += `</div></section>`;
-    document.getElementById('conteudo').innerHTML = html;
-    carregarFavoritos();
+function toggleCategorias(){nav.classList.toggle("oculto");}
+function buscar(){
+  const termo=document.getElementById("search").value.toLowerCase();
+  if(termo===""){carregar(atual);return;}
+  let resultados=[];
+  for(const cat in dados){dados[cat].produtos.forEach(p=>{if(p.nome.toLowerCase().includes(termo)) resultados.push(p);});}
+  if(resultados.length===0){
+    document.getElementById("conteudo").innerHTML=`<section><h2>🔎 Resultados da busca</h2><p style="text-align:center;font-size:18px;color:#777;">Nenhum produto encontrado 😕</p></section>`;
+    return;
   }
+  render({titulo:"🔎 Resultados da busca",produtos:resultados});
+}
 
-  function toggleCategorias(){nav.classList.toggle("oculto");}
-  function buscar(){
-    const termo=document.getElementById("search").value.toLowerCase();
-    if(termo===""){carregar(atual);return;}
-    let resultados=[];
-    for(const cat in dados){dados[cat].produtos.forEach(p=>{if(p.nome.toLowerCase().includes(termo)) resultados.push(p);});}
-    if(resultados.length===0){
-      document.getElementById("conteudo").innerHTML=`<section><h2>🔎 Resultados da busca</h2><p style="text-align:center;font-size:18px;color:#777;">Nenhum produto encontrado 😕</p></section>`;
-      return;
+// ================= OFERTAS =================
+const ofertasDia=[{nome:"Kit 3 Bermudas Jeans Masculinas", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp", link:"https://s.shopee.com.br/7Kr2CrUeZV"}];
+function renderOfertas(){
+  const track=document.getElementById("lista-ofertas"); track.innerHTML="";
+  ofertasDia.forEach(p=>{
+    track.innerHTML+=`<div class="card">
+      <img src="${p.img}" loading="lazy">
+      <h3>${p.nome}</h3>
+      <p class="oferta">🔥 Oferta imperdível</p>
+      <p class="estrelas">⭐⭐⭐⭐☆</p>
+      <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+    </div>`;
+  });
+  iniciarCarrosselOfertas();
+}
+
+function renderMaisClicados(){
+  const container=document.getElementById("lista-mais-clicados");
+  container.innerHTML="";
+  maisClicados.forEach(p=>{
+    container.innerHTML+=`<div class="card">
+      <img src="${p.img}" alt="${p.nome}">
+      <h3>${p.nome}</h3>
+      <p class="estrelas">⭐⭐⭐⭐☆</p>
+      <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+    </div>`;
+  });
+}
+
+function rolarMaisClicados(direcao){const carrossel=document.getElementById("lista-mais-clicados"); const larguraCard=220; carrossel.scrollLeft+=direcao*larguraCard;}
+function iniciarCarrosselOfertas(){const track=document.getElementById("lista-ofertas"); let index=0; setInterval(()=>{const cards=track.querySelectorAll(".card"); if(cards.length===0) return; const cardWidth=cards[0].offsetWidth+15; index++; if(index>=cards.length) index=0; track.style.transform=`translateX(-${index*cardWidth}px)`;},3000);}
+
+// ================= FAVORITOS =================
+function toggleFavorito(i){
+  let favoritos=JSON.parse(localStorage.getItem('favoritos') || "[]");
+    if(favoritos.includes(i)){
+    favoritos = favoritos.filter(id => id !== i);
+  } else {
+    favoritos.push(i);
+  }
+  localStorage.setItem('favoritos', JSON.stringify(favoritos));
+  carregarFavoritos();
+}
+
+function carregarFavoritos(){
+  const favoritos = JSON.parse(localStorage.getItem('favoritos') || "[]");
+  document.querySelectorAll('.card').forEach((card, i) => {
+    const heart = card.querySelector('.favorito');
+    if(favoritos.includes(i)){
+      heart.classList.add('favorito-ativo');
+      heart.textContent = '❤️';
+    } else {
+      heart.classList.remove('favorito-ativo');
+      heart.textContent = '♡';
     }
-    render({titulo:"🔎 Resultados da busca",produtos:resultados});
-  }
-
-  // ================= OFERTAS DO DIA =================
-  const ofertasDia=[{nome:"Kit 3 Bermudas Jeans Masculinas", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp", link:"https://s.shopee.com.br/7Kr2CrUeZV"}];
-
-  function renderOfertas(){
-    const track=document.getElementById("lista-ofertas");
-    track.innerHTML="";
-    ofertasDia.forEach(p=>{
-      track.innerHTML+=`<div class="card">
-        <img src="${p.img}" loading="lazy">
-        <h3>${p.nome}</h3>
-        <p class="oferta">🔥 Oferta imperdível</p>
-        <p class="estrelas">⭐⭐⭐⭐☆</p>
-        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-      </div>`;
-    });
-    iniciarCarrosselOfertas();
-  }
-
-  function renderMaisClicados(){
-    const container=document.getElementById("lista-mais-clicados");
-    container.innerHTML="";
-    maisClicados.forEach(p=>{
-      container.innerHTML+=`<div class="card">
-        <img src="${p.img}" alt="${p.nome}">
-        <h3>${p.nome}</h3>
-        <p class="estrelas">⭐⭐⭐⭐☆</p>
-        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-      </div>`;
-    });
-  }
-
-  function rolarMaisClicados(direcao){
-    const carrossel=document.getElementById("lista-mais-clicados");
-    const larguraCard=220;
-    carrossel.scrollLeft+=direcao*larguraCard;
-  }
-
-  function iniciarCarrosselOfertas(){
-    const track=document.getElementById("lista-ofertas");
-    let index=0;
-    setInterval(()=>{
-      const cards=track.querySelectorAll(".card");
-      if(cards.length===0) return;
-      const cardWidth=cards[0].offsetWidth+15;
-      index++;
-      if(index>=cards.length) index=0;
-      track.style.transform=`translateX(-${index*cardWidth}px)`;
-    },3000);
-  }
-
-  renderOfertas();
-  carregar(atual);
-  renderMaisClicados();
-
-  // ================= WHATSAPP =================
-  function avisoWhatsApp(){return confirm("Você será redirecionado para o grupo do WhatsApp. Deseja continuar?");}
-
-  // ================= BANNER COOKIES =================
-  const banner = document.getElementById('cookie-banner');
-  const btn = document.getElementById('cookie-ok');
-  btn.addEventListener('click', () => {
-    banner.style.display = 'none';
-    localStorage.setItem('cookiesAccepted','true');
   });
-  if(localStorage.getItem('cookiesAccepted')==='true'){banner.style.display='none';}
+}
 
-  // ================= FAVORITOS =================
-  function toggleFavorito(id){
-    let favoritos = JSON.parse(localStorage.getItem('favoritos') || "[]");
-    if(favoritos.includes(id)){favoritos = favoritos.filter(x=>x!==id);}
-    else{favoritos.push(id);}
-    localStorage.setItem('favoritos', JSON.stringify(favoritos));
-    carregarFavoritos();
-  }
-  function carregarFavoritos(){
-    const favoritos = JSON.parse(localStorage.getItem('favoritos') || "[]");
-    document.querySelectorAll(".favorito").forEach((el,i)=>{
-      if(favoritos.includes(i)) el.classList.add("favorito-ativo");
-      else el.classList.remove("favorito-ativo");
-    });
-  }
+// ================= WHATSAPP =================
+function avisoWhatsApp(){return confirm("Você será redirecionado para o grupo do WhatsApp. Deseja continuar?");}
 
-  // ================= NEWSLETTER =================
-  document.getElementById('newsletter-form').addEventListener('submit', function(e){
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const interesse = document.getElementById('interesses').checked;
-    // Aqui você enviaria para Mailchimp ou outro serviço via API
-    document.getElementById('newsletter-msg').textContent = "Obrigado! Você receberá nossas promoções 😄";
-    document.getElementById('newsletter-form').reset();
-  });
+// ================= COOKIES =================
+const banner = document.getElementById('cookie-banner');
+const btnCookie = document.getElementById('cookie-ok');
+btnCookie.addEventListener('click', () => {
+  banner.style.display = 'none';
+  localStorage.setItem('cookiesAccepted', 'true');
+});
+if(localStorage.getItem('cookiesAccepted') === 'true'){
+  banner.style.display = 'none';
+}
+
+// ================= NEWSLETTER FIXA =================
+const newsletterForm = document.getElementById('newsletter-form');
+const newsletterMsg = document.getElementById('newsletter-msg');
+
+newsletterForm.addEventListener('submit', e=>{
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const interesses = document.getElementById('interesses').checked;
+  // Aqui você enviaria o e-mail para um servidor ou API
+  newsletterMsg.textContent = `Obrigado! ${email} foi cadastrado com sucesso!`;
+  newsletterForm.reset();
+});
+
+// ================= POP-UP NEWSLETTER =================
+const popup = document.getElementById('newsletter-popup');
+const popupClose = document.getElementById('popup-close');
+const popupForm = document.getElementById('popup-newsletter-form');
+const popupMsg = document.getElementById('popup-msg');
+
+// Mostrar popup após 5 segundos
+setTimeout(()=>{if(!localStorage.getItem('popupClosed')) popup.style.display='block';},5000);
+
+popupClose.addEventListener('click', ()=>{
+  popup.style.display='none';
+  localStorage.setItem('popupClosed','true');
+});
+
+popupForm.addEventListener('submit', e=>{
+  e.preventDefault();
+  const email = document.getElementById('popup-email').value;
+  const interesses = document.getElementById('popup-interesses').checked;
+  // Aqui você enviaria o e-mail para um servidor ou API
+  popupMsg.textContent = `Obrigado! ${email} foi cadastrado com sucesso!`;
+  popupForm.reset();
+});
+  
+// ================= INICIALIZAÇÃO =================
+renderOfertas();
+carregar(atual);
+renderMaisClicados();
+carregarFavoritos();
 </script>
 </body>
 </html>
