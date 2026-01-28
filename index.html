@@ -5,16 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Central de Promoções</title>
 <style>
-  body {margin:0; font-family:Arial,sans-serif; background:#f9f9f9; color:#333;}
+  /* ===== BODY ===== */
+  body {
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f9f9f9;
+    color:#333;
+    padding-top:140px; /* espaço para header fixo */
+  }
+
   a{text-decoration:none;}
   button{font-family:inherit;}
 
-  /* HEADER FIXO */
-  header{position:fixed;top:0;left:0;width:100%;background:#4A90E2;color:white;padding:15px 20px;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+  /* ===== HEADER FIXO ===== */
+  header {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background:#4A90E2;
+    color:white;
+    padding:15px 20px;
+    z-index:100;
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  }
   header h1{margin:0;font-size:22px;}
   header p{margin:4px 0 0 0;font-size:14px;}
 
-  /* MENU CATEGORIAS */
+  /* ===== MENU CATEGORIAS ===== */
   .menu-categorias{margin-top:10px;text-align:center;}
   .btn-categorias{background:#ffffff;color:#4A90E2;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.15);margin-bottom:8px;}
   .categorias{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:10px;}
@@ -22,15 +40,15 @@
   .categorias button:hover{background:#3672b0;}
   .oculto{display:none;}
 
-  /* SEARCH BAR */
-  .search-bar{margin:15px auto 0;display:flex;align-items:center;justify-content:center;}
+  /* ===== SEARCH BAR ===== */
+  .search-bar{margin:10px auto 0;display:flex;align-items:center;justify-content:center;}
   .search-bar input{padding:8px;width:250px;border-radius:6px;border:1px solid #ccc;outline:none;}
 
-  /* SECTIONS */
-  section{padding:100px 20px 40px 20px;}
+  /* ===== SECTIONS ===== */
+  section{padding:40px 20px;}
   h2{border-bottom:2px solid #4A90E2;padding-bottom:5px;margin-bottom:15px;color:#333;}
 
-  /* CARDS PRODUTOS */
+  /* ===== CARDS PRODUTOS ===== */
   .products,.ofertas-track,.carrossel{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
   .card{background:white;border-radius:12px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,0.1);text-align:center;transition:transform 0.3s,box-shadow 0.3s;position:relative;}
   .card:hover{transform:translateY(-5px);box-shadow:0 8px 12px rgba(0,0,0,0.2);}
@@ -41,22 +59,22 @@
   .card p.oferta{font-size:12px;color:#28a745;margin:5px 0;}
   .card p.estrelas{font-size:12px;color:#FFC107;margin:5px 0;}
 
-  /* OFERTAS DO DIA */
+  /* ===== OFERTAS DO DIA ===== */
   .ofertas-wrapper{overflow:hidden;width:100%;}
   #lista-ofertas{display:flex;gap:15px;transition:transform 0.6s ease;}
   .ofertas-track .card img{height:140px;object-fit:cover;}
 
-  /* CARROSSEL MAIS CLICADOS */
+  /* ===== CARROSSEL MAIS CLICADOS ===== */
   .carrossel-wrapper{display:flex;align-items:center;gap:10px;}
   .carrossel-btn{background:#4A90E2;color:white;border:none;padding:10px;border-radius:50%;cursor:pointer;}
   .carrossel{display:flex;gap:15px;overflow-x:auto;scroll-behavior:smooth;padding:10px 0;}
   .carrossel::-webkit-scrollbar{display:none;}
   @media(max-width:768px){.carrossel-btn{display:none;}}
 
-  /* FOOTER */
+  /* ===== FOOTER ===== */
   footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14px;margin-top:40px;}
 
-  /* WHATSAPP FLUTUANTE */
+  /* ===== WHATSAPP FLUTUANTE ===== */
   .whatsapp-container{position:fixed;bottom:20px;right:20px;z-index:1000;display:flex;flex-direction:column;align-items:center;text-align:center;animation:pulse-container 2s infinite;}
   .whatsapp-text{background-color:#25D366;color:white;font-weight:bold;padding:5px 10px;border-radius:20px;margin-bottom:8px;font-size:14px;box-shadow:0 4px 8px rgba(0,0,0,0.2);animation:pulse-text 2s infinite;}
   .whatsapp-float{width:60px;height:60px;border-radius:50%;background-color:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 8px rgba(0,0,0,0.2);transition:transform 0.2s;cursor:pointer;animation:pulse-button 2s infinite;}
@@ -4740,9 +4758,7 @@ produtos:[
 
   // OFERTAS DO DIA
   const ofertasDia=[
-    {nome:"Kit 3 Bermudas Jeans Masculinas", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp", link:"https://s.shopee.com.br/7Kr2CrUeZV"},
-    {nome:"Fone Bluetooth À Prova D'água", img:"https://down-br.img.susercontent.com/file/sg-11134301-7rd6s-m7i0c05kwmwf29.webp", link:"https://s.shopee.com.br/1gCfVYVSc9"},
-    {nome:"Bolsa Mochila Feminina", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-mcnkdgnxh9flb9.webp", link:"https://s.shopee.com.br/LhHuyzYpU"}
+    {nome:"Kit 3 Bermudas Jeans Masculinas", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp", link:"https://s.shopee.com.br/7Kr2CrUeZV"}
   ];
 
   function renderOfertas(){
