@@ -4891,28 +4891,29 @@ let intervaloOfertas = null;
 
 function renderOfertas() {
   const container = document.getElementById("lista-ofertas");
-  let html = `<div class="ofertas-track">`;
+  let html = "";
 
   ofertasDia.forEach(p => {
     html += `
       <div class="card">
-        <img src="${p.img}" alt="${p.nome}">
+        <img src="${p.img}">
         <h3>${p.nome}</h3>
         <p style="font-size:12px;color:#28a745;">🔥 Oferta imperdível</p>
-        <button onclick="window.open('${p.link}','_blank')">
-          Ver oferta
-        </button>
+        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
       </div>
     `;
   });
 
-  html += `</div>`;
-  container.innerHTML = html;
+  container.innerHTML = `
+    <div class="ofertas-wrapper">
+      <div class="ofertas-track">
+        ${html}
+      </div>
+    </div>
+  `;
 
- container.innerHTML = html;
-iniciarCarrosselInfinito();
-
-
+  iniciarCarrosselInfinito(); // 🔥 AQUI É O PONTO CRÍTICO
+}
 
 /* ===============================
    CARREGAR CATEGORIA
