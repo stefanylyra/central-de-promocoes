@@ -116,6 +116,26 @@
   border: none;
   color: #e85a31;
 }
+/* Ofertas do Dia - layout menor */
+.ofertas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 15px;
+}
+
+.ofertas-grid .card {
+  padding: 12px;
+}
+
+.ofertas-grid .card img {
+  height: 140px;
+  object-fit: cover;
+}
+
+.ofertas-grid .card h3 {
+  font-size: 14px;
+  height: 36px;
+}
 
   </style>
 </head>
@@ -132,7 +152,7 @@
 </header>
 <section id="ofertas-dia">
   <h2>🔥 Ofertas do Dia</h2>
-  <div class="products" id="lista-ofertas"></div>
+  <div class="ofertas-grid" id="lista-ofertas"></div>
 </section>
 
   
@@ -4749,18 +4769,21 @@ const ofertasDia = [
 function renderOfertas() {
   const container = document.getElementById("lista-ofertas");
   let html = "";
+
   ofertasDia.forEach(p => {
     html += `
       <div class="card">
         <img src="${p.img}">
         <h3>${p.nome}</h3>
-        <p style="font-size:13px;color:#28a745;">🔥 Oferta imperdível</p>
+        <p style="font-size:12px;color:#28a745;">🔥 Oferta imperdível</p>
         <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
       </div>
     `;
   });
+
   container.innerHTML = html;
 }
+
 
 renderOfertas();
 
