@@ -1,83 +1,66 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Central de Promoções</title>
-
-
-<style>
-body {
-margin: 0;
-font-family: Arial, sans-serif;
-background: #f5f5f5;
-}
-
-
-/* HEADER */
-header {
-background: #4A90E2;
-color: #fff;
-padding: 20px;
-text-align: center;
-}
-
-
-.search-box input {
-width: 90%;
-max-width: 320px;
-padding: 10px 15px;
-border-radius: 25px;
-border: none;
-margin-top: 10px;
-}
-
-
-/* CATEGORIAS */
-.menu-categorias {
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
-gap: 8px;
-margin-top: 15px;
-}
-
-
-.menu-categorias button {
-background: rgba(255,255,255,0.25);
-border: none;
-color: #fff;
-padding: 8px 14px;
-border-radius: 20px;
-cursor: pointer;
-font-size: 13px;
-}
-
-
-/* PRODUTOS */
-section {
-padding: 30px 20px;
-}
-
-
-.products {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-gap: 20px;
-}
-
-
-.card {
-background: #fff;
-border-radius: 12px;
 padding: 15px;
-box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 text-align: center;
 }
 
 
 .card img {
 width: 100%;
+height: 180px;
+object-fit: cover;
+border-radius: 8px;
+}
+
+
+.whatsapp-card {
+max-width: 360px;
+background: #fff;
+border-radius: 18px;
+padding: 20px;
+margin: 40px auto;
+box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+
+.whatsapp-content {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+
+.whatsapp-content img {
+width: 110px;
+}
+
+
+.whatsapp-btn {
+display: block;
+background: #25D366;
+color: #fff;
+padding: 12px;
+border-radius: 30px;
+text-align: center;
+text-decoration: none;
+font-weight: bold;
+}
+</style>
+</head>
+
+
+<body>
+
+
+<header>
+<h1>Central de Promoções</h1>
+<p>As melhores ofertas para você economizar!</p>
+
+
+<div class="search-box">
+<input id="searchInput" placeholder="🔍 Pesquisar produto..." onkeyup="filtrarProdutos()">
+</div>
+
+
 <nav class="menu-categorias">
 <button onclick="carregarCategoria('roupas-masculinas')">👕 Masculinas</button>
 <button onclick="carregarCategoria('roupas-femininas')">👗 Femininas</button>
@@ -119,18 +102,12 @@ width: 100%;
 </div>
 
 
-<footer>
-Este site participa de programas de afiliados.
-</footer>
-
-
 <script>
 const siteContent = document.getElementById("site-content");
 const searchInput = document.getElementById("searchInput");
 
 
 const categorias = {
-
 "roupas-masculinas":{
 titulo:"👕 Roupas Masculinas",
 produtos:[
@@ -4684,12 +4661,16 @@ produtos:[
 let categoriaAtual = "roupas-masculinas";
 
 
-function renderizar(cat){
+function renderizar(cat) {
 let html = `<section><h2>${cat.titulo}</h2><div class="products">`;
-if(cat.produtos.length === 0){
+
+
+if (cat.produtos.length === 0) {
 html += "<p>Nenhum produto disponível.</p>";
 }
-cat.produtos.forEach(p=>{
+
+
+cat.produtos.forEach(p => {
 html += `
 <div class="card">
 <img src="${p.img}">
@@ -4697,27 +4678,36 @@ html += `
 <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
 </div>`;
 });
+
+
 siteContent.innerHTML = html + "</div></section>";
 }
 
 
-function mudarCategoria(id){
+function mudarCategoria(id) {
 categoriaAtual = id;
 renderizar(categorias[id]);
 }
 
 
-function filtrarProdutos(){
+function filtrarProdutos() {
 const termo = searchInput.value.toLowerCase();
 let resultados = [];
-for(let cat in categorias){
-categorias[cat].produtos.forEach(p=>{
-if(p.nome.toLowerCase().includes(termo)){
+
+
+for (let cat in categorias) {
+categorias[cat].produtos.forEach(p => {
+if (p.nome.toLowerCase().includes(termo)) {
 resultados.push(p);
 }
 });
 }
-renderizar({titulo:"🔍 Resultados da busca", produtos: resultados});
+
+
+renderizar({
+titulo: "🔍 Resultados da busca",
+produtos: resultados
+});
 }
 
 
