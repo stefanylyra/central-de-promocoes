@@ -118,12 +118,6 @@
   color: #e85a31;
 }
 /* Ofertas do Dia - layout menor */
-.ofertas-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 180px));
-  gap: 15px;
-  justify-content: center;
-}
 
 
 .ofertas-grid .card {
@@ -219,8 +213,10 @@
 </header>
 <section id="ofertas-dia">
   <h2>🔥 Ofertas do Dia</h2>
-  <div class="ofertas-grid" id="lista-ofertas"></div>
-  
+
+  <div class="ofertas-wrapper">
+    <div id="lista-ofertas" class="ofertas-track"></div>
+  </div>
 </section>
   
 <section id="mais-clicados">
@@ -4835,19 +4831,25 @@ produtos:[
   ]
 }
 
-
  };
 
-  let atual = "roupas-masculinas";
+let atual = "roupas-masculinas";
 
-  // Gerar botões de categoria
-  const nav = document.getElementById('lista-categorias');
-  categorias.forEach(cat => {
-    const btn = document.createElement('button');
-    btn.textContent = cat.nome;
-    btn.onclick = () => carregar(cat.id);
-    nav.appendChild(btn);
-  });
+/* ===============================
+   GERAR BOTÕES DE CATEGORIA
+================================ */
+const nav = document.getElementById('lista-categorias');
+
+categorias.forEach(cat => {
+  const btn = document.createElement('button');
+  btn.textContent = cat.nome;
+  btn.onclick = () => carregar(cat.id);
+  nav.appendChild(btn);
+});
+
+/* ===============================
+   OFERTAS DO DIA (CARROSSEL)
+================================ */
 const ofertasDia = [
   {
     nome: "Kit 3 Bermudas Jeans Masculinas",
@@ -4855,73 +4857,116 @@ const ofertasDia = [
     link: "https://s.shopee.com.br/7Kr2CrUeZV"
   },
   {
-  nome: "Compre 1 E Ganhe 1 Fone De Ouvido Sem Fio Bluetooth À Prova D'água Com Microfone",
-  img: "https://down-br.img.susercontent.com/file/sg-11134301-7rd6s-m7i0c05kwmwf29.webp",
-  link: "https://s.shopee.com.br/1gCfVYVSc9"
+    nome: "Compre 1 E Ganhe 1 Fone De Ouvido Sem Fio Bluetooth À Prova D'água Com Microfone",
+    img: "https://down-br.img.susercontent.com/file/sg-11134301-7rd6s-m7i0c05kwmwf29.webp",
+    link: "https://s.shopee.com.br/1gCfVYVSc9"
   },
   {
-  nome: "Bolsa Mala Mochila Academia e Viagem Feminina com Alça Transversal",
-  img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mcnkdgnxh9flb9.webp",
-  link: "https://s.shopee.com.br/LhHuyzYpU"
+    nome: "Bolsa Mala Mochila Academia e Viagem Feminina com Alça Transversal",
+    img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mcnkdgnxh9flb9.webp",
+    link: "https://s.shopee.com.br/LhHuyzYpU"
   }
 ];
+
+let indexOferta = 0;
+let intervaloOfertas = null;
+
 function renderOfertas() {
   const container = document.getElementById("lista-ofertas");
-  let html = "";
+  let html = `<div class="ofertas-track">`;
 
   ofertasDia.forEach(p => {
     html += `
       <div class="card">
-        <img src="${p.img}">
+        <img src="${p.img}" alt="${p.nome}">
         <h3>${p.nome}</h3>
         <p style="font-size:12px;color:#28a745;">🔥 Oferta imperdível</p>
-        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+        <button onclick="window.open('${p.link}','_blank')">
+          Ver oferta
+        </button>
       </div>
     `;
   });
 
+  html += `</div>`;
   container.innerHTML = html;
+
+  iniciarCarrosselOfertas();
 }
 
+function iniciarCarrosselOfertas() {
+  const track = document.querySelector(".ofertas-track");
+  const cards = document.querySelectorAll(".ofertas-track .card");
 
-renderOfertas();
+  if (!track || cards.length <= 1) return;
 
-  // Carregar categoria
-  function carregar(cat) {
-    atual = cat;
-    render(dados[cat]);
-  }
+  const cardWidth = cards[0].offsetWidth + 15;
 
-  // Renderizar produtos
-  function render(categoriaObj) {
-    if (!categoriaObj) return;
-    const lista = categoriaObj.produtos;
-    let html = `<section><h2>${categoriaObj.titulo}</h2><div class="products">`;
-    lista.forEach(p => {
-      html += `
-        <div class="card">
-          <img src="${p.img}" alt="${p.nome}">
-          <h3>${p.nome}</h3>
-          <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-        </div>`;
-    });
-    html += `</div></section>`;
-    document.getElementById('conteudo').innerHTML = html;
-  }
-  // Categorias
+  clearInterval(intervaloOfertas);
+
+  intervaloOfertas = setInterval(() => {
+    indexOferta++;
+
+    if (indexOferta >= cards.length) {
+      indexOferta = 0;
+    }
+
+    track.style.transform = `translateX(-${indexOferta * cardWidth}px)`;
+  }, 3000);
+}
+
+/* ===============================
+   CARREGAR CATEGORIA
+================================ */
+function carregar(cat) {
+  atual = cat;
+  render(dados[cat]);
+}
+
+/* ===============================
+   RENDERIZAR PRODUTOS
+================================ */
+function render(categoriaObj) {
+  if (!categoriaObj) return;
+
+  const lista = categoriaObj.produtos;
+  let html = `
+    <section>
+      <h2>${categoriaObj.titulo}</h2>
+      <div class="products">
+  `;
+
+  lista.forEach(p => {
+    html += `
+      <div class="card">
+        <img src="${p.img}" alt="${p.nome}">
+        <h3>${p.nome}</h3>
+        <button onclick="window.open('${p.link}','_blank')">
+          Ver oferta
+        </button>
+      </div>
+    `;
+  });
+
+  html += `
+      </div>
+    </section>
+  `;
+
+  document.getElementById('conteudo').innerHTML = html;
+}
+
+/* ===============================
+   TOGGLE CATEGORIAS (MOBILE)
+================================ */
 function toggleCategorias() {
-  document.getElementById("lista-categorias").classList.toggle("oculto");
+  document.getElementById("lista-categorias")
+    .classList.toggle("oculto");
 }
 
-  // Buscar produtos
- function buscar() {
-  const termo = document.getElementById("search").value.toLowerCase();
-
-  // Se o campo estiver vazio, volta para a categoria atual
-  if (termo === "") {
-    carregar(atual);
-    return;
-  }
+/* ===============================
+   MAIS CLICADOS
+================================ */
 function renderMaisClicados() {
   const container = document.getElementById("lista-mais-clicados");
   let html = "";
@@ -4941,11 +4986,26 @@ function renderMaisClicados() {
 
   container.innerHTML = html;
 }
+
 function rolarMaisClicados(direcao) {
   const carrossel = document.getElementById("lista-mais-clicados");
-  const larguraCard = 220; // largura aproximada do card
+  const larguraCard = 220;
   carrossel.scrollLeft += direcao * larguraCard;
 }
+
+/* ===============================
+   BUSCA
+================================ */
+function buscar() {
+  const termo = document
+    .getElementById("search")
+    .value
+    .toLowerCase();
+
+  if (termo === "") {
+    carregar(atual);
+    return;
+  }
 
   let resultados = [];
 
@@ -4961,7 +5021,7 @@ function rolarMaisClicados(direcao) {
     document.getElementById("conteudo").innerHTML = `
       <section>
         <h2>🔎 Resultados da busca</h2>
-        <p style="text-align:center; font-size:18px; color:#777;">
+        <p style="text-align:center;font-size:18px;color:#777;">
           Nenhum produto encontrado 😕
         </p>
       </section>
@@ -4970,37 +5030,18 @@ function rolarMaisClicados(direcao) {
   }
 
   render({
-    titulo: `🔎 Resultados da busca`,
+    titulo: "🔎 Resultados da busca",
     produtos: resultados
   });
 }
 
-  // Carregar categoria inicial
-  carregar(atual);
-  renderMaisClicados();
+/* ===============================
+   INICIALIZAÇÃO
+================================ */
+renderOfertas();
+carregar(atual);
 renderMaisClicados();
 
 </script>
-<script>
-const track = document.querySelector(".ofertas-track");
-const cards = document.querySelectorAll(".ofertas-track .card");
-
-let index = 0;
-
-function moverCarrossel() {
-  const cardWidth = cards[0].offsetWidth + 15; // largura + gap
-  index++;
-
-  if (index > cards.length - 1) {
-    index = 0;
-  }
-
-  track.style.transform = `translateX(-${index * cardWidth}px)`;
-}
-
-// troca a cada 3 segundos
-setInterval(moverCarrossel, 3000);
-</script>
-
 </body>
 </html>
