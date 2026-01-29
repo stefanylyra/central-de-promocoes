@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💌 Receba Novidades</title>
+
+<style>
+/* ===== BODY ===== */
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f9f9f9;
+  padding-top:70px;
+}
+
+/* ===== HEADER FIXO ===== */
+.header-fixo{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:1000;
+}
+
+.topo-preto{
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 20px;
+}
+
+/* ===== VOLTAR ===== */
+.btn-voltar{
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* ===== SALVOS ===== */
+.salvos-topo{
+  color:#fff;
+  font-weight:bold;
+}
+
+/* ===== CONTEÚDO ===== */
+.container{
+  max-width:500px;
+  margin:40px auto;
+  background:#fff;
+  padding:25px;
+  border-radius:14px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+  text-align:center;
+}
+
+.container h1{
+  margin-bottom:10px;
+}
+
+.container p{
+  font-size:14px;
+  color:#555;
+  margin-bottom:20px;
+}
+
+/* ===== FORM ===== */
+form{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+input[type="email"]{
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:14px;
+}
+
+label{
+  font-size:13px;
+  color:#444;
+  text-align:left;
+}
+
+button{
+  background:#ff6a00;
+  color:#fff;
+  border:none;
+  padding:12px;
+  border-radius:10px;
+  font-size:15px;
+  cursor:pointer;
+}
+
+.mensagem{
+  margin-top:10px;
+  font-size:14px;
+  color:green;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header-fixo">
+  <div class="topo-preto">
+    <span class="btn-voltar" onclick="window.location.href='index.html'">
+      ⬅ Voltar
+    </span>
+
+    <div class="salvos-topo">❤️ Salvos</div>
+  </div>
+</header>
+
+<!-- ===== CONTEÚDO ===== -->
+<div class="container">
+  <h1>💌 Receba novidades</h1>
+  <p>
+    Cadastre seu e-mail para receber promoções exclusivas, cupons e ofertas imperdíveis.
+    <br><strong>Sem spam ❤️</strong>
+  </p>
+
+  <form id="newsletter-form">
+    <input type="email" id="email" placeholder="Seu melhor e-mail" required>
+
+    <label>
+      <input type="checkbox" id="interesses">
+      Quero receber promoções personalizadas
+    </label>
+
+    <button type="submit">Quero receber!</button>
+
+    <div class="mensagem" id="msg"></div>
+  </form>
+</div>
+
+<!-- ===== SCRIPT ===== -->
+<script>
+document.getElementById("newsletter-form").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  document.getElementById("msg").textContent =
+    "Pronto! Em breve você começará a receber nossas promoções 😄";
+
+  this.reset();
+});
+</script>
+
+</body>
+</html>
