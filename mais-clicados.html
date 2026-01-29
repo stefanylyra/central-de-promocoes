@@ -6,16 +6,19 @@
 <title>Mais Clicados</title>
 
 <style>
-  
-  .btn-voltar{
-  color:#fff;
-  font-size:22px;
-  cursor:pointer;
+/* ===== RESET ===== */
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f9f9f9;
+  padding-top:70px; /* espaço pro header fixo */
 }
 
-  .header-fixo{
+/* ===== HEADER FIXO ===== */
+.header-fixo{
   position:fixed;
   top:0;
+  left:0;
   width:100%;
   z-index:1000;
 }
@@ -28,55 +31,27 @@
   padding:12px 20px;
 }
 
-.espaco-logo{width:120px;}
-
-.busca-topo{
-  flex:1;
-  display:flex;
-  justify-content:center;
-}
-
-.busca-topo input{
-  width:60%;
-  max-width:420px;
-  padding:10px;
-  border-radius:6px;
-  border:none;
-}
-
-.salvos-topo{
+/* ===== BOTÃO VOLTAR ===== */
+.btn-voltar{
   color:#fff;
-  font-weight:bold;
-}
-
-.barra-cinza{
-  background:#2b2b2b;
-  padding:8px 20px;
-  display:flex;
-  gap:10px;
-}
-
-.barra-cinza button{
-  background:#fff;
-  color:#000;
-  border:none;
-  border-radius:20px;
-  padding:6px 14px;
+  font-size:16px;
   cursor:pointer;
 }
 
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f9f9f9;
-  padding-top:20px;
+/* ===== SALVOS ===== */
+.salvos-topo{
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
 }
 
+/* ===== TÍTULO ===== */
 h1{
   text-align:center;
-  margin-bottom:20px;
+  margin:20px 0;
 }
 
+/* ===== GRID DE CARDS ===== */
 .carrossel{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
@@ -84,6 +59,7 @@ h1{
   padding:20px;
 }
 
+/* ===== CARD ===== */
 .card{
   background:#fff;
   border-radius:12px;
@@ -105,12 +81,14 @@ h1{
   margin:8px 0;
 }
 
+/* ===== ESTRELAS ===== */
 .estrelas{
   color:#ffc107;
   font-size:12px;
 }
 
-button{
+/* ===== BOTÃO ===== */
+.card button{
   background:#ff6a00;
   color:#fff;
   border:none;
@@ -123,36 +101,24 @@ button{
 </head>
 
 <body>
-  <header class="header-fixo">
 
- <div class="topo-preto">
+<!-- ===== HEADER ===== -->
+<header class="header-fixo">
+  <div class="topo-preto">
+    <span class="btn-voltar" onclick="window.location.href='index.html'">
+      ⬅ Voltar
+    </span>
 
-  <span class="btn-voltar" onclick="window.location.href='index.html'">
-    ⬅ Voltar
-  </span>
-
-  <div class="salvos-topo">❤️ Salvos</div>
-
-</div>
-
+    <div class="salvos-topo">❤️ Salvos</div>
+  </div>
 </header>
 
-<button onclick="window.location.href='index.html'" style="
-  margin:15px;
-  background:#000;
-  color:#fff;
-  border:none;
-  padding:8px 14px;
-  border-radius:6px;
-  cursor:pointer;
-">
-  ⬅ Voltar
-</button>
-
+<!-- ===== CONTEÚDO ===== -->
 <h1>❤️ Mais clicados</h1>
 
 <div class="carrossel" id="lista-mais-clicados"></div>
 
+<!-- ===== SCRIPT ===== -->
 <script>
 const maisClicados = [
   {
@@ -167,10 +133,12 @@ const container = document.getElementById("lista-mais-clicados");
 maisClicados.forEach(p=>{
   container.innerHTML += `
     <div class="card">
-      <img src="${p.img}">
+      <img src="${p.img}" alt="${p.nome}">
       <h3>${p.nome}</h3>
       <p class="estrelas">⭐⭐⭐⭐☆</p>
-      <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+      <button onclick="window.open('${p.link}','_blank')">
+        Ver oferta
+      </button>
     </div>
   `;
 });
@@ -178,4 +146,3 @@ maisClicados.forEach(p=>{
 
 </body>
 </html>
-
