@@ -6,29 +6,17 @@
 <title>Central de Promoções</title>
 
 <style>
-  <header class="header-fixo">
+/* ===== BODY ===== */
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f9f9f9;
+  color:#333;
+  padding-top:130px;
+}
+a{text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
 
-  <!-- TOPO PRETO -->
-  <div class="topo-preto">
-    <span class="btn-voltar" onclick="window.location.href='index.html'">⬅</span>
-
-    <div class="busca-topo">
-      <input type="text" id="search" placeholder="Buscar produtos..." oninput="buscar()">
-    </div>
-
-    <div class="salvos-topo" onclick="window.location.href='salvos.html'">❤️ Salvos</div>
-  </div>
-
-  <!-- BARRA CINZA -->
-  <div class="barra-cinza">
-    <button onclick="toggleCategorias()">☰ Categorias</button>
-    <button onclick="window.location.href='ofertas.html'">Ofertas do dia</button>
-    <button onclick="window.location.href='mais-clicados.html'">Mais clicados</button>
-    <button onclick="window.location.href='novidades.html'">Receba novidades</button>
-  </div>
-
-  <!-- LISTA DE CATEGORIAS OCULTA -->
-  <div id="lista-categorias" class="categorias oculto"></div>
 /* ===== HEADER FIXO ===== */
 .header-fixo{
   position:fixed;
@@ -44,7 +32,7 @@
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:42px 20px; /* altura aumentada */
+  padding:12px 20px;
 }
 
 .espaco-logo{
@@ -94,16 +82,215 @@
   color:#fff;
 }
 
-/* ===== BODY ===== */
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f9f9f9;
-  color:#333;
-  padding-top:92px + 42px + 8px; /* ajuste: topo-preto + barra-cinza */
+/* ===== CATEGORIAS ===== */
+.categorias{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  padding:10px;
+  justify-content:center;
+  background:#eee;
 }
+.categorias button{
+  background:#000;
+  color:#fff;
+  border:none;
+  padding:6px 12px;
+  border-radius:14px;
+}
+.oculto{display:none;}
+
+/* ===== SECTIONS ===== */
+section{padding:40px 20px;}
+h2{
+  border-bottom:2px solid #000;
+  padding-bottom:5px;
+}
+
+/* ===== CARDS ===== */
+.ofertas-track,.carrossel{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+}
+
+.card{
+  background:#fff;
+  border-radius:12px;
+  padding:14px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  text-align:center;
+  position:relative;
+}
+
+.card img{
+  height:160px;
+  object-fit:contain;
+  background:#f5f5f5;
+  padding:10px;
+  width:100%;
+}
+
+.card h3{
+  font-size:14px;
+  margin:8px 0;
+}
+
+.precos{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin:6px 0;
+}
+
+.preco-antigo{
+  color:#999;
+  text-decoration:line-through;
+  font-size:13px;
+}
+
+.preco-novo{
+  color:#e63946;
+  font-weight:bold;
+  font-size:17px;
+}
+
+.oferta{
+  background:#e8f5e9;
+  color:#2e7d32;
+  padding:3px 8px;
+  border-radius:12px;
+  font-size:11px;
+}
+
+.estrelas{
+  color:#ffc107;
+  font-size:12px;
+}
+
+.card button{
+  background:#ff6a00;
+  color:#fff;
+  border:none;
+  padding:9px;
+  border-radius:8px;
+  margin-top:8px;
+  width:100%;
+}
+
+/* ===== FAVORITO ===== */
+.favorito{
+  position:absolute;
+  top:10px;
+  right:10px;
+  font-size:20px;
+}
+.favorito-ativo{color:red;}
+
+/* ===== CARROSSEL ===== */
+.carrossel-wrapper{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.carrossel{
+  overflow-x:auto;
+  display:flex;
+  gap:15px;
+  scroll-behavior:smooth;
+}
+.carrossel::-webkit-scrollbar{display:none;}
+.carrossel-btn{
+  background:#000;
+  color:#fff;
+  border:none;
+  padding:8px;
+  border-radius:50%;
+}
+
+/* ===== NEWSLETTER ===== */
+#newsletter-form{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+#newsletter-form input{
+  padding:8px;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+#newsletter-form button{
+  background:#ff6a00;
+  color:#fff;
+  border:none;
+  padding:8px 12px;
+  border-radius:6px;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  text-align:center;
+  background:#eee;
+  padding:15px;
+  font-size:14px;
+}
+
+/* ===== WHATSAPP ===== */
+.whatsapp-container{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+}
+.whatsapp-float{
+  background:#25D366;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.whatsapp-float img{width:34px;}
+</style>
+</head>
+
+<body>
+
+<header class="header-fixo">
+
+  <div class="topo-preto">
+    <div class="espaco-logo"></div>
+
+    <div class="busca-topo">
+      <input type="text" id="search" placeholder="Buscar produtos..." oninput="buscar()">
+    </div>
+
+    <div class="salvos-topo">❤️ Salvos</div>
+  </div>
+
+  <div class="barra-cinza">
+    <button onclick="toggleCategorias()">☰ Categorias</button>
+    <button onclick="window.location.href='ofertas.html'">ofertas do dia</button>
+   <button onclick="window.location.href='mais-clicados.html'">Mais clicados</button>
+    <button onclick="document.getElementById('newsletter').scrollIntoView()">receba novidades</button>
+  </div>
+
+  <div id="lista-categorias" class="categorias oculto"></div>
+
 </header>
+
 <!-- FORMULÁRIO NEWSLETTER -->
+<section>
+  <h2>💌 Receba novidades e promoções</h2>
+  <form id="newsletter-form">
+    <input type="email" id="email" placeholder="Seu melhor e-mail" required>
+    <label><input type="checkbox" id="interesses"> Receber promoções segmentadas</label>
+    <button type="submit">Quero receber!</button>
+    <p id="newsletter-msg"></p>
+  </form>
+  <p style="text-align:center;font-size:12px;color:#555;">Seu e-mail será usado apenas para envio de promoções exclusivas. Nenhum spam.</p>
+</section>
 
 <div id="conteudo"></div>
 
@@ -156,7 +343,6 @@ body{
 titulo:"👕 Roupas Masculinas",
 produtos:[
 {
-id: "bermuda-jeans-01",
 nome:"Kit 3 Bermudas Jeans Masculinas Lisa",
 img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp",
 link:"https://s.shopee.com.br/7Kr2CrUeZV",
@@ -4977,36 +5163,18 @@ function buscar(){
 }
 
 /* ================== FAVORITOS ================== */
-function toggleFavorito(id, el){
-  let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
-
-  if(salvos.includes(id)){
-    salvos = salvos.filter(item => item !== id);
-    el.classList.remove("favorito-ativo");
-    el.innerText = "♡";
-  }else{
-    salvos.push(id);
-    el.classList.add("favorito-ativo");
-    el.innerText = "❤️";
-  }
-
-  localStorage.setItem("salvos", JSON.stringify(salvos));
+function toggleFavorito(id){
+  let favs=JSON.parse(localStorage.getItem("favoritos")||"[]");
+  favs.includes(id)?favs=favs.filter(x=>x!==id):favs.push(id);
+  localStorage.setItem("favoritos",JSON.stringify(favs));
+  atualizarFavoritos();
 }
 
-function marcarSalvos(){
-  const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
-
-  document.querySelectorAll(".card").forEach(card => {
-    const id = card.dataset.id;
-    const fav = card.querySelector(".favorito");
-
-    if(salvos.includes(id)){
-      fav.classList.add("favorito-ativo");
-      fav.innerText = "❤️";
-    } else {
-      fav.classList.remove("favorito-ativo");
-      fav.innerText = "♡";
-    }
+function atualizarFavoritos(){
+  const favs=JSON.parse(localStorage.getItem("favoritos")||"[]");
+  document.querySelectorAll(".favorito").forEach(el=>{
+    const id=el.getAttribute("onclick").match(/'(.+)'/)[1];
+    el.classList.toggle("favorito-ativo",favs.includes(id));
   });
 }
 
@@ -5053,3 +5221,4 @@ if(localStorage.getItem("cookiesAccepted")) banner.style.display="none";
 </script>
 </body>
 </html>
+
