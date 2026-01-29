@@ -271,7 +271,7 @@ footer{
 
   <div class="barra-cinza">
     <button onclick="toggleCategorias()">☰ Categorias</button>
-    <button onclick="document.getElementById('ofertas-dia').scrollIntoView()">ofertas do dia</button>
+    <button onclick="window.location.href='ofertas.html'">ofertas do dia</button>
     <button onclick="document.getElementById('mais-clicados').scrollIntoView()">Mais clicados</button>
     <button onclick="document.getElementById('newsletter').scrollIntoView()">receba novidades</button>
   </div>
@@ -279,14 +279,6 @@ footer{
   <div id="lista-categorias" class="categorias oculto"></div>
 
 </header>
-
-
-<section id="ofertas-dia">
-  <h2>🔥 Ofertas do Dia</h2>
-  <div class="ofertas-wrapper">
-    <div id="lista-ofertas" class="ofertas-track"></div>
-  </div>
-</section>
 
 <section id="mais-clicados">
   <h2>❤️ Mais clicados</h2>
@@ -5218,7 +5210,6 @@ function rolarMaisClicados(dir){
 }
 
 /* ================== INIT ================== */
-renderOfertas();
 carregarCategoria(categoriaAtual);
 
 /* ================== NEWSLETTER ================== */
