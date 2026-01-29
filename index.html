@@ -6,22 +6,9 @@
 <title>Central de Promoções</title>
 
 <style>
-/* ===== BODY ===== */
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f9f9f9;
-  color:#333;
-  padding-top:130px;
-}
-a{text-decoration:none;}
-button{font-family:inherit;cursor:pointer;}
-
-/* ===== HEADER FIXO ===== */
-.header-fixo{
+  .header-fixo{
   position:fixed;
   top:0;
-  left:0;
   width:100%;
   z-index:1000;
 }
@@ -32,12 +19,10 @@ button{font-family:inherit;cursor:pointer;}
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:12px 20px;
+  padding:42px 20px; /* altura aumentada */
 }
 
-.espaco-logo{
-  width:120px;
-}
+.espaco-logo{width:120px;}
 
 .busca-topo{
   flex:1;
@@ -81,6 +66,17 @@ button{font-family:inherit;cursor:pointer;}
   background:#ff6a00;
   color:#fff;
 }
+
+/* ===== BODY ===== */
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f9f9f9;
+  color:#333;
+  padding-top:92px + 42px + 8px; /* ajuste: topo-preto + barra-cinza */
+}
+a{text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
 
 /* ===== CATEGORIAS ===== */
 .categorias{
@@ -256,42 +252,33 @@ footer{
 </head>
 
 <body>
-
 <header class="header-fixo">
 
+  <!-- TOPO PRETO -->
   <div class="topo-preto">
-    <div class="espaco-logo"></div>
+    <span class="btn-voltar" onclick="window.location.href='index.html'">⬅</span>
 
     <div class="busca-topo">
       <input type="text" id="search" placeholder="Buscar produtos..." oninput="buscar()">
     </div>
 
-    <div class="salvos-topo">❤️ Salvos</div>
+    <div class="salvos-topo" onclick="window.location.href='salvos.html'">❤️ Salvos</div>
   </div>
 
+  <!-- BARRA CINZA -->
   <div class="barra-cinza">
     <button onclick="toggleCategorias()">☰ Categorias</button>
-    <button onclick="window.location.href='ofertas.html'">ofertas do dia</button>
-   <button onclick="window.location.href='mais-clicados.html'">Mais clicados</button>
-    <button onclick="document.getElementById('newsletter').scrollIntoView()">receba novidades</button>
+    <button onclick="window.location.href='ofertas.html'">Ofertas do dia</button>
+    <button onclick="window.location.href='mais-clicados.html'">Mais clicados</button>
+    <button onclick="window.location.href='novidades.html'">Receba novidades</button>
   </div>
 
+  <!-- LISTA DE CATEGORIAS OCULTA -->
   <div id="lista-categorias" class="categorias oculto"></div>
 
 </header>
 
 <!-- FORMULÁRIO NEWSLETTER -->
-<section>
-  <h2>💌 Receba novidades e promoções</h2>
-  <form id="newsletter-form">
-    <input type="email" id="email" placeholder="Seu melhor e-mail" required>
-    <label><input type="checkbox" id="interesses"> Receber promoções segmentadas</label>
-    <button type="submit">Quero receber!</button>
-    <p id="newsletter-msg"></p>
-  </form>
-  <p style="text-align:center;font-size:12px;color:#555;">Seu e-mail será usado apenas para envio de promoções exclusivas. Nenhum spam.</p>
-</section>
-
 <div id="conteudo"></div>
 
 <footer>
@@ -317,6 +304,65 @@ footer{
 <script>
   // ================= SCRIPT CATEGORIAS E PRODUTOS =================
   const categorias = [
+    {id: "roupas-masculinas", nome: "👕 Masculinas"},
+    {id: "roupas-femininas", nome: "👗 Femininas"},
+    {id: "plus-size", nome: "👚 Plus Size"},
+    {id: "relogios", nome: "⌚ Relógios"},
+    {id: "moda-infantil", nome: "🧒 Infantil"},
+    {id: "mae-bebe", nome: "🤱 Mãe & Bebê"},
+    {id: "acessorios", nome: "💎 Acessórios"},
+    {id: "bolsas-femininas", nome: "👝 Bolsas Fem."},
+    {id: "bolsas-masculinas", nome: "🎒 Bolsas Masc."},
+    {id: "viagens-bagagens", nome: "🧳 Itens de Viagem"},
+    {id: "fones", nome: "🎧 Fones de Ouvido"},
+    {id: "beleza", nome: "💄 Beleza"},
+    {id: "papelaria", nome: "✏️ Papelaria"},
+    {id: "casa-construcao", nome: "🏠 Casa e Construção"},
+    {id: "limpeza", nome: "🧼 Limpeza"},
+    {id: "sapatos", nome: "👟 Sapatos"},
+    {id: "brinquedos", nome: "🧸 Brinquedos"},
+    {id: "pets", nome: "🐶 Espaço Pets"}
+  ];
+
+  const dados = {
+"roupas-masculinas":{
+titulo:"👕 Roupas Masculinas",
+produtos:[
+{
+id: "bermuda-jeans-01",
+nome:"Kit 3 Bermudas Jeans Masculinas Lisa",
+img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp",
+link:"https://s.shopee.com.br/7Kr2CrUeZV",
+precoAntigo: "189,90",
+precoNovo: "134,19"
+   }
+    ]
+  }
+};
+
+let categoriaAtual = "roupas-masculinas";
+
+const nav = document.getElementById("lista-categorias");
+
+categorias.forEach(cat=>{
+  const btn=document.createElement("button");
+  btn.textContent=cat.nome;
+  btn.onclick=()=>carregarCategoria(cat.id);
+  nav.appendChild(btn);
+});
+
+function toggleCategorias(){
+  nav.classList.toggle("oculto");
+}
+
+function carregarCategoria(id){
+  categoriaAtual=id;
+  renderProdutos(dados[id]);
+}
+
+function renderProdutos(cat){
+  if(!cat) return;
+  let html=`<section>
     {id: "roupas-masculinas", nome: "👕 Masculinas"},
     {id: "roupas-femininas", nome: "👗 Femininas"},
     {id: "plus-size", nome: "👚 Plus Size"},
@@ -5095,7 +5141,6 @@ produtos:[
 
 let categoriaAtual = "roupas-masculinas";
 
-/* ================== MENU CATEGORIAS ================== */
 const nav = document.getElementById("lista-categorias");
 
 categorias.forEach(cat=>{
@@ -5109,7 +5154,6 @@ function toggleCategorias(){
   nav.classList.toggle("oculto");
 }
 
-/* ================== RENDER PRODUTOS ================== */
 function carregarCategoria(id){
   categoriaAtual=id;
   renderProdutos(dados[id]);
@@ -5141,7 +5185,6 @@ function renderProdutos(cat){
   atualizarFavoritos();
 }
 
-/* ================== BUSCA ================== */
 function buscar(){
   const termo=document.getElementById("search").value.toLowerCase();
   if(!termo){carregarCategoria(categoriaAtual);return;}
@@ -5162,23 +5205,39 @@ function buscar(){
   renderProdutos({titulo:"🔎 Resultados",produtos:resultados});
 }
 
-/* ================== FAVORITOS ================== */
-function toggleFavorito(id){
-  let favs=JSON.parse(localStorage.getItem("favoritos")||"[]");
-  favs.includes(id)?favs=favs.filter(x=>x!==id):favs.push(id);
-  localStorage.setItem("favoritos",JSON.stringify(favs));
-  atualizarFavoritos();
+function toggleFavorito(id, el){
+  let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+
+  if(salvos.includes(id)){
+    salvos = salvos.filter(item => item !== id);
+    el.classList.remove("favorito-ativo");
+    el.innerText = "♡";
+  }else{
+    salvos.push(id);
+    el.classList.add("favorito-ativo");
+    el.innerText = "❤️";
+  }
+
+  localStorage.setItem("salvos", JSON.stringify(salvos));
 }
 
-function atualizarFavoritos(){
-  const favs=JSON.parse(localStorage.getItem("favoritos")||"[]");
-  document.querySelectorAll(".favorito").forEach(el=>{
-    const id=el.getAttribute("onclick").match(/'(.+)'/)[1];
-    el.classList.toggle("favorito-ativo",favs.includes(id));
+function marcarSalvos(){
+  const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+
+  document.querySelectorAll(".card").forEach(card => {
+    const id = card.dataset.id;
+    const fav = card.querySelector(".favorito");
+
+    if(salvos.includes(id)){
+      fav.classList.add("favorito-ativo");
+      fav.innerText = "❤️";
+    } else {
+      fav.classList.remove("favorito-ativo");
+      fav.innerText = "♡";
+    }
   });
 }
 
-/* ================== OFERTAS DO DIA ================== */
 const ofertasDia = dados["roupas-masculinas"].produtos;
 
 function renderOfertas(){
@@ -5194,16 +5253,13 @@ function renderOfertas(){
   });
 }
 
-/* ================== MAIS CLICADOS ================== */
 function rolarMaisClicados(dir){
   document.getElementById("lista-mais-clicados")
   .scrollBy({left:dir*220,behavior:"smooth"});
 }
 
-/* ================== INIT ================== */
 carregarCategoria(categoriaAtual);
 
-/* ================== NEWSLETTER ================== */
 document.getElementById("newsletter-form").addEventListener("submit",e=>{
   e.preventDefault();
   document.getElementById("newsletter-msg").textContent=
@@ -5211,7 +5267,6 @@ document.getElementById("newsletter-form").addEventListener("submit",e=>{
   e.target.reset();
 });
 
-/* ================== COOKIES ================== */
 const banner=document.getElementById("cookie-banner");
 document.getElementById("cookie-ok").onclick=()=>{
   banner.style.display="none";
@@ -5221,4 +5276,3 @@ if(localStorage.getItem("cookiesAccepted")) banner.style.display="none";
 </script>
 </body>
 </html>
-
