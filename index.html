@@ -272,22 +272,13 @@ footer{
   <div class="barra-cinza">
     <button onclick="toggleCategorias()">☰ Categorias</button>
     <button onclick="window.location.href='ofertas.html'">ofertas do dia</button>
-    <button onclick="document.getElementById('mais-clicados').scrollIntoView()">Mais clicados</button>
+   <button onclick="window.location.href='mais-clicados.html'">Mais clicados</button>
     <button onclick="document.getElementById('newsletter').scrollIntoView()">receba novidades</button>
   </div>
 
   <div id="lista-categorias" class="categorias oculto"></div>
 
 </header>
-
-<section id="mais-clicados">
-  <h2>❤️ Mais clicados</h2>
-  <div class="carrossel-wrapper">
-    <button class="carrossel-btn" onclick="rolarMaisClicados(-1)">⬅️</button>
-    <div class="carrossel" id="lista-mais-clicados"></div>
-    <button class="carrossel-btn" onclick="rolarMaisClicados(1)">➡️</button>
-  </div>
-</section>
 
 <!-- FORMULÁRIO NEWSLETTER -->
 <section>
