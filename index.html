@@ -1,168 +1,178 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Central de Promoções</title>
+
 <style>
-  body {
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f9f9f9;
-    color:#333;
-    padding-top:140px;
-  }
-  a{text-decoration:none;}
-  button{font-family:inherit;}
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f5f5f5;
+}
+header{
+  background:#111;
+  color:#fff;
+  padding:15px;
+  text-align:center;
+}
+header input{
+  width:90%;
+  max-width:400px;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+}
+nav{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:10px;
+  background:#fff;
+}
+nav button{
+  padding:8px 14px;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+  background:#eee;
+}
+nav button:hover{background:#ddd;}
 
-  /* HEADER FIXO */
-  header {
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    background:#4A90E2;
-    color:white;
-    padding:15px 20px;
-    z-index:100;
-    box-shadow:0 2px 6px rgba(0,0,0,0.1);
-  }
-  header h1{margin:0;font-size:22px;}
-  header p{margin:4px 0 0 0;font-size:14px;}
+section{padding:20px;}
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+}
+.card{
+  background:#fff;
+  padding:10px;
+  border-radius:12px;
+  position:relative;
+}
+.card img{
+  width:100%;
+  border-radius:10px;
+}
+.card h3{font-size:16px;}
+.oferta{color:#e53935;font-weight:bold;}
+.estrelas{color:#fbc02d;}
 
-  /* MENU CATEGORIAS */
-  .menu-categorias{margin-top:10px;text-align:center;}
-  .btn-categorias{background:#ffffff;color:#4A90E2;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.15);margin-bottom:8px;}
-  .categorias{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:10px;}
-  .categorias button{background:#4A90E2;color:white;border:none;padding:6px 10px;border-radius:12px;cursor:pointer;font-size:14px;transition:background 0.3s;}
-  .categorias button:hover{background:#3672b0;}
-  .oculto{display:none;}
+.favorito{
+  position:absolute;
+  top:10px;
+  right:10px;
+  cursor:pointer;
+  font-size:20px;
+}
+.favorito-ativo{color:red;}
 
-  /* SEARCH BAR */
-  .search-bar{margin:10px auto 0;display:flex;align-items:center;justify-content:center;}
-  .search-bar input{padding:8px;width:250px;border-radius:6px;border:1px solid #ccc;outline:none;}
+button{
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:#111;
+  color:#fff;
+  cursor:pointer;
+}
 
-  /* SECTIONS */
-  section{padding:40px 20px;}
-  h2{border-bottom:2px solid #4A90E2;padding-bottom:5px;margin-bottom:15px;color:#333;}
+footer{
+  background:#111;
+  color:#fff;
+  padding:30px 15px;
+  text-align:center;
+}
 
-  /* CARDS PRODUTOS */
-  .products,.ofertas-track,.carrossel{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));position:relative;}
-  .card{background:white;border-radius:12px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,0.1);text-align:center;transition:transform 0.3s,box-shadow 0.3s;position:relative;}
-  .card:hover{transform:translateY(-5px);box-shadow:0 8px 12px rgba(0,0,0,0.2);}
-  .card img{width:100%;border-radius:8px;margin-bottom:10px;}
-  .card h3{font-size:16px;margin:10px 0;height:40px;overflow:hidden;}
-  .card button{margin-top:10px;background:#FF6A3D;color:white;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%;transition:background-color 0.3s;}
-  .card button:hover{background:#e85a31;}
-  .card p.oferta{font-size:12px;color:#28a745;margin:5px 0;}
-  .card p.estrelas{font-size:12px;color:#FFC107;margin:5px 0;}
+/* COOKIES */
+#cookie-banner{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#222;
+  color:#fff;
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:999;
+}
+#cookie-banner button{
+  width:auto;
+  background:#4caf50;
+}
 
-  /* CORAÇÃO FAVORITO */
-  .favorito {
-    position:absolute;
-    top:12px;
-    right:12px;
-    font-size:22px;
-    cursor:pointer;
-    transition: transform 0.2s;
-  }
-  .favorito:hover {
-    transform: scale(1.2);
-  }
-  .favorito-ativo {
-    color:#FF6A3D;
-    transform: scale(1.3);
-  }
-
-  /* OFERTAS DO DIA */
-  .ofertas-wrapper{overflow:hidden;width:100%;}
-  #lista-ofertas{display:flex;gap:15px;transition:transform 0.6s ease;}
-  .ofertas-track .card img{height:140px;object-fit:cover;}
-
-  /* CARROSSEL MAIS CLICADOS */
-  .carrossel-wrapper{display:flex;align-items:center;gap:10px;}
-  .carrossel-btn{background:#4A90E2;color:white;border:none;padding:10px;border-radius:50%;cursor:pointer;}
-  .carrossel{display:flex;gap:15px;overflow-x:auto;scroll-behavior:smooth;padding:10px 0;}
-  .carrossel::-webkit-scrollbar{display:none;}
-  @media(max-width:768px){.carrossel-btn{display:none;}}
-
-  /* FOOTER */
-  footer{text-align:center;padding:15px;background:#f0f0f0;color:#555;font-size:14px;margin-top:40px;}
-
-  /* WHATSAPP FLUTUANTE */
-  .whatsapp-container{position:fixed;bottom:20px;right:20px;z-index:1000;display:flex;flex-direction:column;align-items:center;text-align:center;animation:pulse-container 2s infinite;}
-  .whatsapp-text{background-color:#25D366;color:white;font-weight:bold;padding:5px 10px;border-radius:20px;margin-bottom:8px;font-size:14px;box-shadow:0 4px 8px rgba(0,0,0,0.2);animation:pulse-text 2s infinite;}
-  .whatsapp-float{width:60px;height:60px;border-radius:50%;background-color:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 8px rgba(0,0,0,0.2);transition:transform 0.2s;cursor:pointer;animation:pulse-button 2s infinite;}
-  .whatsapp-float img{width:35px;height:35px;}
-  .whatsapp-float:hover{transform:scale(1.1);}
-  @keyframes pulse-button{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
-  @keyframes pulse-text{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
-  @keyframes pulse-container{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
-  @media(max-width:768px){.whatsapp-container{bottom:15px;right:15px;}.whatsapp-text{font-size:12px;padding:4px 8px;}.whatsapp-float{width:50px;height:50px;}.whatsapp-float img{width:28px;height:28px;}}
+/* NEWSLETTER */
+#newsletter-final{
+  background:#fff;
+  padding:25px;
+  border-radius:15px;
+  max-width:400px;
+  margin:40px auto;
+}
+#newsletter-final input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+}
 </style>
 </head>
+
 <body>
 
 <header>
-  <h1>Central de Promoções</h1>
-  <p>As melhores ofertas para você economizar!</p>
-
-  <div class="menu-categorias">
-    <button class="btn-categorias" onclick="toggleCategorias()">☰ Categorias</button>
-    <div id="lista-categorias" class="categorias oculto"></div>
-  </div>
-
-  <div class="search-bar">
-    <span>🔎</span>
-    <input type="text" id="search" placeholder="Buscar produtos..." oninput="buscar()">
-  </div>
+  <h1>🔥 Central de Promoções</h1>
+  <input type="text" id="search" placeholder="Buscar ofertas..." onkeyup="buscar()">
 </header>
 
-<section id="ofertas-dia">
-  <h2>🔥 Ofertas do Dia</h2>
-  <div class="ofertas-wrapper">
-    <div id="lista-ofertas" class="ofertas-track"></div>
-  </div>
-</section>
-
-<section id="mais-clicados">
-  <h2>❤️ Mais clicados</h2>
-  <div class="carrossel-wrapper">
-    <button class="carrossel-btn" onclick="rolarMaisClicados(-1)">⬅️</button>
-    <div class="carrossel" id="lista-mais-clicados"></div>
-    <button class="carrossel-btn" onclick="rolarMaisClicados(1)">➡️</button>
-  </div>
-</section>
+<nav id="lista-categorias"></nav>
 
 <div id="conteudo"></div>
 
-<!-- NEWSLETTER FINAL -->
-<section id="newsletter-final" style="max-width:800px;margin:30px auto;padding:20px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.08);text-align:center;">
-  <h2>💌 Receba novidades e promoções</h2>
-  <form id="newsletter-form-final">
-    <input type="email" id="email-final" placeholder="Seu melhor e-mail" required style="padding:10px;border-radius:8px;border:1px solid #ccc;width:70%;max-width:300px;">
-    <label style="display:block;margin-top:10px;font-size:14px;">
-      <input type="checkbox" id="interesses-final"> Receber promoções segmentadas
-    </label>
-    <button type="submit" style="margin-top:12px;padding:10px 18px;border:none;border-radius:8px;background:#FF6A3D;color:white;font-weight:bold;cursor:pointer;transition:all 0.3s;">Quero receber!</button>
-    <p id="newsletter-msg-final" style="font-size:12px;margin-top:8px;color:#555;">Seu e-mail será usado apenas para envio de promoções exclusivas. Nenhum spam.</p>
-  </form>
+<section>
+  <h2>🔥 Ofertas do Dia</h2>
+  <div class="products" id="lista-ofertas"></div>
 </section>
 
+<section>
+  <h2>⭐ Mais Clicados</h2>
+  <div class="products" id="lista-mais-clicados"></div>
+</section>
+
+<!-- NEWSLETTER FINAL -->
+<div id="newsletter-final">
+  <h2>💌 Receba novidades e promoções</h2>
+  <form id="newsletter-form-final">
+    <input type="email" id="email-final" placeholder="Seu melhor e-mail" required>
+    <label>
+      <input type="checkbox" id="interesses-final"> Receber promoções segmentadas
+    </label>
+    <button type="submit">Quero receber!</button>
+    <p id="newsletter-msg-final"></p>
+  </form>
+  <p style="font-size:12px;color:#555;">
+    Seu e-mail será usado apenas para envio de promoções exclusivas. Nenhum spam.
+  </p>
+</div>
+
 <footer>
-  <p>Somos um site de afiliados. Ao comprar pelos links você nos ajuda a continuar trazendo promoções e ofertas imperdíveis — sem nenhum custo extra ❤️.</p>
-  <p>Site afiliado • Central de Promoções</p>
+<p>
+Somos um site de afiliados. Ao comprar pelos links você nos ajuda a continuar trazendo promoções e ofertas imperdíveis — sem nenhum custo extra ❤️
+<br><br>
+Site afiliado • Central de Promoções
+</p>
 </footer>
 
-<!-- BOTÃO WHATSAPP -->
-<div class="whatsapp-container">
-  <div class="whatsapp-text">💬 Entre no nosso grupo do WhatsApp!</div>
-  <a href="https://chat.whatsapp.com/JgiOFb5n2CWKNzsoNADvWt" target="_blank" class="whatsapp-float" onclick="return avisoWhatsApp()">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-  </a>
+<!-- COOKIES -->
+<div id="cookie-banner">
+  Usamos cookies para melhorar sua experiência.
+  <button id="cookie-ok">Ok</button>
 </div>
 
 <script>
+// ===== DADOS =====
 const categorias = [
     {id: "roupas-masculinas", nome: "👕 Masculinas"},
     {id: "roupas-femininas", nome: "👗 Femininas"},
@@ -4734,177 +4744,108 @@ produtos:[
     }
   };
 
-let atual = "roupas-masculinas";
 
-// FAVORITOS
+const ofertasDia = dados["roupas-masculinas"].produtos;
+const maisClicados = dados["relogios"].produtos;
+
+let atual="relogios";
+
+// ===== FAVORITOS =====
 let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+
 function toggleFavorito(id){
-  const cardCoracao = document.querySelector(`.card[data-id='${id}'] .favorito`);
-  if(favoritos.includes(id)){
-    favoritos = favoritos.filter(i => i !== id);
-    cardCoracao.classList.remove("favorito-ativo");
-  } else {
-    favoritos.push(id);
-    cardCoracao.classList.add("favorito-ativo");
-  }
-  localStorage.setItem("favoritos", JSON.stringify(favoritos));
-}
-function carregarFavoritos(){
-  favoritos.forEach(id => {
-    const cardCoracao = document.querySelector(`.card[data-id='${id}'] .favorito`);
-    if(cardCoracao) cardCoracao.classList.add("favorito-ativo");
-  });
+ const el=document.querySelector(`.card[data-id='${id}'] .favorito`);
+ if(favoritos.includes(id)){
+  favoritos=favoritos.filter(i=>i!==id);
+  el.classList.remove("favorito-ativo");
+ }else{
+  favoritos.push(id);
+  el.classList.add("favorito-ativo");
+ }
+ localStorage.setItem("favoritos",JSON.stringify(favoritos));
 }
 
-// BOTÕES DE CATEGORIA
-const nav = document.getElementById('lista-categorias');
-categorias.forEach((cat,i)=>{
-  const btn = document.createElement('button');
-  btn.textContent = cat.nome;
-  btn.onclick = ()=> carregar(cat.id);
-  nav.appendChild(btn);
+function carregarFavoritos(){
+ favoritos.forEach(id=>{
+  const el=document.querySelector(`.card[data-id='${id}'] .favorito`);
+  if(el) el.classList.add("favorito-ativo");
+ });
+}
+
+// ===== RENDER =====
+const nav=document.getElementById("lista-categorias");
+categorias.forEach(c=>{
+ const b=document.createElement("button");
+ b.textContent=c.nome;
+ b.onclick=()=>carregar(c.id);
+ nav.appendChild(b);
 });
 
 function carregar(cat){
-  atual = cat;
-  render(dados[cat]);
+ atual=cat;
+ render(dados[cat]);
 }
 
-function render(categoriaObj){
-  if(!categoriaObj) return;
-  const lista = categoriaObj.produtos;
-  let html = `<section><h2>${categoriaObj.titulo}</h2><div class="products">`;
-  lista.forEach((p,i)=>{
-    html += `<div class="card" data-id="${i}">
-      <img src="${p.img}" alt="${p.nome}">
-      <h3>${p.nome}</h3>
-      <p class="oferta">🔥 Oferta imperdível</p>
-      <p class="estrelas">⭐⭐⭐⭐☆</p>
-      <div class="favorito" onclick="toggleFavorito(${i})">❤️</div>
-      <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-    </div>`;
-  });
-  html += `</div></section>`;
-  document.getElementById('conteudo').innerHTML = html;
-  carregarFavoritos();
+function render(cat){
+ let html=`<section><h2>${cat.titulo}</h2><div class="products">`;
+ cat.produtos.forEach((p,i)=>{
+  html+=`
+  <div class="card" data-id="${cat.titulo+i}">
+   <img src="${p.img}">
+   <h3>${p.nome}</h3>
+   <p class="oferta">🔥 Oferta imperdível</p>
+   <p class="estrelas">⭐⭐⭐⭐☆</p>
+   <div class="favorito" onclick="toggleFavorito('${cat.titulo+i}')">❤️</div>
+   <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+  </div>`;
+ });
+ html+="</div></section>";
+ document.getElementById("conteudo").innerHTML=html;
+ carregarFavoritos();
 }
 
-// SEARCH
 function buscar(){
-  const termo=document.getElementById("search").value.toLowerCase();
-  if(termo===""){carregar(atual);return;}
-  let resultados=[];
-  for(const cat in dados){dados[cat].produtos.forEach((p,i)=>{if(p.nome.toLowerCase().includes(termo)) resultados.push({...p,id:i});});}
-  if(resultados.length===0){
-    document.getElementById("conteudo").innerHTML=`<section><h2>🔎 Resultados da busca</h2><p style="text-align:center;font-size:18px;color:#777;">Nenhum produto encontrado 😕</p></section>`;
-    return;
-  }
-  let html = `<section><h2>🔎 Resultados da busca</h2><div class="products">`;
-  resultados.forEach(p=>{
-    html += `<div class="card" data-id="${p.id}">
-      <img src="${p.img}" alt="${p.nome}">
-      <h3>${p.nome}</h3>
-      <p class="oferta">🔥 Oferta imperdível</p>
-      <p class="estrelas">⭐⭐⭐⭐☆</p>
-      <div class="favorito" onclick="toggleFavorito(${p.id})">❤️</div>
-      <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-    </div>`;
+ const t=search.value.toLowerCase();
+ if(!t){carregar(atual);return;}
+ let res=[];
+ for(let c in dados){
+  dados[c].produtos.forEach((p,i)=>{
+   if(p.nome.toLowerCase().includes(t)) res.push(p);
   });
-  html += `</div></section>`;
-  document.getElementById("conteudo").innerHTML = html;
-  carregarFavoritos();
+ }
+ document.getElementById("conteudo").innerHTML=res.length?
+ `<section><h2>🔎 Resultados</h2><div class="products">${
+ res.map(p=>`
+ <div class="card">
+  <img src="${p.img}">
+  <h3>${p.nome}</h3>
+  <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+ </div>`).join("")
+ }</div></section>`:
+ `<p style="text-align:center;">Nenhum resultado 😕</p>`;
 }
 
-// OFERTAS DO DIA
-const ofertasDia=[
-  {nome:"Kit 3 Bermudas Jeans Masculinas", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp", link:"https://s.shopee.com.br/7Kr2CrUeZV"}
-];
-function renderOfertas(){
-  const track=document.getElementById("lista-ofertas");
-  track.innerHTML="";
-  ofertasDia.forEach((p,i)=>{
-    track.innerHTML+=`<div class="card" data-id="${i}">
-      <img src="${p.img}" loading="lazy">
-      <h3>${p.nome}</h3>
-      <p class="oferta">🔥 Oferta imperdível</p>
-      <p class="estrelas">⭐⭐⭐⭐☆</p>
-      <div class="favorito" onclick="toggleFavorito(${i})">❤️</div>
-      <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-    </div>`;
-  });
-  iniciarCarrosselOfertas();
-  carregarFavoritos();
-}
-
-function iniciarCarrosselOfertas(){
-  const track=document.getElementById("lista-ofertas");
-  let index=0;
-  setInterval(()=>{
-    const cards=track.querySelectorAll(".card");
-    if(cards.length===0) return;
-    const cardWidth=cards[0].offsetWidth+15;
-    index++;
-    if(index>=cards.length) index=0;
-    track.style.transform=`translateX(-${index*cardWidth}px)`;
-  },3000);
-}
-
-// MAIS CLICADOS
-const maisClicados = [
-  {nome:"Relógio Masculino Digital", img:"https://via.placeholder.com/200", link:"#"}
-];
-function renderMaisClicados(){
-  const container=document.getElementById("lista-mais-clicados");
-  container.innerHTML="";
-  maisClicados.forEach((p,i)=>{
-    container.innerHTML+=`<div class="card" data-id="mc${i}">
-      <img src="${p.img}" alt="${p.nome}">
-      <h3>${p.nome}</h3>
-      <p class="estrelas">⭐⭐⭐⭐☆</p>
-      <div class="favorito" onclick="toggleFavorito('mc${i}')">❤️</div>
-      <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-    </div>`;
-  });
-  carregarFavoritos();
-}
-function rolarMaisClicados(direcao){
-  const carrossel=document.getElementById("lista-mais-clicados");
-  const larguraCard=220;
-  carrossel.scrollLeft+=direcao*larguraCard;
-}
-
-// NEWSLETTER FINAL
-document.getElementById('newsletter-form-final').addEventListener('submit', function
-::contentReference[oaicite:0]{index=0}
-  document.getElementById('newsletter-form-final').addEventListener('submit', function(e){
-  e.preventDefault();
-  const email = document.getElementById('email-final').value;
-  const interesses = document.getElementById('interesses-final').checked;
-
-  // Aqui você pode enviar para um serviço de e-mail marketing
-  // Exemplo: Mailchimp, Sendinblue, ou salvar em um backend próprio
-  document.getElementById('newsletter-msg-final').textContent = `Obrigado! ${email} foi cadastrado com sucesso!`;
-
-  // Limpa o formulário
-  this.reset();
-});
-
-// Função do WhatsApp
+// ===== OUTROS =====
 function avisoWhatsApp(){
-  return confirm("Você será redirecionado para o grupo do WhatsApp. Deseja continuar?");
+ return confirm("Você será redirecionado para o WhatsApp. Deseja continuar?");
 }
 
-// Categorias
-function toggleCategorias(){
-  document.getElementById('lista-categorias').classList.toggle("oculto");
-}
+document.getElementById("cookie-ok").onclick=()=>{
+ document.getElementById("cookie-banner").style.display="none";
+ localStorage.setItem("cookiesAccepted","true");
+};
+if(localStorage.getItem("cookiesAccepted"))
+ document.getElementById("cookie-banner").style.display="none";
 
-// Inicializações
-renderOfertas();
+document.getElementById("newsletter-form-final").onsubmit=e=>{
+ e.preventDefault();
+ newsletter-msg-final.textContent="E-mail cadastrado com sucesso 💙";
+ e.target.reset();
+};
+
+// ===== INIT =====
 carregar(atual);
-renderMaisClicados();
-carregarFavoritos();
 </script>
+
 </body>
 </html>
-
