@@ -5105,166 +5105,137 @@ produtos:[
       nome: "Kit 44 Lápis de Cor (24 CORES + 10 Cores Tom Pastel +10 Cores Tons de Pele) Escolar Sextavado",
       img: "",
       link: "https://shopee.com.br/product/761647073/23993398101"
-    }
+   }
     ]
-    }
-  };
-
-  const maisClicados = [
-    {nome:"Relógio Masculino Digital", img:"https://via.placeholder.com/200", link:"#"}
-  ];
-
-  let atual = "roupas-masculinas";
-
-  const nav = document.getElementById('lista-categorias');
-  categorias.forEach(cat=>{
-    const btn = document.createElement('button');
-    btn.textContent = cat.nome;
-    btn.onclick = ()=> carregar(cat.id);
-    nav.appendChild(btn);
-  });
-
-  function carregar(cat){atual = cat; render(dados[cat]);}
-  function render(categoriaObj){
-    if(!categoriaObj) return;
-    const lista = categoriaObj.produtos;
-    let html = `<section><h2>${categoriaObj.titulo}</h2><div class="products">`;
-    lista.forEach((p,i)=>{
-html += `<div class="card" data-id="${i}">
-  <div class="favorito" onclick="toggleFavorito(${i})">♡</div>
-
-  <img src="${p.img}" alt="${p.nome}">
-  <h3>${p.nome}</h3>
-
-  <p class="precos">
-    <span class="preco-antigo">R$ ${p.precoAntigo}</span>
-    <span class="preco-novo">R$ ${p.precoNovo}</span>
-  </p>
-
-  <p class="oferta">🔥 Oferta imperdível</p>
-  <p class="estrelas">⭐⭐⭐⭐☆</p>
-
-  <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-</div>`;
-
-    });
-    html += `</div></section>`;
-    document.getElementById('conteudo').innerHTML = html;
-    carregarFavoritos();
   }
+};
 
-  function toggleCategorias(){nav.classList.toggle("oculto");}
-  function buscar(){
-    const termo=document.getElementById("search").value.toLowerCase();
-    if(termo===""){carregar(atual);return;}
-    let resultados=[];
-    for(const cat in dados){dados[cat].produtos.forEach(p=>{if(p.nome.toLowerCase().includes(termo)) resultados.push(p);});}
-    if(resultados.length===0){
-      document.getElementById("conteudo").innerHTML=`<section><h2>🔎 Resultados da busca</h2><p style="text-align:center;font-size:18px;color:#777;">Nenhum produto encontrado 😕</p></section>`;
-      return;
-    }
-    render({titulo:"🔎 Resultados da busca",produtos:resultados});
-  }
+let categoriaAtual = "roupas-masculinas";
 
-  // ================= OFERTAS DO DIA =================
-  const ofertasDia=[{nome:"Kit 3 Bermudas Jeans Masculinas", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp", link:"https://s.shopee.com.br/7Kr2CrUeZV"}];
+/* ================== MENU CATEGORIAS ================== */
+const nav = document.getElementById("lista-categorias");
 
-  function renderOfertas(){
-    const track=document.getElementById("lista-ofertas");
-    track.innerHTML="";
-    ofertasDia.forEach(p=>{
-      track.innerHTML+=`<div class="card">
-        <img src="${p.img}" loading="lazy">
-        <h3>${p.nome}</h3>
-        <p class="oferta">🔥 Oferta imperdível</p>
-        <p class="estrelas">⭐⭐⭐⭐☆</p>
-        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-      </div>`;
-    });
-    iniciarCarrosselOfertas();
-  }
+categorias.forEach(cat=>{
+  const btn=document.createElement("button");
+  btn.textContent=cat.nome;
+  btn.onclick=()=>carregarCategoria(cat.id);
+  nav.appendChild(btn);
+});
 
-  function renderMaisClicados(){
-    const container=document.getElementById("lista-mais-clicados");
-    container.innerHTML="";
-    maisClicados.forEach(p=>{
-      container.innerHTML+=`<div class="card">
-        <img src="${p.img}" alt="${p.nome}">
-        <h3>${p.nome}</h3>
-        <p class="estrelas">⭐⭐⭐⭐☆</p>
-        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-      </div>`;
-    });
-  }
-
-  function rolarMaisClicados(direcao){
-    const carrossel=document.getElementById("lista-mais-clicados");
-    const larguraCard=220;
-    carrossel.scrollLeft+=direcao*larguraCard;
-  }
-
-  function iniciarCarrosselOfertas(){
-    const track=document.getElementById("lista-ofertas");
-    let index=0;
-    setInterval(()=>{
-      const cards=track.querySelectorAll(".card");
-      if(cards.length===0) return;
-      const cardWidth=cards[0].offsetWidth+15;
-      index++;
-      if(index>=cards.length) index=0;
-      track.style.transform=`translateX(-${index*cardWidth}px)`;
-    },3000);
-  }
-
-  renderOfertas();
-  carregar(atual);
-  renderMaisClicados();
-
-  // ================= WHATSAPP =================
-  function avisoWhatsApp(){return confirm("Você será redirecionado para o grupo do WhatsApp. Deseja continuar?");}
-
-  // ================= BANNER COOKIES =================
-  const banner = document.getElementById('cookie-banner');
-  const btn = document.getElementById('cookie-ok');
-  btn.addEventListener('click', () => {
-    banner.style.display = 'none';
-    localStorage.setItem('cookiesAccepted','true');
-  });
-  if(localStorage.getItem('cookiesAccepted')==='true'){banner.style.display='none';}
-
-  // ================= FAVORITOS =================
-  function toggleFavorito(id){
-    let favoritos = JSON.parse(localStorage.getItem('favoritos') || "[]");
-    if(favoritos.includes(id)){favoritos = favoritos.filter(x=>x!==id);}
-    else{favoritos.push(id);}
-    localStorage.setItem('favoritos', JSON.stringify(favoritos));
-    carregarFavoritos();
-  }
-  function carregarFavoritos(){
-    const favoritos = JSON.parse(localStorage.getItem('favoritos') || "[]");
-    document.querySelectorAll(".favorito").forEach((el,i)=>{
-      if(favoritos.includes(i)) el.classList.add("favorito-ativo");
-      else el.classList.remove("favorito-ativo");
-    });
-  }
 function toggleCategorias(){
-  document.getElementById("lista-categorias").classList.toggle("oculto");
+  nav.classList.toggle("oculto");
 }
-function buscar(){}
-function rolar(dir){
-  document.getElementById("lista-mais-clicados").scrollBy({left:dir*220,behavior:"smooth"});
+
+/* ================== RENDER PRODUTOS ================== */
+function carregarCategoria(id){
+  categoriaAtual=id;
+  renderProdutos(dados[id]);
 }
+
+function renderProdutos(cat){
+  if(!cat) return;
+  let html=`<section><h2>${cat.titulo}</h2>
+  <div class="ofertas-track">`;
+
+  cat.produtos.forEach(p=>{
+    html+=`
+    <div class="card">
+      <div class="favorito" onclick="toggleFavorito('${p.id}')">♡</div>
+      <img src="${p.img}">
+      <h3>${p.nome}</h3>
+      <div class="precos">
+        <span class="preco-antigo">R$ ${p.precoAntigo}</span>
+        <span class="preco-novo">R$ ${p.precoNovo}</span>
+      </div>
+      <p class="oferta">🔥 Oferta imperdível</p>
+      <p class="estrelas">⭐⭐⭐⭐☆</p>
+      <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+    </div>`;
   });
-  // ================= NEWSLETTER =================
-  document.getElementById('newsletter-form').addEventListener('submit', function(e){
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const interesse = document.getElementById('interesses').checked;
-    // Aqui você enviaria para Mailchimp ou outro serviço via API
-    document.getElementById('newsletter-msg').textContent = "Obrigado! Você receberá nossas promoções 😄";
-    document.getElementById('newsletter-form').reset();
+
+  html+=`</div></section>`;
+  document.getElementById("conteudo").innerHTML=html;
+  atualizarFavoritos();
+}
+
+/* ================== BUSCA ================== */
+function buscar(){
+  const termo=document.getElementById("search").value.toLowerCase();
+  if(!termo){carregarCategoria(categoriaAtual);return;}
+
+  let resultados=[];
+  Object.values(dados).forEach(cat=>{
+    cat.produtos.forEach(p=>{
+      if(p.nome.toLowerCase().includes(termo)) resultados.push(p);
+    });
   });
-  
+
+  if(!resultados.length){
+    document.getElementById("conteudo").innerHTML=
+      "<h2 style='text-align:center'>Nenhum produto encontrado 😕</h2>";
+    return;
+  }
+
+  renderProdutos({titulo:"🔎 Resultados",produtos:resultados});
+}
+
+/* ================== FAVORITOS ================== */
+function toggleFavorito(id){
+  let favs=JSON.parse(localStorage.getItem("favoritos")||"[]");
+  favs.includes(id)?favs=favs.filter(x=>x!==id):favs.push(id);
+  localStorage.setItem("favoritos",JSON.stringify(favs));
+  atualizarFavoritos();
+}
+
+function atualizarFavoritos(){
+  const favs=JSON.parse(localStorage.getItem("favoritos")||"[]");
+  document.querySelectorAll(".favorito").forEach(el=>{
+    const id=el.getAttribute("onclick").match(/'(.+)'/)[1];
+    el.classList.toggle("favorito-ativo",favs.includes(id));
+  });
+}
+
+/* ================== OFERTAS DO DIA ================== */
+const ofertasDia = dados["roupas-masculinas"].produtos;
+
+function renderOfertas(){
+  const lista=document.getElementById("lista-ofertas");
+  lista.innerHTML="";
+  ofertasDia.forEach(p=>{
+    lista.innerHTML+=`
+    <div class="card">
+      <img src="${p.img}">
+      <h3>${p.nome}</h3>
+      <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+    </div>`;
+  });
+}
+
+/* ================== MAIS CLICADOS ================== */
+function rolarMaisClicados(dir){
+  document.getElementById("lista-mais-clicados")
+  .scrollBy({left:dir*220,behavior:"smooth"});
+}
+
+/* ================== INIT ================== */
+renderOfertas();
+carregarCategoria(categoriaAtual);
+
+/* ================== NEWSLETTER ================== */
+document.getElementById("newsletter-form").addEventListener("submit",e=>{
+  e.preventDefault();
+  document.getElementById("newsletter-msg").textContent=
+    "Obrigado! Você receberá promoções 😄";
+  e.target.reset();
+});
+
+/* ================== COOKIES ================== */
+const banner=document.getElementById("cookie-banner");
+document.getElementById("cookie-ok").onclick=()=>{
+  banner.style.display="none";
+  localStorage.setItem("cookiesAccepted","true");
+};
+if(localStorage.getItem("cookiesAccepted")) banner.style.display="none";
 </script>
 </body>
 </html>
