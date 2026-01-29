@@ -59,6 +59,26 @@
   .card p.estrelas{font-size:12px;color:#FFC107;margin:5px 0;}
   .favorito{position:absolute;top:10px;right:10px;font-size:22px;cursor:pointer;transition:transform 0.2s;}
   .favorito.favorito-ativo{color:#FF6A3D;transform:scale(1.2);}
+/* ===== PREÇOS ===== */
+.precos{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 8px 0;
+  align-items: center;
+}
+
+.preco-antigo{
+  color: #999;
+  text-decoration: line-through;
+  font-size: 14px;
+}
+
+.preco-novo{
+  color: #e63946;
+  font-weight: bold;
+  font-size: 18px;
+}
 
   /* ===== OFERTAS DO DIA ===== */
   .ofertas-wrapper{overflow:hidden;width:100%;}
@@ -204,7 +224,9 @@ produtos:[
 {
 nome:"Kit 3 Bermudas Jeans Masculinas Lisa",
 img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp",
-link:"https://s.shopee.com.br/7Kr2CrUeZV"
+link:"https://s.shopee.com.br/7Kr2CrUeZV",
+precoAntigo: "189,90",
+precoNovo: "134,19"
 },  
 {
 nome:"3 Bermuda Masculina Adulto Mauricinho Plus Size",
@@ -4766,14 +4788,23 @@ produtos:[
     const lista = categoriaObj.produtos;
     let html = `<section><h2>${categoriaObj.titulo}</h2><div class="products">`;
     lista.forEach((p,i)=>{
-      html += `<div class="card" data-id="${i}">
-        <div class="favorito" onclick="toggleFavorito(${i})">♡</div>
-        <img src="${p.img}" alt="${p.nome}">
-        <h3>${p.nome}</h3>
-        <p class="oferta">🔥 Oferta imperdível</p>
-        <p class="estrelas">⭐⭐⭐⭐☆</p>
-        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-      </div>`;
+html += `<div class="card" data-id="${i}">
+  <div class="favorito" onclick="toggleFavorito(${i})">♡</div>
+
+  <img src="${p.img}" alt="${p.nome}">
+  <h3>${p.nome}</h3>
+
+  <p class="precos">
+    <span class="preco-antigo">R$ ${p.precoAntigo}</span>
+    <span class="preco-novo">R$ ${p.precoNovo}</span>
+  </p>
+
+  <p class="oferta">🔥 Oferta imperdível</p>
+  <p class="estrelas">⭐⭐⭐⭐☆</p>
+
+  <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+</div>`;
+
     });
     html += `</div></section>`;
     document.getElementById('conteudo').innerHTML = html;
