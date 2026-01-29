@@ -408,6 +408,7 @@ footer{
 titulo:"👕 Roupas Masculinas",
 produtos:[
 {
+id: "bermuda-jeans-01",
 nome:"Kit 3 Bermudas Jeans Masculinas Lisa",
 img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp",
 link:"https://s.shopee.com.br/7Kr2CrUeZV",
@@ -5228,18 +5229,36 @@ function buscar(){
 }
 
 /* ================== FAVORITOS ================== */
-function toggleFavorito(id){
-  let favs=JSON.parse(localStorage.getItem("favoritos")||"[]");
-  favs.includes(id)?favs=favs.filter(x=>x!==id):favs.push(id);
-  localStorage.setItem("favoritos",JSON.stringify(favs));
-  atualizarFavoritos();
+function toggleFavorito(id, el){
+  let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+
+  if(salvos.includes(id)){
+    salvos = salvos.filter(item => item !== id);
+    el.classList.remove("favorito-ativo");
+    el.innerText = "♡";
+  }else{
+    salvos.push(id);
+    el.classList.add("favorito-ativo");
+    el.innerText = "❤️";
+  }
+
+  localStorage.setItem("salvos", JSON.stringify(salvos));
 }
 
-function atualizarFavoritos(){
-  const favs=JSON.parse(localStorage.getItem("favoritos")||"[]");
-  document.querySelectorAll(".favorito").forEach(el=>{
-    const id=el.getAttribute("onclick").match(/'(.+)'/)[1];
-    el.classList.toggle("favorito-ativo",favs.includes(id));
+function marcarSalvos(){
+  const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+
+  document.querySelectorAll(".card").forEach(card => {
+    const id = card.dataset.id;
+    const fav = card.querySelector(".favorito");
+
+    if(salvos.includes(id)){
+      fav.classList.add("favorito-ativo");
+      fav.innerText = "❤️";
+    } else {
+      fav.classList.remove("favorito-ativo");
+      fav.innerText = "♡";
+    }
   });
 }
 
