@@ -357,7 +357,11 @@
   <span class="menu-mobile-btn" onclick="toggleMenu()">☰</span>
 
   <div class="busca-topo">
-   <input type="text" placeholder="Buscar produtos...">
+ <input 
+  type="text" 
+  placeholder="Buscar produtos..." 
+  oninput="buscarProdutos(this.value)">
+
   </div>
 
  <div class="salvos-topo" onclick="window.location.href='salvos.html'"> ❤️ Salvos (<span id="contador-salvos">0</span>)</div>
@@ -415,6 +419,12 @@
     {id: "brinquedos", nome: "🧸 Brinquedos"},
     {id: "pets", nome: "🐶 Espaço Pets"}
   ];
+const sinonimos = {
+  iphone: ["celular","smartphone"],
+  bermuda: ["short"],
+  relogio: ["watch"],
+  fone: ["headphone","fone de ouvido"]
+};
 
   // Dados de produtos
   const dados = {
@@ -5436,6 +5446,84 @@ function atualizarContadorSalvos(){
     contador.innerText = salvos.length;
   }
 }
+ function buscarProdutos(texto){
+  texto = texto.toLowerCase().trim();
+
+  if(texto === ""){
+    carregarCategoria(categoriaAtual);
+    return;
+  }
+
+  let termos = [texto];
+
+  if(sinonimos[texto]){
+    termos = termos.concat(sinonimos[texto]);
+  }
+
+  let resultados = [];
+
+  for(const cat in dados){
+    dados[cat].produtos.forEach(p=>{
+      if(termos.some(t => p.nome.toLowerCase().includes(t))){
+        resultados.push(p);
+      }
+    });
+  }
+
+  renderBusca(resultados, texto);
+}
+    function renderBusca(produtos, texto){
+  const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+
+  let html = `
+    <section>
+      <h2>🔍 Resultados para "${texto}"</h2>
+      <div class="ofertas-track">
+  `;
+
+  if(produtos.length === 0){
+    html += `<p>Nenhum produto encontrado 😕</p>`;
+  }
+
+  produtos.forEach(p=>{
+    html += `
+      <div class="card">
+        <div class="favorito ${salvos.includes(p.id) ? 'favorito-ativo' : ''}"
+             onclick="toggleFavorito('${p.id}', this)">
+          ${salvos.includes(p.id) ? '❤️' : '♡'}
+        </div>
+
+        <img src="${p.img}">
+        <h3>${p.nome}</h3>
+
+        <div class="precos">
+          <span class="preco-antigo">R$ ${p.precoAntigo}</span>
+          <span class="preco-novo">R$ ${p.precoNovo}</span>
+        </div>
+
+        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+      </div>
+    `;
+  });
+
+  html += `</div></section>`;
+  document.getElementById("conteudo").innerHTML = html;
+}
+
+
+  let resultados = [];
+
+  for(const cat in dados){
+    dados[cat].produtos.forEach(p=>{
+      if(termos.some(t => p.nome.toLowerCase().includes(t))){
+        resultados.push(p);
+      }
+    });
+  }
+
+  renderBusca(resultados, texto);
+}
+
 function ordenarProdutos(tipo){
   const categoria = dados[categoriaAtual];
   if(!categoria) return;
