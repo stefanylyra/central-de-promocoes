@@ -6,163 +6,369 @@
 <title>Central de Promoções</title>
 
 <style>
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f9f9f9;
-  padding-top:120px;
-}
-
-/* HEADER */
-.header-fixo{
-  position:fixed;
-  top:0;
-  width:100%;
-  z-index:1000;
-}
-
-/* TOPO PRETO */
-.topo-preto{
-  background:#000;
-  color:#fff;
+  /* ===== HEADER FIXO ===== */
+  .header-fixo{
+    position:fixed;
+    top:0;
+    width:100%;
+    z-index:1000;
+  }
+.filtros{
   display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:12px 20px;
-}
-
-.busca-topo input{
-  padding:8px 12px;
-  border-radius:6px;
-  border:none;
-}
-
-.menu-mobile-btn{
-  display:none;
-  font-size:24px;
-  cursor:pointer;
-}
-
-/* BARRA CINZA */
-.barra-cinza{
-  background:#2b2b2b;
-  padding:8px;
-  display:flex;
-  gap:8px;
+  gap:10px;
+  margin:15px 0;
   flex-wrap:wrap;
 }
 
-.barra-cinza button{
+.filtros button{
   background:#fff;
-  border:none;
+  border:1px solid #ccc;
   padding:6px 14px;
   border-radius:20px;
   cursor:pointer;
+  font-size:14px;
 }
 
-/* CATEGORIAS */
-.categorias{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  padding:10px;
-  justify-content:center;
-  background:#eee;
-}
-
-.categorias button{
-  background:#000;
-  color:#fff;
-  border:none;
-  padding:6px 12px;
-  border-radius:14px;
-}
-
-.oculto{display:none}
-
-/* CARDS */
-section{padding:30px 20px}
-
-.ofertas-track{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:20px;
-}
-
-.card{
-  background:#fff;
-  border-radius:12px;
-  padding:14px;
-  text-align:center;
-  position:relative;
-  box-shadow:0 2px 8px rgba(0,0,0,.1);
-}
-
-.card img{
-  width:100%;
-  height:160px;
-  object-fit:contain;
-  background:#f5f5f5;
-  padding:10px;
-}
-
-.precos{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-}
-
-.preco-antigo{text-decoration:line-through;color:#999}
-.preco-novo{color:#e63946;font-weight:bold}
-
-.favorito{
-  position:absolute;
-  top:10px;
-  right:10px;
-  font-size:20px;
-  cursor:pointer;
-}
-.favorito-ativo{color:red}
-
-button{
+.filtros button:hover{
   background:#ff6a00;
   color:#fff;
-  border:none;
-  padding:8px;
-  border-radius:8px;
+  border-color:#ff6a00;
+}
+  /* ===== TOPO PRETO ===== */
+  .topo-preto{
+    background:#000;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 20px;
+  }
+
+  .espaco-logo{width:120px;}
+
+  .busca-topo{
+    flex:1;
+    display:flex;
+    justify-content:center;
+  }
+
+  .busca-topo input{
+    width:60%;
+    max-width:420px;
+    padding:10px 14px;
+    border-radius:6px;
+    border:none;
+    outline:none;
+  }
+
+  .salvos-topo{
+    color:#fff;
+    font-weight:bold;
+  }
+
+  /* ===== BARRA CINZA ===== */
+  .barra-cinza{
+    background:#2b2b2b;
+    padding:8px 20px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  .barra-cinza button{
+    background:#fff;
+    color:#000;
+    border:none;
+    border-radius:20px;
+    padding:6px 14px;
+    font-size:14px;
+    cursor:pointer;
+  }
+
+  .barra-cinza button:hover{
+    background:#ff6a00;
+    color:#fff;
+  }
+
+  /* ===== CATEGORIAS ===== */
+  .categorias{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    padding:10px;
+    justify-content:center;
+    background:#eee;
+  }
+  .categorias button{
+    background:#000;
+    color:#fff;
+    border:none;
+    padding:6px 12px;
+    border-radius:14px;
+  }
+  .oculto{display:none;}
+
+  /* ===== BODY ===== */
+  body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f9f9f9;
+    color:#333;
+    padding-top:130px;
+  }
+  a{text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+
+  /* ===== SECTIONS ===== */
+  section{padding:40px 20px;}
+  h2{
+    border-bottom:2px solid #000;
+    padding-bottom:5px;
+  }
+
+  /* ===== CARDS ===== */
+  .ofertas-track,.carrossel{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+  }
+
+  .card{
+    background:#fff;
+    border-radius:12px;
+    padding:14px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    text-align:center;
+    position:relative;
+  }
+
+  .card img{
+    height:160px;
+    object-fit:contain;
+    background:#f5f5f5;
+    padding:10px;
+    width:100%;
+  }
+
+  .card h3{
+    font-size:14px;
+    margin:8px 0;
+  }
+
+  .precos{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin:6px 0;
+  }
+
+  .preco-antigo{
+    color:#999;
+    text-decoration:line-through;
+    font-size:13px;
+  }
+
+  .preco-novo{
+    color:#e63946;
+    font-weight:bold;
+    font-size:17px;
+  }
+
+  .oferta{
+    background:#e8f5e9;
+    color:#2e7d32;
+    padding:3px 8px;
+    border-radius:12px;
+    font-size:11px;
+  }
+
+  .estrelas{
+    color:#ffc107;
+    font-size:12px;
+  }
+
+  .card button{
+    background:#ff6a00;
+    color:#fff;
+    border:none;
+    padding:9px;
+    border-radius:8px;
+    margin-top:8px;
+    width:100%;
+  }
+
+  /* ===== FAVORITO ===== */
+  .favorito{
+    position:absolute;
+    top:10px;
+    right:10px;
+    font-size:20px;
+  }
+  .favorito-ativo{color:red;}
+
+  /* ===== CARROSSEL ===== */
+  .carrossel-wrapper{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .carrossel{
+    overflow-x:auto;
+    display:flex;
+    gap:15px;
+    scroll-behavior:smooth;
+  }
+  .carrossel::-webkit-scrollbar{display:none;}
+  .carrossel-btn{
+    background:#000;
+    color:#fff;
+    border:none;
+    padding:8px;
+    border-radius:50%;
+  }
+
+  /* ===== NEWSLETTER ===== */
+  #newsletter-form{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  #newsletter-form input{
+    padding:8px;
+    border-radius:6px;
+    border:1px solid #ccc;
+  }
+  #newsletter-form button{
+    background:#ff6a00;
+    color:#fff;
+    border:none;
+    padding:8px 12px;
+    border-radius:6px;
+  }
+
+  /* ===== FOOTER ===== */
+  footer{
+    text-align:center;
+    background:#eee;
+    padding:15px;
+    font-size:14px;
+  }
+
+  /* ===== WHATSAPP ===== */
+  .whatsapp-container{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+  }
+  .whatsapp-float{
+    background:#25D366;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .whatsapp-float img{width:34px;}
+
+  /* ===== RESPONSIVIDADE MOBILE ===== */
+  @media screen and (max-width:768px){
+    body{padding-top:100px;} /* cabeçalho mais compacto */
+
+    /* Topo preto mais compacto */
+    .topo-preto{padding:10px 12px;flex-wrap:wrap;}
+    .busca-topo{display:none;} /* esconde busca */
+    .espaco-logo{width:60px;} /* logo menor */
+
+    /* Barra cinza transformada em menu vertical ao clicar */
+    .barra-cinza{
+      flex-direction:column;
+      align-items:flex-start;
+      padding:5px 12px;
+      gap:5px;
+    }
+    .barra-cinza button{
+      width:100%;
+      padding:10px;
+      font-size:16px;
+    }
+
+    /* Cards ocupam 100% da largura */
+    .ofertas-track,.carrossel{
+      grid-template-columns:1fr;
+    }
+
+    /* Footer menor */
+    footer{padding:10px;font-size:13px;}
+  }
+  /* ===== MENU HAMBURGUER MOBILE ===== */
+.menu-mobile-btn{
+  display:none;
+  color:#fff;
+  font-size:26px;
   cursor:pointer;
-  width:100%;
-  margin-top:6px;
 }
 
-/* MOBILE */
-@media(max-width:768px){
-  body{padding-top:90px}
-  .busca-topo{display:none}
-  .menu-mobile-btn{display:block}
-  .barra-cinza{display:none;flex-direction:column}
-  .barra-cinza.ativo{display:flex}
+/* MOBILE ONLY */
+@media screen and (max-width:768px){
+  body{padding-top:90px;}
+
+  /* Esconde busca */
+  .busca-topo{display:none;}
+
+  /* Mostra botão ☰ */
+  .menu-mobile-btn{
+    display:block;
+  }
+
+  /* Barra cinza vira menu oculto */
+  .barra-cinza{
+    display:none;
+    flex-direction:column;
+    width:100%;
+    background:#2b2b2b;
+  }
+
+  .barra-cinza.ativo{
+    display:flex;
+  }
+
+  .barra-cinza button{
+    width:100%;
+    border-radius:0;
+    padding:12px;
+    font-size:16px;
+  }
+
+  /* Cards em 1 coluna */
+  .ofertas-track,.carrossel{
+    grid-template-columns:1fr;
+  }
 }
+
 </style>
 </head>
-
 <body>
 
 <header class="header-fixo">
-  <div class="topo-preto">
-    <span class="menu-mobile-btn" onclick="toggleMenu()">☰</span>
+<div class="topo-preto">
+  <span class="btn-voltar" onclick="window.location.href='index.html'">⬅</span>
 
-    <div class="busca-topo">
-      <input type="text" placeholder="Buscar produtos..." oninput="buscarProdutos(this.value)">
-    </div>
+  <span class="menu-mobile-btn" onclick="toggleMenu()">☰</span>
 
-    <div onclick="location.href='salvos.html'">
-      ❤️ Salvos (<span id="contador-salvos">0</span>)
-    </div>
+  <div class="busca-topo">
+   <input type="text" placeholder="Buscar produtos...">
   </div>
+
+ <div class="salvos-topo" onclick="window.location.href='salvos.html'"> ❤️ Salvos (<span id="contador-salvos">0</span>)</div>
+
+</div>
 
   <div class="barra-cinza">
     <button onclick="toggleCategorias()">☰ Categorias</button>
+    <button onclick="window.location.href='ofertas.html'">Ofertas do dia</button>
+    <button onclick="window.location.href='mais-clicados.html'">Mais clicados</button>
+    <button onclick="window.location.href='novidades.html'">Receba novidades</button>
   </div>
 
   <div id="lista-categorias" class="categorias oculto"></div>
@@ -170,9 +376,26 @@ button{
 
 <div id="conteudo"></div>
 
+<footer>
+  <p>Somos um site de afiliados. Ao comprar pelos links você nos ajuda a continuar trazendo promoções e ofertas imperdíveis — sem nenhum custo extra ❤️.</p>
+  <p>Site afiliado • Central de Promoções</p>
+</footer>
+
+<div class="whatsapp-container">
+  <div class="whatsapp-text">💬 Entre no nosso grupo do WhatsApp!</div>
+  <a href="https://chat.whatsapp.com/JgiOFb5n2CWKNzsoNADvWt" target="_blank" class="whatsapp-float">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+  </a>
+</div>
+
+<div id="cookie-banner">
+  Usamos cookies para melhorar sua experiência. 
+  <a href="#" target="_blank">Saiba mais</a>.
+  <button id="cookie-ok">Ok</button>
+</div>
+
 <script>
-/* ===== CATEGORIAS ===== */
-const categorias = [
+  const categorias = [
     {id: "roupas-masculinas", nome: "👕 Masculinas"},
     {id: "roupas-femininas", nome: "👗 Femininas"},
     {id: "plus-size", nome: "👚 Plus Size"},
@@ -192,12 +415,6 @@ const categorias = [
     {id: "brinquedos", nome: "🧸 Brinquedos"},
     {id: "pets", nome: "🐶 Espaço Pets"}
   ];
-const sinonimos = {
-  iphone: ["celular","smartphone"],
-  bermuda: ["short"],
-  relogio: ["watch"],
-  fone: ["headphone","fone de ouvido"]
-};
 
   // Dados de produtos
   const dados = {
@@ -5119,156 +5336,127 @@ produtos:[
       nome: "Kit 44 Lápis de Cor (24 CORES + 10 Cores Tom Pastel +10 Cores Tons de Pele) Escolar Sextavado",
       img: "",
       link: "https://shopee.com.br/product/761647073/23993398101"
-}
-]
-}
-};
+   }
+    ]
+  }
+  };
 
-let categoriaAtual = "roupas-masculinas";
+  let categoriaAtual = "roupas-masculinas";
 
-/* ===== CATEGORIAS MENU ===== */
-const nav=document.getElementById("lista-categorias");
-categorias.forEach(c=>{
-  const b=document.createElement("button");
-  b.textContent=c.nome;
-  b.onclick=()=>carregarCategoria(c.id);
-  nav.appendChild(b);
-});
+  const nav = document.getElementById("lista-categorias");
+  categorias.forEach(cat=>{
+    const btn=document.createElement("button");
+    btn.textContent=cat.nome;
+    btn.onclick=()=>carregarCategoria(cat.id);
+    nav.appendChild(btn);
+  });
 
-function toggleCategorias(){nav.classList.toggle("oculto")}
-function toggleMenu(){document.querySelector(".barra-cinza").classList.toggle("ativo")}
+  function toggleCategorias(){ nav.classList.toggle("oculto"); }
 
-/* ===== RENDER ===== */
-function carregarCategoria(id){
-  categoriaAtual=id;
-  renderProdutos(dados[id]);
-}
-
+  function carregarCategoria(id){ categoriaAtual=id; renderProdutos(dados[id]); }
 function renderProdutos(cat){
   if(!cat) return;
-  const salvos=JSON.parse(localStorage.getItem("salvos"))||[];
 
-  let html=`<section><h2>${cat.titulo}</h2><div class="ofertas-track">`;
+  const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+let html = `
+<section>
+  <h2>${cat.titulo}</h2>
+
+  <div class="filtros">
+    <button onclick="ordenarProdutos('menor')">⬇ Menor preço</button>
+    <button onclick="ordenarProdutos('maior')">⬆ Maior preço</button>
+  </div>
+
+  <div class="ofertas-track">
+`;
 
   cat.produtos.forEach(p=>{
-    const ativo=salvos.includes(p.id);
-    html+=`
+    const ativo = salvos.includes(p.id);
+
+    html += `
     <div class="card">
-      <div class="favorito ${ativo?'favorito-ativo':''}"
-           onclick="toggleFavorito('${p.id}',this)">
-        ${ativo?'❤️':'♡'}
+      <div class="favorito ${ativo ? 'favorito-ativo' : ''}"
+           onclick="toggleFavorito('${p.id}', this)">
+        ${ativo ? '❤️' : '♡'}
       </div>
+
       <img src="${p.img}">
       <h3>${p.nome}</h3>
+
       <div class="precos">
         <span class="preco-antigo">R$ ${p.precoAntigo}</span>
         <span class="preco-novo">R$ ${p.precoNovo}</span>
       </div>
-      <button onclick="window.open('${p.link}')">Ver oferta</button>
+
+      <p class="oferta">🔥 Oferta imperdível</p>
+      <p class="estrelas">⭐⭐⭐⭐☆</p>
+
+      <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
     </div>`;
-  });
-
-  html+=`</div></section>`;
-  conteudo.innerHTML=html;
-}
-
-/* ===== FAVORITOS ===== */
-function toggleFavorito(id,el){
-  let salvos=JSON.parse(localStorage.getItem("salvos"))||[];
-  if(salvos.includes(id)){
-    salvos=salvos.filter(i=>i!==id);
-    el.classList.remove("favorito-ativo");
-    el.innerText="♡";
-  }else{
-    salvos.push(id);
-    el.classList.add("favorito-ativo");
-    el.innerText="❤️";
-  }
-  localStorage.setItem("salvos",JSON.stringify(salvos));
-  atualizarContadorSalvos();
-}
-
-function atualizarContadorSalvos(){
-  const salvos=JSON.parse(localStorage.getItem("salvos"))||[];
-  contador-salvos.innerText=salvos.length;
-}
-
-/* ===== BUSCA INTELIGENTE ===== */
-function buscarProdutos(texto){
-  texto = texto.toLowerCase().trim();
-
-  // se a busca estiver vazia, volta ao normal
-  if(texto === ""){
-    carregarCategoria(categoriaAtual);
-    return;
-  }
-
-  const categoria = dados[categoriaAtual];
-  if(!categoria) return;
-
-  const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
-
-  const filtrados = categoria.produtos.filter(p =>
-    p.nome.toLowerCase().includes(texto)
-  );
-
-  let html = `
-    <section>
-      <h2>🔍 Resultados em ${categoria.titulo}</h2>
-      <div class="ofertas-track">
-  `;
-
-  if(filtrados.length === 0){
-    html += `<p>Nenhum produto encontrado 😕</p>`;
-  }
-
-  filtrados.forEach(p=>{
-    const ativo = salvos.includes(p.id);
-    html += `
-      <div class="card">
-        <div class="favorito ${ativo ? 'favorito-ativo' : ''}"
-             onclick="toggleFavorito('${p.id}', this)">
-          ${ativo ? '❤️' : '♡'}
-        </div>
-
-        <img src="${p.img}">
-        <h3>${p.nome}</h3>
-
-        <div class="precos">
-          <span class="preco-antigo">R$ ${p.precoAntigo}</span>
-          <span class="preco-novo">R$ ${p.precoNovo}</span>
-        </div>
-
-        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-      </div>
-    `;
   });
 
   html += `</div></section>`;
   document.getElementById("conteudo").innerHTML = html;
 }
-
-function renderBusca(produtos,texto){
-  let html=`<section><h2>Resultados para "${texto}"</h2><div class="ofertas-track">`;
-  if(produtos.length===0) html+="<p>Nenhum produto encontrado</p>";
-  produtos.forEach(p=>{
-    html+=`
-    <div class="card">
-      <img src="${p.img}">
-      <h3>${p.nome}</h3>
-      <button onclick="window.open('${p.link}')">Ver oferta</button>
-    </div>`;
-  });
-  html+=`</div></section>`;
-  conteudo.innerHTML=html;
+  function toggleFavorito(id, el){
+    let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+    if(salvos.includes(id)){
+      salvos = salvos.filter(item => item !== id);
+      el.classList.remove("favorito-ativo");
+      el.innerText = "♡";
+    } else {
+      salvos.push(id);
+      el.classList.add("favorito-ativo");
+      el.innerText = "❤️";
+    }
+    localStorage.setItem("salvos", JSON.stringify(salvos));
+     atualizarContadorSalvos(); 
+  }
+  function toggleMenu(){
+  document.querySelector(".barra-cinza").classList.toggle("ativo");
 }
-
-/* ===== INIT ===== */
-document.addEventListener("DOMContentLoaded",()=>{
-  carregarCategoria(categoriaAtual);
+  // ================= CARREGAMENTO INICIAL =================
+  document.addEventListener("DOMContentLoaded", function () {
+    // categoria padrão ao abrir o site
+    if (typeof carregarCategoria === "function") {
+carregarCategoria("roupas-masculinas");
+    }
+  });
+  document.addEventListener("DOMContentLoaded", function () {
+  if (typeof carregarCategoria === "function") {
+    carregarCategoria("relogios");
+  }
   atualizarContadorSalvos();
 });
-</script>
 
+function atualizarContadorSalvos(){
+  const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+  const contador = document.getElementById("contador-salvos");
+  if(contador){
+    contador.innerText = salvos.length;
+  }
+}
+function ordenarProdutos(tipo){
+  const categoria = dados[categoriaAtual];
+  if(!categoria) return;
+
+  if(tipo === "menor"){
+    categoria.produtos.sort((a,b)=>{
+      return parseFloat(a.precoNovo.replace(',','.')) -
+             parseFloat(b.precoNovo.replace(',','.'));
+    });
+  }
+
+  if(tipo === "maior"){
+    categoria.produtos.sort((a,b)=>{
+      return parseFloat(b.precoNovo.replace(',','.')) -
+             parseFloat(a.precoNovo.replace(',','.'));
+    });
+  }
+
+  renderProdutos(categoria);
+}
+
+</script>
 </body>
 </html>
