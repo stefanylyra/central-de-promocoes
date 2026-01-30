@@ -13,7 +13,27 @@
     width:100%;
     z-index:1000;
   }
+.filtros{
+  display:flex;
+  gap:10px;
+  margin:15px 0;
+  flex-wrap:wrap;
+}
 
+.filtros button{
+  background:#fff;
+  border:1px solid #ccc;
+  padding:6px 14px;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.filtros button:hover{
+  background:#ff6a00;
+  color:#fff;
+  border-color:#ff6a00;
+}
   /* ===== TOPO PRETO ===== */
   .topo-preto{
     background:#000;
@@ -5338,7 +5358,17 @@ function renderProdutos(cat){
   if(!cat) return;
 
   const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
-  let html = `<section><h2>${cat.titulo}</h2><div class="ofertas-track">`;
+let html = `
+<section>
+  <h2>${cat.titulo}</h2>
+
+  <div class="filtros">
+    <button onclick="ordenarProdutos('menor')">⬇ Menor preço</button>
+    <button onclick="ordenarProdutos('maior')">⬆ Maior preço</button>
+  </div>
+
+  <div class="ofertas-track">
+`;
 
   cat.produtos.forEach(p=>{
     const ativo = salvos.includes(p.id);
@@ -5405,6 +5435,26 @@ function atualizarContadorSalvos(){
   if(contador){
     contador.innerText = salvos.length;
   }
+}
+function ordenarProdutos(tipo){
+  const categoria = dados[categoriaAtual];
+  if(!categoria) return;
+
+  if(tipo === "menor"){
+    categoria.produtos.sort((a,b)=>{
+      return parseFloat(a.precoNovo.replace(',','.')) -
+             parseFloat(b.precoNovo.replace(',','.'));
+    });
+  }
+
+  if(tipo === "maior"){
+    categoria.produtos.sort((a,b)=>{
+      return parseFloat(b.precoNovo.replace(',','.')) -
+             parseFloat(a.precoNovo.replace(',','.'));
+    });
+  }
+
+  renderProdutos(categoria);
 }
 
 </script>
