@@ -5370,6 +5370,15 @@ produtos:[
   function toggleMenu(){
   document.querySelector(".barra-cinza").classList.toggle("ativo");
 }
+  // Garantir que ao abrir a página seja exibida uma categoria padrão
+document.addEventListener("DOMContentLoaded", function () {
+  // Se quiser que carregue "mais clicados" por padrão:
+  // carregarCategoria("mais-clicados");
+
+  // Se quiser que carregue roupas-masculinas (ou outra) por padrão:
+  carregarCategoria(categoriaAtual);
+});
+
 </script>
 </body>
 </html>
