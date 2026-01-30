@@ -401,6 +401,7 @@
 titulo:"👕 Roupas Masculinas",
 produtos:[
 {
+id: "bermuda-jeans-kit-3",
 nome:"Kit 3 Bermudas Jeans Masculinas Lisa",
 img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp",
 link:"https://s.shopee.com.br/7Kr2CrUeZV",
@@ -5335,10 +5336,16 @@ produtos:[
   function renderProdutos(cat){
     if(!cat) return;
     let html=`<section><h2>${cat.titulo}</h2><div class="ofertas-track">`;
-    cat.produtos.forEach(p=>{
+  let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+
+cat.produtos.forEach(p=>{
+  const ativo = salvos.includes(p.id);
+
       html+=`
       <div class="card">
-        <div class="favorito" onclick="toggleFavorito('${p.id}', this)">♡</div>
+      <div class="favorito ${salvos.includes(p.id) ? 'favorito-ativo' : ''}"
+      onclick="toggleFavorito('${p.id}', this)">
+      ${salvos.includes(p.id) ? '❤️' : '♡'}</div>
         <img src="${p.img}">
         <h3>${p.nome}</h3>
         <div class="precos">
