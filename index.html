@@ -5335,6 +5335,7 @@ produtos:[
 
   function renderProdutos(cat){
     if(!cat) return;
+    const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
     let html=`<section><h2>${cat.titulo}</h2><div class="ofertas-track">`;
   let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
 
