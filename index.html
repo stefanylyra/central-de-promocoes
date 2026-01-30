@@ -5195,18 +5195,57 @@ function atualizarContadorSalvos(){
 
 /* ===== BUSCA INTELIGENTE ===== */
 function buscarProdutos(texto){
-  texto=texto.toLowerCase().trim();
-  if(!texto){carregarCategoria(categoriaAtual);return;}
+  texto = texto.toLowerCase().trim();
 
-  let resultados=[];
-  for(const cat in dados){
-    dados[cat].produtos.forEach(p=>{
-      if(p.nome.toLowerCase().includes(texto)){
-        resultados.push(p);
-      }
-    });
+  // se a busca estiver vazia, volta ao normal
+  if(texto === ""){
+    carregarCategoria(categoriaAtual);
+    return;
   }
-  renderBusca(resultados,texto);
+
+  const categoria = dados[categoriaAtual];
+  if(!categoria) return;
+
+  const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+
+  const filtrados = categoria.produtos.filter(p =>
+    p.nome.toLowerCase().includes(texto)
+  );
+
+  let html = `
+    <section>
+      <h2>🔍 Resultados em ${categoria.titulo}</h2>
+      <div class="ofertas-track">
+  `;
+
+  if(filtrados.length === 0){
+    html += `<p>Nenhum produto encontrado 😕</p>`;
+  }
+
+  filtrados.forEach(p=>{
+    const ativo = salvos.includes(p.id);
+    html += `
+      <div class="card">
+        <div class="favorito ${ativo ? 'favorito-ativo' : ''}"
+             onclick="toggleFavorito('${p.id}', this)">
+          ${ativo ? '❤️' : '♡'}
+        </div>
+
+        <img src="${p.img}">
+        <h3>${p.nome}</h3>
+
+        <div class="precos">
+          <span class="preco-antigo">R$ ${p.precoAntigo}</span>
+          <span class="preco-novo">R$ ${p.precoNovo}</span>
+        </div>
+
+        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+      </div>
+    `;
+  });
+
+  html += `</div></section>`;
+  document.getElementById("conteudo").innerHTML = html;
 }
 
 function renderBusca(produtos,texto){
