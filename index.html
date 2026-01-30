@@ -13,16 +13,83 @@
   z-index:1000;
 }
 
+.topo-preto{
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 20px;
+}
+
+.espaco-logo{width:120px;}
+
+.busca-topo{
+  flex:1;
+  display:flex;
+  justify-content:center;
+}
+
+.busca-topo input{
+  width:60%;
+  max-width:420px;
+  padding:10px;
+  border-radius:6px;
+  border:none;
+}
+
+.salvos-topo{
+  color:#fff;
+  font-weight:bold;
+}
+
+.barra-cinza{
+  background:#2b2b2b;
+  padding:8px 20px;
+  display:flex;
+  gap:10px;
+}
+
+.barra-cinza button{
+  background:#fff;
+  color:#000;
+  border:none;
+  border-radius:20px;
+  padding:6px 14px;
+  cursor:pointer;
+}
+
+/* ===== BODY ===== */
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f9f9f9;
+  color:#333;
+  padding-top:130px;
+}
+a{text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+
+/* ===== HEADER FIXO ===== */
+.header-fixo{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:1000;
+}
+
 /* ===== TOPO PRETO ===== */
 .topo-preto{
   background:#000;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:42px 20px; /* altura aumentada */
+  padding:12px 20px;
 }
 
-.espaco-logo{width:120px;}
+.espaco-logo{
+  width:120px;
+}
 
 .busca-topo{
   flex:1;
@@ -66,17 +133,6 @@
   background:#ff6a00;
   color:#fff;
 }
-
-/* ===== BODY ===== */
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f9f9f9;
-  color:#333;
-  padding-top:92px + 42px + 8px; /* ajuste: topo-preto + barra-cinza */
-}
-a{text-decoration:none;}
-button{font-family:inherit;cursor:pointer;}
 
 /* ===== CATEGORIAS ===== */
 .categorias{
@@ -254,31 +310,54 @@ footer{
 <body>
 <header class="header-fixo">
 
-  <!-- TOPO PRETO -->
+ <div class="topo-preto">
+
+  <span class="btn-voltar" onclick="window.location.href='index.html'">
+    ⬅
+  </span>
+
+  <div class="busca-topo">
+    <input type="text" placeholder="Buscar produtos...">
+  </div>
+
+ <div class="salvos-topo" onclick="window.location.href='salvos.html'">❤️ Salvos</div>
+
+
+</div>
+
+  <div class="barra-cinza">
+    <button onclick="window.location.href='index.html'">Home</button>
+    <button onclick="window.location.href='ofertas.html'">Ofertas do dia</button>
+    <button onclick="window.location.href='mais-clicados.html'">Mais clicados</button>
+  </div>
+
+</header>
+
+<header class="header-fixo">
+
   <div class="topo-preto">
-    <span class="btn-voltar" onclick="window.location.href='index.html'">⬅</span>
+    <div class="espaco-logo"></div>
 
     <div class="busca-topo">
       <input type="text" id="search" placeholder="Buscar produtos..." oninput="buscar()">
     </div>
 
-    <div class="salvos-topo" onclick="window.location.href='salvos.html'">❤️ Salvos</div>
+    <div class="salvos-topo">❤️ Salvos</div>
   </div>
 
-  <!-- BARRA CINZA -->
   <div class="barra-cinza">
     <button onclick="toggleCategorias()">☰ Categorias</button>
-    <button onclick="window.location.href='ofertas.html'">Ofertas do dia</button>
-    <button onclick="window.location.href='mais-clicados.html'">Mais clicados</button>
-    <button onclick="window.location.href='novidades.html'">Receba novidades</button>
+    <button onclick="window.location.href='ofertas.html'">ofertas do dia</button>
+   <button onclick="window.location.href='mais-clicados.html'">Mais clicados</button>
+   <button onclick="window.location.href='novidades.html'">receba novidades</button>
   </div>
 
-  <!-- LISTA DE CATEGORIAS OCULTA -->
   <div id="lista-categorias" class="categorias oculto"></div>
 
 </header>
 
 <!-- FORMULÁRIO NEWSLETTER -->
+
 <div id="conteudo"></div>
 
 <footer>
