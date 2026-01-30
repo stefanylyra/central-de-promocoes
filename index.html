@@ -340,7 +340,8 @@
     <input type="text" placeholder="Buscar produtos...">
   </div>
 
-  <div class="salvos-topo" onclick="window.location.href='salvos.html'">❤️ Salvos</div>
+ <div class="salvos-topo" onclick="window.location.href='salvos.html'"> ❤️ Salvos (<span id="contador-salvos">0</span>)</div>
+
 </div>
 
   <div class="barra-cinza">
@@ -5379,6 +5380,7 @@ function renderProdutos(cat){
       el.innerText = "❤️";
     }
     localStorage.setItem("salvos", JSON.stringify(salvos));
+     atualizarContadorSalvos(); 
   }
   function toggleMenu(){
   document.querySelector(".barra-cinza").classList.toggle("ativo");
@@ -5390,6 +5392,20 @@ function renderProdutos(cat){
 carregarCategoria("roupas-masculinas");
     }
   });
+  document.addEventListener("DOMContentLoaded", function () {
+  if (typeof carregarCategoria === "function") {
+    carregarCategoria("relogios");
+  }
+  atualizarContadorSalvos();
+});
+
+function atualizarContadorSalvos(){
+  const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+  const contador = document.getElementById("contador-salvos");
+  if(contador){
+    contador.innerText = salvos.length;
+  }
+}
 
 </script>
 </body>
