@@ -71,20 +71,14 @@ button{
 
 <div class="container" id="lista-salvos"></div>
 
-<script>
-const produtos = [
-  {
-    id:"bermuda-jeans-01",
-    nome:"Kit 3 Bermudas Jeans Masculinas Lisa",
-    img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp",
-    link:"https://s.shopee.com.br/7Kr2CrUeZV"
-  }
-];
+<!-- PRODUTOS -->
+<script src="produtos.js"></script>
 
+<script>
 const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
 const lista = document.getElementById("lista-salvos");
 
-const filtrados = produtos.filter(p => salvos.includes(p.id));
+const filtrados = PRODUTOS.filter(p => salvos.includes(p.id));
 
 if(filtrados.length === 0){
   lista.innerHTML = "<p>Você ainda não salvou nenhum produto ❤️</p>";
