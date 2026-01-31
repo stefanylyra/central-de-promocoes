@@ -5349,6 +5349,7 @@ produtos:[
 
   function renderProdutos(cat){
     if(!cat) return;
+    categoriaAtual = cat;
     let html=`<section><h2>${cat.titulo}</h2><div class="ofertas-track">`;
     cat.produtos.forEach(p=>{
       html+=`
@@ -5413,28 +5414,52 @@ function atualizarContadorSalvos(){
 });
 
 function filtrarProdutos(texto){
-  const cards = document.querySelectorAll(".card");
+  texto = texto.toLowerCase().trim();
+
   const msg = document.getElementById("mensagem-nao-encontrado");
+  const conteudo = document.getElementById("conteudo");
 
-  let encontrou = false;
+  if(!texto){
+    renderProdutos(categoriaAtual);
+    msg.style.display = "none";
+    return;
+  }
 
-  cards.forEach(card=>{
-    const nome = card.querySelector("h3").innerText.toLowerCase();
+  let resultados = [];
 
-    if(nome.includes(texto)){
-      card.style.display = "";
-      encontrou = true;
-    } else {
-      card.style.display = "none";
-    }
+  Object.keys(produtos).forEach(cat=>{
+    produtos[cat].forEach(p=>{
+      if(p.nome.toLowerCase().includes(texto)){
+        resultados.push(p);
+      }
+    });
   });
 
-  // Mostra ou esconde mensagem
-  if(texto.length > 0 && !encontrou){
+  if(resultados.length === 0){
+    conteudo.innerHTML = "";
     msg.style.display = "block";
-  } else {
-    msg.style.display = "none";
+    return;
   }
+
+  msg.style.display = "none";
+
+  let html = `<div class="produtos-grid">`;
+
+  resultados.forEach(p=>{
+    html += `
+      <div class="card">
+        <img src="${p.img}">
+        <h3>${p.nome}</h3>
+        <p class="preco">${p.preco}</p>
+        <a href="${p.link}" target="_blank">Ver oferta</a>
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+
+  conteudo.innerHTML = html;
+}
 }
 </script>
 </body>
