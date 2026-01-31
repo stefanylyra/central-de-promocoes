@@ -8,181 +8,153 @@
 <style>
 /* ===== HEADER ===== */
 .header-fixo{
-  position:fixed;
-  top:0;
-  width:100%;
-  z-index:1000;
+position:fixed;
+top:0;
+width:100%;
+z-index:1000;
 }
 
 .topo-preto{
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:12px 20px;
-}
-
-.menu-mobile-btn{
-  display:none;
-  color:#fff;
-  font-size:26px;
-  cursor:pointer;
+background:#000;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:12px 20px;
 }
 
 .busca-topo{
-  flex:1;
-  display:flex;
-  justify-content:center;
+flex:1;
+display:flex;
+justify-content:center;
 }
 
-.busca-topo input,
-.busca-mobile input{
-  width:100%;
-  max-width:420px;
-  padding:10px;
-  border-radius:6px;
-  border:none;
-  outline:none;
+.busca-topo input{
+width:60%;
+max-width:420px;
+padding:10px;
+border-radius:6px;
+border:none;
 }
 
 .salvos-topo{
-  color:#fff;
-  font-weight:bold;
-  cursor:pointer;
+color:#fff;
+font-weight:bold;
+cursor:pointer;
 }
 
-/* ===== BARRA ===== */
+/* ===== BARRA CINZA ===== */
 .barra-cinza{
-  background:#2b2b2b;
-  padding:8px 20px;
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
+background:#2b2b2b;
+padding:8px 20px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
 }
 
 .barra-cinza button{
-  background:#fff;
-  border:none;
-  border-radius:20px;
-  padding:6px 14px;
-  cursor:pointer;
+background:#fff;
+border:none;
+border-radius:20px;
+padding:6px 14px;
+cursor:pointer;
 }
 
-.barra-cinza button:hover{
-  background:#ff6a00;
-  color:#fff;
+/* ===== BODY ===== */
+body{
+margin:0;
+font-family:Arial;
+background:#f9f9f9;
+padding-top:130px;
 }
 
-.busca-mobile{
-  display:none;
-  width:100%;
+section{padding:40px 20px;}
+
+.ofertas-track{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+}
+
+.card{
+background:#fff;
+border-radius:12px;
+padding:14px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+text-align:center;
+}
+
+.card img{
+height:160px;
+object-fit:contain;
+width:100%;
+}
+
+.card button{
+background:#ff6a00;
+color:#fff;
+border:none;
+padding:9px;
+border-radius:8px;
+width:100%;
 }
 
 /* ===== CATEGORIAS ===== */
 .categorias{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  padding:10px;
-  justify-content:center;
-  background:#eee;
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+padding:10px;
+background:#eee;
 }
+
 .categorias button{
-  background:#000;
-  color:#fff;
-  border:none;
-  padding:6px 12px;
-  border-radius:14px;
+background:#000;
+color:#fff;
+border:none;
+padding:6px 12px;
+border-radius:14px;
 }
+
 .oculto{display:none;}
 
-/* ===== BODY ===== */
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f9f9f9;
-  padding-top:140px;
+/* ===== WHATSAPP ===== */
+.whatsapp-container{
+position:fixed;
+bottom:20px;
+right:20px;
 }
 
-/* ===== SECTIONS ===== */
-section{padding:40px 20px;}
-h2{border-bottom:2px solid #000;padding-bottom:5px;}
-
-/* ===== FILTROS ===== */
-.filtros{
-  display:flex;
-  gap:10px;
-  margin:15px 0;
-}
-.filtros button{
-  border:1px solid #ccc;
-  background:#fff;
-  padding:6px 14px;
-  border-radius:20px;
+.whatsapp-float{
+background:#25D366;
+width:60px;
+height:60px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
-/* ===== CARDS ===== */
-.ofertas-track{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:20px;
-}
-
-.card{
-  background:#fff;
-  border-radius:12px;
-  padding:14px;
-  box-shadow:0 2px 8px rgba(0,0,0,.1);
-  text-align:center;
-  position:relative;
-}
-
-.card img{
-  width:100%;
-  height:160px;
-  object-fit:contain;
-  background:#f5f5f5;
-  padding:10px;
-}
-
-.precos{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-}
-
-.preco-antigo{text-decoration:line-through;color:#999;}
-.preco-novo{color:#e63946;font-weight:bold;}
-
-.card button{
-  background:#ff6a00;
-  color:#fff;
-  border:none;
-  padding:9px;
-  border-radius:8px;
-  width:100%;
-  margin-top:8px;
-}
-
-/* ===== FAVORITO ===== */
-.favorito{
-  position:absolute;
-  top:10px;
-  right:10px;
-  font-size:20px;
-  cursor:pointer;
-}
-.favorito-ativo{color:red;}
+.whatsapp-float img{width:34px;}
 
 /* ===== MOBILE ===== */
-@media(max-width:768px){
-  body{padding-top:110px;}
-  .busca-topo{display:none;}
-  .menu-mobile-btn{display:block;}
-  .barra-cinza{display:none;flex-direction:column;}
-  .barra-cinza.ativo{display:flex;}
-  .busca-mobile{display:block;}
-  .ofertas-track{grid-template-columns:1fr;}
+@media(max-width:600px){
+
+.busca-topo{display:none;}
+
+.barra-cinza{
+overflow-x:auto;
+flex-wrap:nowrap;
+}
+
+.ofertas-track{
+grid-template-columns:1fr;
+}
+
+.whatsapp-float{
+width:50px;
+height:50px;
+}
+
 }
 </style>
 </head>
@@ -190,34 +162,46 @@ h2{border-bottom:2px solid #000;padding-bottom:5px;}
 <body>
 
 <header class="header-fixo">
-  <div class="topo-preto">
-    <span class="menu-mobile-btn" onclick="toggleMenu()">☰</span>
 
-    <div class="busca-topo">
-      <input id="search" type="text" placeholder="Buscar produtos..." onkeyup="buscar()">
-    </div>
+<div class="topo-preto">
 
-    <div class="salvos-topo" onclick="window.location.href='salvos.html'">
-      ❤️ Salvos (<span id="contador-salvos">0</span>)
-    </div>
-  </div>
+<span onclick="toggleCategorias()" style="color:white;cursor:pointer">☰</span>
 
-  <div class="barra-cinza">
-    <div class="busca-mobile">
-      <input id="search" type="text" placeholder="Buscar produtos..." onkeyup="buscar()">
-    </div>
+<div class="busca-topo">
+<input id="search" type="text" placeholder="Buscar produtos..." oninput="buscar()">
+</div>
 
-    <button onclick="toggleCategorias()">☰ Categorias</button>
-  </div>
+<div class="salvos-topo">❤️ Salvos</div>
 
-  <div id="lista-categorias" class="categorias oculto"></div>
+</div>
+
+<div class="barra-cinza">
+<button onclick="carregarCategoria('roupas-masculinas')">Masculinas</button>
+<button onclick="carregarCategoria('roupas-femininas')">Femininas</button>
+<button onclick="carregarCategoria('relogios')">Relógios</button>
+<button onclick="carregarCategoria('acessorios')">Acessórios</button>
+</div>
+
+<div id="lista-categorias" class="categorias oculto"></div>
+
 </header>
 
 <div id="conteudo"></div>
 
+<!-- WHATSAPP -->
+<div class="whatsapp-container">
+<a href="https://chat.whatsapp.com/JgiOFb5n2CWKNzsoNADvWt"
+target="_blank"
+class="whatsapp-float"
+onclick="return avisoWhatsApp()">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+</a>
+</div>
+
 <script>
-/* ===== DADOS ===== */
-const categorias=[
+
+/* ===== CATEGORIAS ===== */
+const categorias = [
     {id: "roupas-masculinas", nome: "👕 Masculinas"},
     {id: "roupas-femininas", nome: "👗 Femininas"},
     {id: "plus-size", nome: "👚 Plus Size"},
@@ -5163,104 +5147,106 @@ produtos:[
   }
 };
 
+
 let categoriaAtual="roupas-masculinas";
 
-/* ===== CATEGORIAS ===== */
+/* ===== MENU CATEGORIAS ===== */
 const nav=document.getElementById("lista-categorias");
+
 categorias.forEach(cat=>{
-  const b=document.createElement("button");
-  b.innerText=cat.nome;
-  b.onclick=()=>carregarCategoria(cat.id);
-  nav.appendChild(b);
+const btn=document.createElement("button");
+btn.textContent=cat.nome;
+btn.onclick=()=>carregarCategoria(cat.id);
+nav.appendChild(btn);
 });
 
 function toggleCategorias(){
-  nav.classList.toggle("oculto");
-}
-
-function toggleMenu(){
-  document.querySelector(".barra-cinza").classList.toggle("ativo");
+nav.classList.toggle("oculto");
 }
 
 /* ===== RENDER ===== */
-function renderProdutos(cat){
-  const salvos=JSON.parse(localStorage.getItem("salvos"))||[];
-  let html=`<section><h2>${cat.titulo}</h2><div class="ofertas-track">`;
+function carregarCategoria(id){
 
-  cat.produtos.forEach(p=>{
-    const ativo=salvos.includes(p.id);
-    html+=`
-    <div class="card">
-      <div class="favorito ${ativo?'favorito-ativo':''}"
-        onclick="toggleFavorito('${p.id}',this)">
-        ${ativo?'❤️':'♡'}
-      </div>
-      <img src="${p.img}">
-      <h3>${p.nome}</h3>
-      <div class="precos">
-        <span class="preco-antigo">R$ ${p.precoAntigo}</span>
-        <span class="preco-novo">R$ ${p.precoNovo}</span>
-      </div>
-      <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-    </div>`;
-  });
+categoriaAtual=id;
 
-  html+=`</div></section>`;
-  document.getElementById("conteudo").innerHTML=html;
+const cat=dados[id];
+
+if(!cat){
+document.getElementById("conteudo").innerHTML="<h2>Categoria vazia</h2>";
+return;
 }
 
-function carregarCategoria(id){
-  categoriaAtual=id;
-  renderProdutos(dados[id]);
+let html=`<section><h2>${cat.titulo}</h2><div class="ofertas-track">`;
+
+cat.produtos.forEach(p=>{
+html+=`
+<div class="card">
+<img src="${p.img}">
+<h3>${p.nome}</h3>
+<p>R$ ${p.preco}</p>
+<button onclick="window.open('${p.link}')">Ver oferta</button>
+</div>`;
+});
+
+html+="</div></section>";
+
+document.getElementById("conteudo").innerHTML=html;
 }
 
 /* ===== BUSCA ===== */
 function buscar(){
-  const termo=document.getElementById("search").value.toLowerCase();
-  if(!termo){carregarCategoria(categoriaAtual);return;}
 
-  let resultados=[];
-  Object.values(dados).forEach(cat=>{
-    cat.produtos.forEach(p=>{
-      if(p.nome.toLowerCase().includes(termo)) resultados.push(p);
-    });
-  });
+const termo=document.getElementById("search").value.toLowerCase();
 
-  if(!resultados.length){
-    document.getElementById("conteudo").innerHTML=
-      "<h2 style='text-align:center'>Nenhum produto encontrado 😕</h2>";
-    return;
-  }
-
-  renderProdutos({titulo:"🔎 Resultados",produtos:resultados});
+if(!termo){
+carregarCategoria(categoriaAtual);
+return;
 }
 
-/* ===== FAVORITOS ===== */
-function toggleFavorito(id,el){
-  let salvos=JSON.parse(localStorage.getItem("salvos"))||[];
-  if(salvos.includes(id)){
-    salvos=salvos.filter(i=>i!==id);
-    el.innerText="♡";
-    el.classList.remove("favorito-ativo");
-  }else{
-    salvos.push(id);
-    el.innerText="❤️";
-    el.classList.add("favorito-ativo");
-  }
-  localStorage.setItem("salvos",JSON.stringify(salvos));
-  atualizarContadorSalvos();
-}
+let resultados=[];
 
-function atualizarContadorSalvos(){
-  document.getElementById("contador-salvos").innerText=
-    (JSON.parse(localStorage.getItem("salvos"))||[]).length;
+Object.values(dados).forEach(cat=>{
+cat.produtos.forEach(p=>{
+if(p.nome.toLowerCase().includes(termo)){
+resultados.push(p);
 }
-
-/* ===== INIT ===== */
-document.addEventListener("DOMContentLoaded",()=>{
-  carregarCategoria(categoriaAtual);
-  atualizarContadorSalvos();
 });
+});
+
+if(resultados.length===0){
+document.getElementById("conteudo").innerHTML=`
+<section style="text-align:center">
+<h2>😕 Nenhum produto encontrado</h2>
+</section>`;
+return;
+}
+
+let html=`<section><h2>Resultados</h2><div class="ofertas-track">`;
+
+resultados.forEach(p=>{
+html+=`
+<div class="card">
+<img src="${p.img}">
+<h3>${p.nome}</h3>
+<p>R$ ${p.preco}</p>
+<button onclick="window.open('${p.link}')">Ver oferta</button>
+</div>`;
+});
+
+html+="</div></section>";
+
+document.getElementById("conteudo").innerHTML=html;
+
+}
+
+/* ===== WHATSAPP ===== */
+function avisoWhatsApp(){
+return confirm("Deseja entrar no grupo do WhatsApp?");
+}
+
+/* INIT */
+carregarCategoria(categoriaAtual);
+
 </script>
 
 </body>
