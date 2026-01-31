@@ -5372,6 +5372,7 @@ const busca = document.getElementById("buscaInput");
 if(busca && busca.value){
   filtrarProdutos(busca.value.toLowerCase());
 }
+  }
 function atualizarContadorSalvos(){
   let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
   const contador = document.getElementById("contador-salvos");
