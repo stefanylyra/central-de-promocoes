@@ -240,6 +240,7 @@
     bottom:20px;
     right:20px;
   }
+  
   .whatsapp-float{
     background:#25D366;
     width:60px;
@@ -257,7 +258,15 @@
 
     /* Topo preto mais compacto */
     .topo-preto{padding:10px 12px;flex-wrap:wrap;}
-    .busca-topo{display:none;} /* esconde busca */
+   .busca-topo{
+  display:flex;
+  width:100%;
+  margin-top:8px;
+}
+
+.busca-topo input{
+  width:100%;
+}
     .espaco-logo{width:60px;} /* logo menor */
 
     /* Barra cinza transformada em menu vertical ao clicar */
@@ -272,7 +281,11 @@
       padding:10px;
       font-size:16px;
     }
-
+.whatsapp-text{
+  font-size:12px;
+  max-width:140px;
+  text-align:right;
+}
     /* Cards ocupam 100% da largura */
     .ofertas-track,.carrossel{
       grid-template-columns:1fr;
@@ -292,9 +305,6 @@
 /* MOBILE ONLY */
 @media screen and (max-width:768px){
   body{padding-top:90px;}
-
-  /* Esconde busca */
-  .busca-topo{display:none;}
 
   /* Mostra botão ☰ */
   .menu-mobile-btn{
@@ -337,10 +347,11 @@
   <span class="menu-mobile-btn" onclick="toggleMenu()">☰</span>
 
   <div class="busca-topo">
-    <input type="text" placeholder="Buscar produtos...">
+  <input type="text" id="buscaInput" placeholder="Buscar produtos...">
   </div>
 
-  <div class="salvos-topo" onclick="window.location.href='salvos.html'">❤️ Salvos</div>
+<div class="salvos-topo" onclick="window.location.href='salvos.html'">
+  ❤️ Salvos (<span id="contador-salvos">0</span>)</div>
 </div>
 
   <div class="barra-cinza">
@@ -5355,6 +5366,13 @@ produtos:[
     html+=`</div></section>`;
     document.getElementById("conteudo").innerHTML=html;
   }
+function atualizarContadorSalvos(){
+  let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+  const contador = document.getElementById("contador-salvos");
+  if(contador){
+    contador.innerText = salvos.length;
+  }
+}
 
   function toggleFavorito(id, el){
     let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
@@ -5368,6 +5386,7 @@ produtos:[
       el.innerText = "❤️";
     }
     localStorage.setItem("salvos", JSON.stringify(salvos));
+    atualizarContadorSalvos();
   }
   function toggleMenu(){
   document.querySelector(".barra-cinza").classList.toggle("ativo");
@@ -5376,9 +5395,29 @@ produtos:[
   document.addEventListener("DOMContentLoaded", function () {
     // categoria padrão ao abrir o site
     if (typeof carregarCategoria === "function") {
-      carregarCategoria("relogios"); 
+      carregarCategoria("roupas-masculinas");
+      atualizarContadorSalvos();
     }
   });
+  document.addEventListener("input", function(e){
+  if(e.target.id === "buscaInput"){
+    filtrarProdutos(e.target.value.toLowerCase());
+  }
+});
+
+function filtrarProdutos(texto){
+  const cards = document.querySelectorAll(".card");
+
+  cards.forEach(card=>{
+    const nome = card.querySelector("h3").innerText.toLowerCase();
+    if(nome.includes(texto)){
+      card.style.display="";
+    } else {
+      card.style.display="none";
+    }
+  });
+}
+
 
 </script>
 </body>
