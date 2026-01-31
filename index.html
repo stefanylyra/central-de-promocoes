@@ -365,7 +365,9 @@
 </header>
 
 <div id="conteudo"></div>
-
+<div id="mensagem-nao-encontrado" style="display:none; text-align:center; padding:30px;">
+  😕 Nenhum produto encontrado
+</div>
 <footer>
   <p>Somos um site de afiliados. Ao comprar pelos links você nos ajuda a continuar trazendo promoções e ofertas imperdíveis — sem nenhum custo extra ❤️.</p>
   <p>Site afiliado • Central de Promoções</p>
@@ -5364,8 +5366,12 @@ produtos:[
       </div>`;
     });
     html+=`</div></section>`;
-    document.getElementById("conteudo").innerHTML=html;
-  }
+   document.getElementById("conteudo").innerHTML=html;
+
+const busca = document.getElementById("buscaInput");
+if(busca && busca.value){
+  filtrarProdutos(busca.value.toLowerCase());
+}
 function atualizarContadorSalvos(){
   let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
   const contador = document.getElementById("contador-salvos");
@@ -5407,18 +5413,28 @@ function atualizarContadorSalvos(){
 
 function filtrarProdutos(texto){
   const cards = document.querySelectorAll(".card");
+  const msg = document.getElementById("mensagem-nao-encontrado");
+
+  let encontrou = false;
 
   cards.forEach(card=>{
     const nome = card.querySelector("h3").innerText.toLowerCase();
+
     if(nome.includes(texto)){
-      card.style.display="";
+      card.style.display = "";
+      encontrou = true;
     } else {
-      card.style.display="none";
+      card.style.display = "none";
     }
   });
+
+  // Mostra ou esconde mensagem
+  if(texto.length > 0 && !encontrou){
+    msg.style.display = "block";
+  } else {
+    msg.style.display = "none";
+  }
 }
-
-
 </script>
 </body>
 </html>
