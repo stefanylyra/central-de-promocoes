@@ -5333,47 +5333,62 @@ produtos:[
   }
   };
 
-  let categoriaAtual = "roupas-masculinas";
+ let categoriaAtual = "roupas-masculinas";
 
-  const nav = document.getElementById("lista-categorias");
-  categorias.forEach(cat=>{
-    const btn=document.createElement("button");
-    btn.textContent=cat.nome;
-    btn.onclick=()=>carregarCategoria(cat.id);
-    nav.appendChild(btn);
+/* ===== MENU CATEGORIAS ===== */
+const nav = document.getElementById("lista-categorias");
+
+categorias.forEach(cat=>{
+  const btn=document.createElement("button");
+  btn.textContent=cat.nome;
+  btn.onclick=()=>carregarCategoria(cat.id);
+  nav.appendChild(btn);
+});
+
+function toggleCategorias(){
+  nav.classList.toggle("oculto");
+}
+
+/* ===== CARREGAR CATEGORIA ===== */
+function carregarCategoria(id){
+  categoriaAtual = id;
+  renderProdutos(dados[id]);
+}
+
+/* ===== RENDER PRODUTOS ===== */
+function renderProdutos(cat){
+  if(!cat) return;
+
+  let html=`<section><h2>${cat.titulo}</h2><div class="ofertas-track">`;
+
+  cat.produtos.forEach(p=>{
+    html+=`
+    <div class="card">
+      <div class="favorito" onclick="toggleFavorito('${p.id}', this)">♡</div>
+      <img src="${p.img}">
+      <h3>${p.nome}</h3>
+      <div class="precos">
+        <span class="preco-antigo">R$ ${p.precoAntigo}</span>
+        <span class="preco-novo">R$ ${p.precoNovo}</span>
+      </div>
+      <p class="oferta">🔥 Oferta imperdível</p>
+      <p class="estrelas">⭐⭐⭐⭐☆</p>
+      <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+    </div>`;
   });
 
-  function toggleCategorias(){ nav.classList.toggle("oculto"); }
+  html+=`</div></section>`;
 
-  function carregarCategoria(id){ categoriaAtual=id; renderProdutos(dados[id]); }
+  document.getElementById("conteudo").innerHTML=html;
 
-  function renderProdutos(cat){
-    if(!cat) return;
-    categoriaAtual = cat;
-    let html=`<section><h2>${cat.titulo}</h2><div class="ofertas-track">`;
-    cat.produtos.forEach(p=>{
-      html+=`
-      <div class="card">
-        <div class="favorito" onclick="toggleFavorito('${p.id}', this)">♡</div>
-        <img src="${p.img}">
-        <h3>${p.nome}</h3>
-        <div class="precos">
-          <span class="preco-antigo">R$ ${p.precoAntigo}</span>
-          <span class="preco-novo">R$ ${p.precoNovo}</span>
-        </div>
-        <p class="oferta">🔥 Oferta imperdível</p>
-        <p class="estrelas">⭐⭐⭐⭐☆</p>
-        <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-      </div>`;
-    });
-    html+=`</div></section>`;
-   document.getElementById("conteudo").innerHTML=html;
-
-const busca = document.getElementById("buscaInput");
-if(busca && busca.value){
-  filtrarProdutos(busca.value.toLowerCase());
-}
+  // reaplica busca se tiver texto digitado
+  const busca = document.getElementById("buscaInput");
+  if(busca && busca.value){
+    filtrarProdutos(busca.value);
   }
+}
+
+/* ===== FAVORITOS ===== */
 function atualizarContadorSalvos(){
   let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
   const contador = document.getElementById("contador-salvos");
@@ -5382,37 +5397,29 @@ function atualizarContadorSalvos(){
   }
 }
 
-  function toggleFavorito(id, el){
-    let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
-    if(salvos.includes(id)){
-      salvos = salvos.filter(item => item !== id);
-      el.classList.remove("favorito-ativo");
-      el.innerText = "♡";
-    } else {
-      salvos.push(id);
-      el.classList.add("favorito-ativo");
-      el.innerText = "❤️";
-    }
-    localStorage.setItem("salvos", JSON.stringify(salvos));
-    atualizarContadorSalvos();
+function toggleFavorito(id, el){
+  let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+
+  if(salvos.includes(id)){
+    salvos = salvos.filter(item => item !== id);
+    el.classList.remove("favorito-ativo");
+    el.innerText = "♡";
+  } else {
+    salvos.push(id);
+    el.classList.add("favorito-ativo");
+    el.innerText = "❤️";
   }
-  function toggleMenu(){
+
+  localStorage.setItem("salvos", JSON.stringify(salvos));
+  atualizarContadorSalvos();
+}
+
+/* ===== MENU MOBILE ===== */
+function toggleMenu(){
   document.querySelector(".barra-cinza").classList.toggle("ativo");
 }
-  // ================= CARREGAMENTO INICIAL =================
-  document.addEventListener("DOMContentLoaded", function () {
-    // categoria padrão ao abrir o site
-    if (typeof carregarCategoria === "function") {
-      carregarCategoria("roupas-masculinas");
-      atualizarContadorSalvos();
-    }
-  });
-  document.addEventListener("input", function(e){
-  if(e.target.id === "buscaInput"){
-    filtrarProdutos(e.target.value.toLowerCase());
-  }
-});
 
+/* ===== BUSCA GLOBAL ===== */
 function filtrarProdutos(texto){
   texto = texto.toLowerCase().trim();
 
@@ -5420,15 +5427,15 @@ function filtrarProdutos(texto){
   const conteudo = document.getElementById("conteudo");
 
   if(!texto){
-    renderProdutos(categoriaAtual);
+    renderProdutos(dados[categoriaAtual]);
     msg.style.display = "none";
     return;
   }
 
   let resultados = [];
 
-  Object.keys(produtos).forEach(cat=>{
-    produtos[cat].forEach(p=>{
+  Object.keys(dados).forEach(cat=>{
+    dados[cat].produtos.forEach(p=>{
       if(p.nome.toLowerCase().includes(texto)){
         resultados.push(p);
       }
@@ -5443,24 +5450,37 @@ function filtrarProdutos(texto){
 
   msg.style.display = "none";
 
-  let html = `<div class="produtos-grid">`;
+  let html = `<section><h2>🔎 Resultados da busca</h2><div class="ofertas-track">`;
 
   resultados.forEach(p=>{
     html += `
-      <div class="card">
-        <img src="${p.img}">
-        <h3>${p.nome}</h3>
-        <p class="preco">${p.preco}</p>
-        <a href="${p.link}" target="_blank">Ver oferta</a>
+    <div class="card">
+      <img src="${p.img}">
+      <h3>${p.nome}</h3>
+      <div class="precos">
+        <span class="preco-antigo">R$ ${p.precoAntigo}</span>
+        <span class="preco-novo">R$ ${p.precoNovo}</span>
       </div>
-    `;
+      <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+    </div>`;
   });
 
-  html += `</div>`;
+  html += `</div></section>`;
 
   conteudo.innerHTML = html;
 }
-}
+
+/* ===== EVENTOS ===== */
+document.addEventListener("DOMContentLoaded", function(){
+  carregarCategoria(categoriaAtual);
+  atualizarContadorSalvos();
+});
+
+document.addEventListener("input", function(e){
+  if(e.target.id === "buscaInput"){
+    filtrarProdutos(e.target.value);
+  }
+});
 </script>
 </body>
 </html>
