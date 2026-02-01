@@ -25,16 +25,17 @@
 
     .oculto { display: none !important; }
 
-    section { padding: 30px 15px; margin-bottom: 20px; }
+    section { padding: 30px 15px; margin-bottom: 30px; }
     h2 { margin-bottom: 15px; font-size: 1.4em; text-align: center; }
 
     .ofertas-track { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
     .card { background: white; border-radius: 10px; padding: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); text-align: center; position: relative; }
     .card img { width: 100%; height: 140px; object-fit: contain; background: #f8f8f8; border-radius: 8px; }
     .card h3 { font-size: 14px; margin: 10px 0 6px; min-height: 40px; }
-    .precos { display: flex; justify-content: center; gap: 8px; margin: 6px 0; }
+    .precos { display: flex; justify-content: center; gap: 8px; margin: 6px 0; font-size: 15px; }
     .preco-antigo { color: #999; text-decoration: line-through; font-size: 13px; }
     .preco-novo { color: var(--vermelho); font-weight: bold; font-size: 18px; }
+    .preco-consulta { color: #555; font-style: italic; }
     .card button { background: var(--laranja); color: white; border: none; padding: 10px; border-radius: 8px; width: 100%; font-size: 15px; margin-top: 8px; }
     .favorito { position: absolute; top: 8px; right: 8px; font-size: 22px; cursor: pointer; color: #ccc; }
     .favorito-ativo { color: red; }
@@ -51,7 +52,7 @@
       .menu-mobile-btn { display: block; font-size: 26px; }
       .barra-cinza { display: none; flex-direction: column; }
       .barra-cinza.ativo { display: flex; }
-      .ofertas-track { grid-template-columns: 1fr; }
+      .ofertas-track { grid-template-columns: 1fr; gap: 24px; }
       .categorias button { font-size: 12px; padding: 6px 10px; }
     }
   </style>
@@ -70,8 +71,8 @@
 
   <div class="barra-cinza">
     <button onclick="toggleCategorias()">☰ Categorias</button>
-    <button onclick="alert('Página em construção - em breve novidades!')">Ofertas do dia</button>
-    <button onclick="alert('Página em construção - em breve os mais clicados!')">Mais clicados</button>
+    <button onclick="alert('Página em construção - em breve!')">Ofertas do dia</button>
+    <button onclick="alert('Página em construção - em breve!')">Mais clicados</button>
     <button onclick="alert('Página em construção - cadastre-se para novidades!')">Receba novidades</button>
   </div>
 
@@ -79,9 +80,6 @@
 </header>
 
 <div id="conteudo"></div>
-<div id="mensagem-nao-encontrado" style="display:none; text-align:center; padding:40px; font-size:1.2em;">
-  😕 Nenhum produto encontrado
-</div>
 
 <div class="siga-discreto">
   Melhores achados do dia – atualizado diariamente!<br>
@@ -94,7 +92,7 @@
 </a>
 
 <script>
-// Categorias (todas listadas)
+// Categorias
 const categorias = [
   {id: "roupas-masculinas", nome: "👕 Masculinas"},
   {id: "roupas-femininas", nome: "👗 Femininas"},
@@ -5042,7 +5040,7 @@ produtos:[
 
 let categoriaAtual = "roupas-masculinas";
 
-// Renderiza botões de categorias (todas, mesmo vazias)
+// Renderiza todas as categorias
 const nav = document.getElementById("lista-categorias");
 categorias.forEach(cat => {
   const btn = document.createElement("button");
@@ -5058,8 +5056,8 @@ function toggleCategorias() {
 function carregarCategoria(id) {
   categoriaAtual = id;
   const cat = dados[id];
-  if (!cat || !cat.produtos || cat.produtos.length === 0) {
-    document.getElementById("conteudo").innerHTML = '<div style="padding:40px;text-align:center;">Categoria em construção ou sem ofertas no momento 😕</div>';
+  if (!cat) {
+    document.getElementById("conteudo").innerHTML = '<div style="padding:40px;text-align:center;">Categoria ainda em construção 😕</div>';
     return;
   }
   renderProdutos(cat);
@@ -5067,13 +5065,13 @@ function carregarCategoria(id) {
 
 function renderProdutos(cat) {
   let html = `<section><h2>${cat.titulo}</h2><div class="ofertas-track">`;
-  let temOfertaReal = false;
+  let count = 0;
 
   cat.produtos.forEach(p => {
+    count++;
     const preco = p.precoNovo || "00,00";
-    if (preco === "00,00") return; // ignora placeholders
+    const precoDisplay = preco === "00,00" ? '<span class="preco-consulta">Preço sob consulta</span>' : `<span class="preco-novo">R$ ${preco}</span>`;
 
-    temOfertaReal = true;
     html += `
     <div class="card">
       <div class="favorito" onclick="toggleFavorito('${p.nome}', this)">♡</div>
@@ -5081,7 +5079,7 @@ function renderProdutos(cat) {
       <h3>${p.nome}</h3>
       <div class="precos">
         <span class="preco-antigo">R$ ${p.precoAntigo || '---'}</span>
-        <span class="preco-novo">R$ ${preco}</span>
+        ${precoDisplay}
       </div>
       <p class="oferta">🔥 Oferta imperdível</p>
       <p class="estrelas">⭐⭐⭐⭐☆</p>
@@ -5089,15 +5087,13 @@ function renderProdutos(cat) {
     </div>`;
   });
 
-  if (!temOfertaReal) {
-    html += '<div style="padding:20px;text-align:center;">Sem ofertas com preço ativo no momento</div>';
-  }
+  if (count === 0) html += '<div style="padding:20px;text-align:center;">Sem produtos cadastrados ainda</div>';
 
   html += `</div></section>`;
   document.getElementById("conteudo").innerHTML = html;
 }
 
-// Favoritos (usando nome como chave)
+// Favoritos (usando nome)
 function toggleFavorito(nome, el) {
   let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
   if (salvos.includes(nome)) {
@@ -5111,43 +5107,39 @@ function toggleFavorito(nome, el) {
   document.getElementById("contador-salvos").innerText = salvos.length;
 }
 
-// Busca corrigida (filtra por nome, ignora placeholders)
+// Busca (filtra por nome, mostra todos)
 document.getElementById("buscaInput").addEventListener("input", e => {
   const texto = e.target.value.toLowerCase().trim();
   if (!texto) return carregarCategoria(categoriaAtual);
 
-  let resultados = [];
+  let html = `<section><h2>Resultados para "${texto}"</h2><div class="ofertas-track">`;
+  let achou = false;
+
   Object.values(dados).forEach(cat => {
     cat.produtos.forEach(p => {
-      if (p.nome.toLowerCase().includes(texto) && p.precoNovo !== "00,00") {
-        resultados.push(p);
+      if (p.nome.toLowerCase().includes(texto)) {
+        achou = true;
+        const preco = p.precoNovo || "00,00";
+        const precoDisplay = preco === "00,00" ? '<span class="preco-consulta">Preço sob consulta</span>' : `<span class="preco-novo">R$ ${preco}</span>`;
+        html += `
+        <div class="card">
+          <img src="${p.img || 'https://via.placeholder.com/160?text=Sem+Foto'}">
+          <h3>${p.nome}</h3>
+          <div class="precos">
+            <span class="preco-antigo">R$ ${p.precoAntigo || '---'}</span>
+            ${precoDisplay}
+          </div>
+          <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+        </div>`;
       }
     });
   });
 
-  if (resultados.length === 0) {
-    document.getElementById("conteudo").innerHTML = '<div style="padding:40px;text-align:center;">Nenhum produto encontrado 😕</div>';
-    return;
-  }
-
-  let html = `<section><h2>Resultados para "${texto}" (${resultados.length} encontrados)</h2><div class="ofertas-track">`;
-  resultados.forEach(p => {
-    html += `
-    <div class="card">
-      <img src="${p.img || 'https://via.placeholder.com/160?text=Sem+Foto'}">
-      <h3>${p.nome}</h3>
-      <div class="precos">
-        <span class="preco-antigo">R$ ${p.precoAntigo || '---'}</span>
-        <span class="preco-novo">R$ ${p.precoNovo}</span>
-      </div>
-      <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-    </div>`;
-  });
-  html += `</div></section>`;
+  if (!achou) html = '<div style="padding:40px;text-align:center;">Nada encontrado 😕</div>';
   document.getElementById("conteudo").innerHTML = html;
 });
 
-// Inicializa com categoria padrão
+// Inicializa
 carregarCategoria(categoriaAtual);
 document.getElementById("contador-salvos").innerText = (JSON.parse(localStorage.getItem("salvos")) || []).length;
 
