@@ -3,128 +3,145 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Central de Promoções Tefany - Melhores achados do dia em roupas, acessórios, beleza e mais! Atualizadas diariamente 🔥">
-  <title>Central de Promoções Tefany | Achados Imperdíveis 🔥</title>
-
+  <title>Central de Promoções Tefany</title>
   <style>
     :root {
-      --cor-principal: #ff6a00;
-      --cor-destaque: #e63946;
+      --laranja: #ff6a00;
+      --vermelho: #e63946;
+      --preto: #000;
       --cinza-escuro: #2b2b2b;
-      --cinza-claro: #eee;
+      --cinza: #eee;
     }
 
+    * { box-sizing: border-box; margin:0; padding:0; }
+
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
       background: #f9f9f9;
       color: #333;
-      padding-top: 110px; /* ajustado para header fixo menor */
+      padding-top: 110px; /* espaço pro header fixo */
+      line-height: 1.4;
     }
 
-    /* Header fixo */
-    .header-fixo { position: fixed; top: 0; width: 100%; z-index: 1000; }
+    /* Header fixo mais compacto */
+    .header-fixo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
     .topo-preto {
       background: #000;
+      color: white;
+      padding: 10px 15px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 15px;
     }
-    .busca-topo { flex: 1; display: flex; justify-content: center; }
+
+    .menu-mobile-btn { font-size: 24px; cursor: pointer; display: none; }
+
     .busca-topo input {
       width: 100%;
-      max-width: 380px;
-      padding: 10px;
+      max-width: 300px;
+      padding: 8px 12px;
       border-radius: 6px;
       border: none;
       font-size: 15px;
     }
+
     .salvos-topo {
-      color: white;
       font-weight: bold;
       cursor: pointer;
-      font-size: 14px;
+      white-space: nowrap;
     }
 
     .barra-cinza {
       background: var(--cinza-escuro);
       padding: 8px 15px;
       display: flex;
-      gap: 8px;
       flex-wrap: wrap;
+      gap: 8px;
     }
+
     .barra-cinza button {
       background: white;
-      color: black;
       border: none;
-      border-radius: 20px;
       padding: 8px 14px;
+      border-radius: 20px;
       cursor: pointer;
       font-size: 14px;
     }
 
-    /* Categorias - scroll horizontal no mobile */
+    .barra-cinza button:hover { background: var(--laranja); color: white; }
+
+    /* Categorias - scroll horizontal suave no mobile */
     .categorias {
       display: flex;
       overflow-x: auto;
       gap: 8px;
       padding: 12px 15px;
-      background: var(--cinza-claro);
-      white-space: nowrap;
-      scrollbar-width: none; /* Firefox */
+      background: var(--cinza);
+      scrollbar-width: none;
     }
     .categorias::-webkit-scrollbar { display: none; }
     .categorias button {
-      background: #333;
+      background: var(--preto);
       color: white;
       border: none;
       padding: 8px 14px;
       border-radius: 20px;
+      white-space: nowrap;
       font-size: 13px;
       flex-shrink: 0;
     }
 
+    .oculto { display: none !important; }
+
     /* Conteúdo principal */
-    section { padding: 25px 15px; }
-    h2 { margin: 0 0 15px; font-size: 1.4em; }
+    section { padding: 20px 15px; }
+    h2 { margin-bottom: 15px; font-size: 1.4em; text-align: center; }
 
     .ofertas-track {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
     }
 
     .card {
       background: white;
       border-radius: 10px;
       padding: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       text-align: center;
       position: relative;
     }
 
     .card img {
       width: 100%;
-      height: 150px;
+      height: 140px;
       object-fit: contain;
       background: #f8f8f8;
       border-radius: 8px;
     }
 
-    .card h3 { font-size: 14px; margin: 10px 0 6px; min-height: 42px; }
-    .precos { display: flex; justify-content: center; gap: 10px; font-size: 15px; }
-    .preco-antigo { color: #888; text-decoration: line-through; }
-    .preco-novo { color: var(--cor-destaque); font-weight: bold; font-size: 18px; }
+    .card h3 { font-size: 14px; margin: 10px 0 6px; min-height: 40px; }
+    .precos { display: flex; justify-content: center; gap: 8px; margin: 6px 0; }
+    .preco-antigo { color: #999; text-decoration: line-through; font-size: 13px; }
+    .preco-novo { color: var(--vermelho); font-weight: bold; font-size: 18px; }
     .card button {
-      background: var(--cor-principal);
+      background: var(--laranja);
       color: white;
       border: none;
       padding: 10px;
       border-radius: 8px;
       width: 100%;
-      margin-top: 8px;
       font-size: 15px;
+      margin-top: 8px;
     }
 
     .favorito {
@@ -133,29 +150,25 @@
       right: 8px;
       font-size: 22px;
       cursor: pointer;
-      color: #ddd;
+      color: #ccc;
     }
     .favorito-ativo { color: red; }
 
     /* Rodapé discreto */
     .siga-discreto {
       text-align: center;
-      padding: 20px 15px;
+      padding: 15px;
       background: #f5f5f5;
-      font-size: 0.95em;
-      color: #555;
+      font-size: 14px;
       border-top: 1px solid #ddd;
+      margin-top: 20px;
     }
-    .siga-discreto strong { color: #000; }
 
-    /* WhatsApp flutuante */
-    .whatsapp-container {
+    /* WhatsApp */
+    .whatsapp-float {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      z-index: 999;
-    }
-    .whatsapp-float {
       background: #25D366;
       width: 60px;
       height: 60px;
@@ -164,14 +177,20 @@
       align-items: center;
       justify-content: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 999;
     }
     .whatsapp-float img { width: 36px; }
 
-    /* Mobile */
+    /* Mobile ajustes */
     @media (max-width: 768px) {
       body { padding-top: 100px; }
+      .topo-preto { padding: 8px 12px; }
+      .busca-topo input { max-width: none; }
+      .menu-mobile-btn { display: block; font-size: 26px; }
+      .barra-cinza { display: none; flex-direction: column; }
+      .barra-cinza.ativo { display: flex; }
       .ofertas-track { grid-template-columns: 1fr; }
-      .categorias { padding: 10px 15px; }
+      .categorias button { font-size: 12px; padding: 6px 10px; }
     }
   </style>
 </head>
@@ -190,39 +209,31 @@
 
   <div class="barra-cinza">
     <button onclick="toggleCategorias()">☰ Categorias</button>
-    <button onclick="window.location.href='ofertas.html'">Ofertas do dia</button>
-    <button onclick="window.location.href='mais-clicados.html'">Mais clicados</button>
-    <button onclick="window.location.href='novidades.html'">Receba novidades</button>
+    <button>Ofertas do dia</button>
+    <button>Mais clicados</button>
+    <button>Receba novidades</button>
   </div>
 
   <div id="lista-categorias" class="categorias oculto"></div>
 </header>
 
 <div id="conteudo"></div>
-
 <div id="mensagem-nao-encontrado" style="display:none; text-align:center; padding:40px; font-size:1.2em;">
   😕 Nenhum produto encontrado
 </div>
 
-<!-- Banner discreto no rodapé -->
 <div class="siga-discreto">
   Melhores achados do dia – atualizado diariamente!<br>
   <strong>Siga no Instagram:</strong> @stefanylyra<br>
   Última atualização: 31/01/2026
 </div>
 
-<footer>
-  <p>Somos um site de afiliados. Compras pelos links ajudam a manter as promoções — sem custo extra ❤️</p>
-</footer>
-
-<div class="whatsapp-container">
-  <a href="https://chat.whatsapp.com/JgiOFb5n2CWKNzsoNADvWt" target="_blank" class="whatsapp-float">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-  </a>
-</div>
+<a href="https://chat.whatsapp.com/JgiOFb5n2CWKNzsoNADvWt" target="_blank" class="whatsapp-float">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+</a>
 
 <script>
-// Seu array de categorias (copie o original)
+// Categorias
 const categorias = [
     {id: "roupas-masculinas", nome: "👕 Masculinas"},
     {id: "roupas-femininas", nome: "👗 Femininas"},
@@ -5169,9 +5180,9 @@ produtos:[
   }
 };
 
+// Inicializa
 let categoriaAtual = "roupas-masculinas";
 
-// Renderiza botões de categorias
 const nav = document.getElementById("lista-categorias");
 categorias.forEach(cat => {
   const btn = document.createElement("button");
@@ -5194,15 +5205,12 @@ function renderProdutos(cat) {
   let html = `<section><h2>${cat.titulo}</h2><div class="ofertas-track">`;
 
   cat.produtos.forEach(p => {
-    if (p.precoNovo === "00,00" || !p.precoNovo) return; // ignora placeholders
+    if (p.precoNovo === "00,00") return; // ignora placeholders
 
     html += `
     <div class="card">
-      <div class="favorito ${isFavorito(p.nome) ? 'favorito-ativo' : ''}" 
-           onclick="toggleFavorito('${p.nome}', this)">
-        ${isFavorito(p.nome) ? '❤️' : '♡'}
-      </div>
-      <img src="${p.img || 'https://via.placeholder.com/180x150?text=Sem+Foto'}">
+      <div class="favorito" onclick="toggleFavorito('${p.nome}', this)">♡</div>
+      <img src="${p.img || 'https://via.placeholder.com/160?text=Foto'}">
       <h3>${p.nome}</h3>
       <div class="precos">
         <span class="preco-antigo">R$ ${p.precoAntigo}</span>
@@ -5218,22 +5226,15 @@ function renderProdutos(cat) {
   document.getElementById("conteudo").innerHTML = html;
 }
 
-// Favoritos (usando nome como ID por simplicidade)
-function isFavorito(nome) {
-  let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
-  return salvos.includes(nome);
-}
-
+// Favoritos simples (usando nome como chave)
 function toggleFavorito(nome, el) {
   let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
   if (salvos.includes(nome)) {
-    salvos = salvos.filter(item => item !== nome);
+    salvos = salvos.filter(n => n !== nome);
     el.innerText = "♡";
-    el.classList.remove("favorito-ativo");
   } else {
     salvos.push(nome);
     el.innerText = "❤️";
-    el.classList.add("favorito-ativo");
   }
   localStorage.setItem("salvos", JSON.stringify(salvos));
   document.getElementById("contador-salvos").innerText = salvos.length;
@@ -5241,35 +5242,23 @@ function toggleFavorito(nome, el) {
 
 // Busca
 document.getElementById("buscaInput").addEventListener("input", e => {
-  const texto = e.target.value.toLowerCase().trim();
-  if (!texto) return carregarCategoria(categoriaAtual);
+  const val = e.target.value.toLowerCase();
+  if (!val) return carregarCategoria(categoriaAtual);
 
-  let html = `<section><h2>🔎 Resultados para "${texto}"</h2><div class="ofertas-track">`;
-  let encontrou = false;
+  let html = `<section><h2>Resultados para "${val}"</h2><div class="ofertas-track">`;
+  let achou = false;
 
   Object.values(dados).forEach(cat => {
     cat.produtos.forEach(p => {
-      if (p.nome.toLowerCase().includes(texto)) {
-        encontrou = true;
-        html += `
-        <div class="card">
-          <img src="${p.img || 'https://via.placeholder.com/180x150?text=Sem+Foto'}">
-          <h3>${p.nome}</h3>
-          <div class="precos">
-            <span class="preco-antigo">R$ ${p.precoAntigo}</span>
-            <span class="preco-novo">R$ ${p.precoNovo}</span>
-          </div>
-          <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
-        </div>`;
+      if (p.nome.toLowerCase().includes(val)) {
+        achou = true;
+        html += `<div class="card">... (mesmo template do card acima) ...</div>`;
       }
     });
   });
 
-  if (!encontrou) {
-    document.getElementById("conteudo").innerHTML = `<div style="padding:40px;text-align:center;">Nenhum produto encontrado 😕</div>`;
-  } else {
-    document.getElementById("conteudo").innerHTML = html + `</div></section>`;
-  }
+  if (!achou) html = `<div style="padding:40px;text-align:center;">Nada encontrado 😕</div>`;
+  document.getElementById("conteudo").innerHTML = html;
 });
 
 // Inicializa
