@@ -5,185 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Central de Promoções Tefany</title>
   <style>
-    :root {
-      --laranja: #ff6a00;
-      --vermelho: #e63946;
-      --preto: #000;
-      --cinza-escuro: #2b2b2b;
-      --cinza: #eee;
-    }
+    :root { --laranja: #ff6a00; --vermelho: #e63946; --preto: #000; --cinza-escuro: #2b2b2b; --cinza: #eee; }
 
     * { box-sizing: border-box; margin:0; padding:0; }
+    body { font-family: Arial, sans-serif; background: #f9f9f9; color: #333; padding-top: 100px; line-height: 1.4; }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      color: #333;
-      padding-top: 110px; /* espaço pro header fixo */
-      line-height: 1.4;
-    }
-
-    /* Header fixo mais compacto */
-    .header-fixo {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .topo-preto {
-      background: #000;
-      color: white;
-      padding: 10px 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
+    .header-fixo { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .topo-preto { background: #000; color: white; padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; }
     .menu-mobile-btn { font-size: 24px; cursor: pointer; display: none; }
-
-    .busca-topo input {
-      width: 100%;
-      max-width: 300px;
-      padding: 8px 12px;
-      border-radius: 6px;
-      border: none;
-      font-size: 15px;
-    }
-
-    .salvos-topo {
-      font-weight: bold;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .barra-cinza {
-      background: var(--cinza-escuro);
-      padding: 8px 15px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .barra-cinza button {
-      background: white;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
+    .busca-topo input { width: 100%; max-width: 300px; padding: 8px 12px; border-radius: 6px; border: none; font-size: 15px; }
+    .salvos-topo { font-weight: bold; cursor: pointer; white-space: nowrap; }
+    .barra-cinza { background: var(--cinza-escuro); padding: 8px 15px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .barra-cinza button { background: white; border: none; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-size: 14px; }
     .barra-cinza button:hover { background: var(--laranja); color: white; }
 
-    /* Categorias - scroll horizontal suave no mobile */
-    .categorias {
-      display: flex;
-      overflow-x: auto;
-      gap: 8px;
-      padding: 12px 15px;
-      background: var(--cinza);
-      scrollbar-width: none;
-    }
+    .categorias { display: flex; overflow-x: auto; gap: 8px; padding: 12px 15px; background: var(--cinza); scrollbar-width: none; }
     .categorias::-webkit-scrollbar { display: none; }
-    .categorias button {
-      background: var(--preto);
-      color: white;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 20px;
-      white-space: nowrap;
-      font-size: 13px;
-      flex-shrink: 0;
-    }
+    .categorias button { background: var(--preto); color: white; border: none; padding: 8px 14px; border-radius: 20px; white-space: nowrap; font-size: 13px; flex-shrink: 0; cursor: pointer; }
 
     .oculto { display: none !important; }
 
-    /* Conteúdo principal */
-    section { padding: 20px 15px; }
+    section { padding: 30px 15px; margin-bottom: 20px; }
     h2 { margin-bottom: 15px; font-size: 1.4em; text-align: center; }
 
-    .ofertas-track {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 10px;
-      padding: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      text-align: center;
-      position: relative;
-    }
-
-    .card img {
-      width: 100%;
-      height: 140px;
-      object-fit: contain;
-      background: #f8f8f8;
-      border-radius: 8px;
-    }
-
+    .ofertas-track { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
+    .card { background: white; border-radius: 10px; padding: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); text-align: center; position: relative; }
+    .card img { width: 100%; height: 140px; object-fit: contain; background: #f8f8f8; border-radius: 8px; }
     .card h3 { font-size: 14px; margin: 10px 0 6px; min-height: 40px; }
     .precos { display: flex; justify-content: center; gap: 8px; margin: 6px 0; }
     .preco-antigo { color: #999; text-decoration: line-through; font-size: 13px; }
     .preco-novo { color: var(--vermelho); font-weight: bold; font-size: 18px; }
-    .card button {
-      background: var(--laranja);
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 8px;
-      width: 100%;
-      font-size: 15px;
-      margin-top: 8px;
-    }
-
-    .favorito {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      font-size: 22px;
-      cursor: pointer;
-      color: #ccc;
-    }
+    .card button { background: var(--laranja); color: white; border: none; padding: 10px; border-radius: 8px; width: 100%; font-size: 15px; margin-top: 8px; }
+    .favorito { position: absolute; top: 8px; right: 8px; font-size: 22px; cursor: pointer; color: #ccc; }
     .favorito-ativo { color: red; }
 
-    /* Rodapé discreto */
-    .siga-discreto {
-      text-align: center;
-      padding: 15px;
-      background: #f5f5f5;
-      font-size: 14px;
-      border-top: 1px solid #ddd;
-      margin-top: 20px;
-    }
+    .siga-discreto { text-align: center; padding: 15px; background: #f5f5f5; font-size: 14px; border-top: 1px solid #ddd; margin-top: 20px; }
 
-    /* WhatsApp */
-    .whatsapp-float {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #25D366;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      z-index: 999;
-    }
+    .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 999; }
     .whatsapp-float img { width: 36px; }
 
-    /* Mobile ajustes */
     @media (max-width: 768px) {
-      body { padding-top: 100px; }
+      body { padding-top: 90px; }
       .topo-preto { padding: 8px 12px; }
       .busca-topo input { max-width: none; }
       .menu-mobile-btn { display: block; font-size: 26px; }
@@ -195,7 +57,6 @@
   </style>
 </head>
 <body>
-
 <header class="header-fixo">
   <div class="topo-preto">
     <span class="menu-mobile-btn" onclick="toggleMenu()">☰</span>
@@ -209,9 +70,9 @@
 
   <div class="barra-cinza">
     <button onclick="toggleCategorias()">☰ Categorias</button>
-    <button>Ofertas do dia</button>
-    <button>Mais clicados</button>
-    <button>Receba novidades</button>
+    <button onclick="alert('Página em construção - em breve novidades!')">Ofertas do dia</button>
+    <button onclick="alert('Página em construção - em breve os mais clicados!')">Mais clicados</button>
+    <button onclick="alert('Página em construção - cadastre-se para novidades!')">Receba novidades</button>
   </div>
 
   <div id="lista-categorias" class="categorias oculto"></div>
@@ -233,27 +94,26 @@
 </a>
 
 <script>
-// Categorias
+// Categorias (todas listadas)
 const categorias = [
-    {id: "roupas-masculinas", nome: "👕 Masculinas"},
-    {id: "roupas-femininas", nome: "👗 Femininas"},
-    {id: "plus-size", nome: "👚 Plus Size"},
-    {id: "relogios", nome: "⌚ Relógios"},
-    {id: "moda-infantil", nome: "🧒 Infantil"},
-    {id: "mae-bebe", nome: "🤱 Mãe & Bebê"},
-    {id: "acessorios", nome: "💎 Acessórios"},
-    {id: "bolsas-femininas", nome: "👝 Bolsas Fem."},
-    {id: "bolsas-masculinas", nome: "🎒 Bolsas Masc."},
-    {id: "viagens-bagagens", nome: "🧳 Itens de Viagem"},
-    {id: "fones", nome: "🎧 Fones de Ouvido"},
-    {id: "beleza", nome: "💄 Beleza"},
-    {id: "papelaria", nome: "✏️ Papelaria"},
-    {id: "casa-construcao", nome: "🏠 Casa e Construção"},
-    {id: "limpeza", nome: "🧼 Limpeza"},
-    {id: "sapatos", nome: "👟 Sapatos"},
-    {id: "brinquedos", nome: "🧸 Brinquedos"},
-    {id: "pets", nome: "🐶 Espaço Pets"}
-  ];
+  {id: "roupas-masculinas", nome: "👕 Masculinas"},
+  {id: "roupas-femininas", nome: "👗 Femininas"},
+  {id: "plus-size", nome: "👚 Plus Size"},
+  {id: "relogios", nome: "⌚ Relógios"},
+  {id: "mae-bebe", nome: "🤱 Mãe & Bebê"},
+  {id: "viagens-bagagens", nome: "🧳 Itens de Viagem"},
+  {id: "fones", nome: "🎧 Fones de Ouvido"},
+  {id: "bolsas-masculinas", nome: "🎒 Bolsas Masc."},
+  {id: "bolsas-femininas", nome: "👝 Bolsas Fem."},
+  {id: "limpeza", nome: "🧼 Limpeza"},
+  {id: "brinquedos", nome: "🧸 Brinquedos"},
+  {id: "acessorios", nome: "💎 Acessórios"},
+  {id: "pets", nome: "🐶 Espaço Pets"},
+  {id: "sapatos", nome: "👟 Sapatos"},
+  {id: "casa-construcao", nome: "🏠 Casa e Construção"},
+  {id: "beleza", nome: "💄 Beleza"},
+  {id: "papelaria", nome: "✏️ Papelaria"}
+];
 
   // Dados de produtos
   const dados = {
@@ -5180,9 +5040,9 @@ produtos:[
   }
 };
 
-// Inicializa
 let categoriaAtual = "roupas-masculinas";
 
+// Renderiza botões de categorias (todas, mesmo vazias)
 const nav = document.getElementById("lista-categorias");
 categorias.forEach(cat => {
   const btn = document.createElement("button");
@@ -5197,24 +5057,31 @@ function toggleCategorias() {
 
 function carregarCategoria(id) {
   categoriaAtual = id;
-  renderProdutos(dados[id]);
+  const cat = dados[id];
+  if (!cat || !cat.produtos || cat.produtos.length === 0) {
+    document.getElementById("conteudo").innerHTML = '<div style="padding:40px;text-align:center;">Categoria em construção ou sem ofertas no momento 😕</div>';
+    return;
+  }
+  renderProdutos(cat);
 }
 
 function renderProdutos(cat) {
-  if (!cat) return;
   let html = `<section><h2>${cat.titulo}</h2><div class="ofertas-track">`;
+  let temOfertaReal = false;
 
   cat.produtos.forEach(p => {
-    if (p.precoNovo === "00,00") return; // ignora placeholders
+    const preco = p.precoNovo || "00,00";
+    if (preco === "00,00") return; // ignora placeholders
 
+    temOfertaReal = true;
     html += `
     <div class="card">
       <div class="favorito" onclick="toggleFavorito('${p.nome}', this)">♡</div>
-      <img src="${p.img || 'https://via.placeholder.com/160?text=Foto'}">
+      <img src="${p.img || 'https://via.placeholder.com/160?text=Sem+Foto'}">
       <h3>${p.nome}</h3>
       <div class="precos">
-        <span class="preco-antigo">R$ ${p.precoAntigo}</span>
-        <span class="preco-novo">R$ ${p.precoNovo}</span>
+        <span class="preco-antigo">R$ ${p.precoAntigo || '---'}</span>
+        <span class="preco-novo">R$ ${preco}</span>
       </div>
       <p class="oferta">🔥 Oferta imperdível</p>
       <p class="estrelas">⭐⭐⭐⭐☆</p>
@@ -5222,11 +5089,15 @@ function renderProdutos(cat) {
     </div>`;
   });
 
+  if (!temOfertaReal) {
+    html += '<div style="padding:20px;text-align:center;">Sem ofertas com preço ativo no momento</div>';
+  }
+
   html += `</div></section>`;
   document.getElementById("conteudo").innerHTML = html;
 }
 
-// Favoritos simples (usando nome como chave)
+// Favoritos (usando nome como chave)
 function toggleFavorito(nome, el) {
   let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
   if (salvos.includes(nome)) {
@@ -5240,28 +5111,43 @@ function toggleFavorito(nome, el) {
   document.getElementById("contador-salvos").innerText = salvos.length;
 }
 
-// Busca
+// Busca corrigida (filtra por nome, ignora placeholders)
 document.getElementById("buscaInput").addEventListener("input", e => {
-  const val = e.target.value.toLowerCase();
-  if (!val) return carregarCategoria(categoriaAtual);
+  const texto = e.target.value.toLowerCase().trim();
+  if (!texto) return carregarCategoria(categoriaAtual);
 
-  let html = `<section><h2>Resultados para "${val}"</h2><div class="ofertas-track">`;
-  let achou = false;
-
+  let resultados = [];
   Object.values(dados).forEach(cat => {
     cat.produtos.forEach(p => {
-      if (p.nome.toLowerCase().includes(val)) {
-        achou = true;
-        html += `<div class="card">... (mesmo template do card acima) ...</div>`;
+      if (p.nome.toLowerCase().includes(texto) && p.precoNovo !== "00,00") {
+        resultados.push(p);
       }
     });
   });
 
-  if (!achou) html = `<div style="padding:40px;text-align:center;">Nada encontrado 😕</div>`;
+  if (resultados.length === 0) {
+    document.getElementById("conteudo").innerHTML = '<div style="padding:40px;text-align:center;">Nenhum produto encontrado 😕</div>';
+    return;
+  }
+
+  let html = `<section><h2>Resultados para "${texto}" (${resultados.length} encontrados)</h2><div class="ofertas-track">`;
+  resultados.forEach(p => {
+    html += `
+    <div class="card">
+      <img src="${p.img || 'https://via.placeholder.com/160?text=Sem+Foto'}">
+      <h3>${p.nome}</h3>
+      <div class="precos">
+        <span class="preco-antigo">R$ ${p.precoAntigo || '---'}</span>
+        <span class="preco-novo">R$ ${p.precoNovo}</span>
+      </div>
+      <button onclick="window.open('${p.link}','_blank')">Ver oferta</button>
+    </div>`;
+  });
+  html += `</div></section>`;
   document.getElementById("conteudo").innerHTML = html;
 });
 
-// Inicializa
+// Inicializa com categoria padrão
 carregarCategoria(categoriaAtual);
 document.getElementById("contador-salvos").innerText = (JSON.parse(localStorage.getItem("salvos")) || []).length;
 
