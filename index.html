@@ -1357,7 +1357,7 @@ function renderProdutos(cat) {
 
     html += `
     <div class="card">
-      <div class="favorito" onclick="toggleFavorito('${p.nome}', this)">♡</div>
+      <div class="favorito" onclick="toggleFavorito('${p.nome}', this)">${coracao}</div>
       <img src="${p.img || 'https://via.placeholder.com/160?text=Sem+Foto'}">
       <h3>${p.nome}</h3>
       <div class="precos">
@@ -1403,7 +1403,11 @@ document.getElementById("buscaInput").addEventListener("input", e => {
       if (p.nome.toLowerCase().includes(texto)) {
         achou = true;
         const preco = p.precoNovo || "00,00";
-        const precoDisplay = preco === "00,00" ? '<span class="preco-consulta">Preço sob consulta</span>' : `<span class="preco-novo">R$ ${preco}</span>`;
+        const precoDisplay = preco === "00,00" 
+            ? '<span class="preco-consulta">Preço sob consulta</span>' 
+            : `<span class="preco-novo">R$ ${preco}</span>`;
+      const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+     const coracao = salvos.includes(p.nome) ? "❤️" : "♡";
         html += `
         <div class="card">
           <img src="${p.img || 'https://via.placeholder.com/160?text=Sem+Foto'}">
