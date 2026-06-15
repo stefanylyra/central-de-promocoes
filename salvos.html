@@ -78,7 +78,7 @@ button{
 const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
 const lista = document.getElementById("lista-salvos");
 
-const filtrados = PRODUTOS.filter(p => salvos.includes(p.id));
+const filtrados = PRODUTOS.filter(p => salvos.includes(p.nome));
 
 if(filtrados.length === 0){
   lista.innerHTML = "<p>Você ainda não salvou nenhum produto ❤️</p>";
