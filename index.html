@@ -1347,17 +1347,26 @@ function carregarCategoria(id) {
 }
 
 function renderProdutos(cat) {
+  const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+
   let html = `<section><h2>${cat.titulo}</h2><div class="ofertas-track">`;
   let count = 0;
 
   cat.produtos.forEach(p => {
     count++;
+
     const preco = p.precoNovo || "00,00";
-    const precoDisplay = preco === "00,00" ? '<span class="preco-consulta">Preço sob consulta</span>' : `<span class="preco-novo">R$ ${preco}</span>`;
+    const precoDisplay = preco === "00,00"
+      ? '<span class="preco-consulta">Preço sob consulta</span>'
+      : `<span class="preco-novo">R$ ${preco}</span>`;
+
+    const coracao = salvos.includes(p.nome) ? "❤️" : "♡";
 
     html += `
     <div class="card">
-      <div class="favorito" onclick="toggleFavorito('${p.nome}', this)">${coracao}</div>
+      <div class="favorito" onclick="toggleFavorito('${p.nome}', this)">
+        ${coracao}
+      </div>
       <img src="${p.img || 'https://via.placeholder.com/160?text=Sem+Foto'}">
       <h3>${p.nome}</h3>
       <div class="precos">
@@ -1370,7 +1379,9 @@ function renderProdutos(cat) {
     </div>`;
   });
 
-  if (count === 0) html += '<div style="padding:20px;text-align:center;">Sem produtos cadastrados ainda</div>';
+  if (count === 0) {
+    html += '<div style="padding:20px;text-align:center;">Sem produtos cadastrados ainda</div>';
+  }
 
   html += `</div></section>`;
   document.getElementById("conteudo").innerHTML = html;
