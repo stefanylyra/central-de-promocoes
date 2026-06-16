@@ -43,13 +43,13 @@
     </div>
   </header>
 
-  <!-- HOT DEALS -->
+  <!-- OFERTAS QUENTES -->
   <section class="max-w-7xl mx-auto px-4 pt-4">
     <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold flex items-center gap-2"><span class="text-red-500">🔥</span> Hot Deals</h2>
+      <h2 class="text-xl font-bold flex items-center gap-2"><span class="text-red-500">🔥</span> Ofertas Quentes</h2>
       <span class="text-red-600 text-sm font-medium">Ver todos →</span>
     </div>
-    <div id="hot-deals" class="grid grid-cols-3 gap-3"></div>
+    <div id="ofertas-quentes" class="grid grid-cols-3 gap-3"></div>
   </section>
 
   <!-- BENEFITS -->
@@ -1245,18 +1245,18 @@ precoNovo: "35,90"
     ]
   }
 };
-// Produtos Hot Deals
-const hotDeals = [
+// Produtos OFERTAS QUENTES
+const ofertasQuentes = [
   {nome:"Smartwatch X7", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1zzq6l901gfa2.webp", precoAntigo:"499,90", precoNovo:"299,90", link:"https://s.shopee.com.br"},
   {nome:"Camiseta Premium", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m9digwvkdgjm92.webp", precoAntigo:"99,90", precoNovo:"64,90", link:"https://s.shopee.com.br"},
   {nome:"Fone Sound Pro", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1f8p2y5m336a1.webp", precoAntigo:"199,90", precoNovo:"139,90", link:"https://s.shopee.com.br"}
 ];
 
-// Render Hot Deals
-function renderHotDeals() {
-  const container = document.getElementById("hot-deals");
+// Render Ofertas Quentes
+function renderofertasQuentes() {
+  const container = document.getElementById("ofertas-quentes");
   let html = '';
-  hotDeals.forEach(p => {
+  ofertasQuentes.forEach(p => {
     html += `
       <div class="card bg-white rounded-2xl overflow-hidden shadow" onclick="window.open('${p.link}','_blank')">
         <div class="relative">
@@ -1273,7 +1273,7 @@ function renderHotDeals() {
 }
 
 // Inicializar
-renderHotDeals();
+renderOfertasQuentes();
 </script>
 </body>
 </html>
