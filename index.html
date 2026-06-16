@@ -3,103 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Central de Promoções Tefany</title>
+  <title>Tefany Promoções</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   
   <script>
     tailwind.config = {
       content: [],
-      theme: {
-        extend: {
-          colors: {
-            primary: '#ff6a00',
-            dark: '#1e2937'
-          }
-        }
-      }
+      theme: { extend: { colors: { primary: '#ff6a00' } } }
     }
   </script>
 
   <style>
     body { font-family: system-ui, -apple-system, sans-serif; }
-    .card { transition: all 0.3s; }
-    .card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
+    .card { transition: all 0.2s ease; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); }
     .hero-bg { background: linear-gradient(135deg, #1e2937 0%, #334155 100%); }
+    .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    
+    @media (max-width: 768px) {
+      .hero-bg h2 { font-size: 2.1rem; line-height: 1.1; }
+      .card img { height: 160px; }
+      .grid { gap: 12px; }
+    }
   </style>
 </head>
 <body class="bg-gray-50">
 
-  <!-- HEADER MODERNO -->
+  <!-- HEADER -->
   <header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex items-center justify-between px-4 py-4">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+      <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
           <h1 class="text-3xl font-bold text-slate-900">Tefany</h1>
-          <span class="text-orange-500 text-sm font-medium">Promoções</span>
+          <span class="text-orange-500 font-medium">Promoções</span>
         </div>
         
-        <div class="flex-1 max-w-xl mx-6">
+        <div class="flex-1 max-w-xl mx-4">
           <div class="relative">
             <input type="text" id="buscaInput" 
-                   class="w-full bg-gray-100 border border-gray-300 rounded-full py-3 px-6 pl-12 focus:outline-none focus:border-orange-500 text-base"
+                   class="w-full bg-gray-100 border border-gray-300 rounded-full py-3 px-6 pl-12 focus:outline-none focus:border-orange-500"
                    placeholder="Buscar produtos...">
             <i class="fas fa-search absolute left-5 top-3.5 text-gray-400"></i>
           </div>
         </div>
 
-        <!-- Apenas o coração de Salvos (sem carrinho) -->
-        <div onclick="window.location.href='salvos.html'" class="flex items-center gap-2 text-2xl cursor-pointer">
+        <div onclick="window.location.href='salvos.html'" class="flex items-center gap-1.5 text-2xl cursor-pointer">
           ❤️ <span id="contador-salvos" class="text-sm font-bold text-red-500">0</span>
         </div>
       </div>
     </div>
 
     <!-- Categorias -->
-    <div id="lista-categorias" class="bg-white border-t overflow-x-auto whitespace-nowrap py-3 px-4 flex gap-3 text-sm"></div>
+    <div id="lista-categorias" class="bg-white border-t overflow-x-auto whitespace-nowrap py-3 px-4 flex gap-2 text-sm"></div>
   </header>
 
-  <!-- HERO BANNER (corrigido) -->
-  <section class="hero-bg text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
+  <!-- HERO BANNER -->
+  <section class="hero-bg text-white py-8 md:py-12">
+    <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-6 items-center">
       <div>
-        <h2 class="text-5xl md:text-6xl font-bold leading-tight">Roupas Masculinas<br>e muito mais!</h2>
-        <p class="mt-4 text-xl text-gray-300">As melhores ofertas do dia com qualidade e preço imbatível.</p>
+        <h2 class="text-4xl md:text-5xl font-bold leading-tight">Roupas Masculinas<br>e muito mais!</h2>
+        <p class="mt-3 text-lg text-gray-300">As melhores ofertas do dia com qualidade e preço imbatível.</p>
         <button onclick="document.getElementById('produtos-section').scrollIntoView({ behavior: 'smooth' })" 
-                class="mt-8 bg-orange-500 hover:bg-orange-600 px-10 py-4 rounded-2xl text-lg font-semibold transition">
+                class="mt-6 bg-orange-500 hover:bg-orange-600 px-8 py-4 rounded-2xl text-base font-semibold w-full md:w-auto">
           Ver Ofertas Imperdíveis
         </button>
       </div>
-      <div class="hidden md:block text-center">
-        <!-- Imagem mais confiável -->
+      <div class="hidden md:block">
         <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" 
-             alt="Homem com estilo" 
-             class="rounded-3xl shadow-2xl mx-auto max-h-[420px] object-cover">
+             alt="Homem com estilo" class="rounded-3xl shadow-2xl w-full">
       </div>
     </div>
   </section>
 
   <!-- TRUST BAR -->
-  <div class="bg-white py-4 border-b">
-    <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-center gap-6 text-sm text-gray-600">
+  <div class="bg-white py-3 text-sm border-b">
+    <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-center gap-x-8 gap-y-2 text-gray-600">
       <div class="flex items-center gap-2"><i class="fas fa-lock text-green-600"></i> Compra Segura</div>
       <div class="flex items-center gap-2"><i class="fas fa-truck text-green-600"></i> Frete Grátis em muitas peças</div>
-      <div class="flex items-center gap-2"><i class="fas fa-star text-green-600"></i> +10.000 clientes satisfeitos</div>
+      <div class="flex items-center gap-2"><i class="fas fa-star text-green-600"></i> Milhares de clientes satisfeitos</div>
     </div>
   </div>
 
-  <!-- CONTEÚDO PRINCIPAL -->
-  <div id="conteudo" class="max-w-7xl mx-auto px-4 py-8"></div>
+  <!-- CONTEÚDO -->
+  <div id="conteudo" class="max-w-7xl mx-auto px-4 py-6"></div>
 
   <!-- RODAPÉ -->
-  <div class="siga-discreto bg-gray-100 py-6 text-center text-sm text-gray-600">
+  <div class="bg-gray-100 py-6 text-center text-sm text-gray-600">
     Melhores achados do dia – atualizado diariamente!<br>
     <strong>Siga no Instagram:</strong> @stefanylyra
   </div>
 
-  <!-- BOTÃO WHATSAPP (mantido) -->
+  <!-- BOTÃO WHATSAPP -->
   <a href="https://chat.whatsapp.com/JgiOFb5n2CWKNzsoNADvWt" target="_blank" 
-     class="fixed bottom-6 right-6 bg-[#25D366] w-16 h-16 rounded-full flex items-center justify-center shadow-xl z-50">
+     class="fixed bottom-6 right-6 bg-[#25D366] w-16 h-16 rounded-full flex items-center justify-center shadow-2xl z-50">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="w-9">
   </a>
 
@@ -1265,7 +1262,7 @@ let categoriaAtual = "roupas-masculinas";
 const nav = document.getElementById("lista-categorias");
 categorias.forEach(cat => {
   const btn = document.createElement("button");
-  btn.className = "bg-slate-800 hover:bg-orange-600 text-white px-5 py-2 rounded-full text-sm font-medium transition whitespace-nowrap";
+  btn.className = "bg-slate-800 hover:bg-orange-600 text-white px-5 py-2 rounded-full text-sm font-medium transition whitespace-nowrap flex-shrink-0";
   btn.textContent = cat.nome;
   btn.onclick = () => carregarCategoria(cat.id);
   nav.appendChild(btn);
@@ -1274,30 +1271,29 @@ categorias.forEach(cat => {
 function carregarCategoria(id) {
   categoriaAtual = id;
   const cat = dados[id];
-  if (!cat) return;
-  renderProdutos(cat);
+  if (cat) renderProdutos(cat);
 }
 
 function renderProdutos(cat) {
   let html = `
     <section id="produtos-section">
       <h2 class="text-3xl font-bold text-center mb-8 text-slate-800">${cat.titulo}</h2>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
   `;
 
   cat.produtos.forEach(p => {
     const preco = p.precoNovo || "00,00";
     html += `
-      <div class="card bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+      <div class="card bg-white rounded-2xl overflow-hidden shadow border border-gray-100">
         <div class="relative">
-          <img src="${p.img}" class="w-full h-48 object-cover" alt="${p.nome}">
-          <div onclick="toggleFavorito('${p.nome}', this)" class="absolute top-3 right-3 text-2xl cursor-pointer text-white drop-shadow-md">♡</div>
+          <img src="${p.img}" class="w-full h-40 md:h-48 object-cover" alt="${p.nome}">
+          <div onclick="toggleFavorito('${p.nome}', this)" class="absolute top-3 right-3 text-2xl cursor-pointer text-white drop-shadow">♡</div>
         </div>
-        <div class="p-4">
-          <h3 class="font-medium text-sm line-clamp-3 min-h-[60px]">${p.nome}</h3>
+        <div class="p-3">
+          <h3 class="font-medium text-sm line-clamp-3 min-h-[52px]">${p.nome}</h3>
           <div class="flex items-baseline gap-2 mt-3">
-            <span class="text-gray-400 line-through text-sm">R$ ${p.precoAntigo}</span>
-            <span class="text-2xl font-bold text-red-600">R$ ${preco}</span>
+            <span class="text-gray-400 line-through text-xs">R$ ${p.precoAntigo}</span>
+            <span class="text-xl font-bold text-red-600">R$ ${preco}</span>
           </div>
           <button onclick="window.open('${p.link}','_blank')" 
                   class="mt-4 w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-semibold text-sm">
@@ -1311,13 +1307,30 @@ function renderProdutos(cat) {
   document.getElementById("conteudo").innerHTML = html;
 }
 
-// Funções de favoritos e busca (mantidas)
 function toggleFavorito(nome, el) {
-  // ... (mesma lógica que você já tinha)
+  let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+  if (salvos.includes(nome)) {
+    salvos = salvos.filter(n => n !== nome);
+    el.innerText = "♡";
+  } else {
+    salvos.push(nome);
+    el.innerText = "❤️";
+  }
+  localStorage.setItem("salvos", JSON.stringify(salvos));
+  document.getElementById("contador-salvos").innerText = salvos.length;
 }
+
+// Busca
+document.getElementById("buscaInput").addEventListener("input", e => {
+  const texto = e.target.value.toLowerCase().trim();
+  if (!texto) return carregarCategoria(categoriaAtual);
+  // ... (busca simplificada - posso melhorar depois se quiser)
+  alert("Busca em desenvolvimento. Use as categorias por enquanto.");
+});
 
 // Inicialização
 carregarCategoria("roupas-masculinas");
+document.getElementById("contador-salvos").innerText = (JSON.parse(localStorage.getItem("salvos")) || []).length;
 </script>
 </body>
 </html>
