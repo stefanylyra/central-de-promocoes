@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Central de Promoções</title>
+    <!-- Ícones atualizados -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -30,19 +31,19 @@
             justify-content: center;
         }
 
-        /* --- CONTAINER RESPONSIVO (MOBILE FIRST + DESKTOP SUPORT) --- */
+        /* CONTAINER CENTRALIZADO */
         .app-container {
             width: 100%;
-            max-width: 1200px; /* Expande no PC */
+            max-width: 1200px;
             min-height: 100vh;
             background-color: var(--cor-fundo);
             position: relative;
-            padding-bottom: 80px;
+            padding-bottom: 90px;
             display: flex;
             flex-direction: column;
         }
 
-        /* --- HEADER ADAPTÁVEL --- */
+        /* HEADER */
         header {
             background-color: var(--cor-card);
             padding: 16px;
@@ -89,7 +90,6 @@
             font-size: 20px;
             color: var(--cor-principal);
             font-weight: 800;
-            text-transform: lowercase;
         }
 
         .header-icons {
@@ -122,47 +122,41 @@
             color: #8e8e93;
         }
 
-        /* --- BANNER DE AVISO --- */
+        /* BANNER INFORMATIVO */
         .afiliado-banner {
             background-color: #fff3cd;
             color: #856404;
-            padding: 10px 16px;
-            font-size: 12px;
+            padding: 12px 16px;
+            font-size: 13px;
             text-align: center;
             border-bottom: 1px solid #ffeeba;
             font-weight: 500;
         }
 
-        /* --- LAYOUT DAS SEÇÕES --- */
+        /* CONTEÚDO DAS ABAS */
         .app-page {
-            display: none;
+            display: none; /* Controlado estritamente por JS */
             padding: 20px 16px;
+            width: 100%;
         }
 
         .app-page.active {
-            display: block;
+            display: block !important;
         }
 
         .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
-            margin: 15px 0;
+            margin: 20px 0 15px 0;
+            color: var(--texto-escuro);
         }
 
-        .section-title a {
-            color: var(--cor-principal);
-            font-size: 13px;
-            text-decoration: none;
-        }
-
-        /* --- CARDS DE PRODUTOS --- */
+        /* LAYOUT DE PRODUTOS */
         .grid-produtos {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 14px;
+            width: 100%;
         }
 
         .produto-card {
@@ -195,14 +189,11 @@
             color: #ccc;
             z-index: 10;
         }
-
-        .btn-favorito.active {
-            color: var(--cor-principal);
-        }
+        .btn-favorito.active { color: var(--cor-principal); }
 
         .produto-img {
             width: 100%;
-            height: 150px;
+            height: 140px;
             object-fit: contain;
             margin-bottom: 10px;
         }
@@ -211,31 +202,25 @@
             font-size: 14px;
             font-weight: 600;
             color: var(--texto-escuro);
-            margin-bottom: 6px;
-            height: 36px;
+            margin-bottom: 8px;
+            height: 38px;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
         }
 
-        .rating {
-            color: #ffbc0d;
-            font-size: 12px;
-            margin-bottom: 8px;
-        }
-
         .preco-antigo {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--texto-mutado);
             text-decoration: line-through;
         }
 
         .preco-novo {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--cor-principal);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .btn-oferta {
@@ -243,98 +228,103 @@
             background-color: var(--cor-principal);
             color: white;
             text-align: center;
-            padding: 10px 0;
+            padding: 11px 0;
             border-radius: 8px;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             display: block;
         }
 
-        /* --- CARROSSEL --- */
+        /* CARROSSEL HOME */
         .ofertas-quentes-carrossel {
             display: flex;
             gap: 14px;
             overflow-x: auto;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
             scrollbar-width: none;
         }
-
+        .ofertas-quentes-carrossel::-webkit-scrollbar { display: none; }
+        
         .card-horizontal {
-            min-width: 160px;
-            background: #fff;
+            background: white;
+            border: 1px solid var(--borda);
             border-radius: 12px;
             padding: 12px;
-            border: 1px solid var(--borda);
+            min-width: 160px;
+            max-width: 160px;
             position: relative;
         }
 
-        /* --- CATEGORIAS (ESTILO DO NOVO MODELO DE CAPA) --- */
+        /* CATEGORIAS (MOSAICO 3 COLUNAS) */
         .grid-categorias {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
         }
 
         .categoria-card {
             position: relative;
-            height: 110px;
-            border-radius: 12px;
+            height: 140px;
+            border-radius: 14px;
             overflow: hidden;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--borda);
         }
 
         .categoria-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.65); /* Escurece o fundo para destacar o texto */
-            transition: transform 0.3s;
         }
 
-        .categoria-card:hover .categoria-img {
-            transform: scale(1.05);
-        }
-
-        .categoria-info {
+        .categoria-tag-top {
             position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .categoria-info p {
+            top: 8px;
+            left: 8px;
+            background-color: var(--cor-principal);
             color: white;
-            font-size: 15px;
-            font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+            font-size: 9px;
+            font-weight: bold;
+            padding: 3px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            z-index: 2;
         }
 
-        /* --- CONTA --- */
-        .perfil-header {
+        .categoria-glass-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 8px 4px;
             text-align: center;
-            padding: 30px 16px;
-            background: white;
-            border-radius: 12px;
-            border: 1px solid var(--borda);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* --- MENU INFERIOR MOBILE --- */
+        .categoria-glass-footer p {
+            color: #000;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* NAVEGAÇÃO SYSTEM INFERIOR (MOBILE) */
         nav.bottom-nav {
             position: fixed;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
+            max-width: 1200px;
             background-color: var(--cor-principal);
             display: flex;
             justify-content: space-around;
-            padding: 10px 0;
+            padding: 14px 0;
             z-index: 110;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
         }
 
         .nav-item {
@@ -344,41 +334,81 @@
             color: rgba(255, 255, 255, 0.65);
             text-decoration: none;
             font-size: 12px;
-            gap: 4px;
+            gap: 5px;
             background: none;
             border: none;
             cursor: pointer;
+            width: 20%;
         }
 
         .nav-item.active { color: white; font-weight: bold; }
+        .nav-item i { font-size: 18px; }
 
-        /* ================= MEDIA QUERY PARA COMPUTADORES (PC) ================= */
+        /* BOTÃO FLUTUANTE DO WHATSAPP */
+        .btn-whatsapp {
+            position: fixed;
+            bottom: 85px; /* Fica logo acima do menu mobile */
+            right: 20px;
+            background-color: #25d366;
+            color: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            text-decoration: none;
+            z-index: 999;
+            transition: transform 0.2s ease;
+        }
+        .btn-whatsapp:hover {
+            transform: scale(1.08);
+        }
+
+        /* ================= AJUSTES COMPATIBILIDADE PC (DESKTOP) ================= */
         @media (min-width: 768px) {
             header {
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
-                padding: 20px 40px;
+                padding: 15px 30px;
             }
-            .search-container { max-width: 500px; }
-            .grid-produtos { grid-template-columns: repeat(4, 1fr); } /* 4 Produtos por linha no PC */
-            .grid-categorias { grid-template-columns: repeat(4, 1fr); } /* 4 Categorias por linha */
+            .search-container { max-width: 400px; }
             
+            /* Reorganiza a barra para o topo no PC para não sumir */
             nav.bottom-nav {
-                top: 80px; /* Move a barra para o topo no PC se quiser, ou mantém embaixo estilizada */
-                bottom: auto;
-                position: sticky;
+                position: static;
                 transform: none;
-                left: auto;
-                max-width: 100%;
-                background: #fff;
+                background: #ffffff;
                 border-bottom: 1px solid var(--borda);
                 box-shadow: none;
-                padding: 12px 0;
+                padding: 10px 30px;
+                justify-content: flex-start;
+                gap: 30px;
             }
-            .nav-item { color: var(--texto-escuro); font-size: 14px; flex-direction: row; gap: 8px; }
-            .nav-item.active { color: var(--cor-principal); border-bottom: 2px solid var(--cor-principal); padding-bottom: 4px; }
+            .nav-item {
+                color: var(--texto-escuro);
+                font-size: 15px;
+                flex-direction: row;
+                gap: 8px;
+                width: auto;
+                padding: 8px 12px;
+                border-radius: 6px;
+            }
+            .nav-item i { color: var(--texto-mutado); font-size: 16px; }
+            .nav-item.active {
+                color: var(--cor-principal);
+                background-color: rgba(204, 10, 18, 0.05);
+            }
+            .nav-item.active i { color: var(--cor-principal); }
+
+            /* Grid expande no monitor */
+            .grid-produtos { grid-template-columns: repeat(4, 1fr); gap: 20px; } 
+            .grid-categorias { grid-template-columns: repeat(6, 1fr); }
             .app-container { padding-bottom: 40px; }
+            .btn-whatsapp { bottom: 30px; right: 40px; } /* Desce o whats no PC já que não tem menu embaixo */
         }
     </style>
 </head>
@@ -386,6 +416,7 @@
 
     <div class="app-container">
         
+        <!-- HEADER -->
         <header>
             <div class="header-top">
                 <a href="#" class="logo" onclick="mudarAba('inicio')">
@@ -395,6 +426,10 @@
                         <span class="p2">promoções</span>
                     </div>
                 </a>
+                <div class="header-icons">
+                    <i class="fa-regular fa-bell"></i>
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
             </div>
             <div class="search-container">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -402,46 +437,7 @@
             </div>
         </header>
 
-        <div class="afiliado-banner">
-            <i class="fa-solid fa-circle-info"></i> <strong>Aviso Importante:</strong> Este site não vende nada. Apenas selecionamos e achamos as melhores ofertas de lojas confiáveis como Shopee e Mercado Livre e redirecionamos você.
-        </div>
-
-        <main id="aba-inicio" class="app-page active">
-            <div class="section-title">
-                <span>🔥 Ofertas Quentes</span>
-            </div>
-            <div class="ofertas-quentes-carrossel" id="carrossel-ofertas"></div>
-
-            <div class="section-title">
-                <span>⚡ Ofertas Imperdíveis</span>
-            </div>
-            <div class="grid-produtos" id="produtos-inicio"></div>
-        </main>
-
-        <main id="aba-categorias" class="app-page">
-            <div class="section-title"><span>📂 Categorias Disponíveis</span></div>
-            <div class="grid-categorias" id="container-categorias"></div>
-        </main>
-
-        <main id="aba-ofertas" class="app-page">
-            <div class="section-title"><span>🛒 Todas as Ofertas Cadastradas</span></div>
-            <div class="grid-produtos" id="todos-produtos-ofertas"></div>
-        </main>
-
-        <main id="aba-favoritos" class="app-page">
-            <div class="section-title"><span>❤️ Seus Itens Salvos</span></div>
-            <p id="total-favoritos" style="font-size: 13px; color: var(--texto-mutado); margin-bottom: 15px;">0 salvos</p>
-            <div class="grid-produtos" id="produtos-favoritos"></div>
-        </main>
-
-        <main id="aba-conta" class="app-page">
-            <div class="perfil-header">
-                <i class="fa-solid fa-circle-user" style="font-size: 60px; color: #ccc; margin-bottom: 10px;"></i>
-                <h2>Visitante</h2>
-                <p style="font-size: 13px; color: var(--texto-mutado); margin-top: 10px;">Boas-vindas à nossa vitrine de cupons e achados!</p>
-            </div>
-        </main>
-
+        <!-- MENU DE NAVEGAÇÃO -->
         <nav class="bottom-nav">
             <button class="nav-item active" onclick="mudarAba('inicio', this)"><i class="fa-solid fa-house"></i><span>Início</span></button>
             <button class="nav-item" onclick="mudarAba('categorias', this)"><i class="fa-solid fa-layer-group"></i><span>Categorias</span></button>
@@ -449,6 +445,49 @@
             <button class="nav-item" onclick="mudarAba('favoritos', this)"><i class="fa-solid fa-heart"></i><span>Salvos</span></button>
             <button class="nav-item" onclick="mudarAba('conta', this)"><i class="fa-solid fa-user"></i><span>Perfil</span></button>
         </nav>
+
+        <!-- BANNER DE AVISO -->
+        <div class="afiliado-banner">
+            <i class="fa-solid fa-circle-info"></i> <strong>Aviso Importante:</strong> Este site não vende nada. Apenas selecionamos e achamos as melhores ofertas de lojas confiáveis como Shopee e Mercado Livre e redirecionamos você.
+        </div>
+
+        <!-- ABAS DE CONTEÚDO -->
+        <main id="aba-inicio" class="app-page active">
+            <div class="section-title">🔥 Ofertas Quentes</div>
+            <div class="ofertas-quentes-carrossel" id="carrossel-ofertas"></div>
+
+            <div class="section-title">⚡ Ofertas Imperdíveis</div>
+            <div class="grid-produtos" id="produtos-inicio"></div>
+        </main>
+
+        <main id="aba-categorias" class="app-page">
+            <div class="section-title">📂 Categorias Disponíveis</div>
+            <div class="grid-categorias" id="container-categorias"></div>
+        </main>
+
+        <main id="aba-ofertas" class="app-page">
+            <div class="section-title">🛒 Todas as Ofertas Cadastradas</div>
+            <div class="grid-produtos" id="todos-produtos-ofertas"></div>
+        </main>
+
+        <main id="aba-favoritos" class="app-page">
+            <div class="section-title">❤️ Meus Salvos</div>
+            <p id="total-favoritos" style="font-size: 14px; color: var(--texto-mutado); margin-bottom: 15px;">0 produtos</p>
+            <div class="grid-produtos" id="produtos-favoritos"></div>
+        </main>
+
+        <main id="aba-conta" class="app-page">
+            <div style="text-align: center; padding: 40px 10px;">
+                <i class="fa-solid fa-circle-user" style="font-size: 70px; color: #ccc; margin-bottom: 15px;"></i>
+                <h2>Meu Perfil</h2>
+                <p style="color: var(--texto-mutado); margin-top: 10px;">Central de Promoções - Vitrine de Achados</p>
+            </div>
+        </main>
+
+        <!-- BOTÃO WHATSAPP FLUTUANTE (Cole seu link real entre as aspas do href abaixo) -->
+        <a href="SEU_LINK_DO_WHATSAPP_AQUI" target="_blank" class="btn-whatsapp" title="Entre no nosso Grupo!">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
 
     </div>
 
@@ -1627,14 +1666,18 @@ precoNovo: "35,90"
             { id: "papelaria", nome: "✏️ Papelaria", img: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400" }
         ];
 
-        let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+       let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
 
         function mudarAba(idAba, elementoBotao) {
-            document.querySelectorAll('.app-page').forEach(pag => pag.classList.remove('active'));
-            document.getElementById(`aba-${idAba}`).classList.add('active');
+            // Força a remoção de ativos em todas as telas
+            document.querySelectorAll('.app-page').forEach(pag => pag.style.display = 'none');
+            
+            // Exibe estritamente a selecionada
+            const abaAlvo = document.getElementById(`aba-${idAba}`);
+            if(abaAlvo) abaAlvo.style.display = 'block';
 
-            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
             if(elementoBotao) {
+                document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
                 elementoBotao.classList.add('active');
             }
             if(idAba === 'favoritos') carregarFavoritos();
@@ -1649,7 +1692,6 @@ precoNovo: "35,90"
                     <button class="btn-favorito ${isFav}" onclick="alternarFavorito(event, ${prod.id})"><i class="${icone}"></i></button>
                     <img src="${prod.img}" class="produto-img">
                     <div class="produto-nome">${prod.nome}</div>
-                    <div class="rating"><i class="fa-solid fa-star"></i> 4.7</div>
                     <div>
                         <div class="preco-antigo">R$ ${prod.precoAntigo.toFixed(2).replace('.',',')}</div>
                         <div class="preco-novo">R$ ${prod.preco.toFixed(2).replace('.',',')}</div>
@@ -1672,9 +1714,9 @@ precoNovo: "35,90"
         function carregarFavoritos() {
             const container = document.getElementById('produtos-favoritos');
             const filtrados = PRODUTOS_DADOS.filter(p => favoritos.includes(p.id));
-            document.getElementById('total-favoritos').innerText = `${filtrados.length} item(ns) salvo(s)`;
+            document.getElementById('total-favoritos').innerText = `${filtrados.length} produto(s) salvo(s)`;
             if(filtrados.length === 0) {
-                container.innerHTML = `<p style="grid-column: span 2; text-align:center; color:gray;">Sua lista de desejos está vazia.</p>`;
+                container.innerHTML = `<p style="grid-column: span 2; text-align:center; color:gray; padding:30px;">Sua lista está vazia.</p>`;
                 return;
             }
             container.innerHTML = filtrados.map(p => criarCardProduto(p)).join('');
@@ -1685,7 +1727,7 @@ precoNovo: "35,90"
             const filtrados = PRODUTOS_DADOS.filter(p => p.categoria === idCat);
             const container = document.getElementById('todos-produtos-ofertas');
             if(filtrados.length === 0) {
-                container.innerHTML = `<p style="grid-column: span 2; text-align:center; padding:40px;">Nenhum produto cadastrado nesta categoria ainda.</p>`;
+                container.innerHTML = `<p style="grid-column: span 2; text-align:center; padding:40px; color:gray;">Nenhum produto cadastrado nessa categoria.</p>`;
             } else {
                 container.innerHTML = filtrados.map(p => criarCardProduto(p)).join('');
             }
@@ -1696,44 +1738,46 @@ precoNovo: "35,90"
             if(termo.trim() !== '') {
                 mudarAba('ofertas');
                 const filtrados = PRODUTOS_DADOS.filter(p => p.nome.toLowerCase().includes(termo));
-                document.getElementById('todos-produtos-ofertas').innerHTML = filtrados.length ? filtrados.map(p => criarCardProduto(p)).join('') : '<p style="grid-column:span 2;text-align:center;">Nada encontrado.</p>';
+                document.getElementById('todos-produtos-ofertas').innerHTML = filtrados.length ? filtrados.map(p => criarCardProduto(p)).join('') : '<p style="grid-column:span 2;text-align:center;padding:40px;">Nenhum produto encontrado.</p>';
             } else {
                 renderizarVitrine();
             }
         }
 
         function renderizarVitrine() {
-            // Renderiza ofertas quentes (carrossel)
+            // Renderiza carrossel inicial (Quentes)
             const quentes = PRODUTOS_DADOS.filter(p => p.quente);
             document.getElementById('carrossel-ofertas').innerHTML = quentes.map(p => `
                 <div class="card-horizontal">
                     <button class="btn-favorito ${favoritos.includes(p.id) ? 'active' : ''}" onclick="alternarFavorito(event, ${p.id})"><i class="${favoritos.includes(p.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'}"></i></button>
-                    <img src="${p.img}" class="produto-img" style="height:110px;">
-                    <div class="produto-nome" style="font-size:12px; height:32px;">${p.nome}</div>
-                    <div class="preco-novo" style="font-size:14px;">R$ ${p.preco.toFixed(2).replace('.',',')}</div>
-                    <a href="${p.link}" class="btn-oferta" style="padding:5px; font-size:11px;">Ver Oferta</a>
+                    <img src="${p.img}" class="produto-img" style="height:90px;">
+                    <div class="produto-nome" style="font-size:12px; height:34px;">${p.nome}</div>
+                    <div class="preco-novo" style="font-size:14px; margin-bottom:8px;">R$ ${p.preco.toFixed(2).replace('.',',')}</div>
+                    <a href="${p.link}" target="_blank" class="btn-oferta" style="padding:6px; font-size:11px;">Ver Oferta</a>
                 </div>
             `).join('');
 
-            // Imperdíveis no Início
+            // Renderiza Normais na Home
             const imperdiveis = PRODUTOS_DADOS.filter(p => !p.quente);
             document.getElementById('produtos-inicio').innerHTML = imperdiveis.map(p => criarCardProduto(p)).join('');
 
-            // Todas as ofertas por padrão na aba ofertas
+            // Mostra tudo na aba ofertas
             document.getElementById('todos-produtos-ofertas').innerHTML = PRODUTOS_DADOS.map(p => criarCardProduto(p)).join('');
 
-            // Categorias Estilizadas
+            // Renderiza o mosaico
             document.getElementById('container-categorias').innerHTML = CATEGORIAS_DADOS.map(c => `
                 <div class="categoria-card" onclick="filtrarPorCategoria('${c.id}')">
+                    <span class="categoria-tag-top">Oferta</span>
                     <img src="${c.img}" class="categoria-img">
-                    <div class="categoria-info">
+                    <div class="categoria-glass-footer">
                         <p>${c.nome}</p>
                     </div>
                 </div>
             `).join('');
         }
 
-        window.onload = renderizarVitrine;
+        // Executa imediatamente para garantir exibição
+        renderizarVitrine();
     </script>
 </body>
 </html>
