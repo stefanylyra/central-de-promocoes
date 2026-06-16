@@ -1,10 +1,3 @@
-Peço sinceras desculpas. Fui tentar adivinhar um comportamento para o computador, acabei misturando as coisas e quebrei o layout que você já tinha aprovado nas imagens. Vamos voltar exatamente para o visual perfeito dos seus prints de celular (image_dd952b.jpg, image_dd9509.png, image_dd9264.png, image_dd925d.png), mantendo a barra vermelha sempre fixa no rodapé e os espaçamentos corretos.
-
-O motivo real dos produtos "sumirem" no seu navegador é um detalhe técnico no JavaScript: a função que desenha os produtos na tela (renderizarVitrine()) roda antes mesmo que a página termine de carregar os elementos HTML na memória. Para resolver isso de vez, mudei a estratégia e fiz os produtos nascerem diretamente escritos no HTML, eliminando qualquer chance do JavaScript falhar ou travar a tela em branco.
-
-Substitua todo o seu código por este. Ele traz de volta o design original idêntico aos seus prints, corrige o bug do sumiço dos produtos e adiciona o WhatsApp de forma discreta:
-
-HTML
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
