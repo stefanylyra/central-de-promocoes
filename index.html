@@ -1328,6 +1328,7 @@ document.getElementById("buscaInput").addEventListener("input", e => {
 
 function toggleFavorito(nome, el) {
   let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+  
   if (salvos.includes(nome)) {
     salvos = salvos.filter(n => n !== nome);
     el.innerText = "♡";
@@ -1335,10 +1336,21 @@ function toggleFavorito(nome, el) {
     salvos.push(nome);
     el.innerText = "❤️";
   }
+  
   localStorage.setItem("salvos", JSON.stringify(salvos));
+  
+  // Atualiza o contador
   document.getElementById("contador-salvos").innerText = salvos.length;
 }
 
+// Função para atualizar contador (usada pelo salvos.html)
+function atualizarContador() {
+  const contador = document.getElementById("contador-salvos");
+  if (contador) {
+    const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+    contador.innerText = salvos.length;
+  }
+}
 carregarCategoria("roupas-masculinas");
 document.getElementById("contador-salvos").innerText = (JSON.parse(localStorage.getItem("salvos")) || []).length;
 </script>
