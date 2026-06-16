@@ -6,7 +6,7 @@
 <title>❤️ Meus Salvos</title>
 <style>
     :root { --laranja: #ff6a00; --vermelho: #e63946; }
-    
+   
     * { box-sizing: border-box; margin:0; padding:0; }
     body {
         font-family: Arial, sans-serif;
@@ -31,13 +31,11 @@
         cursor: pointer;
         font-size: 18px;
         color: white;
-        text-decoration: none;
     }
     .salvos-titulo {
         font-size: 19px;
         white-space: nowrap;
     }
-
     .container {
         padding: 20px 15px;
     }
@@ -54,6 +52,7 @@
         text-align: center;
         display: flex;
         flex-direction: column;
+        position: relative;
     }
     .card img {
         width: 100%;
@@ -84,13 +83,26 @@
         cursor: pointer;
         margin-top: auto;
     }
+    .remover-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: #fff;
+        color: #e63946;
+        border: none;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
     .vazio {
         text-align: center;
         padding: 80px 20px;
         color: #777;
         font-size: 18px;
     }
-
     @media (max-width: 480px) {
         .ofertas-track {
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -101,12 +113,10 @@
 </style>
 </head>
 <body>
-
 <header class="header-fixo">
     <span class="btn-voltar" onclick="window.location.href='index.html'">⬅ Voltar</span>
     <div class="salvos-titulo">❤️ Salvos (<span id="contador">0</span>)</div>
 </header>
-
 <div class="container">
     <div class="ofertas-track" id="lista-salvos"></div>
 </div>
@@ -1250,7 +1260,7 @@ function carregarSalvos() {
     const salvosNomes = JSON.parse(localStorage.getItem("salvos")) || [];
     const container = document.getElementById("lista-salvos");
     const contador = document.getElementById("contador");
-    
+   
     contador.textContent = salvosNomes.length;
 
     if (salvosNomes.length === 0) {
@@ -1259,12 +1269,12 @@ function carregarSalvos() {
     }
 
     let html = '';
-
     Object.values(dados).forEach(categoria => {
         categoria.produtos.forEach(p => {
             if (salvosNomes.includes(p.nome)) {
                 html += `
                 <div class="card">
+                    <button class="remover-btn" onclick="removerSalvo('${p.nome}')">✕</button>
                     <img src="${p.img}" alt="${p.nome}">
                     <h3>${p.nome}</h3>
                     <p class="preco-novo">R$ ${p.precoNovo || p.precoAntigo}</p>
@@ -1273,8 +1283,21 @@ function carregarSalvos() {
             }
         });
     });
-
     container.innerHTML = html;
+}
+
+function removerSalvo(nome) {
+    let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+    salvos = salvos.filter(item => item !== nome);
+    localStorage.setItem("salvos", JSON.stringify(salvos));
+    
+    // Atualiza a página de salvos
+    carregarSalvos();
+    
+    // Atualiza o contador no index.html (se estiver aberto)
+    if (window.opener) {
+        window.opener.atualizarContador && window.opener.atualizarContador();
+    }
 }
 
 carregarSalvos();
