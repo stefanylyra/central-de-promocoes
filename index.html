@@ -130,6 +130,64 @@
       .ofertas-track { grid-template-columns: 1fr; gap: 24px; }
       .categorias button { font-size: 12px; padding: 6px 10px; }
     }
+/* ===== CONTROLE DE VISUALIZAÇÃO MOBILE ===== */
+.view-controls {
+    display: none;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 15px;
+    padding: 0 5px;
+}
+
+.view-controls button {
+    background: white;
+    border: 2px solid #ddd;
+    color: #666;
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.view-controls button.active {
+    background: var(--laranja);
+    color: white;
+    border-color: var(--laranja);
+}
+
+@media (max-width: 768px) {
+    .view-controls {
+        display: flex;
+    }
+
+    /* Modo Grade (2 colunas) */
+    .ofertas-track.grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    /* Ajustes nos cards para modo grade */
+    .ofertas-track.grid-2 .card {
+        padding: 10px;
+    }
+
+    .ofertas-track.grid-2 .card img {
+        height: 110px;
+    }
+
+    .ofertas-track.grid-2 .card h3 {
+        font-size: 13px;
+        height: 80px; /* reduz altura do título */
+    }
+
+    .ofertas-track.grid-2 .preco-novo {
+        font-size: 16px;
+    }
+}
   </style>
 </head>
 <body>
@@ -1348,8 +1406,20 @@ function carregarCategoria(id) {
 
 function renderProdutos(cat) {
   const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
+  const viewMode = localStorage.getItem('viewMode') || 'list'; // 'list' ou 'grid'
 
-  let html = `<section><h2>${cat.titulo}</h2><div class="ofertas-track">`;
+  let html = `
+    <section>
+      <h2>${cat.titulo}</h2>
+      
+      <!-- CONTROLE DE VISUALIZAÇÃO -->
+      <div class="view-controls">
+        <button id="btn-list" class="${viewMode === 'list' ? 'active' : ''}" title="Modo Lista">☰</button>
+        <button id="btn-grid" class="${viewMode === 'grid' ? 'active' : ''}" title="Modo Grade">▦</button>
+      </div>
+
+      <div class="ofertas-track ${viewMode === 'grid' ? 'grid-2' : ''}">
+  `;
   let count = 0;
 
   cat.produtos.forEach(p => {
@@ -1382,7 +1452,12 @@ function renderProdutos(cat) {
   if (count === 0) {
     html += '<div style="padding:20px;text-align:center;">Sem produtos cadastrados ainda</div>';
   }
-
+  html += `</div></section>`;
+  document.getElementById("conteudo").innerHTML = html;
+  
+  // Ativa os botões após renderizar
+  setTimeout(setupViewControls, 10);
+    
   html += `</div></section>`;
   document.getElementById("conteudo").innerHTML = html;
 }
@@ -1436,7 +1511,27 @@ document.getElementById("buscaInput").addEventListener("input", e => {
   if (!achou) html = '<div style="padding:40px;text-align:center;">Nada encontrado 😕</div>';
   document.getElementById("conteudo").innerHTML = html;
 });
+// ==================== CONTROLE DE VISUALIZAÇÃO MOBILE ====================
+function setupViewControls() {
+  const btnList = document.getElementById('btn-list');
+  const btnGrid = document.getElementById('btn-grid');
 
+  if (!btnList || !btnGrid) return;
+
+  btnList.onclick = () => changeViewMode('list');
+  btnGrid.onclick = () => changeViewMode('grid');
+}
+
+function changeViewMode(mode) {
+  localStorage.setItem('viewMode', mode);
+  
+  // Recarrega a categoria atual com o novo modo
+  const cat = dados[categoriaAtual];
+  if (cat) renderProdutos(cat);
+}
+
+// Chama o setup depois que renderiza
+// Vamos modificar o renderProdutos para chamar isso no final
 // Inicializa
 carregarCategoria(categoriaAtual);
 document.getElementById("contador-salvos").innerText = (JSON.parse(localStorage.getItem("salvos")) || []).length;
