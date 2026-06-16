@@ -1,97 +1,617 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Central de Promoções</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  
-  <style>
-    body { font-family: system-ui, -apple-system, sans-serif; }
-    .card { transition: all 0.2s ease; }
-    .card:hover { transform: translateY(-4px); }
-    .bottom-nav { box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Central de Promoções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --cor-principal: #cc0a12;
+            --cor-fundo: #f8f9fa;
+            --cor-card: #ffffff;
+            --texto-escuro: #1a1a1a;
+            --texto-mutado: #707070;
+            --borda: #eaeaea;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--cor-fundo);
+            color: var(--texto-escuro);
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Simulador de tamanho de tela mobile para visualização perfeita */
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            min-height: 100vh;
+            background-color: var(--cor-fundo);
+            position: relative;
+            padding-bottom: 75px; /* Espaço para a barra inferior fixa */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- HEADER FIXO --- */
+        header {
+            background-color: var(--cor-card);
+            padding: 12px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .logo-tag {
+            background-color: var(--cor-principal);
+            color: white;
+            padding: 4px 6px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .logo-texto {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .logo-texto .p1 {
+            font-size: 14px;
+            color: var(--texto-escuro);
+            font-weight: 500;
+        }
+
+        .logo-texto .p2 {
+            font-size: 18px;
+            color: var(--cor-principal);
+            font-weight: 800;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 16px;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .icon-badge {
+            position: relative;
+        }
+
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--cor-principal);
+            color: white;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        /* --- BARRA DE PESQUISA --- */
+        .search-container {
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 10px 12px 10px 40px;
+            border: 1px solid var(--borda);
+            border-radius: 8px;
+            background-color: #f1f3f5;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .search-container input:focus {
+            background-color: #fff;
+            border-color: #ccc;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8e8e93;
+        }
+
+        /* --- AVISO DE AFILIADO (REQUISITO) --- */
+        .afiliado-banner {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 8px 16px;
+            font-size: 11px;
+            text-align: center;
+            border-bottom: 1px solid #ffeeba;
+            font-weight: 500;
+        }
+
+        /* --- SEÇÕES DA SPA --- */
+        .app-page {
+            display: none;
+            padding: 16px;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        .app-page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-title a {
+            color: var(--cor-principal);
+            font-size: 12px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* --- CARDS DE PRODUTOS --- */
+        .grid-produtos {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .produto-card {
+            background-color: var(--cor-card);
+            border-radius: 12px;
+            padding: 12px;
+            position: relative;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            border: 1px solid var(--borda);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .btn-favorito {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #ccc;
+            z-index: 10;
+            transition: transform 0.1s ease;
+        }
+
+        .btn-favorito.active {
+            color: var(--cor-principal);
+        }
+
+        .btn-favorito:active {
+            transform: scale(0.9);
+        }
+
+        .produto-img {
+            width: 100%;
+            height: 130px;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
+
+        .produto-nome {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--texto-escuro);
+            margin-bottom: 4px;
+            line-height: 1.3;
+            height: 34px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            color: #ffbc0d;
+            margin-bottom: 6px;
+        }
+
+        .rating span {
+            color: var(--texto-mutado);
+        }
+
+        .preco-antigo {
+            font-size: 11px;
+            color: var(--texto-mutado);
+            text-decoration: line-through;
+        }
+
+        .preco-novo {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--cor-principal);
+            margin-bottom: 8px;
+        }
+
+        .btn-oferta {
+            width: 100%;
+            background-color: var(--cor-principal);
+            color: white;
+            text-align: center;
+            padding: 8px 0;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* --- SEÇÃO: INÍCIO (COMPLEMENTOS ESPECÍFICOS) --- */
+        .ofertas-quentes-carrossel {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            scrollbar-width: none;
+        }
+        .ofertas-quentes-carrossel::-webkit-scrollbar { display: none; }
+
+        .card-horizontal {
+            min-width: 150px;
+            width: 150px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid var(--borda);
+            position: relative;
+        }
+
+        .tag-desconto {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--cor-principal);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            z-index: 5;
+        }
+
+        .selos-confianca {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .selo-item {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--borda);
+        }
+
+        .selo-item i { color: var(--cor-principal); font-size: 16px; }
+        .selo-texto p { font-size: 11px; font-weight: 600; }
+        .selo-texto span { font-size: 9px; color: var(--texto-mutado); }
+
+        /* Depoimento */
+        .depoimento-box {
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid var(--borda);
+            display: flex;
+            gap: 12px;
+            position: relative;
+        }
+        .depoimento-profile { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; }
+        .depoimento-aspas { position: absolute; right: 16px; bottom: 16px; font-size: 30px; color: #fcd4d5; font-family: Georgia, serif; line-height: 0; }
+
+        /* --- SEÇÃO: CATEGORIAS --- */
+        .grid-categorias {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .categoria-card {
+            background: white;
+            border-radius: 10px;
+            padding: 12px 6px;
+            text-align: center;
+            border: 1px solid var(--borda);
+            cursor: pointer;
+        }
+        .categoria-card i { font-size: 24px; color: var(--cor-principal); margin-bottom: 6px; }
+        .categoria-card p { font-size: 12px; font-weight: 500; }
+
+        /* --- SEÇÃO: CONTA --- */
+        .perfil-header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--borda);
+            margin-bottom: 16px;
+        }
+        .perfil-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 8px; border: 2px solid var(--cor-principal); }
+        .menu-conta-item {
+            background: white;
+            padding: 14px 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            border: 1px solid var(--borda);
+            text-decoration: none;
+            color: var(--texto-escuro);
+            font-size: 14px;
+        }
+        .menu-conta-item div { display: flex; align-items: center; gap: 12px; }
+        .menu-conta-item i.icon-red { color: var(--cor-principal); }
+        .btn-sair {
+            margin-top: 20px;
+            width: 100%;
+            background-color: var(--cor-principal);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* --- BOTTOM NAVIGATION BAR FIXA --- */
+        nav.bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 450px;
+            background-color: var(--cor-principal);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 11px;
+            gap: 4px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            flex: 1;
+        }
+
+        .nav-item i {
+            font-size: 18px;
+        }
+
+        .nav-item.active {
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .nav-item.active-central {
+            background-color: white;
+            color: var(--cor-principal);
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            margin-top: -20px;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+            justify-content: center;
+            flex: none;
+        }
+    </style>
 </head>
-<body class="bg-gray-50 pb-20">
+<body>
 
-  <!-- HEADER -->
-  <header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <div class="bg-red-600 text-white w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xl">%</div>
-        <div>
-          <span class="text-xl font-bold">central de</span>
-          <span class="text-red-600 font-bold text-2xl">promoções</span>
+    <div class="app-container">
+        
+        <header>
+            <div class="header-top">
+                <a href="#" class="logo" onclick="mudarAba('inicio')">
+                    <span class="logo-tag">%</span>
+                    <div class="logo-texto">
+                        <span class="p1">central de</span>
+                        <span class="p2">promoções</span>
+                    </div>
+                </a>
+                <div class="header-icons">
+                    <div class="icon-badge"><i class="fa-regular fa-bell"></i><span class="badge">3</span></div>
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+            </div>
+            
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="inputPesquisa" placeholder="Buscar produtos, marcas e ofertas..." oninput="executarPesquisa()">
+            </div>
+        </header>
+
+        <div class="afiliado-banner">
+            <i class="fa-solid fa-circle-info"></i> Atenção: Não realizamos vendas direta. Redirecionamos para lojas oficiais parceiras (Mercado Livre, Shopee, etc).
         </div>
-      </div>
-      <div class="flex items-center gap-5">
-        <i class="fas fa-bell text-2xl text-gray-700 cursor-pointer"></i>
-        <i onclick="window.location.href='salvos.html'" class="fas fa-shopping-cart text-2xl text-gray-700 cursor-pointer"></i>
-      </div>
+
+        <main id="aba-inicio" class="app-page active">
+            
+            <div class="section-title">
+                <span>🔥 Ofertas Quentes</span>
+                <a href="#" onclick="mudarAba('ofertas')">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+            
+            <div class="ofertas-quentes-carrossel" id="carrossel-ofertas">
+                </div>
+
+            <div class="selos-confianca">
+                <div class="selo-item">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <div class="selo-texto"><p>Compra Segura</p><span>Dados protegidos</span></div>
+                </div>
+                <div class="selo-item">
+                    <i class="fa-solid fa-truck"></i>
+                    <div class="selo-texto"><p>Frete Grátis</p><span>Consulte regras</span></div>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <span>Ofertas Imperdíveis</span>
+                <a href="#" onclick="mudarAba('ofertas')">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+
+            <div class="grid-produtos" id="produtos-inicio">
+                </div>
+
+            <div class="section-title" style="margin-top: 25px;">
+                <span>O que nossos clientes dizem</span>
+            </div>
+            <div class="depoimento-box">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop" class="depoimento-profile" alt="Juliana">
+                <div>
+                    <div class="rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p style="font-size: 12px; font-weight: 500; margin-bottom: 4px;">Entrega rápida, produto de qualidade e ótimo atendimento!</p>
+                    <span style="font-size: 11px; color: var(--texto-mutado);">Juliana S. • Comprou Smartwatch X7</span>
+                </div>
+                <div class="depoimento-aspas">”</div>
+            </div>
+        </main>
+
+        <main id="aba-categorias" class="app-page">
+            <div class="section-title"><span>Categorias</span></div>
+            <div class="grid-categorias" id="container-categorias">
+                </div>
+        </main>
+
+        <main id="aba-ofertas" class="app-page">
+            <div class="section-title"><span>Todas as Ofertas</span></div>
+            <div class="grid-produtos" id="todos-produtos-ofertas">
+                </div>
+        </main>
+
+        <main id="aba-favoritos" class="app-page">
+            <div class="section-title">
+                <span>❤️ Meus Favoritos</span>
+            </div>
+            <p id="total-favoritos" style="font-size: 12px; color: var(--texto-mutado); margin-bottom: 12px;">0 produtos</p>
+            <div class="grid-produtos" id="produtos-favoritos">
+                </div>
+        </main>
+
+        <main id="aba-conta" class="app-page">
+            <div class="perfil-header">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop" class="perfil-img" alt="Foto de perfil">
+                <h3 style="font-size: 16px;">Hosterat proIgotent</h3>
+            </div>
+            
+            <a href="#" class="menu-conta-item">
+                <div><i class="fa-solid fa-shield-halved icon-red"></i> Meus Pedidos</div>
+                <i class="fa-solid fa-chevron-right" style="font-size: 12px; color: #ccc;"></i>
+            </a>
+            <a href="#" class="menu-conta-item" onclick="mudarAba('favoritos')">
+                <div><i class="fa-solid fa-heart icon-red"></i> Favoritos</div>
+                <i class="fa-solid fa-chevron-right" style="font-size: 12px; color: #ccc;"></i>
+            </a>
+            <a href="#" class="menu-conta-item">
+                <div><i class="fa-solid fa-location-dot icon-red"></i> Endereços</div>
+                <i class="fa-solid fa-chevron-right" style="font-size: 12px; color: #ccc;"></i>
+            </a>
+            <a href="#" class="menu-conta-item">
+                <div><i class="fa-solid fa-lock icon-red"></i> Segurança</div>
+                <i class="fa-solid fa-chevron-right" style="font-size: 12px; color: #ccc;"></i>
+            </a>
+
+            <button class="btn-sair">Sair</button>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="mudarAba('inicio', this)">
+                <i class="fa-solid fa-house"></i>
+                <span>Início</span>
+            </button>
+            <button class="nav-item" onclick="mudarAba('categorias', this)">
+                <i class="fa-solid fa-grid-2x2 fa-shapes"></i>
+                <span>Categorias</span>
+            </button>
+            <button class="nav-item active-central" onclick="mudarAba('ofertas', this)">
+                <i class="fa-solid fa-tags"></i>
+                <span>Ofertas</span>
+            </button>
+            <button class="nav-item" onclick="mudarAba('favoritos', this)">
+                <i class="fa-solid fa-heart"></i>
+                <span>Favoritos</span>
+            </button>
+            <button class="nav-item" onclick="mudarAba('conta', this)">
+                <i class="fa-solid fa-user"></i>
+                <span>Conta</span>
+            </button>
+        </nav>
+
     </div>
 
-    <!-- Busca -->
-    <div class="max-w-7xl mx-auto px-4 pb-4">
-      <div class="relative">
-        <input type="text" id="buscaInput" 
-               class="w-full bg-gray-100 border border-gray-300 rounded-2xl py-3 px-5 pl-12 text-base focus:outline-none focus:border-red-500"
-               placeholder="Buscar produtos, marcas e ofertas...">
-        <i class="fas fa-search absolute left-4 top-3.5 text-gray-400"></i>
-      </div>
-    </div>
-  </header>
-
-  <!-- OFERTAS QUENTES -->
-  <section class="max-w-7xl mx-auto px-4 pt-4">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold flex items-center gap-2"><span class="text-red-500">🔥</span> Ofertas Quentes</h2>
-      <span class="text-red-600 text-sm font-medium">Ver todos →</span>
-    </div>
-    <div id="ofertas-quentes" class="grid grid-cols-3 gap-3"></div>
-  </section>
-
-  <!-- BENEFITS -->
-  <div class="max-w-7xl mx-auto px-4 py-5 bg-white mt-6">
-    <div class="grid grid-cols-4 gap-4 text-center text-xs">
-      <div><i class="fas fa-shield-alt text-green-600 text-2xl mb-1"></i><p>Compra Segura</p></div>
-      <div><i class="fas fa-truck text-green-600 text-2xl mb-1"></i><p>Frete Grátis</p></div>
-      <div><i class="fas fa-exchange-alt text-green-600 text-2xl mb-1"></i><p>Troca Fácil</p></div>
-    </div>
-  </div>
-
-  <!-- OFERTAS IMPERDÍVEIS -->
-  <section class="max-w-7xl mx-auto px-4 py-6">
-    <div class="flex justify-between mb-5">
-      <h2 class="text-2xl font-bold">Ofertas Imperdíveis</h2>
-      <span onclick="window.location.href='ofertas.html'" class="text-red-600 font-medium cursor-pointer">Ver todas →</span>
-    </div>
-    <div id="ofertas-grid" class="grid grid-cols-2 gap-4"></div>
-  </section>
-
-  <!-- DEPOIMENTOS -->
-  <section class="bg-white py-8 px-4">
-    <h2 class="text-2xl font-bold text-center mb-6">O que nossos clientes dizem</h2>
-    <div class="max-w-md mx-auto bg-gray-50 p-6 rounded-3xl">
-      <div class="flex gap-1 text-yellow-400 mb-3">★★★★★</div>
-      <p class="text-gray-700">"Entrega rápida, produto de qualidade e ótimo atendimento! Já comprei várias vezes."</p>
-      <p class="text-sm text-gray-500 mt-4">- Juliana S.</p>
-    </div>
-  </section>
-
-  <!-- BOTTOM NAV -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-red-600 text-white z-50">
-    <div class="grid grid-cols-5 text-center py-2 text-xs">
-      <a href="index.html" class="flex flex-col items-center"><i class="fas fa-home text-2xl"></i><span>Início</span></a>
-      <a href="#" class="flex flex-col items-center"><i class="fas fa-th-large text-2xl"></i><span>Categorias</span></a>
-      <a href="ofertas.html" class="flex flex-col items-center"><i class="fas fa-fire text-2xl"></i><span>Ofertas</span></a>
-      <a href="salvos.html" class="flex flex-col items-center"><i class="fas fa-heart text-2xl"></i><span>Favoritos</span></a>
-      <a href="#" class="flex flex-col items-center"><i class="fas fa-user text-2xl"></i><span>Conta</span></a>
-    </div>
-  </nav>
-
-<script>
+    <script>
 // Categorias
 const categorias = [
   {id: "roupas-masculinas", nome: "👕 Masculinas"},
@@ -1245,35 +1765,139 @@ precoNovo: "35,90"
     ]
   }
 };
-// Produtos OFERTAS QUENTES
-const ofertasQuentes = [
-  {nome:"Smartwatch X7", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1zzq6l901gfa2.webp", precoAntigo:"499,90", precoNovo:"299,90", link:"https://s.shopee.com.br"},
-  {nome:"Camiseta Premium", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m9digwvkdgjm92.webp", precoAntigo:"99,90", precoNovo:"64,90", link:"https://s.shopee.com.br"},
-  {nome:"Fone Sound Pro", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1f8p2y5m336a1.webp", precoAntigo:"199,90", precoNovo:"139,90", link:"https://s.shopee.com.br"}
-];
+// Inicializa vetor de salvos usando o LocalStorage para não perder dados ao atualizar
+        let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
 
-// Render Ofertas Quentes
-function renderofertasQuentes() {
-  const container = document.getElementById("ofertas-quentes");
-  let html = '';
-  ofertasQuentes.forEach(p => {
-    html += `
-      <div class="card bg-white rounded-2xl overflow-hidden shadow" onclick="window.open('${p.link}','_blank')">
-        <div class="relative">
-          <span class="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">-${Math.round((parseFloat(p.precoAntigo.replace(',','.')) - parseFloat(p.precoNovo.replace(',','.'))) / parseFloat(p.precoAntigo.replace(',','.')) * 100)}%</span>
-          <img src="${p.img}" class="w-full h-36 object-cover">
-        </div>
-        <div class="p-3">
-          <p class="text-xs line-clamp-2">${p.nome}</p>
-          <div class="text-red-600 font-bold">R$ ${p.precoNovo}</div>
-        </div>
-      </div>`;
-  });
-  container.innerHTML = html;
-}
+        // --- SISTEMA DE ABAS (Muda o conteúdo sem dar refresh ou histórico de voltar) ---
+        function mudarAba(idAba, elementoBotao) {
+            document.querySelectorAll('.app-page').forEach(pag => pag.classList.remove('active'));
+            document.getElementById(`aba-${idAba}`).classList.remove('active');
+            document.getElementById(`aba-${idAba}`).classList.add('active');
 
-// Inicializar
-renderOfertasQuentes();
-</script>
+            if (elementoBotao) {
+                document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+                if (!elementoBotao.classList.contains('active-central')) {
+                    elementoBotao.classList.add('active');
+                }
+            }
+            
+            // Força renderização atualizada se for para favoritos
+            if(idAba === 'favoritos') carregarFavoritos();
+            
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // --- GERAÇÃO DE TEMPLATE DE PRODUTO COMPATÍVEL COM CORAÇÃO ---
+        function criarCardProduto(prod) {
+            const isFav = favoritos.includes(prod.id) ? 'active' : '';
+            const iconeCoracao = favoritos.includes(prod.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
+            
+            return `
+                <div class="produto-card">
+                    <button class="btn-favorito ${isFav}" onclick="alternarFavorito(event, ${prod.id})">
+                        <i class="${iconeCoracao}"></i>
+                    </button>
+                    <img src="${prod.img}" class="produto-img" alt="${prod.nome}">
+                    <div class="produto-nome">${prod.nome}</div>
+                    <div class="rating">
+                        <i class="fa-solid fa-star"></i> 
+                        <span>${prod.rating} (${prod.avaliacoes})</span>
+                    </div>
+                    <div>
+                        <div class="preco-antigo">R$ ${prod.precoAntigo.toFixed(2).replace('.',',')}</div>
+                        <div class="preco-novo">R$ ${prod.preco.toFixed(2).replace('.',',')}</div>
+                    </div>
+                    <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
+                </div>
+            `;
+        }
+
+        // --- MANIPULAÇÃO DE FAVORITOS ---
+        function alternarFavorito(event, id) {
+            event.stopPropagation(); // Impede ações involuntárias do card
+            const index = favoritos.indexOf(id);
+            if (index > -1) {
+                favoritos.splice(index, 1);
+            } else {
+                favoritos.push(id);
+            }
+            localStorage.setItem('favoritos', JSON.stringify(favoritos));
+            
+            // Recarrega os ambientes visuais
+            renderizarSistemas();
+            carregarFavoritos();
+        }
+
+        // --- CARREGAR PÁGINA DE SALVOS/FAVORITOS ---
+        function carregarFavoritos() {
+            const container = document.getElementById('produtos-favoritos');
+            const totalTexto = document.getElementById('total-favoritos');
+            const prodsFavoritados = PRODUTOS_DADOS.filter(p => favoritos.includes(p.id));
+            
+            totalTexto.innerText = `${prodsFavoritados.length} produto(s)`;
+            
+            if(prodsFavoritados.length === 0) {
+                container.innerHTML = `<p style="grid-column: span 2; text-align:center; padding: 40px var(--texto-mutado);">Nenhum item salvo ainda.</p>`;
+                return;
+            }
+            container.innerHTML = prodsFavoritados.map(p => criarCardProduto(p)).join('');
+        }
+
+        // --- SISTEMA DE PESQUISA EM TEMPO REAL ---
+        function executarPesquisa() {
+            const termo = document.getElementById('inputPesquisa').value.toLowerCase();
+            
+            if (termo.trim() !== '') {
+                mudarAba('ofertas'); // Joga o usuário dinamicamente para o grid amplo
+                const filtrados = PRODUTOS_DADOS.filter(p => p.nome.toLowerCase().includes(termo));
+                const container = document.getElementById('todos-produtos-ofertas');
+                
+                if(filtrados.length === 0) {
+                    container.innerHTML = `<p style="grid-column: span 2; text-align:center; padding:40px;">Nenhum produto encontrado.</p>`;
+                } else {
+                    container.innerHTML = filtrados.map(p => criarCardProduto(p)).join('');
+                }
+            } else {
+                renderizarSistemas();
+            }
+        }
+
+        // --- INICIALIZADOR GLOBAL ---
+        function renderizarSistemas() {
+            // Renderiza Ofertas Quentes (Horizontal)
+            const quentes = PRODUTOS_DADOS.filter(p => p.quente);
+            document.getElementById('carrossel-ofertas').innerHTML = quentes.map(p => `
+                <div class="card-horizontal">
+                    <span class="tag-desconto">${p.desconto || '-30%'}</span>
+                    <button class="btn-favorito ${favoritos.includes(p.id) ? 'active' : ''}" onclick="alternarFavorito(event, ${p.id})">
+                        <i class="${favoritos.includes(p.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'}"></i>
+                    </button>
+                    <img src="${p.img}" class="produto-img" style="height:100px;" alt="${p.nome}">
+                    <div class="produto-nome" style="font-size:12px; height:32px;">${p.nome}</div>
+                    <div class="preco-novo" style="font-size:13px; margin:0;">R$ ${p.preco.toFixed(2).replace('.',',')}</div>
+                </div>
+            `).join('');
+
+            // Renderiza Ofertas Imperdíveis na Home
+            const imperdiveis = PRODUTOS_DADOS.filter(p => !p.quente);
+            document.getElementById('produtos-inicio').innerHTML = imperdiveis.map(p => criarCardProduto(p)).join('');
+
+            // Renderiza Categorias
+            document.getElementById('container-categorias').innerHTML = CATEGORIAS_DADOS.map(c => `
+                <div class="categoria-card" onclick="mudarAba('ofertas')">
+                    <i class="fa-solid ${c.icone}"></i>
+                    <p>${c.nome}</p>
+                </div>
+            `).join('');
+
+            // Renderiza Todas as Ofertas por padrão na aba de Ofertas
+            document.getElementById('todos-produtos-ofertas').innerHTML = PRODUTOS_DADOS.map(p => criarCardProduto(p)).join('');
+        }
+
+        // Rodar ao iniciar página
+        window.onload = () => {
+            renderizarSistemas();
+        };
+    </script>
 </body>
 </html>
