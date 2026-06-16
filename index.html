@@ -13,6 +13,7 @@
     .card:hover { transform: translateY(-6px); }
     .bottom-nav { box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
     .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .active-cat { background-color: #e11d48 !important; color: white !important; }
   </style>
 </head>
 <body class="bg-gray-50 pb-20">
@@ -39,48 +40,25 @@
       <div class="relative">
         <input type="text" id="buscaInput" 
                class="w-full bg-gray-100 border border-gray-300 rounded-2xl py-3 px-5 pl-12 text-base focus:outline-none focus:border-red-500"
-               placeholder="Buscar produtos, marcas e ofertas...">
+               placeholder="Buscar produtos...">
         <i class="fas fa-search absolute left-4 top-3.5 text-gray-400"></i>
       </div>
     </div>
   </header>
 
-  <!-- HOT DEALS -->
-  <section class="max-w-7xl mx-auto px-4 pt-2">
-    <div class="flex justify-between mb-4">
-      <h2 class="text-xl font-bold flex items-center gap-2">🔥 Hot Deals</h2>
-      <span class="text-red-600 font-medium">Ver todos →</span>
-    </div>
-    <div class="grid grid-cols-3 gap-3" id="hot-deals"></div>
-  </section>
-
-  <!-- BENEFITS -->
-  <div class="max-w-7xl mx-auto px-4 py-6 bg-white mt-6">
-    <div class="grid grid-cols-4 gap-4 text-center text-xs">
-      <div><i class="fas fa-shield-alt text-green-600 text-2xl mb-1"></i><p>Compra Segura</p></div>
-      <div><i class="fas fa-truck text-green-600 text-2xl mb-1"></i><p>Frete Grátis</p></div>
-      <div><i class="fas fa-exchange-alt text-green-600 text-2xl mb-1"></i><p>Troca Fácil</p></div>
-      <div><i class="fas fa-star text-green-600 text-2xl mb-1"></i><p>Garantia</p></div>
-    </div>
+  <!-- CATEGORIAS -->
+  <div class="max-w-7xl mx-auto px-4 py-4 border-b bg-white">
+    <div id="lista-categorias" class="flex gap-2 overflow-x-auto pb-2"></div>
   </div>
 
-  <!-- OFERTAS IMPERDÍVEIS -->
+  <!-- TÍTULO DA CATEGORIA + PRODUTOS -->
   <section class="max-w-7xl mx-auto px-4 py-6">
-    <div class="flex justify-between items-center mb-5">
-      <h2 class="text-2xl font-bold">Ofertas Imperdíveis</h2>
-      <span onclick="window.location.href='ofertas.html'" class="text-red-600 font-medium cursor-pointer">Ver todas →</span>
-    </div>
-    <div id="ofertas-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
-  </section>
+    <h2 id="categoria-titulo" class="text-2xl font-bold mb-6">Hot Deals</h2>
+    
+    <div id="produtos-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
 
-  <!-- DEPOIMENTOS -->
-  <section class="bg-white py-8 px-4">
-    <h2 class="text-2xl font-bold text-center mb-6">O que nossos clientes dizem</h2>
-    <div class="max-w-md mx-auto bg-gray-50 p-6 rounded-3xl">
-      <div class="flex gap-1 text-yellow-400 mb-3">★★★★★</div>
-      <p class="text-gray-700">"Entrega rápida, produto de qualidade e ótimo atendimento!"</p>
-      <p class="text-sm text-gray-500 mt-4">- Juliana S.</p>
-    </div>
+    <!-- PAGINAÇÃO -->
+    <div id="paginacao" class="flex justify-center items-center gap-3 mt-10"></div>
   </section>
 
   <!-- BOTTOM NAV -->
@@ -89,7 +67,7 @@
       <a href="index.html" class="flex flex-col items-center text-red-600">
         <i class="fas fa-home text-2xl"></i><span>Início</span>
       </a>
-      <a href="#" onclick="abrirCategorias()" class="flex flex-col items-center text-gray-600">
+      <a href="#" onclick="abrirTodasCategorias()" class="flex flex-col items-center text-gray-600">
         <i class="fas fa-th-large text-2xl"></i><span>Categorias</span>
       </a>
       <a href="ofertas.html" class="flex flex-col items-center text-gray-600">
@@ -98,7 +76,7 @@
       <a href="salvos.html" class="flex flex-col items-center text-gray-600">
         <i class="fas fa-heart text-2xl"></i><span>Favoritos</span>
       </a>
-      <a href="#" onclick="alert('🔧 Página de Conta em desenvolvimento...')" class="flex flex-col items-center text-gray-600">
+      <a href="#" class="flex flex-col items-center text-gray-600">
         <i class="fas fa-user text-2xl"></i><span>Conta</span>
       </a>
     </div>
@@ -1258,47 +1236,206 @@ precoNovo: "35,90"
     ]
   }
 };
-// Exemplo de produtos com links reais (substitua com os seus)
-const hotDeals = [
-  { nome: "Smartwatch X7", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1zzq6l901gfa2.webp", precoAntigo: "499,90", precoNovo: "299,90", link: "https://s.shopee.com.br/3VeJf1EwzR" },
-  { nome: "Camiseta Premium", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m9digwvkdgjm92.webp", precoAntigo: "99,90", precoNovo: "64,90", link: "https://s.shopee.com.br/3LKtRVjsgr" },
-  { nome: "Fone Bluetooth", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1f8p2y5m336a1.webp", precoAntigo: "199,90", precoNovo: "139,90", link: "https://s.shopee.com.br/1BGOudXMd6" }
-];
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central de Promoções</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; }
+    .card { transition: all 0.2s ease; }
+    .card:hover { transform: translateY(-6px); }
+    .bottom-nav { box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .active-cat { background-color: #e11d48 !important; color: white !important; }
+  </style>
+</head>
+<body class="bg-gray-50 pb-20">
 
-const ofertasDestaque = [ /* adicione mais produtos com .link */ ];
-
-// Render functions (com links)
-function renderHotDeals() {
-  const container = document.getElementById("hot-deals");
-  let html = '';
-  hotDeals.forEach(p => {
-    html += `
-      <div class="card bg-white rounded-2xl overflow-hidden shadow cursor-pointer" onclick="window.open('${p.link}','_blank')">
-        <div class="relative">
-          <span class="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">${Math.round((1 - parseFloat(p.precoNovo)/parseFloat(p.precoAntigo))*100)}% OFF</span>
-          <img src="${p.img}" class="w-full h-36 object-cover">
-        </div>
-        <div class="p-3">
-          <p class="text-sm line-clamp-2">${p.nome}</p>
-          <div class="flex items-baseline gap-2 mt-2">
-            <span class="text-red-600 font-bold text-lg">R$ ${p.precoNovo}</span>
-            <span class="text-gray-400 line-through text-xs">R$ ${p.precoAntigo}</span>
+  <!-- HEADER -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="bg-red-600 text-white w-9 h-9 rounded-xl flex items-center justify-center font-bold text-2xl">%</div>
+          <div>
+            <span class="text-2xl font-bold text-black">central de</span>
+            <span class="text-red-600 font-bold text-2xl">promoções</span>
           </div>
+        </div>
+        <div onclick="window.location.href='salvos.html'" class="relative cursor-pointer">
+          <i class="fas fa-heart text-2xl text-gray-700"></i>
+          <span id="contador-salvos" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 pb-4">
+      <div class="relative">
+        <input type="text" id="buscaInput" 
+               class="w-full bg-gray-100 border border-gray-300 rounded-2xl py-3 px-5 pl-12 text-base focus:outline-none focus:border-red-500"
+               placeholder="Buscar produtos...">
+        <i class="fas fa-search absolute left-4 top-3.5 text-gray-400"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- CATEGORIAS -->
+  <div class="max-w-7xl mx-auto px-4 py-4 border-b bg-white">
+    <div id="lista-categorias" class="flex gap-2 overflow-x-auto pb-2"></div>
+  </div>
+
+  <!-- TÍTULO DA CATEGORIA + PRODUTOS -->
+  <section class="max-w-7xl mx-auto px-4 py-6">
+    <h2 id="categoria-titulo" class="text-2xl font-bold mb-6">Hot Deals</h2>
+    
+    <div id="produtos-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+
+    <!-- PAGINAÇÃO -->
+    <div id="paginacao" class="flex justify-center items-center gap-3 mt-10"></div>
+  </section>
+
+  <!-- BOTTOM NAV -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t z-50">
+    <div class="max-w-7xl mx-auto grid grid-cols-5 text-center py-2 text-xs">
+      <a href="index.html" class="flex flex-col items-center text-red-600">
+        <i class="fas fa-home text-2xl"></i><span>Início</span>
+      </a>
+      <a href="#" onclick="abrirTodasCategorias()" class="flex flex-col items-center text-gray-600">
+        <i class="fas fa-th-large text-2xl"></i><span>Categorias</span>
+      </a>
+      <a href="ofertas.html" class="flex flex-col items-center text-gray-600">
+        <i class="fas fa-fire text-2xl"></i><span>Ofertas</span>
+      </a>
+      <a href="salvos.html" class="flex flex-col items-center text-gray-600">
+        <i class="fas fa-heart text-2xl"></i><span>Favoritos</span>
+      </a>
+      <a href="#" class="flex flex-col items-center text-gray-600">
+        <i class="fas fa-user text-2xl"></i><span>Conta</span>
+      </a>
+    </div>
+  </nav>
+
+<script>
+// ==================== SEUS DADOS (cole todo o objeto aqui) ====================
+const dados = { /* ← Cole aqui todo o grande objeto "dados" do seu arquivo original */ };
+
+// Configuração de paginação
+let categoriaAtual = "roupas-masculinas";
+let paginaAtual = 1;
+const produtosPorPagina = 12;
+
+// Render categorias
+function renderCategorias() {
+  const container = document.getElementById("lista-categorias");
+  container.innerHTML = '';
+  
+  Object.keys(dados).forEach(key => {
+    const cat = dados[key];
+    const btn = document.createElement("button");
+    btn.className = `px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap flex-shrink-0 ${key === categoriaAtual ? 'active-cat bg-red-600 text-white' : 'bg-gray-100 hover:bg-gray-200'}`;
+    btn.textContent = cat.titulo;
+    btn.onclick = () => {
+      categoriaAtual = key;
+      paginaAtual = 1;
+      renderCategorias();
+      carregarProdutos();
+    };
+    container.appendChild(btn);
+  });
+}
+
+// Carregar produtos com paginação
+function carregarProdutos() {
+  const cat = dados[categoriaAtual];
+  document.getElementById("categoria-titulo").textContent = cat.titulo;
+
+  const produtos = cat.produtos;
+  const totalPaginas = Math.ceil(produtos.length / produtosPorPagina);
+  const inicio = (paginaAtual - 1) * produtosPorPagina;
+  const fim = inicio + produtosPorPagina;
+  const produtosPagina = produtos.slice(inicio, fim);
+
+  const grid = document.getElementById("produtos-grid");
+  let html = '';
+
+  produtosPagina.forEach(p => {
+    html += `
+      <div class="card bg-white rounded-2xl overflow-hidden shadow">
+        <div class="relative">
+          <img src="${p.img}" class="w-full h-48 object-cover" alt="${p.nome}">
+          <div onclick="event.stopImmediatePropagation(); toggleFavorito('${p.nome}', this)" 
+               class="absolute top-3 right-3 text-2xl cursor-pointer text-white drop-shadow-md">♡</div>
+        </div>
+        <div class="p-4">
+          <h3 class="font-medium text-sm line-clamp-2 min-h-[42px]">${p.nome}</h3>
+          <div class="flex items-baseline gap-2 mt-3">
+            <span class="text-red-600 font-bold text-xl">R$ ${p.precoNovo}</span>
+            <span class="text-gray-400 line-through text-sm">R$ ${p.precoAntigo}</span>
+          </div>
+          <button onclick="window.open('${p.link}','_blank')" 
+                  class="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-2xl font-semibold text-sm">
+            Ver Oferta
+          </button>
         </div>
       </div>`;
   });
+
+  grid.innerHTML = html;
+  renderPaginacao(totalPaginas);
+}
+
+// Render Paginação
+function renderPaginacao(totalPaginas) {
+  const container = document.getElementById("paginacao");
+  let html = `
+    <button onclick="mudarPagina(-1)" class="px-4 py-2 bg-gray-200 rounded-xl ${paginaAtual === 1 ? 'opacity-50 cursor-not-allowed' : ''}">
+      Anterior
+    </button>
+  `;
+
+  for (let i = 1; i <= totalPaginas; i++) {
+    if (i === paginaAtual || i === 1 || i === totalPaginas || (i >= paginaAtual-1 && i <= paginaAtual+1)) {
+      html += `
+        <button onclick="irParaPagina(${i})" 
+                class="w-9 h-9 flex items-center justify-center rounded-xl ${i === paginaAtual ? 'bg-red-600 text-white' : 'bg-gray-100'}">
+          ${i}
+        </button>`;
+    }
+  }
+
+  html += `
+    <button onclick="mudarPagina(1)" class="px-4 py-2 bg-gray-200 rounded-xl ${paginaAtual === totalPaginas ? 'opacity-50 cursor-not-allowed' : ''}">
+      Próximo
+    </button>
+  `;
+
   container.innerHTML = html;
 }
 
-// Favoritos (melhorado)
+function mudarPagina(direcao) {
+  paginaAtual += direcao;
+  carregarProdutos();
+}
+
+function irParaPagina(pagina) {
+  paginaAtual = pagina;
+  carregarProdutos();
+}
+
+// Toggle Favorito
 function toggleFavorito(nome, el) {
   let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
   if (salvos.includes(nome)) {
     salvos = salvos.filter(n => n !== nome);
-    el.innerHTML = '♡';
+    el.textContent = '♡';
   } else {
     salvos.push(nome);
-    el.innerHTML = '❤️';
+    el.textContent = '❤️';
   }
   localStorage.setItem("salvos", JSON.stringify(salvos));
   document.getElementById("contador-salvos").textContent = salvos.length;
@@ -1309,25 +1446,24 @@ function atualizarContador() {
   document.getElementById("contador-salvos").textContent = salvos.length;
 }
 
-// Busca melhorada
+// Busca
 document.getElementById("buscaInput").addEventListener("input", (e) => {
-  const termo = e.target.value.toLowerCase().trim();
-  if (termo.length === 0) {
-    renderOfertas(); // volta ao normal
+  const termo = e.target.value.toLowerCase();
+  if (!termo) {
+    carregarProdutos();
     return;
   }
-  // lógica de filtro aqui (pode ser expandida)
-  console.log("Buscando:", termo);
+  // Busca simples dentro da categoria atual
+  const cat = dados[categoriaAtual];
+  const filtrados = cat.produtos.filter(p => p.nome.toLowerCase().includes(termo));
+  // Renderiza filtrados sem paginação por enquanto
+  const grid = document.getElementById("produtos-grid");
+  grid.innerHTML = filtrados.map(p => `... mesmo card ...`).join(''); // pode expandir depois
 });
 
-// Abrir Categorias
-function abrirCategorias() {
-  alert("Em breve: Lista completa de categorias\n\n(ou podemos criar uma página categorias.html)");
-  // window.location.href = 'categorias.html'; // futuro
-}
-
-// Inicializar
-renderHotDeals();
+// Inicialização
+renderCategorias();
+carregarProdutos();
 atualizarContador();
 </script>
 </body>
