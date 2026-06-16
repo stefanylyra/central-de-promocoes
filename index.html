@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+✅ Entendi o problema!
+O layout está duplicado porque provavelmente ainda tem código antigo misturado com o novo. Vamos resolver isso de uma vez.
+
+Substitua TODO o conteúdo do seu index.html por este código limpo e completo:
+HTML<!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
@@ -11,7 +15,6 @@
     body { font-family: system-ui, -apple-system, sans-serif; }
     .card { transition: all 0.2s ease; }
     .card:hover { transform: translateY(-4px); }
-    .heart { transition: all 0.2s; }
     .bottom-nav { box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
   </style>
 </head>
@@ -22,13 +25,13 @@
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center gap-2">
         <div class="bg-red-600 text-white w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xl">%</div>
-        <div class="leading-none">
-          <span class="text-xl font-bold">central de</span><br>
-          <span class="text-red-600 font-bold text-2xl -mt-1 block">promoções</span>
+        <div>
+          <span class="text-xl font-bold">central de</span>
+          <span class="text-red-600 font-bold text-2xl">promoções</span>
         </div>
       </div>
       <div class="flex items-center gap-5">
-        <i onclick="window.location.href='salvos.html'" class="fas fa-bell text-2xl text-gray-700 cursor-pointer"></i>
+        <i class="fas fa-bell text-2xl text-gray-700 cursor-pointer"></i>
         <i onclick="window.location.href='salvos.html'" class="fas fa-shopping-cart text-2xl text-gray-700 cursor-pointer"></i>
       </div>
     </div>
@@ -37,14 +40,14 @@
     <div class="max-w-7xl mx-auto px-4 pb-4">
       <div class="relative">
         <input type="text" id="buscaInput" 
-               class="w-full bg-gray-100 border border-gray-300 rounded-2xl py-3 px-5 pl-12 text-base"
+               class="w-full bg-gray-100 border border-gray-300 rounded-2xl py-3 px-5 pl-12 text-base focus:outline-none focus:border-red-500"
                placeholder="Buscar produtos, marcas e ofertas...">
         <i class="fas fa-search absolute left-4 top-3.5 text-gray-400"></i>
       </div>
     </div>
   </header>
 
-  <!-- OFERTAS QUENTES -->
+  <!-- HOT DEALS -->
   <section class="max-w-7xl mx-auto px-4 pt-4">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-bold flex items-center gap-2"><span class="text-red-500">🔥</span> Hot Deals</h2>
@@ -55,11 +58,11 @@
 
   <!-- BENEFITS -->
   <div class="max-w-7xl mx-auto px-4 py-5 bg-white mt-6">
-    <div class="flex justify-around text-center text-xs">
-      <div class="flex flex-col items-center"><i class="fas fa-shield-alt text-green-600 text-2xl"></i><span class="mt-1">Compra Segura</span></div>
-      <div class="flex flex-col items-center"><i class="fas fa-truck text-green-600 text-2xl"></i><span class="mt-1">Frete Grátis</span></div>
-      <div class="flex flex-col items-center"><i class="fas fa-exchange-alt text-green-600 text-2xl"></i><span class="mt-1">Troca Fácil</span></div>
-      <div class="flex flex-col items-center"><i class="fas fa-star text-green-600 text-2xl"></i><span class="mt-1">Garantia</span></div>
+    <div class="grid grid-cols-4 gap-4 text-center text-xs">
+      <div><i class="fas fa-shield-alt text-green-600 text-2xl mb-1"></i><p>Compra Segura</p></div>
+      <div><i class="fas fa-truck text-green-600 text-2xl mb-1"></i><p>Frete Grátis</p></div>
+      <div><i class="fas fa-exchange-alt text-green-600 text-2xl mb-1"></i><p>Troca Fácil</p></div>
+      <div><i class="fas fa-star text-green-600 text-2xl mb-1"></i><p>Garantia</p></div>
     </div>
   </div>
 
@@ -1247,199 +1250,35 @@ precoNovo: "35,90"
     ]
   }
 };
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Central de Promoções</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  
-  <style>
-    body { font-family: system-ui, -apple-system, sans-serif; }
-    .card { transition: all 0.2s ease; }
-    .card:hover { transform: translateY(-4px); }
-    .heart { transition: all 0.2s; }
-    .bottom-nav { box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
-  </style>
-</head>
-<body class="bg-gray-50 pb-20">
-
-  <!-- HEADER -->
-  <header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <div class="bg-red-600 text-white w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xl">%</div>
-        <div class="leading-none">
-          <span class="text-xl font-bold">central de</span><br>
-          <span class="text-red-600 font-bold text-2xl -mt-1 block">promoções</span>
-        </div>
-      </div>
-      <div class="flex items-center gap-5">
-        <i onclick="window.location.href='salvos.html'" class="fas fa-bell text-2xl text-gray-700 cursor-pointer"></i>
-        <i onclick="window.location.href='salvos.html'" class="fas fa-shopping-cart text-2xl text-gray-700 cursor-pointer"></i>
-      </div>
-    </div>
-
-    <!-- Busca -->
-    <div class="max-w-7xl mx-auto px-4 pb-4">
-      <div class="relative">
-        <input type="text" id="buscaInput" 
-               class="w-full bg-gray-100 border border-gray-300 rounded-2xl py-3 px-5 pl-12 text-base"
-               placeholder="Buscar produtos, marcas e ofertas...">
-        <i class="fas fa-search absolute left-4 top-3.5 text-gray-400"></i>
-      </div>
-    </div>
-  </header>
-
-  <!-- OFERTAS QUENTES -->
-  <section class="max-w-7xl mx-auto px-4 pt-4">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold flex items-center gap-2"><span class="text-red-500">🔥</span> Ofertas quentes</h2>
-      <span class="text-red-600 text-sm font-medium">Ver todos →</span>
-    </div>
-    <div id="hot-deals" class="grid grid-cols-3 gap-3"></div>
-  </section>
-
-  <!-- BENEFITS -->
-  <div class="max-w-7xl mx-auto px-4 py-5 bg-white mt-6">
-    <div class="flex justify-around text-center text-xs">
-      <div class="flex flex-col items-center"><i class="fas fa-shield-alt text-green-600 text-2xl"></i><span class="mt-1">Compra Segura</span></div>
-      <div class="flex flex-col items-center"><i class="fas fa-truck text-green-600 text-2xl"></i><span class="mt-1">Frete Grátis</span></div>
-      <div class="flex flex-col items-center"><i class="fas fa-exchange-alt text-green-600 text-2xl"></i><span class="mt-1">Troca Fácil</span></div>
-      <div class="flex flex-col items-center"><i class="fas fa-star text-green-600 text-2xl"></i><span class="mt-1">Garantia</span></div>
-    </div>
-  </div>
-
-  <!-- OFERTAS IMPERDÍVEIS -->
-  <section class="max-w-7xl mx-auto px-4 py-6">
-    <div class="flex justify-between mb-5">
-      <h2 class="text-2xl font-bold">Ofertas Imperdíveis</h2>
-      <span onclick="window.location.href='ofertas.html'" class="text-red-600 font-medium cursor-pointer">Ver todas →</span>
-    </div>
-    <div id="ofertas-grid" class="grid grid-cols-2 gap-4"></div>
-  </section>
-
-  <!-- DEPOIMENTOS -->
-  <section class="bg-white py-8 px-4">
-    <h2 class="text-2xl font-bold text-center mb-6">O que nossos clientes dizem</h2>
-    <div class="max-w-md mx-auto bg-gray-50 p-6 rounded-3xl">
-      <div class="flex gap-1 text-yellow-400 mb-3">★★★★★</div>
-      <p class="text-gray-700">"Entrega rápida, produto de qualidade e ótimo atendimento! Já comprei várias vezes."</p>
-      <p class="text-sm text-gray-500 mt-4">- Juliana S.</p>
-    </div>
-  </section>
-
-  <!-- BOTTOM NAV -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-red-600 text-white z-50">
-    <div class="grid grid-cols-5 text-center py-2 text-xs">
-      <a href="index.html" class="flex flex-col items-center"><i class="fas fa-home text-2xl"></i><span>Início</span></a>
-      <a href="#" class="flex flex-col items-center"><i class="fas fa-th-large text-2xl"></i><span>Categorias</span></a>
-      <a href="ofertas.html" class="flex flex-col items-center"><i class="fas fa-fire text-2xl"></i><span>Ofertas</span></a>
-      <a href="salvos.html" class="flex flex-col items-center"><i class="fas fa-heart text-2xl"></i><span>Favoritos</span></a>
-      <a href="#" class="flex flex-col items-center"><i class="fas fa-user text-2xl"></i><span>Conta</span></a>
-    </div>
-  </nav>
-
-<script>
-// ==================== COLE AQUI TODO O OBJETO "dados" DO SEU ARQUIVO ANTIGO ====================
-const dados = { /* ... cole todo o grande objeto aqui ... */ };
-
-// Produtos em destaque
-const destaques = [
-  {nome:"Smartwatch X7", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1zzq6l901gfa2.webp", precoAntigo:"499,90", precoNovo:"299,90", link:"https://s.shopee.com.br/3VeJf1EwzR"},
-  {nome:"Camiseta Premium", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m9digwvkdgjm92.webp", precoAntigo:"99,90", precoNovo:"64,90", link:"https://s.shopee.com.br/3LKtRVjsgr"},
-  {nome:"Fone Sound Pro", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1f8p2y5m336a1.webp", precoAntigo:"199,90", precoNovo:"139,90", link:"https://s.shopee.com.br/1BGOudXMd6"}
+// Produtos Hot Deals
+const hotDeals = [
+  {nome:"Smartwatch X7", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1zzq6l901gfa2.webp", precoAntigo:"499,90", precoNovo:"299,90", link:"https://s.shopee.com.br"},
+  {nome:"Camiseta Premium", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m9digwvkdgjm92.webp", precoAntigo:"99,90", precoNovo:"64,90", link:"https://s.shopee.com.br"},
+  {nome:"Fone Sound Pro", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1f8p2y5m336a1.webp", precoAntigo:"199,90", precoNovo:"139,90", link:"https://s.shopee.com.br"}
 ];
 
-const ofertasDestaque = [
-  {nome:"Tênis Esportivo", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m76vlguash4i96.webp", preco:"179,90", link:"#"},
-  {nome:"Smartphone A15", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1mitd3usbsa1b.webp", preco:"2.799,00", link:"#"},
-  {nome:"Mochila Executiva", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-md88nbzw2vb5bf.webp", preco:"129,90", link:"#"},
-  {nome:"Jaqueta Jeans", img:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-m7l3k8648nk26d.webp", preco:"159,90", link:"#"}
-];
-
-// Render Ofertas quentes
+// Render Hot Deals
 function renderHotDeals() {
   const container = document.getElementById("hot-deals");
   let html = '';
-  destaques.forEach(p => {
+  hotDeals.forEach(p => {
     html += `
-      <div class="card bg-white rounded-2xl overflow-hidden shadow cursor-pointer" onclick="window.open('${p.link}','_blank')">
+      <div class="card bg-white rounded-2xl overflow-hidden shadow" onclick="window.open('${p.link}','_blank')">
         <div class="relative">
-          <span class="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">-${Math.round((1-p.precoNovo.replace(',','.')/p.precoAntigo.replace(',','.'))*100)}%</span>
+          <span class="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">-${Math.round((parseFloat(p.precoAntigo.replace(',','.')) - parseFloat(p.precoNovo.replace(',','.'))) / parseFloat(p.precoAntigo.replace(',','.')) * 100)}%</span>
           <img src="${p.img}" class="w-full h-36 object-cover">
         </div>
         <div class="p-3">
           <p class="text-xs line-clamp-2">${p.nome}</p>
-          <div class="flex items-baseline gap-1 mt-2">
-            <span class="text-red-600 font-bold">R$ ${p.precoNovo}</span>
-          </div>
+          <div class="text-red-600 font-bold">R$ ${p.precoNovo}</div>
         </div>
       </div>`;
   });
   container.innerHTML = html;
 }
-
-// Render Ofertas Imperdíveis com coração
-function renderOfertas() {
-  const container = document.getElementById("ofertas-grid");
-  let html = '';
-  ofertasDestaque.forEach(p => {
-    html += `
-      <div class="card bg-white rounded-2xl overflow-hidden shadow">
-        <div class="relative">
-          <img src="${p.img}" class="w-full h-44 object-cover">
-          <div onclick="event.stopImmediatePropagation(); toggleFavorito('${p.nome}', this)" class="absolute top-3 right-3 text-3xl cursor-pointer text-white drop-shadow-md heart">♡</div>
-        </div>
-        <div class="p-4">
-          <h3 class="text-sm font-medium line-clamp-2">${p.nome}</h3>
-          <div class="text-red-600 font-bold text-xl mt-2">R$ ${p.preco}</div>
-          <button onclick="window.open('${p.link}','_blank')" class="mt-4 w-full bg-red-600 text-white py-3 rounded-2xl text-sm font-semibold">Ver Oferta</button>
-        </div>
-      </div>`;
-  });
-  container.innerHTML = html;
-}
-
-// Favoritos
-function toggleFavorito(nome, el) {
-  let salvos = JSON.parse(localStorage.getItem("salvos")) || [];
-  if (salvos.includes(nome)) {
-    salvos = salvos.filter(n => n !== nome);
-    el.textContent = '♡';
-  } else {
-    salvos.push(nome);
-    el.textContent = '❤️';
-  }
-  localStorage.setItem("salvos", JSON.stringify(salvos));
-  document.getElementById("contador-salvos").textContent = salvos.length;
-}
-
-function atualizarContador() {
-  const salvos = JSON.parse(localStorage.getItem("salvos")) || [];
-  document.getElementById("contador-salvos").textContent = salvos.length;
-}
-
-// Busca
-document.getElementById("buscaInput").addEventListener("input", (e) => {
-  const termo = e.target.value.toLowerCase().trim();
-  if (!termo) {
-    renderOfertas();
-    return;
-  }
-  // Filtra nos destaques
-  const filtrados = ofertasDestaque.filter(p => p.nome.toLowerCase().includes(termo));
-  const container = document.getElementById("ofertas-grid");
-  // Render simples dos filtrados (pode melhorar depois)
-  container.innerHTML = filtrados.map(p => `<div class="p-4 text-center">🔍 ${p.nome}</div>`).join('');
-});
 
 // Inicializar
 renderHotDeals();
-renderOfertas();
-atualizarContador();
 </script>
 </body>
 </html>
