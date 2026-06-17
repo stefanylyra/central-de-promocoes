@@ -370,25 +370,51 @@
         .info-item { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 500; }
         .info-item i { color: var(--cor-principal); font-size: 16px; }
 
+        /* CARROSSEL INFINITO DE DEPOIMENTOS */
+        .carrossel-depoimentos-container {
+            width: 100%;
+            overflow: hidden;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .carrossel-depoimentos-track {
+            display: flex;
+            gap: 16px;
+            width: max-content;
+            animation: rolarDepoimentos 25s linear infinite;
+        }
+
+        .carrossel-depoimentos-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes rolarDepoimentos {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
         .depoimento-box {
             background: white;
             border: 1px solid var(--borda);
             border-radius: 16px;
             padding: 16px;
-            margin-bottom: 12px;
+            width: 280px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
         .depoimento-user { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
         
         .avatar-fake {
             color: white; 
-            width: 40px; 
-            height: 40px; 
+            width: 36px; 
+            height: 36px; 
             border-radius: 50%; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
             font-weight: bold;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .conta-item {
@@ -537,18 +563,10 @@
             <div class="grid-produtos" id="grid-home-ofertas">
                 </div>
 
-            <div class="section-title"><span>💬 O que nossos clientes dizem</span></div>
-            <div id="container-depoimentos">
-                <div class="depoimento-box">
-                    <div class="depoimento-user">
-                        <div class="avatar-fake" style="background: #e63946;">R</div>
-                        <div>
-                            <h4 style="font-size:14px;">Rodrigo Alves</h4>
-                            <p style="font-size:11px; color:gray;">Verificado ✅</p>
-                        </div>
+            <div class="section-title" id="titulo-depoimentos"><span>💬 O que nossos clientes dizem</span></div>
+            <div class="carrossel-depoimentos-container" id="wrapper-depoimentos">
+                <div class="carrossel-depoimentos-track" id="track-depoimentos">
                     </div>
-                    <p style="font-size:13px; color:#444; font-style:italic;">"Mano, esse site é bom demais. Eu tava atrás de um monitor gamer faz tempo e não achava preço bom, por aqui peguei uma promoção bizarra de barata. Não perco mais nada!"</p>
-                </div>
             </div>
         </main>
 
@@ -1748,7 +1766,7 @@ precoNovo: "35,90"
     ]
   }
 };
-      // === LISTA DAS 17 CATEGORIAS ===
+     // === LISTA DAS 17 CATEGORIAS ===
         const CATEGORIAS_DADOS = [
             { id: "roupas-masculinas", nome: "👕 Masculinas", img: "https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?w=400" },
             { id: "roupas-femininas", nome: "👗 Femininas", img: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400" },
@@ -1769,11 +1787,20 @@ precoNovo: "35,90"
             { id: "papelaria", nome: "✏️ Papelaria", img: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400" }
         ];
 
+        // === BANCO DE DEPOIMENTOS PARA O CARROSSEL INFINITO ===
+        const DEPOIMENTOS_DADOS = [
+            { nome: "Rodrigo Alves", letra: "R", cor: "#e63946", texto: "\"Mano, esse site é bom demais. Eu tava atrás de uma promo boa e peguei por aqui bem mais barato. Não perco mais nada!\"" },
+            { nome: "Mariana Costa", letra: "M", cor: "#2a9d8f", texto: "\"Achei que era mentira, mas os links mandam direto para as promoções reais da Shopee e Amazon. Economizei muito no frete!\"" },
+            { nome: "Lucas Souza", letra: "L", cor: "#f4a261", texto: "\"Muito prático. Em vez de ficar caçando cupom que não funciona na internet, só entro aqui todo dia e vejo o que mudou.\"" },
+            { nome: "Amanda Lima", letra: "A", cor: "#e9c46a", texto: "\"O grupo de promoções que eu seguia faliu, agora só uso essa central. Os kits de roupa masculina valem super a pena.\"" },
+            { nome: "Bruno Ramos", letra: "B", cor: "#457b9d", texto: "\"Sensacional! Comprei o estojo box para o meu filho por menos da metade do preço de livraria comum. Recomendo!\"" },
+            { nome: "Carla Diaz", letra: "C", cor: "#8338ec", texto: "\"O design é muito limpo e direto, clica e já vai para o link com o desconto aplicado. Facilita demais a nossa vida!\"" }
+        ];
+
         let favoritosSalvos = [];
         let categoriaAtiva = null;
 
         function mudarAba(idAba, elementoBotao) {
-            document.querySelectorAll('.app-page').forEach(pag => pag.classList.remove('remove'));
             document.querySelectorAll('.app-page').forEach(pag => pag.classList.remove('active'));
             
             const target = document.getElementById(`aba-${idAba}`);
@@ -1816,15 +1843,20 @@ precoNovo: "35,90"
             const barraBeneficios = document.getElementById('barra-beneficios');
             const tituloGridHome = document.getElementById('titulo-grid-home');
             const linkVerTodosHome = document.getElementById('link-ver-todos-home');
+            const tituloDepoimentos = document.getElementById('titulo-depoimentos');
+            const wrapperDepoimentos = document.getElementById('wrapper-depoimentos');
             
             const activePage = document.querySelector('.app-page.active');
 
             if (termo.length > 0) {
+                // SÓ ESCONDE QUANDO A PESSOA PESQUISA
                 if (activePage && activePage.id === 'aba-inicio') {
                     if(containerOfertasQuentes) containerOfertasQuentes.style.display = 'none';
                     if(barraBeneficios) barraBeneficios.style.display = 'none';
                     if(tituloGridHome) tituloGridHome.innerText = "🔍 Resultado da Busca";
                     if(linkVerTodosHome) linkVerTodosHome.style.display = 'none';
+                    if(tituloDepoimentos) tituloDepoimentos.style.display = 'none';
+                    if(wrapperDepoimentos) wrapperDepoimentos.style.display = 'none';
                 }
 
                 const produtosFiltrados = PRODUTOS_LOJA.filter(p => p.nome.toLowerCase().includes(termo));
@@ -1842,11 +1874,15 @@ precoNovo: "35,90"
             const barraBeneficios = document.getElementById('barra-beneficios');
             const tituloGridHome = document.getElementById('titulo-grid-home');
             const linkVerTodosHome = document.getElementById('link-ver-todos-home');
+            const tituloDepoimentos = document.getElementById('titulo-depoimentos');
+            const wrapperDepoimentos = document.getElementById('wrapper-depoimentos');
 
             if(containerOfertasQuentes) containerOfertasQuentes.style.display = 'block';
             if(barraBeneficios) barraBeneficios.style.display = 'grid';
             if(tituloGridHome) tituloGridHome.innerText = "⚡ Ofertas Imperdíveis";
             if(linkVerTodosHome) linkVerTodosHome.style.display = 'block';
+            if(tituloDepoimentos) tituloDepoimentos.style.display = 'flex';
+            if(wrapperDepoimentos) wrapperDepoimentos.style.display = 'block';
         }
 
         function alternarFavorito(idProduto) {
@@ -1992,6 +2028,25 @@ precoNovo: "35,90"
                         <span class="categoria-tag-top">Oferta</span>
                         <img src="${cat.img}" class="categoria-img">
                         <div class="categoria-glass-footer"><p>${cat.nome}</p></div>
+                    </div>
+                `).join('');
+            }
+
+            // CONSTRÓI O TRACK DUPLICADO PARA O CARROSSEL INFINITO DE DEPOIMENTOS
+            const trackDepoimentos = document.getElementById('track-depoimentos');
+            if(trackDepoimentos) {
+                // Junta a lista original com ela mesma para criar a ilusão de loop perfeito
+                const listaDuplicada = [...DEPOIMENTOS_DADOS, ...DEPOIMENTOS_DADOS];
+                trackDepoimentos.innerHTML = listaDuplicada.map(dep => `
+                    <div class="depoimento-box">
+                        <div class="depoimento-user">
+                            <div class="avatar-fake" style="background: ${dep.cor};">${dep.letra}</div>
+                            <div>
+                                <h4 style="font-size:13px;">${dep.nome}</h4>
+                                <p style="font-size:11px; color:gray;">Verificado ✅</p>
+                            </div>
+                        </div>
+                        <p style="font-size:12px; color:#444; font-style:italic; line-height:1.4;">${dep.texto}</p>
                     </div>
                 `).join('');
             }
