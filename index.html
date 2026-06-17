@@ -681,7 +681,11 @@ body.tema-escuro .categoria-glass-footer p {
         <main id="aba-conta" class="app-page">
             <div style="text-align: center; padding: 20px 0 30px 0;">
                 <div style="width: 80px; height: 80px; border-radius: 50%; background: #ddd; display:inline-flex; align-items:center; justify-content:center; margin-bottom: 10px; font-size: 28px; color: #666;"><i class="fa-solid fa-user"></i></div>
-                <h2>Usuário Central</h2>
+                <h2 id="nome-usuario">Visitante</h2>
+
+<button class="btn-sair" style="margin-top:10px;" onclick="abrirCadastro()">
+    Entrar / Criar Conta
+</button>
             </div>
             <div class="section-title"><span>Minha Conta</span></div>
            <div class="conta-item" onclick="alternarTema()"><div><i class="fa-solid fa-palette icone-vermelho"></i>Aparência</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
@@ -2321,6 +2325,33 @@ window.addEventListener("load", () => {
     }
 
 });
+        function abrirCadastro() {
+
+    const nome = prompt("Digite seu nome:");
+
+    if (!nome || nome.trim() === "") {
+        return;
+    }
+
+    localStorage.setItem("usuarioNome", nome);
+
+    carregarUsuario();
+
+    alert("Cadastro realizado com sucesso 🎉");
+}
+
+function carregarUsuario() {
+
+    const nomeSalvo = localStorage.getItem("usuarioNome");
+
+    if(nomeSalvo){
+
+        document.getElementById("nome-usuario").innerText = nomeSalvo;
+
+    }
+}
+
+window.addEventListener("load", carregarUsuario);
     </script>
     <!-- BANNER DE COOKIES -->
 <div id="cookie-banner" class="cookie-banner">
