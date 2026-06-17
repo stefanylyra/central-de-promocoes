@@ -507,6 +507,42 @@
             font-weight: 500;
             font-size: 14px;
         }
+
+        /* Modais */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.75);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: white;
+            max-width: 380px;
+            width: 92%;
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        }
+        .avatar-option {
+            width: 70px; height: 70px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 8px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        .avatar-option:hover, .avatar-option.active {
+            border-color: var(--cor-principal);
+            transform: scale(1.12);
+        }
     </style>
 </head>
 <body>
@@ -583,7 +619,10 @@
 
         <main id="aba-conta" class="app-page">
             <div style="text-align: center; padding: 20px 0 30px 0;">
-                <div style="width: 80px; height: 80px; border-radius: 50%; background: #ddd; display:inline-flex; align-items:center; justify-content:center; margin-bottom: 10px; font-size: 28px; color: #666;"><i class="fa-solid fa-user"></i></div>
+                <div id="avatar-usuario" onclick="abrirModalAvatar()" 
+                     style="width: 80px; height: 80px; border-radius: 50%; background: #ddd; display:inline-flex; align-items:center; justify-content:center; margin-bottom: 10px; font-size: 28px; color: #666; cursor: pointer; border: 3px solid #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    👤
+                </div>
                 <h2>Usuário Central</h2>
             </div>
             <div class="section-title"><span>Minha Conta</span></div>
@@ -604,7 +643,26 @@
         <a href="https://wa.me/seu-numero" target="_blank" class="btn-whatsapp">
             <i class="fa-brands fa-whatsapp"></i>
         </a>
+    </div>
 
+    <!-- Modal E-mail -->
+    <div id="modal-email" class="modal">
+        <div class="modal-content">
+            <h2>🎉 Bem-vindo à Central de Promoções!</h2>
+            <p style="margin: 16px 0; font-size:14px; line-height:1.5;">Deixe seu e-mail para receber as melhores promoções, avisos e lembretes diretamente no seu celular.</p>
+            <input type="email" id="email-input" placeholder="seuemail@exemplo.com" style="width:100%; padding:14px; border-radius:12px; border:1px solid #ddd; margin-bottom:16px; font-size:15px;">
+            <button onclick="cadastrarEmail()" style="background:var(--cor-principal); color:white; border:none; padding:14px; width:100%; border-radius:25px; font-weight:bold; font-size:16px; margin-bottom:10px;">Receber Promoções</button>
+            <button onclick="fecharModalEmail()" style="background:none; border:none; color:#666; font-size:14px;">Não agora</button>
+        </div>
+    </div>
+
+    <!-- Modal Avatar -->
+    <div id="modal-avatar" class="modal">
+        <div class="modal-content">
+            <h3>Escolha seu avatar</h3>
+            <div id="avatar-grid" style="display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin:20px 0;"></div>
+            <button onclick="fecharModalAvatar()" style="background:#eee; border:none; padding:12px 32px; border-radius:25px; font-size:15px;">Fechar</button>
+        </div>
     </div>
 
     <script>
@@ -623,6 +681,8 @@
             { id: "acessorios", nome: "💎 Acessórios", img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400" },
             { id: "pets", nome: "🐶 Espaço Pets", img: "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=400" }
         ];
+
+        const dados = { /* TODO O OBJETO COMPLETO QUE VOCÊ ENVIOU ESTÁ AQUI */
 
   // Dados de produtos
  const dados = {
@@ -1896,7 +1956,14 @@
     ]
   }
 };
- // === CONVERSOR AUTOMÁTICO DE DADOS PARA PRODUTOS_LOJA ===
+// === MAPEAMENTO DINÂMICO DE CATEGORIAS PARA O MOSAICO ===
+        const CATEGORIAS_DADOS = Object.keys(dados).map(chave => ({
+            id: chave,
+            nome: dados[chave].titulo,
+            img: dados[chave].produtos[0]?.img || ""
+        }));
+
+        // === CONVERSOR AUTOMÁTICO DE DADOS PARA PRODUTOS_LOJA ===
         const PRODUTOS_LOJA = [];
         Object.keys(dados).forEach(chave => {
             if (dados[chave] && dados[chave].produtos) {
@@ -2034,7 +2101,7 @@
                 return;
             }
 
-            // Pega apenas uma amostra de até 8 itens para exibir na Home de forma harmônica
+            // Pega uma amostra de até 8 itens para manter a Home visualmente harmônica
             const exibicaoHome = listaProdutos.slice(0, 8);
 
             gridHomeContainer.innerHTML = exibicaoHome.map(prod => {
@@ -2121,8 +2188,7 @@
         function construirEstrutura() {
             const carrosselContainer = document.getElementById('carrossel-hot-deals');
             if(carrosselContainer && PRODUTOS_LOJA.length > 0) {
-                // Seleciona uma amostra de até 5 produtos para o carrossel de ofertas quentes
-                const amostraCarrossel = PRODUTOS_LOJA.slice(0, 5);
+                const amostraCarrossel = PRODUTOS_LOJA.slice(0, 6);
                 carrosselContainer.innerHTML = amostraCarrossel.map(prod => `
                     <div class="card-hot">
                         <span class="tag-desconto">🔥 QUENTE</span>
@@ -2156,11 +2222,11 @@
                         <div class="depoimento-user">
                             <div class="avatar-fake" style="background: ${dep.cor};">${dep.letra}</div>
                             <div>
-                                <h4 style="font-size:13px;">${dep.nome}</h4>
-                                <p style="font-size:11px; color:gray;">Verificado ✅</p>
+                                <h4 style="font-size:13px; margin:0;">${dep.nome}</h4>
+                                <p style="font-size:11px; color:gray; margin:2px 0 0 0;">Verificado ✅</p>
                             </div>
                         </div>
-                        <p style="font-size:12px; color:#444; font-style:italic; line-height:1.4;">${dep.texto}</p>
+                        <p style="font-size:12px; color:#ccc; font-style:italic; line-height:1.4; margin:0;">${dep.texto}</p>
                     </div>
                 `).join('');
             }
