@@ -507,6 +507,43 @@
             font-weight: 500;
             font-size: 14px;
         }
+        .cookie-banner{
+    position:fixed;
+    bottom:70px;
+    left:10px;
+    right:10px;
+
+    background:#ffffff;
+    border:1px solid #ddd;
+    border-radius:14px;
+
+    padding:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+
+    box-shadow:0 4px 18px rgba(0,0,0,.15);
+
+    z-index:9999;
+}
+
+.cookie-texto{
+    font-size:13px;
+    color:#444;
+    line-height:1.4;
+}
+
+.cookie-banner button{
+    background:#cc0a12;
+    color:white;
+    border:none;
+    border-radius:10px;
+    padding:10px 16px;
+    cursor:pointer;
+    font-weight:600;
+}
     </style>
 </head>
 <body>
@@ -2180,6 +2217,31 @@ Object.keys(dados).forEach(chave => {
         }
 
         document.addEventListener("DOMContentLoaded", construirEstrutura);
+        function aceitarCookies() {
+    localStorage.setItem("cookiesAceitos", "sim");
+
+    document.getElementById("cookie-banner").style.display = "none";
+}
+
+window.addEventListener("load", () => {
+
+    const aceitou = localStorage.getItem("cookiesAceitos");
+
+    if(aceitou === "sim"){
+        document.getElementById("cookie-banner").style.display = "none";
+    }
+
+});
     </script>
+    <!-- BANNER DE COOKIES -->
+<div id="cookie-banner" class="cookie-banner">
+    <div class="cookie-texto">
+        🍪 Utilizamos cookies para melhorar sua experiência, analisar visitas e oferecer conteúdos mais relevantes.
+    </div>
+
+    <button onclick="aceitarCookies()">
+        Aceitar
+    </button>
+</div>
 </body>
 </html>
