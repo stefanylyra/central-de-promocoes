@@ -1948,6 +1948,8 @@ Object.keys(dados).forEach(chave => {
         }
 
         function filtrarPorCategoria(idCategoria) {
+            console.log("Categoria clicada:", idCategoria);
+            console.log("Primeiro produto:", PRODUTOS_LOJA[0]);
             categoriaAtiva = idCategoria;
             const infoCategoria = CATEGORIAS_DADOS.find(c => c.id === idCategoria);
             const tituloAba = document.getElementById('titulo-aba-ofertas');
