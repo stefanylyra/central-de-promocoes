@@ -547,8 +547,14 @@
         /* TEMA ESCURO */
 
 body.tema-escuro {
-    background: #121212;
-    color: #ffffff;
+    --cor-fundo: #121212;
+    --cor-card: #1e1e1e;
+    --texto-escuro: #ffffff;
+    --texto-mutado: #b0b0b0;
+    --borda: #333333;
+
+    background: var(--cor-fundo);
+    color: var(--texto-escuro);
 }
 
 body.tema-escuro .produto-card,
