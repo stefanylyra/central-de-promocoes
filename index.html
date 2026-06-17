@@ -544,6 +544,35 @@
     cursor:pointer;
     font-weight:600;
 }
+        /* TEMA ESCURO */
+
+body.tema-escuro {
+    background: #121212;
+    color: #ffffff;
+}
+
+body.tema-escuro .produto-card,
+body.tema-escuro .card,
+body.tema-escuro .conta-item,
+body.tema-escuro .section-title,
+body.tema-escuro .header,
+body.tema-escuro .app-page {
+    background: #1e1e1e !important;
+    color: #ffffff !important;
+}
+
+body.tema-escuro .preco-antigo {
+    color: #999 !important;
+}
+
+body.tema-escuro .nome-produto,
+body.tema-escuro h1,
+body.tema-escuro h2,
+body.tema-escuro h3,
+body.tema-escuro p,
+body.tema-escuro span {
+    color: #ffffff !important;
+}
     </style>
 </head>
 <body>
@@ -624,7 +653,7 @@
                 <h2>Usuário Central</h2>
             </div>
             <div class="section-title"><span>Minha Conta</span></div>
-            <div class="conta-item"><div><i class="fa-solid fa-shield-halved icone-vermelho"></i> Meus Pedidos</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
+           <div class="conta-item" onclick="alternarTema()"><div><i class="fa-solid fa-palette icone-vermelho"></i>Aparência</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
             <div class="conta-item" onclick="mudarAba('favoritos', document.querySelectorAll('.nav-item')[3])"><div><i class="fa-solid fa-heart icone-vermelho"></i> Favoritos</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
             <div class="conta-item" onclick="abrirPoliticaPrivacidade()"><div><i class="fa-solid fa-file-shield icone-vermelho"></i> Política de Privacidade</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
             <button class="btn-sair">Sair</button>
@@ -2229,6 +2258,35 @@ window.addEventListener("load", () => {
 
     if(aceitou === "sim"){
         document.getElementById("cookie-banner").style.display = "none";
+    }
+
+});
+        function alternarTema() {
+
+    const temaAtual = localStorage.getItem("tema-site") || "claro";
+
+    if (temaAtual === "claro") {
+
+        document.body.classList.add("tema-escuro");
+        localStorage.setItem("tema-site", "escuro");
+
+        alert("🌙 Tema escuro ativado");
+
+    } else {
+
+        document.body.classList.remove("tema-escuro");
+        localStorage.setItem("tema-site", "claro");
+
+        alert("☀️ Tema claro ativado");
+    }
+}
+
+window.addEventListener("load", () => {
+
+    const temaSalvo = localStorage.getItem("tema-site");
+
+    if (temaSalvo === "escuro") {
+        document.body.classList.add("tema-escuro");
     }
 
 });
