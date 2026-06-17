@@ -152,7 +152,7 @@
             line-height: 1.4;
         }
 
-        /* CONTROLE DE PAGINAS (CORRIGIDO) */
+        /* CONTROLE DE PAGINAS */
         .app-page {
             display: none;
             padding: 16px;
@@ -409,6 +409,7 @@
             margin-bottom: 10px;
             font-weight: 600;
             font-size: 14px;
+            cursor: pointer;
         }
         .conta-item div { display: flex; align-items: center; gap: 12px; }
         .conta-item i.icone-vermelho { color: var(--cor-principal); font-size: 18px; }
@@ -455,11 +456,11 @@
             border: none;
             cursor: pointer;
             width: 20%;
-            transition: transform 0.1s ease; /* Animação suave ao clicar */
+            transition: transform 0.1s ease;
         }
 
         .nav-item:active {
-            transform: scale(0.9); /* Efeito clique que você gostou */
+            transform: scale(0.9);
         }
 
         .nav-item.active { color: white; font-weight: bold; }
@@ -505,7 +506,7 @@
             </div>
             <div class="search-container">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Buscar produtos, marcas e ofertas...">
+                <input type="text" id="input-busca" placeholder="Buscar produtos, marcas e ofertas..." oninput="filtrarPesquisa()">
             </div>
         </header>
 
@@ -549,17 +550,6 @@
                     </div>
                     <p style="font-size:13px; color:#444; font-style:italic;">"Mano, esse site é bom demais. Eu tava atrás de um monitor gamer faz tempo e não achava preço bom, por aqui peguei uma promoção bizarra de barata. Não perco mais nada!"</p>
                 </div>
-
-                <div class="depoimento-box">
-                    <div class="depoimento-user">
-                        <div class="avatar-fake" style="background: #457b9d;">M</div>
-                        <div>
-                            <h4 style="font-size:14px;">Mariana Costa</h4>
-                            <p style="font-size:11px; color:gray;">Verificado ✅</p>
-                        </div>
-                    </div>
-                    <p style="font-size:13px; color:#444; font-style:italic;">"Tô viciada kkkk todo dia entro pra olhar. Queria muito um perfume importado e consegui comprar pela metade do preço no link que postaram aqui. Melhor achadinho da internet!"</p>
-                </div>
             </div>
         </main>
 
@@ -569,15 +559,14 @@
         </main>
 
         <main id="aba-ofertas" class="app-page">
-            <div class="section-title"><span>🛒 Todas as Ofertas</span></div>
+            <div class="section-title"><span id="titulo-aba-ofertas">🛒 Todas as Ofertas</span></div>
             <div class="grid-produtos" id="grid-todas-ofertas"></div>
         </main>
 
         <main id="aba-favoritos" class="app-page">
             <div class="section-title"><span>❤️ Meus Favoritos</span></div>
             <div class="grid-produtos" id="grid-favoritos-salvos">
-                <p style="text-align: center; grid-column: span 2; color: var(--texto-mutado); padding: 20px;">Nenhum produto favoritado ainda.</p>
-            </div>
+                </div>
         </main>
 
         <main id="aba-conta" class="app-page">
@@ -588,14 +577,16 @@
             <div class="section-title"><span>Minha Conta</span></div>
             <div class="conta-item"><div><i class="fa-solid fa-shield-halved icone-vermelho"></i> Meus Pedidos</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
             <div class="conta-item" onclick="mudarAba('favoritos', document.querySelectorAll('.nav-item')[3])"><div><i class="fa-solid fa-heart icone-vermelho"></i> Favoritos</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
-            <div class="conta-item"><div><i class="fa-solid fa-location-dot icone-vermelho"></i> Endereços</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
+            
+            <div class="conta-item" onclick="abrirPoliticaPrivacidade()"><div><i class="fa-solid fa-file-shield icone-vermelho"></i> Política de Privacidade</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
+            
             <button class="btn-sair">Sair</button>
         </main>
 
         <nav class="bottom-nav">
             <button class="nav-item active" onclick="mudarAba('inicio', this)"><i class="fa-solid fa-house"></i><span>Início</span></button>
             <button class="nav-item" onclick="mudarAba('categorias', this)"><i class="fa-solid fa-layer-group"></i><span>Categorias</span></button>
-            <button class="nav-item" onclick="mudarAba('ofertas', this)"><i class="fa-solid fa-fire"></i><span>Ofertas</span></button>
+            <button class="nav-item" onclick="limparFiltrosEMudarAba(this)"><i class="fa-solid fa-fire"></i><span>Ofertas</span></button>
             <button class="nav-item" onclick="mudarAba('favoritos', this)"><i class="fa-solid fa-heart"></i><span>Favoritos</span></button>
             <button class="nav-item" onclick="mudarAba('conta', this)"><i class="fa-solid fa-user"></i><span>Conta</span></button>
         </nav>
@@ -1781,33 +1772,200 @@ precoNovo: "35,90"
             { id: "papelaria", nome: "✏️ Papelaria", img: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400" }
         ];
 
-   // LÓGICA DE NAVEGAÇÃO CORRIGIDA
-        function mudarAba(idAba, elementoBotao) {
-            // Remove a classe active de todas as abas (esconde todas)
-            document.querySelectorAll('.app-page').forEach(pag => {
-                pag.classList.remove('active');
-            });
-            
-            // Adiciona active apenas na aba clicada (mostra ela)
-            const target = document.getElementById(`aba-${idAba}`);
-            if(target) {
-                target.classList.add('active');
-            }
+   // Lista global para armazenar IDs dos itens salvos/favoritados
+        let favoritosSalvos = [];
+        let categoriaAtiva = null;
 
-            // Atualiza o estado visual do menu inferior
+        // Função auxiliar para pegar todos os produtos em uma única lista
+        function obterTodosProdutos() {
+            let lista = [];
+            Object.keys(dados).forEach(chave => {
+                lista = lista.concat(dados[chave].produtos);
+            });
+            return lista;
+        }
+
+        // LÓGICA DE NAVEGAÇÃO
+        function mudarAba(idAba, elementoBotao) {
+            document.querySelectorAll('.app-page').forEach(pag => pag.classList.remove('active'));
+            
+            const target = document.getElementById(`aba-${idAba}`);
+            if(target) target.classList.add('active');
+
             if(elementoBotao) {
                 document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
                 elementoBotao.classList.add('active');
             }
             
+            // Limpa o campo de busca ao trocar de página para não bugar a visualização
+            document.getElementById('input-busca').value = "";
+            filtrarPesquisa();
+
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
+        // Clicar no botão "Ofertas" no menu inferior limpa os filtros anteriores
+        function limparFiltrosEMudarAba(elementoBotao) {
+            categoriaAtiva = null;
+            document.getElementById('titulo-aba-ofertas').innerText = "🛒 Todas as Ofertas";
+            renderizarGridOfertas(obterTodosProdutos());
+            mudarAba('ofertas', elementoBotao);
+        }
+
+        // FILTRO POR CATEGORIA CLICADA
+        function filtrarPorCategoria(idCategoria) {
+            categoriaAtiva = idCategoria;
+            const infoCategoria = CATEGORIAS_DADOS.find(c => c.id === idCategoria);
+            const tituloAba = document.getElementById('titulo-aba-ofertas');
+            
+            if(infoCategoria) {
+                tituloAba.innerText = `📂 Categoria: ${infoCategoria.nome}`;
+            }
+
+            const todos = obterTodosProdutos();
+            const filtrados = todos.filter(p => p.categoria === idCategoria);
+
+            renderizarGridOfertas(filtrados);
+            
+            // Ativa visualmente o botão de ofertas no menu inferior
+            mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
+        }
+
+        // SISTEMA DE BUSCA DINÂMICA
+        function filtrarPesquisa() {
+            const termo = document.getElementById('input-busca').value.toLowerCase();
+            const todosOsProdutos = obterTodosProdutos();
+
+            // Filtra com base se há uma categoria selecionada no momento ou não
+            let produtosParaFiltrar = categoriaAtiva 
+                ? todosOsProdutos.filter(p => p.categoria === categoriaAtiva)
+                : todosOsProdutos;
+
+            const produtosFiltrados = produtosParaFiltrar.filter(p => 
+                p.nome.toLowerCase().includes(termo)
+            );
+
+            renderizarGridOfertas(produtosFiltrados);
+            
+            // Filtra também a página inicial se o usuário estiver nela
+            const gridHome = document.getElementById('grid-home-ofertas');
+            const produtosHomeFiltrados = todosOsProdutos.filter(p => p.nome.toLowerCase().includes(termo));
+            renderizarGridHome(produtosHomeFiltrados);
+        }
+
+        // GERENCIADOR DE FAVORITOS (SALVOS)
+        function alternarFavorito(idProduto, elementoBotao) {
+            elementoBotao.classList.toggle('active');
+            const icone = elementoBotao.querySelector('i');
+            
+            if(elementoBotao.classList.contains('active')) {
+                icone.classList.replace('fa-regular', 'fa-solid');
+                if(!favoritosSalvos.includes(idProduto)) favoritosSalvos.push(idProduto);
+            } else {
+                icone.classList.replace('fa-solid', 'fa-regular');
+                favoritosSalvos = favoritosSalvos.filter(id => id !== idProduto);
+            }
+            
+            renderizarAbaFavoritos();
+        }
+
+        // RE-RENDERIZAR GRIDS AO ALTERAR ESTADOS
+        function renderizarGridOfertas(listaProdutos) {
+            const gridTodasOfertas = document.getElementById('grid-todas-ofertas');
+            if(!gridTodasOfertas) return;
+
+            if(listaProdutos.length === 0) {
+                gridTodasOfertas.innerHTML = `<p style="text-align: center; grid-column: span 2; color: var(--texto-mutado); padding: 20px;">Nenhum produto encontrado.</p>`;
+                return;
+            }
+
+            gridTodasOfertas.innerHTML = listaProdutos.map(prod => {
+                const isFav = favoritosSalvos.includes(prod.id);
+                return `
+                    <div class="produto-card">
+                        <button class="btn-favorito ${isFav ? 'active' : ''}" onclick="alternarFavorito('${prod.id}', this)">
+                            <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+                        </button>
+                        <img src="${prod.img}" class="produto-img">
+                        <div class="produto-nome">${prod.nome}</div>
+                        <div>
+                            <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
+                            <div class="preco-novo">R$ ${prod.precoNovo}</div>
+                        </div>
+                        <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderizarGridHome(listaProdutos) {
+            const gridHomeContainer = document.getElementById('grid-home-ofertas');
+            if(!gridHomeContainer) return;
+
+            gridHomeContainer.innerHTML = listaProdutos.map(prod => {
+                const isFav = favoritosSalvos.includes(prod.id);
+                return `
+                    <div class="produto-card">
+                        <button class="btn-favorito ${isFav ? 'active' : ''}" onclick="alternarFavorito('${prod.id}', this)">
+                            <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+                        </button>
+                        <img src="${prod.img}" class="produto-img">
+                        <div class="produto-nome">${prod.nome}</div>
+                        <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(94)</span></div>
+                        <div>
+                            <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
+                            <div class="preco-novo">R$ ${prod.precoNovo}</div>
+                        </div>
+                        <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderizarAbaFavoritos() {
+            const containerFavoritos = document.getElementById('grid-favoritos-salvos');
+            if(!containerFavoritos) return;
+
+            const todos = obterTodosProdutos();
+            const filtrados = todos.filter(p => favoritosSalvos.includes(p.id));
+
+            if(filtrados.length === 0) {
+                containerFavoritos.innerHTML = `<p style="text-align: center; grid-column: span 2; color: var(--texto-mutado); padding: 20px;">Nenhum produto favoritado ainda.</p>`;
+                return;
+            }
+
+            containerFavoritos.innerHTML = filtrados.map(prod => `
+                <div class="produto-card">
+                    <button class="btn-favorito active" onclick="alternarFavorito('${prod.id}', this); renderizarAbaFavoritos();">
+                        <i class="fa-solid fa-heart"></i>
+                    </button>
+                    <img src="${prod.img}" class="produto-img">
+                    <div class="produto-nome">${prod.nome}</div>
+                    <div>
+                        <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
+                        <div class="preco-novo">R$ ${prod.precoNovo}</div>
+                    </div>
+                    <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
+                </div>
+            `).join('');
+        }
+
+        // DIRECIONAMENTO DA POLÍTICA DE PRIVACIDADE
+        function abrirPoliticaPrivacidade() {
+            // === COLOQUE SEU LINK AQUI ===
+            // Substitua o '#' abaixo pelo link do seu documento do Google Docs, PDF ou outra página.
+            const urlPolitica = "#"; 
+            
+            if(urlPolitica === "#") {
+                alert("Página de Políticas configurada com sucesso! (Adicione o link definitivo no código JavaScript)");
+            } else {
+                window.open(urlPolitica, '_blank');
+            }
+        }
+
+        // CONSTRUTOR GERAL DO APP
         function construirEstrutura() {
-            let todosProdutos = [];
-            Object.keys(dados).forEach(chave => {
-                todosProdutos = todosProdutos.concat(dados[chave].produtos);
-            });
+            const todosProdutos = obterTodosProdutos();
 
             // 1. Renderizar Carrossel "Ofertas Quentes"
             const carrosselContainer = document.getElementById('carrossel-hot-deals');
@@ -1826,29 +1984,14 @@ precoNovo: "35,90"
                 `).join('');
             }
 
-            // 2. Renderizar Grid da Home
-            const gridHomeContainer = document.getElementById('grid-home-ofertas');
-            if(gridHomeContainer && todosProdutos.length > 0) {
-                gridHomeContainer.innerHTML = todosProdutos.map(prod => `
-                    <div class="produto-card">
-                        <button class="btn-favorito" onclick="this.classList.toggle('active')"><i class="fa-regular fa-heart"></i></button>
-                        <img src="${prod.img}" class="produto-img">
-                        <div class="produto-nome">${prod.nome}</div>
-                        <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(94)</span></div>
-                        <div>
-                            <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
-                            <div class="preco-novo">R$ ${prod.precoNovo}</div>
-                        </div>
-                        <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
-                    </div>
-                `).join('');
-            }
+            // 2. Renderizar Grid Inicial (Home)
+            renderizarGridHome(todosProdutos);
 
-            // 3. Renderizar Mosaico de Categorias
+            // 3. Renderizar Mosaico de Categorias (Atualizado com a nova função de filtro)
             const mosaicoContainer = document.getElementById('mosaico-categorias-container');
             if(mosaicoContainer) {
                 mosaicoContainer.innerHTML = CATEGORIAS_DADOS.map(cat => `
-                    <div class="categoria-card" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">
+                    <div class="categoria-card" onclick="filtrarPorCategoria('${cat.id}')">
                         <span class="categoria-tag-top">Oferta</span>
                         <img src="${cat.img}" class="categoria-img">
                         <div class="categoria-glass-footer"><p>${cat.nome}</p></div>
@@ -1856,22 +1999,8 @@ precoNovo: "35,90"
                 `).join('');
             }
 
-            // 4. Renderizar Aba Todas as Ofertas
-            const gridTodasOfertas = document.getElementById('grid-todas-ofertas');
-            if(gridTodasOfertas) {
-                gridTodasOfertas.innerHTML = todosProdutos.map(prod => `
-                    <div class="produto-card">
-                        <button class="btn-favorito" onclick="this.classList.toggle('active')"><i class="fa-regular fa-heart"></i></button>
-                        <img src="${prod.img}" class="produto-img">
-                        <div class="produto-nome">${prod.nome}</div>
-                        <div>
-                            <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
-                            <div class="preco-novo">R$ ${prod.precoNovo}</div>
-                        </div>
-                        <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
-                    </div>
-                `).join('');
-            }
+            // 4. Renderizar Lista Completa na aba de Ofertas inicialmente
+            renderizarGridOfertas(todosProdutos);
         }
 
         document.addEventListener("DOMContentLoaded", construirEstrutura);
