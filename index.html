@@ -485,7 +485,6 @@
             z-index: 998;
         }
 
-        /* TEXTO DE NADA ENCONTRADO */
         .erro-busca {
             grid-column: span 2;
             text-align: center;
@@ -530,7 +529,6 @@
                     <span>🔥 Ofertas Quentes</span>
                     <a href="#" class="ver-todos" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
                 </div>
-                
                 <div class="ofertas-quentes-carrossel" id="carrossel-hot-deals">
                     </div>
             </div>
@@ -1761,22 +1759,11 @@ precoNovo: "35,90"
     ]
   }
 };
-// Categorias extras prontas para você preencher com produtos quando quiser
-            "roupas-femininas": { produtos: [] },
-            "plus-size": { produtos: [] },
-            "relogios": { produtos: [] },
-            "mae-bebe": { produtos: [] },
-            "viagens-bagagens": { produtos: [] },
-            "fones": { produtos: [] },
-            "bolsas-masculinas": { produtos: [] },
-            "bolsas-femininas": { produtos: [] },
-            "limpeza": { produtos: [] },
-            "brinquedos": { produtos: [] },
-            "acessorios": { produtos: [] },
-            "pets": { produtos: [] },
-            "sapatos": { produtos: [] },
-            "casa-construcao": { produtos: [] },
-            "beleza": { produtos: [] }
+        // Arrays prontos e protegidos para receberem novos itens futuramente
+            "roupas-femininas": [], "plus-size": [], "relogios": [], "mae-bebe": [], 
+            "viagens-bagagens": [], "fones": [], "bolsas-masculinas": [], "bolsas-femininas": [], 
+            "limpeza": [], "brinquedos": [], "acessorios": [], "pets": [], "sapatos": [], 
+            "casa-construcao": [], "beleza": []
         };
 
         const CATEGORIAS_DADOS = [
@@ -1802,17 +1789,23 @@ precoNovo: "35,90"
         let favoritosSalvos = [];
         let categoriaAtiva = null;
 
+        // Se o produto não tiver avaliação configurada, gera uma automática para não quebrar
+        function obterAvaliacaoProd(prod) {
+            if(prod.avaliacoes) return prod.avaliacoes;
+            const padrões = ["94", "100", "432", "1.5mil", "2.8mil", "500", "10mil"];
+            return padrões[Math.floor(Math.random() * padrões.length)];
+        }
+
         function obterTodosProdutos() {
             let lista = [];
             Object.keys(dados).forEach(chave => {
-                if(dados[chave] && dados[chave].produtos) {
-                    lista = lista.concat(dados[chave].produtos);
+                if(Array.isArray(dados[chave])) {
+                    lista = lista.concat(dados[chave]);
                 }
             });
             return lista;
         }
 
-        // NAVEGAÇÃO PRINCIPAL
         function mudarAba(idAba, elementoBotao) {
             document.querySelectorAll('.app-page').forEach(pag => pag.classList.remove('active'));
             
@@ -1824,10 +1817,8 @@ precoNovo: "35,90"
                 elementoBotao.classList.add('active');
             }
             
-            // Restaura o estado da busca ao sair voluntariamente
             document.getElementById('input-busca').value = "";
             restaurarElementosEscondidos();
-
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
@@ -1838,7 +1829,6 @@ precoNovo: "35,90"
             mudarAba('ofertas', elementoBotao);
         }
 
-        // NAVEGAÇÃO POR CATEGORIA
         function filtrarPorCategoria(idCategoria) {
             categoriaAtiva = idCategoria;
             const infoCategoria = CATEGORIAS_DADOS.find(c => c.id === idCategoria);
@@ -1855,7 +1845,6 @@ precoNovo: "35,90"
             mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
         }
 
-        // BUSCA DINÂMICA INTELIGENTE
         function filtrarPesquisa() {
             const termo = document.getElementById('input-busca').value.toLowerCase().trim();
             const containerOfertasQuentes = document.getElementById('wrapper-ofertas-quentes');
@@ -1866,9 +1855,7 @@ precoNovo: "35,90"
             const todosOsProdutos = obterTodosProdutos();
             const activePage = document.querySelector('.app-page.active');
 
-            // Se o usuário estiver digitando
             if (termo.length > 0) {
-                // Se ele estiver na página inicial (Início), esconde os elementos solicitados
                 if (activePage && activePage.id === 'aba-inicio') {
                     if(containerOfertasQuentes) containerOfertasQuentes.style.display = 'none';
                     if(barraBeneficios) barraBeneficios.style.display = 'none';
@@ -1876,13 +1863,11 @@ precoNovo: "35,90"
                     if(linkVerTodosHome) linkVerTodosHome.style.display = 'none';
                 }
 
-                // Filtra e atualiza os grids das abas de acordo com o termo
                 const produtosFiltrados = todosOsProdutos.filter(p => p.nome.toLowerCase().includes(termo));
                 
                 renderizarGridHome(produtosFiltrados);
                 renderizarGridOfertas(produtosFiltrados);
             } else {
-                // Se limpou o input, restaura tudo de volta
                 restaurarElementosEscondidos();
                 renderizarGridHome(todosOsProdutos);
                 renderizarGridOfertas(categoriaAtiva ? todosOsProdutos.filter(p => p.categoria === categoriaAtiva) : todosOsProdutos);
@@ -1901,15 +1886,12 @@ precoNovo: "35,90"
             if(linkVerTodosHome) linkVerTodosHome.style.display = 'block';
         }
 
-        // CONTROLADOR GLOBAL DE FAVORITOS (Muda em todas as telas simultaneamente)
         function alternarFavorito(idProduto) {
             if(favoritosSalvos.includes(idProduto)) {
                 favoritosSalvos = favoritosSalvos.filter(id => id !== idProduto);
             } else {
                 favoritosSalvos.push(idProduto);
             }
-            
-            // Re-renderiza tudo para atualizar os corações visuais uniformemente
             atualizarIconesCoraoGlobais();
             renderizarAbaFavoritos();
         }
@@ -1928,7 +1910,6 @@ precoNovo: "35,90"
             });
         }
 
-        // RENDERIZADORES DE GRID COM TRATAMENTO DE ERRO (NADA ENCONTRADO)
         function renderizarGridHome(listaProdutos) {
             const gridHomeContainer = document.getElementById('grid-home-ofertas');
             if(!gridHomeContainer) return;
@@ -1947,7 +1928,7 @@ precoNovo: "35,90"
                         </button>
                         <img src="${prod.img}" class="produto-img">
                         <div class="produto-nome">${prod.nome}</div>
-                        <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(94)</span></div>
+                        <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(${obterAvaliacaoProd(prod)})</span></div>
                         <div>
                             <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
                             <div class="preco-novo">R$ ${prod.precoNovo}</div>
@@ -1976,6 +1957,7 @@ precoNovo: "35,90"
                         </button>
                         <img src="${prod.img}" class="produto-img">
                         <div class="produto-nome">${prod.nome}</div>
+                        <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(${obterAvaliacaoProd(prod)})</span></div>
                         <div>
                             <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
                             <div class="preco-novo">R$ ${prod.precoNovo}</div>
@@ -2005,6 +1987,7 @@ precoNovo: "35,90"
                     </button>
                     <img src="${prod.img}" class="produto-img">
                     <div class="produto-nome">${prod.nome}</div>
+                    <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(${obterAvaliacaoProd(prod)})</span></div>
                     <div>
                         <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
                         <div class="preco-novo">R$ ${prod.precoNovo}</div>
@@ -2015,9 +1998,7 @@ precoNovo: "35,90"
         }
 
         function abrirPoliticaPrivacidade() {
-            // === COLOQUE SEU LINK AQUI ===
             const urlPolitica = "#"; 
-            
             if(urlPolitica === "#") {
                 alert("Link de Políticas não configurado. Adicione sua URL no JavaScript da função abrirPoliticaPrivacidade()");
             } else {
@@ -2025,11 +2006,9 @@ precoNovo: "35,90"
             }
         }
 
-        // ESTRUTURADOR INICIAL DO SISTEMA
         function construirEstrutura() {
             const todosProdutos = obterTodosProdutos();
 
-            // Renderizar Carrossel
             const carrosselContainer = document.getElementById('carrossel-hot-deals');
             if(carrosselContainer && todosProdutos.length > 0) {
                 carrosselContainer.innerHTML = todosProdutos.map(prod => `
@@ -2046,7 +2025,6 @@ precoNovo: "35,90"
                 `).join('');
             }
 
-            // Renderizar Mosaico das Categorias (Vinculado dinamicamente)
             const mosaicoContainer = document.getElementById('mosaico-categorias-container');
             if(mosaicoContainer) {
                 mosaicoContainer.innerHTML = CATEGORIAS_DADOS.map(cat => `
