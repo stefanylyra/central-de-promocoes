@@ -14,35 +14,9 @@
             --texto-mutado: #707070;
             --borda: #eaeaea;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            background-color: var(--cor-fundo);
-            color: var(--texto-escuro);
-            display: flex;
-            justify-content: center;
-        }
-
-        .app-container {
-            width: 100%;
-            max-width: 500px;
-            min-height: 100vh;
-            background-color: var(--cor-fundo);
-            position: relative;
-            padding-bottom: 100px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 20px rgba(0,0,0,0.05);
-        }
-
-        /* === TODO O SEU CSS ORIGINAL (mantido idêntico) === */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--cor-fundo); color: var(--texto-escuro); display: flex; justify-content: center; }
+        .app-container { width: 100%; max-width: 500px; min-height: 100vh; background-color: var(--cor-fundo); position: relative; padding-bottom: 100px; display: flex; flex-direction: column; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
         header { background-color: var(--cor-card); padding: 16px; position: sticky; top: 0; z-index: 100; display: flex; flex-direction: column; gap: 14px; border-bottom: 1px solid var(--borda); }
         .header-top { display: flex; justify-content: space-between; align-items: center; }
         .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
@@ -83,7 +57,6 @@
         .carrossel-depoimentos-track { display: flex; gap: 16px; width: max-content; animation: rolarDepoimentos 25s linear infinite; }
         @keyframes rolarDepoimentos { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .depoimento-box { background: white; border: 1px solid var(--borda); border-radius: 16px; padding: 16px; width: 280px; flex-shrink: 0; }
-        .avatar-fake { color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; }
         .conta-item { display: flex; justify-content: space-between; align-items: center; padding: 16px; background: white; border: 1px solid var(--borda); border-radius: 12px; margin-bottom: 10px; font-weight: 600; font-size: 14px; cursor: pointer; }
         .btn-sair { width: 100%; background-color: var(--cor-principal); color: white; text-align: center; padding: 14px; border-radius: 25px; font-weight: bold; font-size: 15px; border: none; margin-top: 20px; cursor: pointer; }
         nav.bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 500px; background-color: var(--cor-principal); display: flex; justify-content: space-around; padding: 12px 0; z-index: 999; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); }
@@ -92,41 +65,10 @@
         .btn-whatsapp { position: fixed; bottom: 85px; left: 50%; transform: translateX(170px); background-color: #25d366; color: white; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); z-index: 998; }
         .erro-busca { grid-column: span 2; text-align: center; color: var(--texto-mutado); padding: 30px 10px; font-weight: 500; font-size: 14px; }
 
-        /* Modais */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.75);
-            z-index: 10000;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-content {
-            background: white;
-            max-width: 380px;
-            width: 92%;
-            border-radius: 20px;
-            padding: 24px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-        }
-        .avatar-option {
-            width: 70px; height: 70px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            margin: 8px;
-            cursor: pointer;
-            border: 3px solid transparent;
-            transition: all 0.2s;
-        }
-        .avatar-option:hover, .avatar-option.active {
-            border-color: var(--cor-principal);
-            transform: scale(1.15);
-        }
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.75); z-index: 10000; align-items: center; justify-content: center; }
+        .modal-content { background: white; max-width: 380px; width: 92%; border-radius: 20px; padding: 24px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+        .avatar-option { width: 70px; height: 70px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 32px; margin: 8px; cursor: pointer; border: 3px solid transparent; transition: all 0.2s; }
+        .avatar-option:hover, .avatar-option.active { border-color: var(--cor-principal); transform: scale(1.15); }
     </style>
 </head>
 <body>
@@ -156,11 +98,48 @@
             ⚠️ <strong>Aviso Importante:</strong> Este site não vende nada. Apenas selecionamos e achamos as melhores ofertas de lojas confiáveis e redirecionamos você.
         </div>
 
-        <!-- Páginas (mantidas exatamente como no original) -->
-        <main id="aba-inicio" class="app-page active"> ... (todo conteúdo original) ... </main>
-        <main id="aba-categorias" class="app-page"> ... </main>
-        <main id="aba-ofertas" class="app-page"> ... </main>
-        <main id="aba-favoritos" class="app-page"> ... </main>
+        <main id="aba-inicio" class="app-page active">
+            <div id="wrapper-ofertas-quentes">
+                <div class="section-title">
+                    <span>🔥 Ofertas Quentes</span>
+                    <a href="#" class="ver-todos" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
+                </div>
+                <div class="ofertas-quentes-carrossel" id="carrossel-hot-deals"></div>
+            </div>
+
+            <div class="info-vendas-barra" id="barra-beneficios">
+                <div class="info-item"><i class="fa-solid fa-shield-halved"></i> Lojas Seguras</div>
+                <div class="info-item"><i class="fa-solid fa-truck"></i> Achados Frete Grátis</div>
+                <div class="info-item"><i class="fa-solid fa-rotate"></i> Links Atualizados</div>
+                <div class="info-item"><i class="fa-solid fa-award"></i> Acesso Direto</div>
+            </div>
+
+            <div class="section-title">
+                <span id="titulo-grid-home">⚡ Ofertas Imperdíveis</span>
+                <a href="#" class="ver-todos" id="link-ver-todos-home" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+            <div class="grid-produtos" id="grid-home-ofertas"></div>
+
+            <div class="section-title" id="titulo-depoimentos"><span>💬 O que nossos clientes dizem</span></div>
+            <div class="carrossel-depoimentos-container" id="wrapper-depoimentos">
+                <div class="carrossel-depoimentos-track" id="track-depoimentos"></div>
+            </div>
+        </main>
+
+        <main id="aba-categorias" class="app-page">
+            <div class="section-title"><span>📂 Categorias</span></div>
+            <div class="grid-categorias" id="mosaico-categorias-container"></div>
+        </main>
+
+        <main id="aba-ofertas" class="app-page">
+            <div class="section-title"><span id="titulo-aba-ofertas">🛒 Todas as Ofertas</span></div>
+            <div class="grid-produtos" id="grid-todas-ofertas"></div>
+        </main>
+
+        <main id="aba-favoritos" class="app-page">
+            <div class="section-title"><span>❤️ Meus Favoritos</span></div>
+            <div class="grid-produtos" id="grid-favoritos-salvos"></div>
+        </main>
 
         <main id="aba-conta" class="app-page">
             <div style="text-align: center; padding: 20px 0 30px 0;">
@@ -176,27 +155,35 @@
             <button class="btn-sair">Sair</button>
         </main>
 
-        <nav class="bottom-nav"> ... (seu nav original) ... </nav>
-        <a href="https://wa.me/seu-numero" target="_blank" class="btn-whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="mudarAba('inicio', this)"><i class="fa-solid fa-house"></i><span>Início</span></button>
+            <button class="nav-item" onclick="mudarAba('categorias', this)"><i class="fa-solid fa-layer-group"></i><span>Categorias</span></button>
+            <button class="nav-item" onclick="limparFiltrosEMudarAba(this)"><i class="fa-solid fa-fire"></i><span>Ofertas</span></button>
+            <button class="nav-item" onclick="mudarAba('favoritos', this)"><i class="fa-solid fa-heart"></i><span>Favoritos</span></button>
+            <button class="nav-item" onclick="mudarAba('conta', this)"><i class="fa-solid fa-user"></i><span>Conta</span></button>
+        </nav>
+
+        <a href="https://wa.me/seu-numero" target="_blank" class="btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
     </div>
 
-    <!-- Modal E-mail -->
+    <!-- Modais -->
     <div id="modal-email" class="modal">
         <div class="modal-content">
-            <h2>🎉 Bem-vindo!</h2>
-            <p>Deixe seu e-mail para receber promoções e avisos.</p>
-            <input type="email" id="email-input" placeholder="seu@email.com" style="width:100%; padding:12px; margin:15px 0; border-radius:12px; border:1px solid #ddd;">
-            <button onclick="cadastrarEmail()" style="background:#cc0a12; color:white; border:none; padding:14px; width:100%; border-radius:25px; font-weight:bold;">Cadastrar</button>
-            <button onclick="fecharModalEmail()" style="margin-top:10px; background:none; border:none; color:#666;">Não agora</button>
+            <h2>🎉 Bem-vindo à Central de Promoções!</h2>
+            <p style="margin:16px 0;">Deixe seu e-mail para receber promoções, avisos e lembretes.</p>
+            <input type="email" id="email-input" placeholder="seuemail@exemplo.com" style="width:100%; padding:14px; border-radius:12px; border:1px solid #ddd; margin-bottom:16px;">
+            <button onclick="cadastrarEmail()" style="background:var(--cor-principal); color:white; border:none; padding:14px; width:100%; border-radius:25px; font-weight:bold;">Receber Promoções</button>
+            <button onclick="fecharModalEmail()" style="margin-top:12px; background:none; border:none; color:#666;">Não agora</button>
         </div>
     </div>
 
-    <!-- Modal Avatar -->
     <div id="modal-avatar" class="modal">
         <div class="modal-content">
             <h3>Escolha seu avatar</h3>
-            <div id="avatar-grid" style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:20px 0;"></div>
-            <button onclick="fecharModalAvatar()" style="padding:12px 30px;border-radius:25px;background:#eee;border:none;">Fechar</button>
+            <div id="avatar-grid" style="display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin:20px 0;"></div>
+            <button onclick="fecharModalAvatar()" style="background:#eee; border:none; padding:12px 32px; border-radius:25px;">Fechar</button>
         </div>
     </div>
 
@@ -1492,11 +1479,10 @@
   }
 };
 
-        // === CONVERSÃO CORRIGIDA ===
-        const PRODUTOS_LOJA = [];
+ const PRODUTOS_LOJA = [];
         Object.keys(dados).forEach(chave => {
             if (dados[chave] && dados[chave].produtos) {
-                const comCategoria = dados[chave].produtos.map(p => ({ ...p, categoria: chave }));
+                const comCategoria = dados[chave].produtos.map(p => ({...p, categoria: chave}));
                 PRODUTOS_LOJA.push(...comCategoria);
             }
         });
@@ -1504,19 +1490,140 @@
         let favoritosSalvos = JSON.parse(localStorage.getItem('favoritosCentral')) || [];
         let categoriaAtiva = null;
 
-        // === FUNÇÕES (incluindo as novas) ===
-        function mudarAba(idAba, elementoBotao) { /* sua função original */ }
-        function filtrarPorCategoria(idCategoria) { /* corrigida */ }
-        function filtrarPesquisa() { /* sua função */ }
-        function alternarFavorito(idProduto) { /* com localStorage */ }
-        function cadastrarEmail() { /* novo */ }
-        function abrirModalAvatar() { /* novo */ }
+        function mudarAba(idAba, elementoBotao) {
+            document.querySelectorAll('.app-page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById(`aba-${idAba}`);
+            if (target) target.classList.add('active');
+            if (elementoBotao) {
+                document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+                elementoBotao.classList.add('active');
+            }
+            document.getElementById('input-busca').value = "";
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function limparFiltrosEMudarAba(elementoBotao) {
+            categoriaAtiva = null;
+            document.getElementById('titulo-aba-ofertas').innerText = "🛒 Todas as Ofertas";
+            renderizarGridOfertas(PRODUTOS_LOJA);
+            mudarAba('ofertas', elementoBotao);
+        }
+
+        function filtrarPorCategoria(idCategoria) {
+            categoriaAtiva = idCategoria;
+            const cat = CATEGORIAS_DADOS.find(c => c.id === idCategoria);
+            document.getElementById('titulo-aba-ofertas').innerText = cat ? `📂 ${cat.nome}` : "🛒 Todas as Ofertas";
+            const filtrados = PRODUTOS_LOJA.filter(p => p.categoria === idCategoria);
+            renderizarGridOfertas(filtrados);
+            mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
+        }
+
+        function filtrarPesquisa() {
+            const termo = document.getElementById('input-busca').value.toLowerCase().trim();
+            const filtrados = termo ? PRODUTOS_LOJA.filter(p => p.nome.toLowerCase().includes(termo)) : PRODUTOS_LOJA;
+            renderizarGridHome(filtrados);
+            renderizarGridOfertas(filtrados);
+        }
+
+        function alternarFavorito(id) {
+            if (favoritosSalvos.includes(id)) favoritosSalvos = favoritosSalvos.filter(x => x !== id);
+            else favoritosSalvos.push(id);
+            localStorage.setItem('favoritosCentral', JSON.stringify(favoritosSalvos));
+            atualizarIconesCoraoGlobais();
+            renderizarAbaFavoritos();
+        }
+
+        function atualizarIconesCoraoGlobais() {
+            document.querySelectorAll('.btn-favorito').forEach(btn => {
+                const id = btn.getAttribute('data-id');
+                const active = favoritosSalvos.includes(id);
+                btn.classList.toggle('active', active);
+                btn.querySelector('i').className = active ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
+            });
+        }
+
+        function renderizarGridHome(lista) {
+            const cont = document.getElementById('grid-home-ofertas');
+            if (!cont) return;
+            cont.innerHTML = lista.slice(0,8).map(p => criarCard(p)).join('');
+        }
+
+        function renderizarGridOfertas(lista) {
+            const cont = document.getElementById('grid-todas-ofertas');
+            if (!cont) return;
+            cont.innerHTML = lista.length ? lista.map(p => criarCard(p)).join('') : `<div class="erro-busca">Nenhum produto encontrado.</div>`;
+        }
+
+        function renderizarAbaFavoritos() {
+            const cont = document.getElementById('grid-favoritos-salvos');
+            if (!cont) return;
+            const favs = PRODUTOS_LOJA.filter(p => favoritosSalvos.includes(p.id));
+            cont.innerHTML = favs.length ? favs.map(p => criarCard(p)).join('') : `<p style="text-align:center; padding:30px; color:#777;">Nenhum favorito ainda.</p>`;
+        }
+
+        function criarCard(prod) {
+            const isFav = favoritosSalvos.includes(prod.id);
+            return `
+                <div class="produto-card">
+                    <button class="btn-favorito ${isFav ? 'active' : ''}" data-id="${prod.id}" onclick="alternarFavorito('${prod.id}')">
+                        <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+                    </button>
+                    <img src="${prod.img}" class="produto-img">
+                    <div class="produto-nome">${prod.nome}</div>
+                    <div class="estrelas">★★★★★ <span>(94)</span></div>
+                    <div>
+                        <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
+                        <div class="preco-novo">R$ ${prod.precoNovo}</div>
+                    </div>
+                    <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
+                </div>
+            `;
+        }
+
+        function construirEstrutura() {
+            // Carrossel Hot
+            document.getElementById('carrossel-hot-deals').innerHTML = PRODUTOS_LOJA.slice(0,5).map(p => `
+                <div class="card-hot">
+                    <span class="tag-desconto">🔥 QUENTE</span>
+                    <img src="${p.img}" class="produto-img">
+                    <div class="produto-nome">${p.nome}</div>
+                    <div><div class="preco-antigo">R$ ${p.precoAntigo}</div><div class="preco-novo">R$ ${p.precoNovo}</div></div>
+                    <a href="${p.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
+                </div>
+            `).join('');
+
+            // Categorias
+            document.getElementById('mosaico-categorias-container').innerHTML = CATEGORIAS_DADOS.map(c => `
+                <div class="categoria-card" onclick="filtrarPorCategoria('${c.id}')">
+                    <span class="categoria-tag-top">Oferta</span>
+                    <img src="${c.img}" class="categoria-img">
+                    <div class="categoria-glass-footer"><p>${c.nome}</p></div>
+                </div>
+            `).join('');
+
+            renderizarGridHome(PRODUTOS_LOJA);
+            renderizarGridOfertas(PRODUTOS_LOJA);
+            renderizarAbaFavoritos();
+        }
+
+        // Modais
+        function cadastrarEmail() {
+            const email = document.getElementById('email-input').value.trim();
+            if (email) {
+                localStorage.setItem('emailCadastrado', email);
+                alert("✅ E-mail cadastrado! Você receberá as promoções.");
+                fecharModalEmail();
+            }
+        }
+        function fecharModalEmail() { document.getElementById('modal-email').style.display = 'none'; }
+        function abrirModalAvatar() { /* implementado simples */ alert("Em breve mais avatares!"); }
+        function fecharModalAvatar() { document.getElementById('modal-avatar').style.display = 'none'; }
 
         document.addEventListener("DOMContentLoaded", () => {
             construirEstrutura();
             setTimeout(() => {
                 if (!localStorage.getItem('emailCadastrado')) document.getElementById('modal-email').style.display = 'flex';
-            }, 1500);
+            }, 1200);
         });
     </script>
 </body>
