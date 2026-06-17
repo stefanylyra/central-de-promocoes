@@ -152,7 +152,7 @@
             line-height: 1.4;
         }
 
-        /* CONTROLE DE PAGINAS */
+        /* CONTROLE DE PAGINAS (CORRIGIDO) */
         .app-page {
             display: none;
             padding: 16px;
@@ -455,6 +455,11 @@
             border: none;
             cursor: pointer;
             width: 20%;
+            transition: transform 0.1s ease; /* Animação suave ao clicar */
+        }
+
+        .nav-item:active {
+            transform: scale(0.9); /* Efeito clique que você gostou */
         }
 
         .nav-item.active { color: white; font-weight: bold; }
@@ -534,7 +539,6 @@
 
             <div class="section-title"><span>💬 O que nossos clientes dizem</span></div>
             <div id="container-depoimentos">
-                
                 <div class="depoimento-box">
                     <div class="depoimento-user">
                         <div class="avatar-fake" style="background: #e63946;">R</div>
@@ -556,78 +560,11 @@
                     </div>
                     <p style="font-size:13px; color:#444; font-style:italic;">"Tô viciada kkkk todo dia entro pra olhar. Queria muito um perfume importado e consegui comprar pela metade do preço no link que postaram aqui. Melhor achadinho da internet!"</p>
                 </div>
-
-                <div class="depoimento-box">
-                    <div class="depoimento-user">
-                        <div class="avatar-fake" style="background: #2a9d8f;">F</div>
-                        <div>
-                            <h4 style="font-size:14px;">Fabio G.</h4>
-                            <p style="font-size:11px; color:gray;">Verificado ✅</p>
-                        </div>
-                    </div>
-                    <p style="font-size:13px; color:#444; font-style:italic;">"Salvou demais meu bolso. Estava monitorando o preço de uma airfryer e graças aos alertas daqui comprei no momento certo com o menor preço possível. Recomendo muito o site."</p>
-                </div>
-
-                <div class="depoimento-box">
-                    <div class="depoimento-user">
-                        <div class="avatar-fake" style="background: #e9c46a;">A</div>
-                        <div>
-                            <h4 style="font-size:14px;">Amanda Martins</h4>
-                            <p style="font-size:11px; color:gray;">Verificado ✅</p>
-                        </div>
-                    </div>
-                    <p style="font-size:13px; color:#444; font-style:italic;">"Nossa, simplesmente perfeito. Eu sempre perdia as promoções relâmpago da Shopee porque acabava muito rápido. Agora eu só acompanho por aqui e consigo pegar tudo o que eu quero."</p>
-                </div>
-
-                <div class="depoimento-box">
-                    <div class="depoimento-user">
-                        <div class="avatar-fake" style="background: #f4a261;">L</div>
-                        <div>
-                            <h4 style="font-size:14px;">Lucas Henrique</h4>
-                            <p style="font-size:11px; color:gray;">Verificado ✅</p>
-                        </div>
-                    </div>
-                    <p style="font-size:13px; color:#444; font-style:italic;">"Olho esse site de hora em hora kkkk. Já economizei uma nota em pecinha de computador e fone de ouvido. Os caras acham as promoções de verdade mesmo."</p>
-                </div>
-
-                <div class="depoimento-box">
-                    <div class="depoimento-user">
-                        <div class="avatar-fake" style="background: #6a0dad;">B</div>
-                        <div>
-                            <h4 style="font-size:14px;">Beatriz Lima</h4>
-                            <p style="font-size:11px; color:gray;">Verificado ✅</p>
-                        </div>
-                    </div>
-                    <p style="font-size:13px; color:#444; font-style:italic;">"Muito prático! Antes eu ficava revirando os aplicativos de compras atrás de desconto, agora mudei a tática e só vejo aqui. Não perco nenhuma promoção do que eu realmente quero comprar."</p>
-                </div>
-
-                <div class="depoimento-box">
-                    <div class="depoimento-user">
-                        <div class="avatar-fake" style="background: #118ab2;">T</div>
-                        <div>
-                            <h4 style="font-size:14px;">Thiago Souza</h4>
-                            <p style="font-size:11px; color:gray;">Verificado ✅</p>
-                        </div>
-                    </div>
-                    <p style="font-size:13px; color:#444; font-style:italic;">"Excelente trampo de vcs. O melhor é que o link já manda direto pro produto certo com o cupom aplicado. Peguei um tênis que queria muito hoje com um desconto absurdo."</p>
-                </div>
-
-                <div class="depoimento-box">
-                    <div class="depoimento-user">
-                        <div class="avatar-fake" style="background: #06d6a0;">C</div>
-                        <div>
-                            <h4 style="font-size:14px;">Camila Rocha</h4>
-                            <p style="font-size:11px; color:gray;">Verificado ✅</p>
-                        </div>
-                    </div>
-                    <p style="font-size:13px; color:#444; font-style:italic;">"Adoro o site! Toda vez que coloco na cabeça que quero comprar alguma coisa, venho direto aqui conferir se tem promoção. Nunca me decepciono, economizo sempre."</p>
-                </div>
-
             </div>
         </main>
 
         <main id="aba-categorias" class="app-page">
-            <div class="section-title"><span>Categories</span></div>
+            <div class="section-title"><span>📂 Categorias</span></div>
             <div class="grid-categorias" id="mosaico-categorias-container"></div>
         </main>
 
@@ -648,7 +585,7 @@
                 <div style="width: 80px; height: 80px; border-radius: 50%; background: #ddd; display:inline-flex; align-items:center; justify-content:center; margin-bottom: 10px; font-size: 28px; color: #666;"><i class="fa-solid fa-user"></i></div>
                 <h2>Usuário Central</h2>
             </div>
-            <div class="section-title"><span>Account</span></div>
+            <div class="section-title"><span>Minha Conta</span></div>
             <div class="conta-item"><div><i class="fa-solid fa-shield-halved icone-vermelho"></i> Meus Pedidos</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
             <div class="conta-item" onclick="mudarAba('favoritos', document.querySelectorAll('.nav-item')[3])"><div><i class="fa-solid fa-heart icone-vermelho"></i> Favoritos</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
             <div class="conta-item"><div><i class="fa-solid fa-location-dot icone-vermelho"></i> Endereços</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
@@ -1844,15 +1781,25 @@ precoNovo: "35,90"
             { id: "papelaria", nome: "✏️ Papelaria", img: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400" }
         ];
 
-    function mudarAba(idAba, elementoBotao) {
-            document.querySelectorAll('.app-page').forEach(pag => pag.style.display = 'none');
+   // LÓGICA DE NAVEGAÇÃO CORRIGIDA
+        function mudarAba(idAba, elementoBotao) {
+            // Remove a classe active de todas as abas (esconde todas)
+            document.querySelectorAll('.app-page').forEach(pag => {
+                pag.classList.remove('active');
+            });
+            
+            // Adiciona active apenas na aba clicada (mostra ela)
             const target = document.getElementById(`aba-${idAba}`);
-            if(target) target.style.display = 'block';
+            if(target) {
+                target.classList.add('active');
+            }
 
+            // Atualiza o estado visual do menu inferior
             if(elementoBotao) {
                 document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
                 elementoBotao.classList.add('active');
             }
+            
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
@@ -1865,7 +1812,7 @@ precoNovo: "35,90"
             // 1. Renderizar Carrossel "Ofertas Quentes"
             const carrosselContainer = document.getElementById('carrossel-hot-deals');
             if(carrosselContainer && todosProdutos.length > 0) {
-                carrosselContainer.innerHTML = todosProdutos.slice(0, 3).map(prod => `
+                carrosselContainer.innerHTML = todosProdutos.map(prod => `
                     <div class="card-hot">
                         <span class="tag-desconto">🔥 QUENTE</span>
                         <img src="${prod.img}" class="produto-img">
