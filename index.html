@@ -544,14 +544,13 @@
                     <span>🔥 Ofertas Quentes</span>
                     <a href="#" class="ver-todos" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
                 </div>
-                <div class="ofertas-quentes-carrossel" id="carrossel-hot-deals">
-                    </div>
+                <div class="ofertas-quentes-carrossel" id="carrossel-hot-deals"></div>
             </div>
 
             <div class="info-vendas-barra" id="barra-beneficios">
                 <div class="info-item"><i class="fa-solid fa-shield-halved"></i> Lojas Seguras</div>
                 <div class="info-item"><i class="fa-solid fa-truck"></i> Achados Frete Grátis</div>
-                <div class="info-item"><i class="fa-solid fa-rotate"></i> Links Atualizados</div>
+                <div class="info-item"><i class="fa-solid fa-rotate"></i> Links Aktualizados</div>
                 <div class="info-item"><i class="fa-solid fa-award"></i> Acesso Direto</div>
             </div>
 
@@ -560,13 +559,11 @@
                 <a href="#" class="ver-todos" id="link-ver-todos-home" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
             </div>
 
-            <div class="grid-produtos" id="grid-home-ofertas">
-                </div>
+            <div class="grid-produtos" id="grid-home-ofertas"></div>
 
             <div class="section-title" id="titulo-depoimentos"><span>💬 O que nossos clientes dizem</span></div>
             <div class="carrossel-depoimentos-container" id="wrapper-depoimentos">
-                <div class="carrossel-depoimentos-track" id="track-depoimentos">
-                    </div>
+                <div class="carrossel-depoimentos-track" id="track-depoimentos"></div>
             </div>
         </main>
 
@@ -582,8 +579,7 @@
 
         <main id="aba-favoritos" class="app-page">
             <div class="section-title"><span>❤️ Meus Favoritos</span></div>
-            <div class="grid-produtos" id="grid-favoritos-salvos">
-                </div>
+            <div class="grid-produtos" id="grid-favoritos-salvos"></div>
         </main>
 
         <main id="aba-conta" class="app-page">
@@ -1766,6 +1762,15 @@ precoNovo: "35,90"
     ]
   }
 };
+
+        // === CONVERSOR AUTOMÁTICO DE DADOS PARA PRODUTOS_LOJA ===
+        // Isso lê o seu objeto 'dados' e monta a lista plana que o seu código usa globalmente.
+        const PRODUTOS_LOJA = [];
+        Object.keys(dados).forEach(chave => {
+            if (dados[chave] && dados[chave].produtos) {
+                PRODUTOS_LOJA.push(...dados[chave].produtos);
+            }
+        });
      // === LISTA DAS 17 CATEGORIAS ===
         const CATEGORIAS_DADOS = [
             { id: "roupas-masculinas", nome: "👕 Masculinas", img: "https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?w=400" },
@@ -1787,7 +1792,7 @@ precoNovo: "35,90"
             { id: "papelaria", nome: "✏️ Papelaria", img: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400" }
         ];
 
-        // === BANCO DE DEPOIMENTOS PARA O CARROSSEL INFINITO ===
+       // === BANCO DE DEPOIMENTOS PARA O CARROSSEL INFINITO ===
         const DEPOIMENTOS_DADOS = [
             { nome: "Rodrigo Alves", letra: "R", cor: "#e63946", texto: "\"Mano, esse site é bom demais. Eu tava atrás de uma promo boa e peguei por aqui bem mais barato. Não perco mais nada!\"" },
             { nome: "Mariana Costa", letra: "M", cor: "#2a9d8f", texto: "\"Achei que era mentira, mas os links mandam direto para as promoções reais da Shopee e Amazon. Economizei muito no frete!\"" },
@@ -1849,7 +1854,6 @@ precoNovo: "35,90"
             const activePage = document.querySelector('.app-page.active');
 
             if (termo.length > 0) {
-                // SÓ ESCONDE QUANDO A PESSOA PESQUISA
                 if (activePage && activePage.id === 'aba-inicio') {
                     if(containerOfertasQuentes) containerOfertasQuentes.style.display = 'none';
                     if(barraBeneficios) barraBeneficios.style.display = 'none';
@@ -1914,7 +1918,7 @@ precoNovo: "35,90"
             if(!gridHomeContainer) return;
 
             if(listaProdutos.length === 0) {
-                gridHomeContainer.innerHTML = `<div class="erro-busca">⚠️ Nenhum produto encontrado com esse nome...</div>`;
+                gridHomeContainer.innerHTML = `<div class="erro-busca">⚠️ Nenhum produto foi encontrado.</div>`;
                 return;
             }
 
@@ -1943,7 +1947,7 @@ precoNovo: "35,90"
             if(!gridTodasOfertas) return;
 
             if(listaProdutos.length === 0) {
-                gridTodasOfertas.innerHTML = `<div class="erro-busca">⚠️ Desculpe! Nenhum produto foi encontrado nesta categoria ainda.</div>`;
+                gridTodasOfertas.innerHTML = `<div class="erro-busca">⚠️ Nenhum produto nesta categoria.</div>`;
                 return;
             }
 
@@ -2032,10 +2036,8 @@ precoNovo: "35,90"
                 `).join('');
             }
 
-            // CONSTRÓI O TRACK DUPLICADO PARA O CARROSSEL INFINITO DE DEPOIMENTOS
             const trackDepoimentos = document.getElementById('track-depoimentos');
             if(trackDepoimentos) {
-                // Junta a lista original com ela mesma para criar a ilusão de loop perfeito
                 const listaDuplicada = [...DEPOIMENTOS_DADOS, ...DEPOIMENTOS_DADOS];
                 trackDepoimentos.innerHTML = listaDuplicada.map(dep => `
                     <div class="depoimento-box">
