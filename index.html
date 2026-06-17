@@ -484,6 +484,16 @@
             text-decoration: none;
             z-index: 998;
         }
+
+        /* TEXTO DE NADA ENCONTRADO */
+        .erro-busca {
+            grid-column: span 2;
+            text-align: center;
+            color: var(--texto-mutado);
+            padding: 30px 10px;
+            font-weight: 500;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -515,15 +525,17 @@
         </div>
 
         <main id="aba-inicio" class="app-page active">
-            <div class="section-title">
-                <span>🔥 Ofertas Quentes</span>
-                <a href="#" class="ver-todos" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
-            </div>
-            
-            <div class="ofertas-quentes-carrossel" id="carrossel-hot-deals">
+            <div id="wrapper-ofertas-quentes">
+                <div class="section-title">
+                    <span>🔥 Ofertas Quentes</span>
+                    <a href="#" class="ver-todos" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
                 </div>
+                
+                <div class="ofertas-quentes-carrossel" id="carrossel-hot-deals">
+                    </div>
+            </div>
 
-            <div class="info-vendas-barra">
+            <div class="info-vendas-barra" id="barra-beneficios">
                 <div class="info-item"><i class="fa-solid fa-shield-halved"></i> Lojas Seguras</div>
                 <div class="info-item"><i class="fa-solid fa-truck"></i> Achados Frete Grátis</div>
                 <div class="info-item"><i class="fa-solid fa-rotate"></i> Links Atualizados</div>
@@ -531,8 +543,8 @@
             </div>
 
             <div class="section-title">
-                <span>⚡ Ofertas Imperdíveis</span>
-                <a href="#" class="ver-todos" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
+                <span id="titulo-grid-home">⚡ Ofertas Imperdíveis</span>
+                <a href="#" class="ver-todos" id="link-ver-todos-home" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
             </div>
 
             <div class="grid-produtos" id="grid-home-ofertas">
@@ -577,9 +589,7 @@
             <div class="section-title"><span>Minha Conta</span></div>
             <div class="conta-item"><div><i class="fa-solid fa-shield-halved icone-vermelho"></i> Meus Pedidos</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
             <div class="conta-item" onclick="mudarAba('favoritos', document.querySelectorAll('.nav-item')[3])"><div><i class="fa-solid fa-heart icone-vermelho"></i> Favoritos</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
-            
             <div class="conta-item" onclick="abrirPoliticaPrivacidade()"><div><i class="fa-solid fa-file-shield icone-vermelho"></i> Política de Privacidade</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
-            
             <button class="btn-sair">Sair</button>
         </main>
 
@@ -1751,7 +1761,24 @@ precoNovo: "35,90"
     ]
   }
 };
-// === AS SUAS 17 CATEGORIAS COM IMAGENS PROFISSIONAIS DE CAPA ===
+// Categorias extras prontas para você preencher com produtos quando quiser
+            "roupas-femininas": { produtos: [] },
+            "plus-size": { produtos: [] },
+            "relogios": { produtos: [] },
+            "mae-bebe": { produtos: [] },
+            "viagens-bagagens": { produtos: [] },
+            "fones": { produtos: [] },
+            "bolsas-masculinas": { produtos: [] },
+            "bolsas-femininas": { produtos: [] },
+            "limpeza": { produtos: [] },
+            "brinquedos": { produtos: [] },
+            "acessorios": { produtos: [] },
+            "pets": { produtos: [] },
+            "sapatos": { produtos: [] },
+            "casa-construcao": { produtos: [] },
+            "beleza": { produtos: [] }
+        };
+
         const CATEGORIAS_DADOS = [
             { id: "roupas-masculinas", nome: "👕 Masculinas", img: "https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?w=400" },
             { id: "roupas-femininas", nome: "👗 Femininas", img: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400" },
@@ -1772,20 +1799,20 @@ precoNovo: "35,90"
             { id: "papelaria", nome: "✏️ Papelaria", img: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400" }
         ];
 
-   // Lista global para armazenar IDs dos itens salvos/favoritados
         let favoritosSalvos = [];
         let categoriaAtiva = null;
 
-        // Função auxiliar para pegar todos os produtos em uma única lista
         function obterTodosProdutos() {
             let lista = [];
             Object.keys(dados).forEach(chave => {
-                lista = lista.concat(dados[chave].produtos);
+                if(dados[chave] && dados[chave].produtos) {
+                    lista = lista.concat(dados[chave].produtos);
+                }
             });
             return lista;
         }
 
-        // LÓGICA DE NAVEGAÇÃO
+        // NAVEGAÇÃO PRINCIPAL
         function mudarAba(idAba, elementoBotao) {
             document.querySelectorAll('.app-page').forEach(pag => pag.classList.remove('active'));
             
@@ -1797,14 +1824,13 @@ precoNovo: "35,90"
                 elementoBotao.classList.add('active');
             }
             
-            // Limpa o campo de busca ao trocar de página para não bugar a visualização
+            // Restaura o estado da busca ao sair voluntariamente
             document.getElementById('input-busca').value = "";
-            filtrarPesquisa();
+            restaurarElementosEscondidos();
 
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // Clicar no botão "Ofertas" no menu inferior limpa os filtros anteriores
         function limparFiltrosEMudarAba(elementoBotao) {
             categoriaAtiva = null;
             document.getElementById('titulo-aba-ofertas').innerText = "🛒 Todas as Ofertas";
@@ -1812,7 +1838,7 @@ precoNovo: "35,90"
             mudarAba('ofertas', elementoBotao);
         }
 
-        // FILTRO POR CATEGORIA CLICADA
+        // NAVEGAÇÃO POR CATEGORIA
         function filtrarPorCategoria(idCategoria) {
             categoriaAtiva = idCategoria;
             const infoCategoria = CATEGORIAS_DADOS.find(c => c.id === idCategoria);
@@ -1826,68 +1852,102 @@ precoNovo: "35,90"
             const filtrados = todos.filter(p => p.categoria === idCategoria);
 
             renderizarGridOfertas(filtrados);
-            
-            // Ativa visualmente o botão de ofertas no menu inferior
             mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
         }
 
-        // SISTEMA DE BUSCA DINÂMICA
+        // BUSCA DINÂMICA INTELIGENTE
         function filtrarPesquisa() {
-            const termo = document.getElementById('input-busca').value.toLowerCase();
-            const todosOsProdutos = obterTodosProdutos();
-
-            // Filtra com base se há uma categoria selecionada no momento ou não
-            let produtosParaFiltrar = categoriaAtiva 
-                ? todosOsProdutos.filter(p => p.categoria === categoriaAtiva)
-                : todosOsProdutos;
-
-            const produtosFiltrados = produtosParaFiltrar.filter(p => 
-                p.nome.toLowerCase().includes(termo)
-            );
-
-            renderizarGridOfertas(produtosFiltrados);
+            const termo = document.getElementById('input-busca').value.toLowerCase().trim();
+            const containerOfertasQuentes = document.getElementById('wrapper-ofertas-quentes');
+            const barraBeneficios = document.getElementById('barra-beneficios');
+            const tituloGridHome = document.getElementById('titulo-grid-home');
+            const linkVerTodosHome = document.getElementById('link-ver-todos-home');
             
-            // Filtra também a página inicial se o usuário estiver nela
-            const gridHome = document.getElementById('grid-home-ofertas');
-            const produtosHomeFiltrados = todosOsProdutos.filter(p => p.nome.toLowerCase().includes(termo));
-            renderizarGridHome(produtosHomeFiltrados);
+            const todosOsProdutos = obterTodosProdutos();
+            const activePage = document.querySelector('.app-page.active');
+
+            // Se o usuário estiver digitando
+            if (termo.length > 0) {
+                // Se ele estiver na página inicial (Início), esconde os elementos solicitados
+                if (activePage && activePage.id === 'aba-inicio') {
+                    if(containerOfertasQuentes) containerOfertasQuentes.style.display = 'none';
+                    if(barraBeneficios) barraBeneficios.style.display = 'none';
+                    if(tituloGridHome) tituloGridHome.innerText = "🔍 Resultado da Busca";
+                    if(linkVerTodosHome) linkVerTodosHome.style.display = 'none';
+                }
+
+                // Filtra e atualiza os grids das abas de acordo com o termo
+                const produtosFiltrados = todosOsProdutos.filter(p => p.nome.toLowerCase().includes(termo));
+                
+                renderizarGridHome(produtosFiltrados);
+                renderizarGridOfertas(produtosFiltrados);
+            } else {
+                // Se limpou o input, restaura tudo de volta
+                restaurarElementosEscondidos();
+                renderizarGridHome(todosOsProdutos);
+                renderizarGridOfertas(categoriaAtiva ? todosOsProdutos.filter(p => p.categoria === categoriaAtiva) : todosOsProdutos);
+            }
         }
 
-        // GERENCIADOR DE FAVORITOS (SALVOS)
-        function alternarFavorito(idProduto, elementoBotao) {
-            elementoBotao.classList.toggle('active');
-            const icone = elementoBotao.querySelector('i');
-            
-            if(elementoBotao.classList.contains('active')) {
-                icone.classList.replace('fa-regular', 'fa-solid');
-                if(!favoritosSalvos.includes(idProduto)) favoritosSalvos.push(idProduto);
-            } else {
-                icone.classList.replace('fa-solid', 'fa-regular');
+        function restaurarElementosEscondidos() {
+            const containerOfertasQuentes = document.getElementById('wrapper-ofertas-quentes');
+            const barraBeneficios = document.getElementById('barra-beneficios');
+            const tituloGridHome = document.getElementById('titulo-grid-home');
+            const linkVerTodosHome = document.getElementById('link-ver-todos-home');
+
+            if(containerOfertasQuentes) containerOfertasQuentes.style.display = 'block';
+            if(barraBeneficios) barraBeneficios.style.display = 'grid';
+            if(tituloGridHome) tituloGridHome.innerText = "⚡ Ofertas Imperdíveis";
+            if(linkVerTodosHome) linkVerTodosHome.style.display = 'block';
+        }
+
+        // CONTROLADOR GLOBAL DE FAVORITOS (Muda em todas as telas simultaneamente)
+        function alternarFavorito(idProduto) {
+            if(favoritosSalvos.includes(idProduto)) {
                 favoritosSalvos = favoritosSalvos.filter(id => id !== idProduto);
+            } else {
+                favoritosSalvos.push(idProduto);
             }
             
+            // Re-renderiza tudo para atualizar os corações visuais uniformemente
+            atualizarIconesCoraoGlobais();
             renderizarAbaFavoritos();
         }
 
-        // RE-RENDERIZAR GRIDS AO ALTERAR ESTADOS
-        function renderizarGridOfertas(listaProdutos) {
-            const gridTodasOfertas = document.getElementById('grid-todas-ofertas');
-            if(!gridTodasOfertas) return;
+        function atualizarIconesCoraoGlobais() {
+            document.querySelectorAll(`.btn-favorito`).forEach(btn => {
+                const idProd = btn.getAttribute('data-id');
+                const icone = btn.querySelector('i');
+                if(favoritosSalvos.includes(idProd)) {
+                    btn.classList.add('active');
+                    if(icone) icone.className = 'fa-solid fa-heart';
+                } else {
+                    btn.classList.remove('active');
+                    if(icone) icone.className = 'fa-regular fa-heart';
+                }
+            });
+        }
+
+        // RENDERIZADORES DE GRID COM TRATAMENTO DE ERRO (NADA ENCONTRADO)
+        function renderizarGridHome(listaProdutos) {
+            const gridHomeContainer = document.getElementById('grid-home-ofertas');
+            if(!gridHomeContainer) return;
 
             if(listaProdutos.length === 0) {
-                gridTodasOfertas.innerHTML = `<p style="text-align: center; grid-column: span 2; color: var(--texto-mutado); padding: 20px;">Nenhum produto encontrado.</p>`;
+                gridHomeContainer.innerHTML = `<div class="erro-busca">⚠️ Nenhum produto encontrado com esse nome...</div>`;
                 return;
             }
 
-            gridTodasOfertas.innerHTML = listaProdutos.map(prod => {
+            gridHomeContainer.innerHTML = listaProdutos.map(prod => {
                 const isFav = favoritosSalvos.includes(prod.id);
                 return `
                     <div class="produto-card">
-                        <button class="btn-favorito ${isFav ? 'active' : ''}" onclick="alternarFavorito('${prod.id}', this)">
+                        <button class="btn-favorito ${isFav ? 'active' : ''}" data-id="${prod.id}" onclick="alternarFavorito('${prod.id}')">
                             <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
                         </button>
                         <img src="${prod.img}" class="produto-img">
                         <div class="produto-nome">${prod.nome}</div>
+                        <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(94)</span></div>
                         <div>
                             <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
                             <div class="preco-novo">R$ ${prod.precoNovo}</div>
@@ -1898,20 +1958,24 @@ precoNovo: "35,90"
             }).join('');
         }
 
-        function renderizarGridHome(listaProdutos) {
-            const gridHomeContainer = document.getElementById('grid-home-ofertas');
-            if(!gridHomeContainer) return;
+        function renderizarGridOfertas(listaProdutos) {
+            const gridTodasOfertas = document.getElementById('grid-todas-ofertas');
+            if(!gridTodasOfertas) return;
 
-            gridHomeContainer.innerHTML = listaProdutos.map(prod => {
+            if(listaProdutos.length === 0) {
+                gridTodasOfertas.innerHTML = `<div class="erro-busca">⚠️ Desculpe! Nenhum produto foi encontrado nesta categoria ainda.</div>`;
+                return;
+            }
+
+            gridTodasOfertas.innerHTML = listaProdutos.map(prod => {
                 const isFav = favoritosSalvos.includes(prod.id);
                 return `
                     <div class="produto-card">
-                        <button class="btn-favorito ${isFav ? 'active' : ''}" onclick="alternarFavorito('${prod.id}', this)">
+                        <button class="btn-favorito ${isFav ? 'active' : ''}" data-id="${prod.id}" onclick="alternarFavorito('${prod.id}')">
                             <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
                         </button>
                         <img src="${prod.img}" class="produto-img">
                         <div class="produto-nome">${prod.nome}</div>
-                        <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(94)</span></div>
                         <div>
                             <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
                             <div class="preco-novo">R$ ${prod.precoNovo}</div>
@@ -1930,13 +1994,13 @@ precoNovo: "35,90"
             const filtrados = todos.filter(p => favoritosSalvos.includes(p.id));
 
             if(filtrados.length === 0) {
-                containerFavoritos.innerHTML = `<p style="text-align: center; grid-column: span 2; color: var(--texto-mutado); padding: 20px;">Nenhum produto favoritado ainda.</p>`;
+                containerFavoritos.innerHTML = `<p style="text-align: center; grid-column: span 2; color: var(--texto-mutado); padding: 25px; font-size:13px;">Nenhum produto favoritado ainda.</p>`;
                 return;
             }
 
             containerFavoritos.innerHTML = filtrados.map(prod => `
                 <div class="produto-card">
-                    <button class="btn-favorito active" onclick="alternarFavorito('${prod.id}', this); renderizarAbaFavoritos();">
+                    <button class="btn-favorito active" data-id="${prod.id}" onclick="alternarFavorito('${prod.id}')">
                         <i class="fa-solid fa-heart"></i>
                     </button>
                     <img src="${prod.img}" class="produto-img">
@@ -1950,24 +2014,22 @@ precoNovo: "35,90"
             `).join('');
         }
 
-        // DIRECIONAMENTO DA POLÍTICA DE PRIVACIDADE
         function abrirPoliticaPrivacidade() {
             // === COLOQUE SEU LINK AQUI ===
-            // Substitua o '#' abaixo pelo link do seu documento do Google Docs, PDF ou outra página.
             const urlPolitica = "#"; 
             
             if(urlPolitica === "#") {
-                alert("Página de Políticas configurada com sucesso! (Adicione o link definitivo no código JavaScript)");
+                alert("Link de Políticas não configurado. Adicione sua URL no JavaScript da função abrirPoliticaPrivacidade()");
             } else {
                 window.open(urlPolitica, '_blank');
             }
         }
 
-        // CONSTRUTOR GERAL DO APP
+        // ESTRUTURADOR INICIAL DO SISTEMA
         function construirEstrutura() {
             const todosProdutos = obterTodosProdutos();
 
-            // 1. Renderizar Carrossel "Ofertas Quentes"
+            // Renderizar Carrossel
             const carrosselContainer = document.getElementById('carrossel-hot-deals');
             if(carrosselContainer && todosProdutos.length > 0) {
                 carrosselContainer.innerHTML = todosProdutos.map(prod => `
@@ -1984,10 +2046,7 @@ precoNovo: "35,90"
                 `).join('');
             }
 
-            // 2. Renderizar Grid Inicial (Home)
-            renderizarGridHome(todosProdutos);
-
-            // 3. Renderizar Mosaico de Categorias (Atualizado com a nova função de filtro)
+            // Renderizar Mosaico das Categorias (Vinculado dinamicamente)
             const mosaicoContainer = document.getElementById('mosaico-categorias-container');
             if(mosaicoContainer) {
                 mosaicoContainer.innerHTML = CATEGORIAS_DADOS.map(cat => `
@@ -1999,8 +2058,9 @@ precoNovo: "35,90"
                 `).join('');
             }
 
-            // 4. Renderizar Lista Completa na aba de Ofertas inicialmente
+            renderizarGridHome(todosProdutos);
             renderizarGridOfertas(todosProdutos);
+            renderizarAbaFavoritos();
         }
 
         document.addEventListener("DOMContentLoaded", construirEstrutura);
