@@ -1896,14 +1896,21 @@
     ]
   }
 };
- // === CONVERSOR AUTOMÁTICO DE DADOS PARA PRODUTOS_LOJA ===
-        const PRODUTOS_LOJA = [];
-        Object.keys(dados).forEach(chave => {
-            if (dados[chave] && dados[chave].produtos) {
-                PRODUTOS_LOJA.push(...dados[chave].produtos);
-            }
+        
+const PRODUTOS_LOJA = [];
+
+Object.keys(dados).forEach(chave => {
+    if (dados[chave] && dados[chave].produtos) {
+
+        dados[chave].produtos.forEach(produto => {
+            PRODUTOS_LOJA.push({
+                ...produto,
+                categoria: chave
+            });
         });
 
+    }
+});
         // === BANCO DE DEPOIMENTOS PARA O CARROSSEL INFINITO ===
         const DEPOIMENTOS_DADOS = [
             { nome: "Rodrigo Alves", letra: "R", cor: "#e63946", texto: "\"Mano, esse site é bom demais. Eu tava atrás de uma promo boa e peguei por aqui bem mais barato. Não perco mais nada!\"" },
