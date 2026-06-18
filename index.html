@@ -2369,17 +2369,6 @@ const PRODUTOS_LOJA = [];
             "🦊", "🐼", "🐱", "🐸", "🐵", "🐧", "🦁", "🐨", "🐯", "🐰", "🦄", "🐻"
         ];
 
-        function abrirCadastro() {
-            const nome = prompt("Digite seu nome:");
-            if (!nome || nome.trim() === "") return;
-
-            const avatarAleatorio = AVATARES[Math.floor(Math.random() * AVATARES.length)];
-            localStorage.setItem("usuarioNome", nome);
-            localStorage.setItem("usuarioAvatar", avatarAleatorio);
-            carregarUsuario();
-            alert("Cadastro realizado com sucesso 🎉");
-        }
-
        function criarConta() {
     const nome = document.getElementById("nome-usuario").value.trim();
     const email = document.getElementById("email-usuario").value.trim();
@@ -2446,17 +2435,24 @@ document.getElementById("btn-login").style.display = "none";
 }
         
 function login() {
+
     const email = document.getElementById("email-usuario").value.trim();
-    const senha = "123456";
+    const senha = document.getElementById("senha-usuario").value;
 
     auth.signInWithEmailAndPassword(email, senha)
         .then(() => {
-            alert("Login feito com sucesso!");
+
+            alert("Login realizado com sucesso!");
             fecharCadastro();
+
         })
         .catch((error) => {
-            alert("Erro: " + error.message);
+
+            alert("Erro ao entrar: " + error.message);
+            console.log(error);
+
         });
+
 }
         function logout() {
     auth.signOut().then(() => {
@@ -2464,22 +2460,6 @@ function login() {
         document.getElementById("nome-perfil").innerText = "Visitante";
     });
 }
-        function carregarUsuario() {
-            const nomeSalvo = localStorage.getItem("usuarioNome");
-            const avatarSalvo = localStorage.getItem("usuarioAvatar");
-
-            if(nomeSalvo){
-                const perfil = document.getElementById("nome-perfil");
-                if(perfil) perfil.innerText = nomeSalvo;
-
-                if(avatarSalvo){
-                    const avatar = document.getElementById("avatar-usuario");
-                    if(avatar) avatar.innerText = avatarSalvo;
-                }
-            }
-        }
-
-        window.addEventListener("load", carregarUsuario);
 
         function abrirCadastro(){
             document.getElementById("modal-cadastro").style.display = "flex";
@@ -2489,15 +2469,6 @@ function login() {
             document.getElementById("modal-cadastro").style.display = "none";
         }
 
-        window.addEventListener("load", () => {
-            const nomeSalvo = localStorage.getItem("usuarioNome");
-            if(nomeSalvo){
-                const perfil = document.getElementById("nome-perfil");
-                if(perfil){
-                    perfil.innerText = nomeSalvo;
-                }
-            }
-        });
        auth.onAuthStateChanged((user) => {
 
     if(user){
@@ -2510,6 +2481,9 @@ function login() {
             if(doc.exists){
 
                 const dados = doc.data();
+                
+                console.log("Nome vindo do Firebase:", dados.nome);
+                console.log("Elemento perfil:", document.getElementById("nome-perfil"));
 
                 document.getElementById("nome-perfil").innerText = dados.nome;
 
@@ -2553,9 +2527,7 @@ function login() {
             <h2>🎉 Crie sua conta grátis</h2>
             <p>Salve produtos favoritos e receba ofertas exclusivas.</p>
             <input type="text" id="nome-usuario" placeholder="Seu nome">
-            
             <input type="email" id="email-usuario" placeholder="Seu e-mail">
-            
             <input type="password" id="senha-usuario" placeholder="Crie uma senha">
             
             <div class="aceite-newsletter">
@@ -2567,11 +2539,15 @@ function login() {
                 <label for="aceitou-termos">
                     Estou ciente da <a href="LINK_POLITICA">Política de Privacidade</a> e dos <a href="LINK_TERMOS">Termos de Uso</a>
                 </label>
-            </div>
-            <button onclick="criarConta()">Criar Conta</button>
-            <button onclick="fecharCadastro()" class="btn-fechar-cadastro">Fechar</button>
-        </div>
-    </div>
+         <button onclick="criarConta()">Criar Conta</button>
+
+<button onclick="login()">
+    Entrar
+</button>
+
+<button onclick="fecharCadastro()" class="btn-fechar-cadastro">
+    Fechar
+</button>
 
     <!-- BANNER DE COOKIES -->
     <div id="cookie-banner" class="cookie-banner">
