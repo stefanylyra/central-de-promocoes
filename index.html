@@ -2470,20 +2470,23 @@ function abrirCadastro() {
     alert("Cadastro realizado com sucesso 🎉");
 }
 function criarConta() {
-
+    
     const nome = document.getElementById("nome-usuario").value.trim();
     const email = document.getElementById("email-usuario").value.trim();
     const aceitou = document.getElementById("aceitou-termos").checked;
+    const receberPromocoes = document.getElementById("aceitou-promocoes").checked;
 
     if(nome === ""){
         alert("Digite seu nome.");
         return;
     }
 
-    if(email === ""){
-        alert("Digite seu e-mail.");
-        return;
-    }
+const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+if(!regexEmail.test(email)){
+    alert("Digite um e-mail válido.");
+    return;
+}
 
     if(!aceitou){
         alert("Você precisa aceitar a Política de Privacidade e os Termos de Uso.");
@@ -2493,6 +2496,7 @@ function criarConta() {
     localStorage.setItem("usuarioNome", nome);
     localStorage.setItem("usuarioEmail", email);
     localStorage.setItem("usuarioLogado", "sim");
+    localStorage.setItem("receberPromocoes",receberPromocoes);
 
     const perfil = document.getElementById("nome-perfil");
 
@@ -2567,6 +2571,17 @@ function fecharCadastro(){
         <input type="email"
                id="email-usuario"
                placeholder="Seu e-mail">
+
+        <div class="aceite-newsletter">
+
+    <input type="checkbox"
+           id="aceitou-promocoes">
+
+    <label for="aceitou-promocoes">
+        Quero receber ofertas e promoções por e-mail.
+    </label>
+
+</div>
 
         <div class="aceite-termos">
 
