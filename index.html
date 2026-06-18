@@ -720,7 +720,7 @@
                     😀
                 </div>
                 <h2 id="nome-perfil">Visitante</h2>
-                <button class="btn-sair" style="margin-top:10px;" onclick="abrirCadastro()">Entrar / Criar Conta</button>
+                <button id="btn-login" class="btn-sair" style="margin-top:10px;" onclick="abrirCadastro()"> Entrar / Criar Conta</button>
             </div>
             <div class="section-title"><span>Minha Conta</span></div>
             <div class="conta-item" onclick="alternarTema()"><div><i class="fa-solid fa-palette icone-vermelho"></i>Aparência</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
@@ -2382,13 +2382,17 @@ const PRODUTOS_LOJA = [];
        function criarConta() {
     const nome = document.getElementById("nome-usuario").value.trim();
     const email = document.getElementById("email-usuario").value.trim();
-    const senha = "123456"; // depois você pode colocar campo de senha se quiser
+    const senha = document.getElementById("senha-usuario").value;  
     const aceitou = document.getElementById("aceitou-termos").checked;
     const recebe = document.getElementById("aceitou-promocoes").checked;
 
     if (!nome) return alert("Digite seu nome");
     if (!email) return alert("Digite um e-mail válido");
     if (!aceitou) return alert("Você precisa aceitar os termos");
+    if(senha.length < 6){
+    alert("A senha precisa ter pelo menos 6 caracteres.");
+    return;
+}
 
     auth.createUserWithEmailAndPassword(email, senha)
         .then((userCredential) => {
@@ -2402,9 +2406,13 @@ const PRODUTOS_LOJA = [];
             });
         })
         .then(() => {
-            alert("Conta criada com sucesso!");
-            fecharCadastro();
-        })
+
+    document.getElementById("nome-perfil").innerText = nome;
+
+document.getElementById("btn-login").style.display = "none";
+    alert("Conta criada com sucesso!");
+    fecharCadastro();
+})
         .catch((error) => {
             alert(error.message);
             console.log(error);
@@ -2464,17 +2472,27 @@ function login() {
             }
         });
         auth.onAuthStateChanged((user) => {
-    if (user) {
-        db.collection("usuarios").doc(user.uid).get()
-            .then((doc) => {
-                if (doc.exists) {
-                    const dados = doc.data();
 
-                    document.getElementById("nome-perfil").innerText = dados.nome;
-                    document.getElementById("avatar-usuario").innerText = "😀";
-                }
-            });
+    if(user){
+
+        db.collection("usuarios")
+          .doc(user.uid)
+          .get()
+          .then((doc) => {
+
+            if(doc.exists){
+
+                const dados = doc.data();
+
+                document.getElementById("nome-perfil").innerText = dados.nome;
+
+                document.getElementById("btn-login").style.display = "none";
+            }
+
+          });
+
     }
+
 });
     </script>
 
@@ -2484,7 +2502,11 @@ function login() {
             <h2>🎉 Crie sua conta grátis</h2>
             <p>Salve produtos favoritos e receba ofertas exclusivas.</p>
             <input type="text" id="nome-usuario" placeholder="Seu nome">
+            
             <input type="email" id="email-usuario" placeholder="Seu e-mail">
+            
+            <input type="password" id="senha-usuario" placeholder="Crie uma senha">
+            
             <div class="aceite-newsletter">
                 <input type="checkbox" id="aceitou-promocoes">
                 <label for="aceitou-promocoes">Quero receber ofertas e promoções por e-mail.</label>
