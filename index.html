@@ -680,8 +680,19 @@ body.tema-escuro .categoria-glass-footer p {
 
         <main id="aba-conta" class="app-page">
             <div style="text-align: center; padding: 20px 0 30px 0;">
-                <div style="width: 80px; height: 80px; border-radius: 50%; background: #ddd; display:inline-flex; align-items:center; justify-content:center; margin-bottom: 10px; font-size: 28px; color: #666;"><i class="fa-solid fa-user"></i></div>
-                <h2 id="nome-usuario">Visitante</h2>
+            <div id="avatar-usuario"
+     style="width:80px;
+            height:80px;
+            border-radius:50%;
+            background:#cc0a12;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            margin-bottom:10px;
+            font-size:40px;">
+     😀
+</div>
+<h2 id="nome-usuario">Visitante</h2>
 
 <button class="btn-sair" style="margin-top:10px;" onclick="abrirCadastro()">
     Entrar / Criar Conta
@@ -2325,7 +2336,22 @@ window.addEventListener("load", () => {
     }
 
 });
-        function abrirCadastro() {
+      const AVATARES = [
+    "🦊",
+    "🐼",
+    "🐱",
+    "🐸",
+    "🐵",
+    "🐧",
+    "🦁",
+    "🐨",
+    "🐯",
+    "🐰",
+    "🦄",
+    "🐻"
+];
+
+function abrirCadastro() {
 
     const nome = prompt("Digite seu nome:");
 
@@ -2333,7 +2359,11 @@ window.addEventListener("load", () => {
         return;
     }
 
+    const avatarAleatorio =
+        AVATARES[Math.floor(Math.random() * AVATARES.length)];
+
     localStorage.setItem("usuarioNome", nome);
+    localStorage.setItem("usuarioAvatar", avatarAleatorio);
 
     carregarUsuario();
 
@@ -2343,14 +2373,17 @@ window.addEventListener("load", () => {
 function carregarUsuario() {
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
+    const avatarSalvo = localStorage.getItem("usuarioAvatar");
 
     if(nomeSalvo){
 
         document.getElementById("nome-usuario").innerText = nomeSalvo;
 
+        if(avatarSalvo){
+            document.getElementById("avatar-usuario").innerText = avatarSalvo;
+        }
     }
 }
-
 window.addEventListener("load", carregarUsuario);
     </script>
     <!-- BANNER DE COOKIES -->
