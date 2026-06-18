@@ -2498,6 +2498,20 @@ function criarConta() {
     localStorage.setItem("usuarioEmail", email);
     localStorage.setItem("usuarioLogado", "sim");
 
+    // 🔥 AQUI ENTRA O FIREBASE
+db.collection("usuarios").add({
+    nome: nome,
+    email: email,
+    receberPromocoes: receberPromocoes,
+    dataCriacao: new Date()
+})
+.then(() => {
+    console.log("Usuário salvo no Firebase");
+})
+.catch((error) => {
+    console.error("Erro ao salvar no Firebase:", error);
+});
+
     // ⭐ NOVO: preferências de marketing
     localStorage.setItem("receberPromocoes", receberPromocoes ? "sim" : "nao");
 
@@ -2558,8 +2572,28 @@ function fecharCadastro(){
     }
 
 });
-    </script>
+        
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
 
+<script>
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyCydy0v27JxNvKBW3aqFa3Uel8Slkdtcx4",
+  authDomain: "central-promocoes.firebaseapp.com",
+  projectId: "central-promocoes",
+  storageBucket: "central-promocoes.firebasestorage.app",
+  messagingSenderId: "396856047778",
+  appId: "1:396856047778:web:8608a6b95f26f160d27ffb"
+};
+
+// inicializar Firebase
+firebase.initializeApp(firebaseConfig);
+
+// iniciar Firestore
+const db = firebase.firestore();
+</script>
     <!-- MODAL DE CADASTRO -->
 
 <div id="modal-cadastro" class="modal-cadastro">
