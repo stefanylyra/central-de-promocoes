@@ -792,8 +792,7 @@ body.tema-escuro .categoria-glass-footer p {
             font-size:40px;">
      😀
 </div>
-<h2 id="nome-usuario">Visitante</h2>
-
+<h2 id="nome-perfil">Visitante</h2>
 <button class="btn-sair" style="margin-top:10px;" onclick="abrirCadastro()">
     Entrar / Criar Conta
 </button>
@@ -2474,16 +2473,9 @@ function criarConta() {
 
     alert("PASSO 1");
 
-   alert(document.getElementById("nome-usuario"));
+    alert(document.getElementById("nome-usuario"));
+
     alert("PASSO 2");
-
-    const email = document.getElementById("email-usuario").value.trim();
-
-    alert("PASSO 3");
-
-    const aceitou = document.getElementById("aceitou-termos").checked;
-
-    alert("PASSO 4");
 
 }
 function carregarUsuario() {
@@ -2526,9 +2518,10 @@ function fecharCadastro(){
             Salve produtos favoritos e receba ofertas exclusivas.
         </p>
 
-        <input type="text"
-               id="nome-usuario"
-               placeholder="Seu nome">
+        <input
+    type="text"
+    id="nome-usuario"
+    placeholder="Seu nome">
 
         <input type="email"
                id="email-usuario"
