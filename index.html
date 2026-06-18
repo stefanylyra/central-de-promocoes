@@ -2471,26 +2471,38 @@ function abrirCadastro() {
 }
 function criarConta() {
 
-    alert("PASSO 1");
-
     const nome = document.getElementById("nome-usuario").value.trim();
-
-    alert("PASSO 2");
-
     const email = document.getElementById("email-usuario").value.trim();
-
-    alert("PASSO 3");
-
     const aceitou = document.getElementById("aceitou-termos").checked;
 
-    alert("PASSO 4");
+    if(nome === ""){
+        alert("Digite seu nome.");
+        return;
+    }
 
-    alert("Nome: " + nome);
+    if(email === ""){
+        alert("Digite seu e-mail.");
+        return;
+    }
 
-    alert("Email: " + email);
+    if(!aceitou){
+        alert("Você precisa aceitar a Política de Privacidade e os Termos de Uso.");
+        return;
+    }
 
-    alert("Aceitou: " + aceitou);
+    localStorage.setItem("usuarioNome", nome);
+    localStorage.setItem("usuarioEmail", email);
+    localStorage.setItem("usuarioLogado", "sim");
 
+    const perfil = document.getElementById("nome-perfil");
+
+    if(perfil){
+        perfil.innerText = nome;
+    }
+
+    alert("🎉 Conta criada com sucesso!");
+
+    fecharCadastro();
 }
 function carregarUsuario() {
 
@@ -2518,6 +2530,21 @@ function fecharCadastro(){
     document.getElementById("modal-cadastro").style.display = "none";
 
 }
+        window.addEventListener("load", () => {
+
+    const nomeSalvo = localStorage.getItem("usuarioNome");
+
+    if(nomeSalvo){
+
+        const perfil = document.getElementById("nome-perfil");
+
+        if(perfil){
+            perfil.innerText = nomeSalvo;
+        }
+
+    }
+
+});
     </script>
 
     <!-- MODAL DE CADASTRO -->
