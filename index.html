@@ -2481,27 +2481,36 @@ function criarConta() {
         return;
     }
 
-const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-if(!regexEmail.test(email)){
-    alert("Digite um e-mail válido.");
-    return;
-}
+    if(!regexEmail.test(email)){
+        alert("Digite um e-mail válido.");
+        return;
+    }
 
     if(!aceitou){
         alert("Você precisa aceitar a Política de Privacidade e os Termos de Uso.");
         return;
     }
 
+    // 💾 SALVANDO DADOS DO USUÁRIO
     localStorage.setItem("usuarioNome", nome);
     localStorage.setItem("usuarioEmail", email);
     localStorage.setItem("usuarioLogado", "sim");
-    localStorage.setItem("receberPromocoes",receberPromocoes);
 
+    // ⭐ NOVO: preferências de marketing
+    localStorage.setItem("receberPromocoes", receberPromocoes ? "sim" : "nao");
+
+    // 👤 atualizar perfil
     const perfil = document.getElementById("nome-perfil");
-
     if(perfil){
         perfil.innerText = nome;
+    }
+
+    // opcional: atualizar avatar também se quiser manter consistência
+    const avatar = document.getElementById("avatar-usuario");
+    if(avatar){
+        avatar.innerText = avatar.innerText || "😀";
     }
 
     alert("🎉 Conta criada com sucesso!");
