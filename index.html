@@ -2413,11 +2413,37 @@ document.getElementById("btn-login").style.display = "none";
     alert("Conta criada com sucesso!");
     fecharCadastro();
 })
-        .catch((error) => {
-            alert(error.message);
-            console.log(error);
-        });
+.catch((error) => {
+
+    if(error.code === "auth/email-already-in-use"){
+
+        auth.signInWithEmailAndPassword(email, senha)
+            .then(() => {
+
+                document.getElementById("nome-perfil").innerText = nome;
+                document.getElementById("btn-login").style.display = "none";
+
+                alert("Login realizado com sucesso!");
+                fecharCadastro();
+
+            })
+            .catch(() => {
+
+                alert("Este e-mail já existe, mas a senha está incorreta.");
+
+            });
+
+    } else {
+
+        alert(error.message);
+        console.log(error);
+
+    }
+
+});
+           
 }
+        
 function login() {
     const email = document.getElementById("email-usuario").value.trim();
     const senha = "123456";
