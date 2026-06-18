@@ -2361,39 +2361,54 @@ const PRODUTOS_LOJA = [];
             alert("Cadastro realizado com sucesso 🎉");
         }
 
-        function criarConta() {
-            const nome = document.getElementById("nome-usuario").value.trim();
-            const email = document.getElementById("email-usuario").value.trim();
-            const aceitou = document.getElementById("aceitou-termos").checked;
-            const receberPromocoes = document.getElementById("aceitou-promocoes").checked;
+       function criarConta() {
+    
+    const nome = document.getElementById("nome-usuario").value.trim();
+    const email = document.getElementById("email-usuario").value.trim();
+    const aceitou = document.getElementById("aceitou-termos").checked;
+    const receberPromocoes = document.getElementById("aceitou-promocoes").checked;
 
-            if(nome === ""){
-                alert("Digite seu nome.");
-                return;
-            }
+    if(nome === ""){
+        alert("Digite seu nome.");
+        return;
+    }
 
-            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if(!regexEmail.test(email)){
-                alert("Digite um e-mail válido.");
-                return;
-            }
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-            if(!aceitou){
-                alert("Você precisa aceitar a Política de Privacidade e os Termos de Uso.");
-                return;
-            }
+    if(!regexEmail.test(email)){
+        alert("Digite um e-mail válido.");
+        return;
+    }
 
-            localStorage.setItem("usuarioNome", nome);
-            localStorage.setItem("usuarioEmail", email);
-            localStorage.setItem("usuarioLogado", "sim");
-            localStorage.setItem("receberPromocoes", receberPromocoes);
+    if(!aceitou){
+        alert("Você precisa aceitar a Política de Privacidade e os Termos de Uso.");
+        return;
+    }
 
-            const perfil = document.getElementById("nome-perfil");
-            if(perfil) perfil.innerText = nome;
+    // 💾 SALVANDO DADOS DO USUÁRIO
+    localStorage.setItem("usuarioNome", nome);
+    localStorage.setItem("usuarioEmail", email);
+    localStorage.setItem("usuarioLogado", "sim");
 
-            alert("🎉 Conta criada com sucesso!");
-            fecharCadastro();
-        }
+    // ⭐ NOVO: preferências de marketing
+    localStorage.setItem("receberPromocoes", receberPromocoes ? "sim" : "nao");
+
+    // 👤 atualizar perfil
+    const perfil = document.getElementById("nome-perfil");
+    if(perfil){
+        perfil.innerText = nome;
+    }
+
+    // opcional: atualizar avatar também se quiser manter consistência
+    const avatar = document.getElementById("avatar-usuario");
+    if(avatar){
+        avatar.innerText = avatar.innerText || "😀";
+    }
+
+    alert("🎉 Conta criada com sucesso!");
+
+    fecharCadastro();
+}
 
         function carregarUsuario() {
             const nomeSalvo = localStorage.getItem("usuarioNome");
