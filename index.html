@@ -2473,9 +2473,23 @@ function criarConta() {
 
     alert("PASSO 1");
 
-    alert(document.getElementById("nome-usuario"));
+    const nome = document.getElementById("nome-usuario").value.trim();
 
     alert("PASSO 2");
+
+    const email = document.getElementById("email-usuario").value.trim();
+
+    alert("PASSO 3");
+
+    const aceitou = document.getElementById("aceitou-termos").checked;
+
+    alert("PASSO 4");
+
+    alert("Nome: " + nome);
+
+    alert("Email: " + email);
+
+    alert("Aceitou: " + aceitou);
 
 }
 function carregarUsuario() {
