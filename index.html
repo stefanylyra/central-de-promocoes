@@ -2432,26 +2432,32 @@ document.getElementById("btn-login").style.display = "none";
 });
            
 }
-        function login() {
+       function login() {
 
     const email = document.getElementById("email-usuario").value.trim();
     const senha = document.getElementById("senha-usuario").value;
 
-    console.log("EMAIL:", email);
-    console.log("SENHA:", senha);
+    console.log("EMAIL DIGITADO:", email);
+    console.log("SENHA DIGITADA:", senha);
+
+    if(!email){
+        alert("Digite seu e-mail antes de entrar");
+        return;
+    }
+
+    if(!email.includes("@")){
+        alert("E-mail inválido");
+        return;
+    }
 
     auth.signInWithEmailAndPassword(email, senha)
         .then(() => {
-
             alert("Login realizado com sucesso!");
             fecharCadastro();
-
         })
         .catch((error) => {
-
             alert("Erro ao entrar: " + error.message);
             console.log(error);
-
         });
 
 }
