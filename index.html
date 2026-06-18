@@ -2164,14 +2164,25 @@ const PRODUTOS_LOJA = [];
         }
 
         function alternarFavorito(idProduto) {
-            if(favoritosSalvos.includes(idProduto)) {
-                favoritosSalvos = favoritosSalvos.filter(id => id !== idProduto);
-            } else {
-                favoritosSalvos.push(idProduto);
-            }
-            atualizarIconesCoraoGlobais();
-            renderizarAbaFavoritos();
-        }
+    const user = auth.currentUser;
+
+    if (!user) {
+        mostrarModalLoginObrigatorio();
+        return;
+    }
+
+    // Usuário logado → salva normalmente
+    if (favoritosSalvos.includes(idProduto)) {
+        favoritosSalvos = favoritosSalvos.filter(id => id !== idProduto);
+    } else {
+        favoritosSalvos.push(idProduto);
+    }
+
+    atualizarIconesCoraoGlobais();
+    renderizarAbaFavoritos();
+
+    // Futuro: salvar no Firestore (vou te ajudar depois)
+}
 
         function atualizarIconesCoraoGlobais() {
             document.querySelectorAll(`.btn-favorito`).forEach(btn => {
@@ -2278,7 +2289,18 @@ const PRODUTOS_LOJA = [];
         function abrirPoliticaPrivacidade() {
             alert("Link de Políticas não configurado.");
         }
+function mostrarModalLoginObrigatorio() {
+    document.getElementById("modal-login-obrigatorio").style.display = "flex";
+}
 
+function fecharModalLoginObrigatorio() {
+    document.getElementById("modal-login-obrigatorio").style.display = "none";
+}
+
+function abrirLoginDoModal() {
+    fecharModalLoginObrigatorio();
+    abrirCadastro(); // abre o modal de login/cadastro que você já tem
+}
         function construirEstrutura() {
             const carrosselContainer = document.getElementById('carrossel-hot-deals');
             if(carrosselContainer && PRODUTOS_LOJA.length > 0) {
@@ -2555,7 +2577,22 @@ document.getElementById("btn-login").style.display = "none";
 <button onclick="fecharCadastro()" class="btn-fechar-cadastro">
     Fechar
 </button>
-
+<!-- MODAL LOGIN OBRIGATÓRIO -->
+<div id="modal-login-obrigatorio" class="modal-cadastro" style="display: none;">
+    <div class="modal-cadastro-box" style="text-align: center;">
+        <h2>❤️ Salvar favorito</h2>
+        <p style="margin: 16px 0; font-size: 15px; color: #444;">
+            Para salvar suas promoções favoritas, você precisa estar logado.
+        </p>
+        
+        <button onclick="abrirLoginDoModal()" style="width: 100%; margin-bottom: 10px;">
+            Fazer Login / Criar Conta
+        </button>
+        <button onclick="fecharModalLoginObrigatorio()" class="btn-fechar-cadastro" style="width: 100%;">
+            Cancelar
+        </button>
+    </div>
+</div>
     <!-- BANNER DE COOKIES -->
     <div id="cookie-banner" class="cookie-banner">
         <div class="cookie-texto">
