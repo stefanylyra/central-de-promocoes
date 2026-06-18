@@ -644,6 +644,28 @@ body.tema-escuro .categoria-glass-footer p {
 }
 
 .modal-cadastro-box button{
+    .aceite-termos{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    font-size:13px;
+    line-height:1.4;
+}
+
+.aceite-termos input{
+    width:auto;
+    margin-top:3px;
+}
+
+.aceite-termos a{
+    color:#cc0a12;
+    font-weight:600;
+    text-decoration:none;
+}
+
+.aceite-termos a:hover{
+    text-decoration:underline;
+}
 
     padding:12px;
 
@@ -2370,6 +2392,7 @@ Object.keys(dados).forEach(chave => {
         }
 
         document.addEventListener("DOMContentLoaded", construirEstrutura);
+        document.addEventListener("DOMContentLoaded", atualizarPerfilUsuario);
         function aceitarCookies() {
     localStorage.setItem("cookiesAceitos", "sim");
 
@@ -2447,7 +2470,50 @@ function abrirCadastro() {
 
     alert("Cadastro realizado com sucesso 🎉");
 }
+function criarConta() {
 
+    const nome = document.getElementById("nome-usuario").value.trim();
+    const email = document.getElementById("email-usuario").value.trim();
+    const aceitou = document.getElementById("aceitou-termos").checked;
+
+    if(nome === ""){
+        alert("Digite seu nome.");
+        return;
+    }
+
+    if(email === ""){
+        alert("Digite seu e-mail.");
+        return;
+    }
+
+    if(!aceitou){
+        alert("Você precisa aceitar a Política de Privacidade e os Termos de Uso.");
+        return;
+    }
+
+    localStorage.setItem("usuarioNome", nome);
+    localStorage.setItem("usuarioEmail", email);
+    localStorage.setItem("usuarioLogado", "sim");
+
+    atualizarPerfilUsuario();
+
+    alert("🎉 Conta criada com sucesso!");
+
+    fecharCadastro();
+}
+        function atualizarPerfilUsuario(){
+
+    const nome = localStorage.getItem("usuarioNome");
+
+    if(nome){
+
+        const titulo = document.querySelector("#aba-conta h2");
+
+        if(titulo){
+            titulo.innerText = nome;
+        }
+    }
+}
 function carregarUsuario() {
 
     const nomeSalvo = localStorage.getItem("usuarioNome");
