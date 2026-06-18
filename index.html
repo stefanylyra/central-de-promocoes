@@ -720,13 +720,13 @@
                     😀
                 </div>
                 <h2 id="nome-perfil">Visitante</h2>
-                <button id="btn-login" class="btn-sair" style="margin-top:10px;" onclick="abrirCadastro()"> Entrar / Criar Conta</button>
+                <button id="btn-login" class="btn-sair" style="margin-top:10px;" onclick="abrirCadastro()">Entrar / Criar Conta</button>
             </div>
             <div class="section-title"><span>Minha Conta</span></div>
             <div class="conta-item" onclick="alternarTema()"><div><i class="fa-solid fa-palette icone-vermelho"></i>Aparência</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
             <div class="conta-item" onclick="mudarAba('favoritos', document.querySelectorAll('.nav-item')[3])"><div><i class="fa-solid fa-heart icone-vermelho"></i> Favoritos</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
             <div class="conta-item" onclick="abrirPoliticaPrivacidade()"><div><i class="fa-solid fa-file-shield icone-vermelho"></i> Política de Privacidade</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
-            <button class="btn-sair">Sair</button>
+            <button class="btn-sair" onclick="logout()">Sair</button>
         </main>
 
         <nav class="bottom-nav">
@@ -735,6 +735,7 @@
             <button class="nav-item" onclick="limparFiltrosEMudarAba(this)"><i class="fa-solid fa-fire"></i><span>Ofertas</span></button>
             <button class="nav-item" onclick="mudarAba('favoritos', this)"><i class="fa-solid fa-heart"></i><span>Favoritos</span></button>
             <button class="nav-item" onclick="mudarAba('conta', this)"><i class="fa-solid fa-user"></i><span>Conta</span></button>
+            
         </nav>
 
         <a href="https://wa.me/seu-numero" target="_blank" class="btn-whatsapp">
@@ -2497,7 +2498,7 @@ function login() {
                 }
             }
         });
-        auth.onAuthStateChanged((user) => {
+       auth.onAuthStateChanged((user) => {
 
     if(user){
 
@@ -2512,14 +2513,38 @@ function login() {
 
                 document.getElementById("nome-perfil").innerText = dados.nome;
 
-                document.getElementById("btn-login").style.display = "none";
+                const btnLogin = document.getElementById("btn-login");
+
+                if(btnLogin){
+                    btnLogin.style.display = "none";
+                }
+
             }
 
           });
 
+    } else {
+
+        document.getElementById("nome-perfil").innerText = "Visitante";
+
+        const btnLogin = document.getElementById("btn-login");
+
+        if(btnLogin){
+            btnLogin.style.display = "block";
+        }
+
     }
 
 });
+        function logout(){
+
+    auth.signOut()
+        .then(() => {
+            alert("Você saiu da conta.");
+            location.reload();
+        });
+
+}
     </script>
 
     <!-- MODAL DE CADASTRO -->
