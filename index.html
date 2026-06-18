@@ -2451,13 +2451,6 @@ window.addEventListener("load", () => {
     "🐻"
 ];
 
-function abrirCadastro() {
-
-    const nome = prompt("Digite seu nome:");
-
-    if (!nome || nome.trim() === "") {
-        return;
-    }
 
     const avatarAleatorio =
         AVATARES[Math.floor(Math.random() * AVATARES.length)];
@@ -2572,27 +2565,6 @@ function fecharCadastro(){
     }
 
 });
-        
-<!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
-
-<script>
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyCydy0v27JxNvKBW3aqFa3Uel8Slkdtcx4",
-  authDomain: "central-promocoes.firebaseapp.com",
-  projectId: "central-promocoes",
-  storageBucket: "central-promocoes.firebasestorage.app",
-  messagingSenderId: "396856047778",
-  appId: "1:396856047778:web:8608a6b95f26f160d27ffb"
-};
-
-// inicializar Firebase
-firebase.initializeApp(firebaseConfig);
-
-// iniciar Firestore
-const db = firebase.firestore();
 </script>
     <!-- MODAL DE CADASTRO -->
 
@@ -2671,5 +2643,22 @@ const db = firebase.firestore();
         Aceitar
     </button>
 </div>
+    <!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "...",
+  authDomain: "central-promocoes.firebaseapp.com",
+  projectId: "central-promocoes",
+  storageBucket: "central-promocoes.appspot.com",
+  messagingSenderId: "396856047778",
+  appId: "1:396856047778:web:8608a6b95f26f160d27ffb"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+</script>
 </body>
 </html>
