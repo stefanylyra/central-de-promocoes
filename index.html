@@ -507,7 +507,7 @@
             font-weight: 500;
             font-size: 14px;
         }
-        
+
         .cookie-banner{
             position:fixed;
             bottom:70px;
@@ -716,14 +716,11 @@
 
         <main id="aba-conta" class="app-page">
             <div style="text-align: center; padding: 20px 0 30px 0;">
-                <div id="avatar-usuario"
-                     style="width:80px; height:80px; border-radius:50%; background:#cc0a12; display:inline-flex; align-items:center; justify-content:center; margin-bottom:10px; font-size:40px;">
-                     😀
+                <div id="avatar-usuario" style="width:80px;height:80px;border-radius:50%;background:#cc0a12;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:40px;">
+                    😀
                 </div>
                 <h2 id="nome-perfil">Visitante</h2>
-                <button class="btn-sair" style="margin-top:10px;" onclick="abrirCadastro()">
-                    Entrar / Criar Conta
-                </button>
+                <button class="btn-sair" style="margin-top:10px;" onclick="abrirCadastro()">Entrar / Criar Conta</button>
             </div>
             <div class="section-title"><span>Minha Conta</span></div>
             <div class="conta-item" onclick="alternarTema()"><div><i class="fa-solid fa-palette icone-vermelho"></i>Aparência</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
@@ -2061,9 +2058,9 @@ const PRODUTOS_LOJA = [];
         let favoritosSalvos = [];
         let categoriaAtiva = null;
 
-        // Todas as funções (mudarAba, filtrarPorCategoria, etc.) mantidas com indentação correta
         function mudarAba(idAba, elementoBotao) {
             document.querySelectorAll('.app-page').forEach(pag => pag.classList.remove('active'));
+            
             const target = document.getElementById(`aba-${idAba}`);
             if(target) target.classList.add('active');
 
@@ -2077,12 +2074,361 @@ const PRODUTOS_LOJA = [];
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // ... (demais funções do script com indentação limpa)
+        function limparFiltrosEMudarAba(elementoBotao) {
+            categoriaAtiva = null;
+            document.getElementById('titulo-aba-ofertas').innerText = "🛒 Todas as Ofertas";
+            renderizarGridOfertas(PRODUTOS_LOJA);
+            mudarAba('ofertas', elementoBotao);
+        }
+
+        function filtrarPorCategoria(idCategoria) {
+            console.log("Categoria clicada:", idCategoria);
+            console.log("Primeiro produto:", PRODUTOS_LOJA[0]);
+            categoriaAtiva = idCategoria;
+            const infoCategoria = CATEGORIAS_DADOS.find(c => c.id === idCategoria);
+            const tituloAba = document.getElementById('titulo-aba-ofertas');
+            
+            if(infoCategoria) {
+                tituloAba.innerText = `📂 Categoria: ${infoCategoria.nome}`;
+            }
+
+            const filtrados = PRODUTOS_LOJA.filter(p => p.categoria === idCategoria);
+            renderizarGridOfertas(filtrados);
+            mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
+        }
+
+        function filtrarPesquisa() {
+            const termo = document.getElementById('input-busca').value.toLowerCase().trim();
+            const containerOfertasQuentes = document.getElementById('wrapper-ofertas-quentes');
+            const barraBeneficios = document.getElementById('barra-beneficios');
+            const tituloGridHome = document.getElementById('titulo-grid-home');
+            const linkVerTodosHome = document.getElementById('link-ver-todos-home');
+            const tituloDepoimentos = document.getElementById('titulo-depoimentos');
+            const wrapperDepoimentos = document.getElementById('wrapper-depoimentos');
+            
+            const activePage = document.querySelector('.app-page.active');
+
+            if (termo.length > 0) {
+                if (activePage && activePage.id === 'aba-inicio') {
+                    if(containerOfertasQuentes) containerOfertasQuentes.style.display = 'none';
+                    if(barraBeneficios) barraBeneficios.style.display = 'none';
+                    if(tituloGridHome) tituloGridHome.innerText = "🔍 Resultado da Busca";
+                    if(linkVerTodosHome) linkVerTodosHome.style.display = 'none';
+                    if(tituloDepoimentos) tituloDepoimentos.style.display = 'none';
+                    if(wrapperDepoimentos) wrapperDepoimentos.style.display = 'none';
+                }
+
+                const produtosFiltrados = PRODUTOS_LOJA.filter(p => p.nome.toLowerCase().includes(termo));
+                renderizarGridHome(produtosFiltrados);
+                renderizarGridOfertas(produtosFiltrados);
+            } else {
+                restaurarElementosEscondidos();
+                renderizarGridHome(PRODUTOS_LOJA);
+                renderizarGridOfertas(categoriaAtiva ? PRODUTOS_LOJA.filter(p => p.categoria === categoriaAtiva) : PRODUTOS_LOJA);
+            }
+        }
+
+        function restaurarElementosEscondidos() {
+            const containerOfertasQuentes = document.getElementById('wrapper-ofertas-quentes');
+            const barraBeneficios = document.getElementById('barra-beneficios');
+            const tituloGridHome = document.getElementById('titulo-grid-home');
+            const linkVerTodosHome = document.getElementById('link-ver-todos-home');
+            const tituloDepoimentos = document.getElementById('titulo-depoimentos');
+            const wrapperDepoimentos = document.getElementById('wrapper-depoimentos');
+
+            if(containerOfertasQuentes) containerOfertasQuentes.style.display = 'block';
+            if(barraBeneficios) barraBeneficios.style.display = 'grid';
+            if(tituloGridHome) tituloGridHome.innerText = "⚡ Ofertas Imperdíveis";
+            if(linkVerTodosHome) linkVerTodosHome.style.display = 'block';
+            if(tituloDepoimentos) tituloDepoimentos.style.display = 'flex';
+            if(wrapperDepoimentos) wrapperDepoimentos.style.display = 'block';
+        }
+
+        function alternarFavorito(idProduto) {
+            if(favoritosSalvos.includes(idProduto)) {
+                favoritosSalvos = favoritosSalvos.filter(id => id !== idProduto);
+            } else {
+                favoritosSalvos.push(idProduto);
+            }
+            atualizarIconesCoraoGlobais();
+            renderizarAbaFavoritos();
+        }
+
+        function atualizarIconesCoraoGlobais() {
+            document.querySelectorAll(`.btn-favorito`).forEach(btn => {
+                const idProd = btn.getAttribute('data-id');
+                const icone = btn.querySelector('i');
+                if(favoritosSalvos.includes(idProd)) {
+                    btn.classList.add('active');
+                    if(icone) icone.className = 'fa-solid fa-heart';
+                } else {
+                    btn.classList.remove('active');
+                    if(icone) icone.className = 'fa-regular fa-heart';
+                }
+            });
+        }
+
+        function renderizarGridHome(listaProdutos) {
+            const gridHomeContainer = document.getElementById('grid-home-ofertas');
+            if(!gridHomeContainer) return;
+
+            if(listaProdutos.length === 0) {
+                gridHomeContainer.innerHTML = `<div class="erro-busca">⚠️ Nenhum produto foi encontrado.</div>`;
+                return;
+            }
+
+            const exibicaoHome = listaProdutos.slice(0, 8);
+
+            gridHomeContainer.innerHTML = exibicaoHome.map(prod => {
+                const isFav = favoritosSalvos.includes(prod.id);
+                return `
+                    <div class="produto-card">
+                        <button class="btn-favorito ${isFav ? 'active' : ''}" data-id="${prod.id}" onclick="alternarFavorito('${prod.id}')">
+                            <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+                        </button>
+                        <img src="${prod.img}" class="produto-img">
+                        <div class="produto-nome">${prod.nome}</div>
+                        <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(94)</span></div>
+                        <div>
+                            <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
+                            <div class="preco-novo">R$ ${prod.precoNovo}</div>
+                        </div>
+                        <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderizarGridOfertas(listaProdutos) {
+            const gridTodasOfertas = document.getElementById('grid-todas-ofertas');
+            if(!gridTodasOfertas) return;
+
+            if(listaProdutos.length === 0) {
+                gridTodasOfertas.innerHTML = `<div class="erro-busca">⚠️ Nenhum produto nesta categoria.</div>`;
+                return;
+            }
+
+            gridTodasOfertas.innerHTML = listaProdutos.map(prod => {
+                const isFav = favoritosSalvos.includes(prod.id);
+                return `
+                    <div class="produto-card">
+                        <button class="btn-favorito ${isFav ? 'active' : ''}" data-id="${prod.id}" onclick="alternarFavorito('${prod.id}')">
+                            <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+                        </button>
+                        <img src="${prod.img}" class="produto-img">
+                        <div class="produto-nome">${prod.nome}</div>
+                        <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(94)</span></div>
+                        <div>
+                            <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
+                            <div class="preco-novo">R$ ${prod.precoNovo}</div>
+                        </div>
+                        <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderizarAbaFavoritos() {
+            const containerFavoritos = document.getElementById('grid-favoritos-salvos');
+            if(!containerFavoritos) return;
+
+            const filtrados = PRODUTOS_LOJA.filter(p => favoritosSalvos.includes(p.id));
+
+            if(filtrados.length === 0) {
+                containerFavoritos.innerHTML = `<p style="text-align: center; grid-column: span 2; color: var(--texto-mutado); padding: 25px; font-size:13px;">Nenhum produto favoritado ainda.</p>`;
+                return;
+            }
+
+            containerFavoritos.innerHTML = filtrados.map(prod => `
+                <div class="produto-card">
+                    <button class="btn-favorito active" data-id="${prod.id}" onclick="alternarFavorito('${prod.id}')">
+                        <i class="fa-solid fa-heart"></i>
+                    </button>
+                    <img src="${prod.img}" class="produto-img">
+                    <div class="produto-nome">${prod.nome}</div>
+                    <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(94)</span></div>
+                    <div>
+                        <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
+                        <div class="preco-novo">R$ ${prod.precoNovo}</div>
+                    </div>
+                    <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
+                </div>
+            `).join('');
+        }
+
+        function abrirPoliticaPrivacidade() {
+            alert("Link de Políticas não configurado.");
+        }
+
+        function construirEstrutura() {
+            const carrosselContainer = document.getElementById('carrossel-hot-deals');
+            if(carrosselContainer && PRODUTOS_LOJA.length > 0) {
+                const amostraCarrossel = PRODUTOS_LOJA.slice(0, 5);
+                carrosselContainer.innerHTML = amostraCarrossel.map(prod => `
+                    <div class="card-hot">
+                        <span class="tag-desconto">🔥 QUENTE</span>
+                        <img src="${prod.img}" class="produto-img">
+                        <div class="produto-nome">${prod.nome}</div>
+                        <div>
+                            <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
+                            <div class="preco-novo">R$ ${prod.precoNovo}</div>
+                        </div>
+                        <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
+                    </div>
+                `).join('');
+            }
+
+            const mosaicoContainer = document.getElementById('mosaico-categorias-container');
+            if(mosaicoContainer) {
+                mosaicoContainer.innerHTML = CATEGORIAS_DADOS.map(cat => `
+                    <div class="categoria-card" onclick="filtrarPorCategoria('${cat.id}')">
+                        <span class="categoria-tag-top">Oferta</span>
+                        <img src="${cat.img}" class="categoria-img">
+                        <div class="categoria-glass-footer"><p>${cat.nome}</p></div>
+                    </div>
+                `).join('');
+            }
+
+            const trackDepoimentos = document.getElementById('track-depoimentos');
+            if(trackDepoimentos) {
+                const listaDuplicada = [...DEPOIMENTOS_DADOS, ...DEPOIMENTOS_DADOS];
+                trackDepoimentos.innerHTML = listaDuplicada.map(dep => `
+                    <div class="depoimento-box">
+                        <div class="depoimento-user">
+                            <div class="avatar-fake" style="background: ${dep.cor};">${dep.letra}</div>
+                            <div>
+                                <h4 style="font-size:13px;">${dep.nome}</h4>
+                                <p style="font-size:11px; color:gray;">Verificado ✅</p>
+                            </div>
+                        </div>
+                        <p style="font-size:12px; color:#444; font-style:italic; line-height:1.4;">${dep.texto}</p>
+                    </div>
+                `).join('');
+            }
+
+            renderizarGridHome(PRODUTOS_LOJA);
+            renderizarGridOfertas(PRODUTOS_LOJA);
+            renderizarAbaFavoritos();
+        }
 
         document.addEventListener("DOMContentLoaded", construirEstrutura);
         document.addEventListener("DOMContentLoaded", atualizarPerfilUsuario);
 
-        // Modal e cookie banner mantidos
+        function aceitarCookies() {
+            localStorage.setItem("cookiesAceitos", "sim");
+            document.getElementById("cookie-banner").style.display = "none";
+        }
+
+        window.addEventListener("load", () => {
+            const aceitou = localStorage.getItem("cookiesAceitos");
+            if(aceitou === "sim"){
+                document.getElementById("cookie-banner").style.display = "none";
+            }
+        });
+
+        function alternarTema() {
+            const temaAtual = localStorage.getItem("tema-site") || "claro";
+            if (temaAtual === "claro") {
+                document.body.classList.add("tema-escuro");
+                localStorage.setItem("tema-site", "escuro");
+                alert("🌙 Tema escuro ativado");
+            } else {
+                document.body.classList.remove("tema-escuro");
+                localStorage.setItem("tema-site", "claro");
+                alert("☀️ Tema claro ativado");
+            }
+        }
+
+        window.addEventListener("load", () => {
+            const temaSalvo = localStorage.getItem("tema-site");
+            if (temaSalvo === "escuro") {
+                document.body.classList.add("tema-escuro");
+            }
+        });
+
+        const AVATARES = [
+            "🦊", "🐼", "🐱", "🐸", "🐵", "🐧", "🦁", "🐨", "🐯", "🐰", "🦄", "🐻"
+        ];
+
+        function abrirCadastro() {
+            const nome = prompt("Digite seu nome:");
+            if (!nome || nome.trim() === "") return;
+
+            const avatarAleatorio = AVATARES[Math.floor(Math.random() * AVATARES.length)];
+            localStorage.setItem("usuarioNome", nome);
+            localStorage.setItem("usuarioAvatar", avatarAleatorio);
+            carregarUsuario();
+            alert("Cadastro realizado com sucesso 🎉");
+        }
+
+        function criarConta() {
+            const nome = document.getElementById("nome-usuario").value.trim();
+            const email = document.getElementById("email-usuario").value.trim();
+            const aceitou = document.getElementById("aceitou-termos").checked;
+            const receberPromocoes = document.getElementById("aceitou-promocoes").checked;
+
+            if(nome === ""){
+                alert("Digite seu nome.");
+                return;
+            }
+
+            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if(!regexEmail.test(email)){
+                alert("Digite um e-mail válido.");
+                return;
+            }
+
+            if(!aceitou){
+                alert("Você precisa aceitar a Política de Privacidade e os Termos de Uso.");
+                return;
+            }
+
+            localStorage.setItem("usuarioNome", nome);
+            localStorage.setItem("usuarioEmail", email);
+            localStorage.setItem("usuarioLogado", "sim");
+            localStorage.setItem("receberPromocoes", receberPromocoes);
+
+            const perfil = document.getElementById("nome-perfil");
+            if(perfil) perfil.innerText = nome;
+
+            alert("🎉 Conta criada com sucesso!");
+            fecharCadastro();
+        }
+
+        function carregarUsuario() {
+            const nomeSalvo = localStorage.getItem("usuarioNome");
+            const avatarSalvo = localStorage.getItem("usuarioAvatar");
+
+            if(nomeSalvo){
+                const perfil = document.getElementById("nome-perfil");
+                if(perfil) perfil.innerText = nomeSalvo;
+
+                if(avatarSalvo){
+                    const avatar = document.getElementById("avatar-usuario");
+                    if(avatar) avatar.innerText = avatarSalvo;
+                }
+            }
+        }
+
+        window.addEventListener("load", carregarUsuario);
+
+        function abrirCadastro(){
+            document.getElementById("modal-cadastro").style.display = "flex";
+        }
+
+        function fecharCadastro(){
+            document.getElementById("modal-cadastro").style.display = "none";
+        }
+
+        window.addEventListener("load", () => {
+            const nomeSalvo = localStorage.getItem("usuarioNome");
+            if(nomeSalvo){
+                const perfil = document.getElementById("nome-perfil");
+                if(perfil){
+                    perfil.innerText = nomeSalvo;
+                }
+            }
+        });
     </script>
 
     <!-- MODAL DE CADASTRO -->
@@ -2092,14 +2438,16 @@ const PRODUTOS_LOJA = [];
             <p>Salve produtos favoritos e receba ofertas exclusivas.</p>
             <input type="text" id="nome-usuario" placeholder="Seu nome">
             <input type="email" id="email-usuario" placeholder="Seu e-mail">
-            
+            <div class="aceite-newsletter">
+                <input type="checkbox" id="aceitou-promocoes">
+                <label for="aceitou-promocoes">Quero receber ofertas e promoções por e-mail.</label>
+            </div>
             <div class="aceite-termos">
                 <input type="checkbox" id="aceitou-termos">
                 <label for="aceitou-termos">
                     Estou ciente da <a href="LINK_POLITICA">Política de Privacidade</a> e dos <a href="LINK_TERMOS">Termos de Uso</a>
                 </label>
             </div>
-
             <button onclick="criarConta()">Criar Conta</button>
             <button onclick="fecharCadastro()" class="btn-fechar-cadastro">Fechar</button>
         </div>
