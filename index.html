@@ -603,7 +603,85 @@ body.tema-escuro .depoimento-box h4 {
 body.tema-escuro .categoria-glass-footer p {
     color: white !important;
 }
-        
+       .modal-cadastro{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.6);
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    z-index:99999;
+}
+
+.modal-cadastro-box{
+
+    background:white;
+
+    width:90%;
+    max-width:400px;
+
+    padding:25px;
+
+    border-radius:16px;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:12px;
+}
+
+.modal-cadastro-box input{
+
+    padding:12px;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+}
+
+.modal-cadastro-box button{
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    background:#cc0a12;
+
+    color:white;
+
+    font-weight:600;
+}
+
+.btn-fechar-cadastro{
+
+    background:#999 !important;
+}
+
+.aceite-termos{
+
+    font-size:13px;
+
+    display:flex;
+
+    gap:8px;
+
+    align-items:flex-start;
+}
+
+.aceite-termos a{
+
+    color:#cc0a12;
+
+    font-weight:600;
+} 
     </style>
 </head>
 <body>
@@ -2385,7 +2463,74 @@ function carregarUsuario() {
     }
 }
 window.addEventListener("load", carregarUsuario);
+        function abrirCadastro(){
+
+    document.getElementById("modal-cadastro").style.display = "flex";
+
+}
+
+function fecharCadastro(){
+
+    document.getElementById("modal-cadastro").style.display = "none";
+
+}
     </script>
+
+    <!-- MODAL DE CADASTRO -->
+
+<div id="modal-cadastro" class="modal-cadastro">
+
+    <div class="modal-cadastro-box">
+
+        <h2>🎉 Crie sua conta grátis</h2>
+
+        <p>
+            Salve produtos favoritos e receba ofertas exclusivas.
+        </p>
+
+        <input type="text"
+               id="nome-usuario"
+               placeholder="Seu nome">
+
+        <input type="email"
+               id="email-usuario"
+               placeholder="Seu e-mail">
+
+        <div class="aceite-termos">
+
+            <input type="checkbox"
+                   id="aceitou-termos">
+
+            <label for="aceitou-termos">
+
+                Estou ciente da
+
+                <a href="LINK_POLITICA">
+                    Política de Privacidade
+                </a>
+
+                e dos
+
+                <a href="LINK_TERMOS">
+                    Termos de Uso
+                </a>
+
+            </label>
+
+        </div>
+
+        <button onclick="criarConta()">
+            Criar Conta
+        </button>
+
+        <button onclick="fecharCadastro()"
+                class="btn-fechar-cadastro">
+            Fechar
+        </button>
+
+    </div>
+
+</div>
     <!-- BANNER DE COOKIES -->
 <div id="cookie-banner" class="cookie-banner">
     <div class="cookie-texto">
