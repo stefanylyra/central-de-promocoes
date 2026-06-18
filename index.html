@@ -2468,49 +2468,8 @@ function login() {
         function fecharCadastro(){
             document.getElementById("modal-cadastro").style.display = "none";
         }
-
-       auth.onAuthStateChanged((user) => {
-
-    if(user){
-
-        db.collection("usuarios")
-          .doc(user.uid)
-          .get()
-          .then((doc) => {
-
-            if(doc.exists){
-
-                const dados = doc.data();
-                
-                console.log("Nome vindo do Firebase:", dados.nome);
-                console.log("Elemento perfil:", document.getElementById("nome-perfil"));
-
-                document.getElementById("nome-perfil").innerText = dados.nome;
-
-                const btnLogin = document.getElementById("btn-login");
-
-                if(btnLogin){
-                    btnLogin.style.display = "none";
-                }
-
-            }
-
-          });
-
-    } else {
-
-        document.getElementById("nome-perfil").innerText = "Visitante";
-
-        const btnLogin = document.getElementById("btn-login");
-
-        if(btnLogin){
-            btnLogin.style.display = "block";
-        }
-
-    }
-
-});
-        function logout(){
+        
+          function logout(){
 
     auth.signOut()
         .then(() => {
@@ -2519,6 +2478,47 @@ function login() {
         });
 
 }
+
+       auth.onAuthStateChanged((user) => {
+
+    console.log("USER:", user);
+
+    if(user){
+
+        db.collection("usuarios")
+          .doc(user.uid)
+          .get()
+          .then((doc) => {
+
+              console.log("DOC EXISTS:", doc.exists);
+              console.log("DADOS:", doc.data());
+
+              if(doc.exists){
+
+                  const dados = doc.data();
+
+                  const perfil =
+                      document.getElementById("nome-perfil");
+
+                  console.log("PERFIL:", perfil);
+
+                  perfil.innerText = dados.nome;
+
+                  const btnLogin =
+                      document.getElementById("btn-login");
+
+                  if(btnLogin){
+                      btnLogin.style.display = "none";
+                  }
+
+              }
+
+          });
+
+    }
+
+});
+      
     </script>
 
     <!-- MODAL DE CADASTRO -->
