@@ -2163,15 +2163,18 @@ const PRODUTOS_LOJA = [];
             if(wrapperDepoimentos) wrapperDepoimentos.style.display = 'block';
         }
 
-        function alternarFavorito(idProduto) {
+       function alternarFavorito(idProduto) {
+    console.log("Alternar favorito clicado:", idProduto); // debug
+
     const user = auth.currentUser;
 
     if (!user) {
+        console.log("Usuário não logado → abrindo modal");
         mostrarModalLoginObrigatorio();
         return;
     }
 
-    // Usuário logado → salva normalmente
+    // Usuário logado
     if (favoritosSalvos.includes(idProduto)) {
         favoritosSalvos = favoritosSalvos.filter(id => id !== idProduto);
     } else {
@@ -2180,10 +2183,7 @@ const PRODUTOS_LOJA = [];
 
     atualizarIconesCoraoGlobais();
     renderizarAbaFavoritos();
-
-    // Futuro: salvar no Firestore (vou te ajudar depois)
 }
-
         function atualizarIconesCoraoGlobais() {
             document.querySelectorAll(`.btn-favorito`).forEach(btn => {
                 const idProd = btn.getAttribute('data-id');
@@ -2290,7 +2290,22 @@ const PRODUTOS_LOJA = [];
             alert("Link de Políticas não configurado.");
         }
 function mostrarModalLoginObrigatorio() {
-    document.getElementById("modal-login-obrigatorio").style.display = "flex";
+    const modal = document.getElementById("modal-login-obrigatorio");
+    if (modal) {
+        modal.style.display = "flex";
+    } else {
+        console.error("Modal não encontrado!");
+    }
+}
+
+function fecharModalLoginObrigatorio() {
+    const modal = document.getElementById("modal-login-obrigatorio");
+    if (modal) modal.style.display = "none";
+}
+
+function abrirLoginDoModal() {
+    fecharModalLoginObrigatorio();
+    abrirCadastro();
 }
 
 function fecharModalLoginObrigatorio() {
@@ -2577,12 +2592,14 @@ document.getElementById("btn-login").style.display = "none";
 <button onclick="fecharCadastro()" class="btn-fechar-cadastro">
     Fechar
 </button>
-<!-- MODAL LOGIN OBRIGATÓRIO -->
+    </div> 
+</div> <
+<!-- MODAL LOGIN OBRIGATÓRIO (fora do outro modal!) -->
 <div id="modal-login-obrigatorio" class="modal-cadastro" style="display: none;">
     <div class="modal-cadastro-box" style="text-align: center;">
         <h2>❤️ Salvar favorito</h2>
         <p style="margin: 16px 0; font-size: 15px; color: #444;">
-            Para salvar suas promoções favoritas, você precisa estar logado.
+            Para salvar suas promoções favoritas, você precisa estar logado na sua conta.
         </p>
         
         <button onclick="abrirLoginDoModal()" style="width: 100%; margin-bottom: 10px;">
