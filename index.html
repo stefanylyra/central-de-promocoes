@@ -640,6 +640,63 @@
         .aceite-termos a:hover{
             text-decoration:underline;
         }
+        .lojas-container{
+    padding:16px;
+    background:white;
+    border-bottom:1px solid var(--borda);
+}
+
+.titulo-lojas{
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:14px;
+}
+
+.lojas-grid{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    scrollbar-width:none;
+}
+
+.lojas-grid::-webkit-scrollbar{
+    display:none;
+}
+
+.loja-card{
+    min-width:140px;
+    height:60px;
+
+    background:white;
+
+    border-radius:14px;
+
+    border:1px solid var(--borda);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.loja-card:hover{
+    transform:translateY(-2px);
+}
+
+.loja-card img{
+    width:34px;
+    height:34px;
+    object-fit:contain;
+}
+
+.loja-card span{
+    font-size:13px;
+    font-weight:700;
+}
     </style>
 </head>
 <body>
@@ -669,7 +726,45 @@
         <div class="afiliado-banner">
             ⚠️ <strong>Aviso Importante:</strong> Este site não vende nada. Apenas selecionamos e achamos as melhores ofertas de lojas confiáveis e redirecionamos você.
         </div>
+<div class="lojas-container">
+    
+    <h3 class="titulo-lojas">Filtrar por loja</h3>
 
+    <div class="lojas-grid">
+
+        <div class="loja-card" onclick="filtrarPorLoja('amazon')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
+            <span>Amazon</span>
+        </div>
+
+        <div class="loja-card" onclick="filtrarPorLoja('mercado-livre')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_Mercado_Livre.png">
+            <span>Mercado Livre</span>
+        </div>
+
+        <div class="loja-card" onclick="filtrarPorLoja('shopee')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg">
+            <span>Shopee</span>
+        </div>
+
+        <div class="loja-card" onclick="filtrarPorLoja('magalu')">
+            <img src="https://logodownload.org/wp-content/uploads/2017/12/magazine-luiza-logo.png">
+            <span>Magazine Luiza</span>
+        </div>
+
+        <div class="loja-card" onclick="filtrarPorLoja('shein')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Shein_logo.svg/512px-Shein_logo.svg.png">
+            <span>Shein</span>
+        </div>
+
+        <div class="loja-card" onclick="filtrarPorLoja('aliexpress')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Aliexpress_logo.svg">
+            <span>AliExpress</span>
+        </div>
+
+    </div>
+
+</div>
         <main id="aba-inicio" class="app-page active">
             <div id="wrapper-ofertas-quentes">
                 <div class="section-title">
@@ -2421,6 +2516,34 @@ const PRODUTOS_LOJA = [];
             renderizarGridOfertas(filtrados);
             mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
         }
+        
+        function filtrarPorLoja(loja){
+
+    const produtosFiltrados =
+    PRODUTOS_LOJA.filter(prod => {
+
+        return (
+            prod.loja &&
+            prod.loja.toLowerCase() === loja.toLowerCase()
+        );
+
+    });
+
+    document.getElementById(
+        "titulo-aba-ofertas"
+    ).innerText =
+    "🏪 " + loja.toUpperCase();
+
+    renderizarGridOfertas(
+        produtosFiltrados
+    );
+
+    mudarAba(
+        "ofertas",
+        document.querySelectorAll(".nav-item")[2]
+    );
+
+}
 
         function filtrarPesquisa() {
             const termo = document.getElementById('input-busca').value.toLowerCase().trim();
