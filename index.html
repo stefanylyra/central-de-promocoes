@@ -697,6 +697,90 @@
     font-size:13px;
     font-weight:700;
 }
+        .lojas-wrapper{
+    position:relative;
+    display:flex;
+    align-items:center;
+}
+
+.btn-loja-nav{
+    width:36px;
+    height:36px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#cc0a12;
+
+    color:white;
+
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:0 3px 8px rgba(0,0,0,.15);
+
+    z-index:10;
+}
+
+.btn-loja-nav:hover{
+    opacity:.9;
+}
+
+.left{
+    margin-right:8px;
+}
+
+.right{
+    margin-left:8px;
+}
+
+.lojas-grid{
+    flex:1;
+
+    display:flex;
+    gap:12px;
+
+    overflow-x:auto;
+
+    scroll-behavior:smooth;
+
+    scrollbar-width:none;
+}
+
+.lojas-grid::-webkit-scrollbar{
+    display:none;
+}
+        .loja-card{
+    min-width:160px;
+    height:70px;
+
+    background:#fff;
+
+    border-radius:14px;
+
+    border:1px solid #eee;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:12px;
+
+    padding:0 15px;
+
+    flex-shrink:0;
+}
+        .loja-card img{
+    width:40px;
+    height:40px;
+    object-fit:contain;
+}
     </style>
 </head>
 <body>
@@ -730,7 +814,25 @@
     
     <h3 class="titulo-lojas">Filtrar por loja</h3>
 
-    <div class="lojas-grid">
+    <div class="lojas-wrapper">
+
+    <button class="btn-loja-nav left"
+            onclick="scrollLojas(-250)">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+
+    <div class="lojas-grid" id="lojas-grid">
+
+        <!-- cards -->
+
+    </div>
+
+    <button class="btn-loja-nav right"
+            onclick="scrollLojas(250)">
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+</div>
 
         <div class="loja-card" onclick="filtrarPorLoja('amazon')">
             <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
@@ -738,7 +840,7 @@
         </div>
 
         <div class="loja-card" onclick="filtrarPorLoja('mercado-livre')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_Mercado_Livre.png">
+           <img src="https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo__large_plus.png">
             <span>Mercado Livre</span>
         </div>
 
@@ -748,7 +850,7 @@
         </div>
 
         <div class="loja-card" onclick="filtrarPorLoja('magalu')">
-            <img src="https://logodownload.org/wp-content/uploads/2017/12/magazine-luiza-logo.png">
+            <img src="https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo-1.png">
             <span>Magazine Luiza</span>
         </div>
 
@@ -758,7 +860,7 @@
         </div>
 
         <div class="loja-card" onclick="filtrarPorLoja('aliexpress')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Aliexpress_logo.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/AliExpress_logo.svg">
             <span>AliExpress</span>
         </div>
 
@@ -2516,6 +2618,17 @@ const PRODUTOS_LOJA = [];
             renderizarGridOfertas(filtrados);
             mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
         }
+
+        function scrollLojas(valor){
+
+    document
+        .getElementById("lojas-grid")
+        .scrollBy({
+            left: valor,
+            behavior: "smooth"
+        });
+
+}
         
         function filtrarPorLoja(loja){
 
@@ -2554,6 +2667,7 @@ const PRODUTOS_LOJA = [];
             const tituloDepoimentos = document.getElementById('titulo-depoimentos');
             const wrapperDepoimentos = document.getElementById('wrapper-depoimentos');
             
+ 
             const activePage = document.querySelector('.app-page.active');
 
             if (termo.length > 0) {
