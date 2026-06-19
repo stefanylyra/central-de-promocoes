@@ -642,21 +642,28 @@
         }
         .lojas-container{
     padding:16px;
-    background:white;
-    border-bottom:1px solid var(--borda);
+    background:transparent;
 }
 
 .titulo-lojas{
     font-size:18px;
     font-weight:700;
-    margin-bottom:14px;
+    margin-bottom:12px;
+}
+
+.lojas-wrapper{
+    display:flex;
+    align-items:center;
+    gap:8px;
 }
 
 .lojas-grid{
     display:flex;
-    gap:12px;
+    gap:10px;
     overflow-x:auto;
+    scroll-behavior:smooth;
     scrollbar-width:none;
+    flex:1;
 }
 
 .lojas-grid::-webkit-scrollbar{
@@ -664,122 +671,39 @@
 }
 
 .loja-card{
-    min-width:140px;
-    height:60px;
-
-    background:white;
-
-    border-radius:14px;
-
+    min-width:130px;
+    height:52px;
+    background:#fff;
     border:1px solid var(--borda);
-
+    border-radius:12px;
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:10px;
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-.loja-card:hover{
-    transform:translateY(-2px);
+    gap:8px;
+    padding:0 12px;
+    flex-shrink:0;
 }
 
 .loja-card img{
-    width:34px;
-    height:34px;
+    width:28px;
+    height:28px;
     object-fit:contain;
 }
 
 .loja-card span{
     font-size:13px;
-    font-weight:700;
-}
-        .lojas-wrapper{
-    position:relative;
-    display:flex;
-    align-items:center;
+    font-weight:600;
 }
 
 .btn-loja-nav{
-    width:36px;
-    height:36px;
-
+    width:34px;
+    height:34px;
     border:none;
-
     border-radius:50%;
-
-    background:#cc0a12;
-
-    color:white;
-
+    background:var(--cor-principal);
+    color:#fff;
     cursor:pointer;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    box-shadow:0 3px 8px rgba(0,0,0,.15);
-
-    z-index:10;
-}
-
-.btn-loja-nav:hover{
-    opacity:.9;
-}
-
-.left{
-    margin-right:8px;
-}
-
-.right{
-    margin-left:8px;
-}
-
-.lojas-grid{
-    flex:1;
-
-    display:flex;
-    gap:12px;
-
-    overflow-x:auto;
-
-    scroll-behavior:smooth;
-
-    scrollbar-width:none;
-}
-
-.lojas-grid::-webkit-scrollbar{
-    display:none;
-}
-        .loja-card{
-    min-width:160px;
-    height:70px;
-
-    background:#fff;
-
-    border-radius:14px;
-
-    border:1px solid #eee;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:12px;
-
-    padding:0 15px;
-
     flex-shrink:0;
-}
-        .loja-card img{
-    width:40px;
-    height:40px;
-    object-fit:contain;
 }
     </style>
 </head>
@@ -814,55 +738,55 @@
     
     <h3 class="titulo-lojas">Filtrar por loja</h3>
 
+  <div class="lojas-container">
+
+    <h3 class="titulo-lojas">Filtrar por loja</h3>
+
     <div class="lojas-wrapper">
 
-    <button class="btn-loja-nav left"
-            onclick="scrollLojas(-250)">
-        <i class="fa-solid fa-chevron-left"></i>
-    </button>
+        <button class="btn-loja-nav left"
+                onclick="scrollLojas(-250)">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
 
-    <div class="lojas-grid" id="lojas-grid">
+        <div class="lojas-grid" id="lojas-grid">
 
-        <!-- cards -->
+            <div class="loja-card" onclick="filtrarPorLoja('amazon')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
+                <span>Amazon</span>
+            </div>
 
-    </div>
+            <div class="loja-card" onclick="filtrarPorLoja('mercado-livre')">
+                <img src="https://cdn.worldvectorlogo.com/logos/mercado-libre-1.svg">
+                <span>Mercado Livre</span>
+            </div>
 
-    <button class="btn-loja-nav right"
-            onclick="scrollLojas(250)">
-        <i class="fa-solid fa-chevron-right"></i>
-    </button>
+            <div class="loja-card" onclick="filtrarPorLoja('shopee')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg">
+                <span>Shopee</span>
+            </div>
 
-</div>
+            <div class="loja-card" onclick="filtrarPorLoja('magalu')">
+                <img src="https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png">
+                <span>Magazine Luiza</span>
+            </div>
 
-        <div class="loja-card" onclick="filtrarPorLoja('amazon')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
-            <span>Amazon</span>
+            <div class="loja-card" onclick="filtrarPorLoja('shein')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Shein_logo.svg">
+                <span>Shein</span>
+            </div>
+
+            <div class="loja-card" onclick="filtrarPorLoja('aliexpress')">
+                <img src="https://cdn.worldvectorlogo.com/logos/aliexpress.svg">
+                <span>AliExpress</span>
+            </div>
+
         </div>
 
-        <div class="loja-card" onclick="filtrarPorLoja('mercado-livre')">
-           <img src="https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo__large_plus.png">
-            <span>Mercado Livre</span>
-        </div>
-
-        <div class="loja-card" onclick="filtrarPorLoja('shopee')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg">
-            <span>Shopee</span>
-        </div>
-
-        <div class="loja-card" onclick="filtrarPorLoja('magalu')">
-            <img src="https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo-1.png">
-            <span>Magazine Luiza</span>
-        </div>
-
-        <div class="loja-card" onclick="filtrarPorLoja('shein')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Shein_logo.svg/512px-Shein_logo.svg.png">
-            <span>Shein</span>
-        </div>
-
-        <div class="loja-card" onclick="filtrarPorLoja('aliexpress')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/AliExpress_logo.svg">
-            <span>AliExpress</span>
-        </div>
+        <button class="btn-loja-nav right"
+                onclick="scrollLojas(250)">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
 
     </div>
 
