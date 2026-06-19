@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Central de Ofertas Quentes</title>
+    <title>Central de Promoções</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -14,14 +14,6 @@
             --texto-escuro: #1a1a1a;
             --texto-mutado: #707070;
             --borda: #eaeaea;
-        }
-
-        .tema-escuro {
-            --cor-fundo: #121212;
-            --cor-card: #1e1e1e;
-            --texto-escuro: #f5f5f5;
-            --texto-mutado: #a0a0a0;
-            --borda: #2d2d2d;
         }
 
         * {
@@ -37,152 +29,294 @@
             color: var(--texto-escuro);
             display: flex;
             justify-content: center;
-            transition: background-color 0.3s, color 0.3s;
         }
 
         .app-container {
             width: 100%;
-            max-width: 600px;
-            background: var(--cor-card);
+            max-width: 500px;
             min-height: 100vh;
+            background-color: var(--cor-fundo);
+            position: relative;
+            padding-bottom: 100px;
             display: flex;
             flex-direction: column;
-            position: relative;
-            padding-bottom: 70px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
         }
 
-        /* Topo / Header */
         header {
+            background-color: var(--cor-card);
             padding: 16px;
-            background: var(--cor-card);
-            border-bottom: 1px solid var(--borda);
             position: sticky;
             top: 0;
             z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            border-bottom: 1px solid var(--borda);
         }
 
         .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
         }
 
-        .logo h1 {
-            font-size: 20px;
-            color: var(--cor-principal);
-            font-weight: 800;
-        }
-
-        .header-actions {
+        .logo {
             display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .header-actions button, .header-actions i {
-            background: none;
-            border: none;
-            color: var(--texto-escuro);
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-        .search-container {
-            display: flex;
-            background: var(--cor-fundo);
-            border-radius: 8px;
-            padding: 10px 14px;
             align-items: center;
             gap: 8px;
-        }
-
-        .search-container input {
-            border: none;
-            background: none;
-            width: 100%;
-            outline: none;
-            color: var(--texto-escuro);
-            font-size: 14px;
-        }
-
-        /* Páginas / Abas */
-        .app-page {
-            display: none;
-            padding: 16px;
-            flex-direction: column;
-        }
-
-        .app-page.active {
-            display: flex;
-        }
-
-        /* Seções e Títulos */
-        .secao-titulo {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .secao-titulo a {
-            font-size: 12px;
-            color: var(--cor-principal);
             text-decoration: none;
         }
 
-        /* Carrossel e Elementos de Scroll */
-        .carrossel-hot {
+        .logo-tag {
+            background-color: var(--cor-principal);
+            color: white;
+            padding: 6px 9px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .logo-texto .p1 {
+            font-size: 13px;
+            color: var(--texto-escuro);
+            font-weight: 500;
+            display: block;
+            line-height: 1;
+        }
+
+        .logo-texto .p2 {
+            font-size: 22px;
+            color: var(--cor-principal);
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+            font-size: 22px;
+            color: #333;
+            position: relative;
+        }
+
+        .badge-notificacao {
+            position: absolute;
+            top: -5px;
+            left: 12px;
+            background-color: var(--cor-principal);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 14px 16px 14px 45px;
+            border: 1px solid var(--borda);
+            border-radius: 25px;
+            background-color: #f1f3f5;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8e8e93;
+            font-size: 16px;
+        }
+
+        .afiliado-banner {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 12px 16px;
+            font-size: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ffeeba;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .app-page {
+            display: none;
+            padding: 16px;
+        }
+
+        .app-page.active {
+            display: block !important;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 700;
+            margin: 20px 0 14px 0;
+            color: var(--texto-escuro);
+        }
+
+        .ver-todos {
+            color: var(--cor-principal);
+            font-size: 13px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .grid-produtos {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .produto-card {
+            background-color: var(--cor-card);
+            border-radius: 16px;
+            padding: 12px;
+            position: relative;
+            border: 1px solid var(--borda);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+        }
+
+        .btn-favorito {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            color: #ccc;
+            z-index: 10;
+        }
+        .btn-favorito.active { color: var(--cor-principal); }
+
+        .produto-img {
+            width: 100%;
+            height: 130px;
+            object-fit: contain;
+            margin-bottom: 8px;
+            background-color: #fff;
+        }
+
+        .produto-nome {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--texto-escuro);
+            margin-bottom: 6px;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 34px;
+        }
+
+        .estrelas {
+            color: #ffb703;
+            font-size: 11px;
+            margin-bottom: 8px;
+        }
+        .estrelas span { color: var(--texto-mutado); font-weight: normal; }
+
+        .preco-antigo {
+            font-size: 11px;
+            color: var(--texto-mutado);
+            text-decoration: line-through;
+            margin-bottom: 2px;
+        }
+
+        .preco-novo {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--cor-principal);
+            margin-bottom: 10px;
+        }
+
+        .btn-oferta {
+            width: 100%;
+            background-color: var(--cor-principal);
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            display: block;
+        }
+
+        .ofertas-quentes-carrossel {
             display: flex;
             gap: 12px;
             overflow-x: auto;
-            padding-bottom: 8px;
+            padding-bottom: 10px;
             scrollbar-width: none;
         }
-        .carrossel-hot::-webkit-scrollbar { display: none; }
-
+        .ofertas-quentes-carrossel::-webkit-scrollbar { display: none; }
+        
         .card-hot {
-            min-width: 140px;
-            width: 140px;
-            background: var(--cor-fundo);
-            border-radius: 8px;
-            padding: 10px;
+            background: white;
+            border: 1px solid var(--borda);
+            border-radius: 16px;
+            padding: 12px;
+            min-width: 150px;
+            max-width: 150px;
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-
         .tag-desconto {
             position: absolute;
-            top: 6px;
-            left: 6px;
-            background: var(--cor-principal);
+            top: 10px;
+            left: 10px;
+            background-color: var(--cor-principal);
             color: white;
-            font-size: 9px;
-            font-weight: 700;
-            padding: 2px 6px;
-            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 3px 6px;
+            border-radius: 6px;
+            z-index: 2;
         }
 
-        /* Grid Mosaico de Categorias */
-        .mosaico-categorias {
+        .grid-categorias {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            margin-bottom: 20px;
         }
 
         .categoria-card {
-            background: var(--cor-fundo);
-            border-radius: 8px;
-            height: 90px;
             position: relative;
+            height: 145px;
+            border-radius: 14px;
             overflow: hidden;
             cursor: pointer;
+            border: 1px solid var(--borda);
         }
 
         .categoria-img {
@@ -193,13 +327,16 @@
 
         .categoria-tag-top {
             position: absolute;
-            top: 6px;
-            right: 6px;
-            background: rgba(0,0,0,0.6);
+            top: 8px;
+            left: 8px;
+            background-color: var(--cor-principal);
             color: white;
-            font-size: 8px;
-            padding: 2px 5px;
-            border-radius: 3px;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 3px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            z-index: 2;
         }
 
         .categoria-glass-footer {
@@ -207,334 +344,301 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            padding: 6px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 8px 4px;
             text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .categoria-glass-footer p {
-            color: white;
-            font-size: 12px;
-            font-weight: 600;
+            color: #000;
+            font-size: 11px;
+            font-weight: 700;
         }
 
-        /* Grid de Produtos Geral */
-        .grid-produtos {
+        .info-vendas-barra {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
-        .produto-card {
-            background: var(--cor-card);
-            border: 1px solid var(--borda);
-            border-radius: 8px;
-            padding: 10px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .produto-img {
-            width: 100%;
-            aspect-ratio: 1;
-            object-fit: contain;
-            margin-bottom: 8px;
-            border-radius: 4px;
-        }
-
-        .produto-nome {
-            font-size: 13px;
-            font-weight: 500;
-            line-height: 1.3;
-            height: 34px;
-            overflow: hidden;
-            margin-bottom: 6px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        .estrelas {
-            font-size: 10px;
-            color: #ffb300;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 2px;
-        }
-
-        .estrelas span {
-            color: var(--texto-mutado);
-            margin-left: 2px;
-        }
-
-        .preco-antigo {
-            font-size: 11px;
-            color: var(--texto-mutado);
-            text-decoration: line-through;
-        }
-
-        .preco-novo {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--cor-principal);
-            margin-bottom: 8px;
-        }
-
-        .btn-oferta {
-            display: block;
-            text-align: center;
-            background: var(--cor-principal);
-            color: white;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            padding: 8px;
-            border-radius: 6px;
-        }
-
-        .btn-favorito {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: var(--cor-card);
-            border: 1px solid var(--borda);
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 5;
-            color: var(--texto-mutado);
-        }
-
-        .btn-favorito.active {
-            color: var(--cor-principal);
-            border-color: var(--cor-principal);
-        }
-
-        /* Barra de Benefícios */
-        .barra-beneficios {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin: 16px 0;
-            text-align: center;
-        }
-
-        .beneficio-item {
-            background: var(--cor-fundo);
-            padding: 8px;
-            border-radius: 6px;
-            font-size: 11px;
-        }
-
-        .beneficio-item i {
-            color: var(--cor-principal);
-            margin-bottom: 4px;
-            display: block;
-        }
-
-        /* Depoimentos Infinitos */
-        .wrapper-depoimentos {
-            overflow: hidden;
-            width: 100%;
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
-
-        .track-depoimentos {
-            display: flex;
-            gap: 12px;
-            width: max-content;
-            animation: scrollDepoimentos 25s linear infinite;
-        }
-
-        .depoimento-box {
-            width: 240px;
-            background: var(--cor-fundo);
+            gap: 10px;
+            background: white;
             padding: 12px;
-            border-radius: 8px;
-            flex-shrink: 0;
+            border-radius: 12px;
+            border: 1px solid var(--borda);
+            margin: 15px 0;
+        }
+        .info-item { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 500; }
+        .info-item i { color: var(--cor-principal); font-size: 16px; }
+
+        .carrossel-depoimentos-container {
+            width: 100%;
+            overflow: hidden;
+            padding: 10px 0;
+            position: relative;
         }
 
-        .depoimento-user {
+        .carrossel-depoimentos-track {
             display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
+            gap: 16px;
+            width: max-content;
+            animation: rolarDepoimentos 25s linear infinite;
         }
 
-        .avatar-fake {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 12px;
+        .carrossel-depoimentos-track:hover {
+            animation-play-state: paused;
         }
 
-        @keyframes scrollDepoimentos {
+        @keyframes rolarDepoimentos {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
 
-        /* Menu de Navegação Inferior */
-        nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            max-width: 600px;
-            background: var(--cor-card);
-            border-top: 1px solid var(--borda);
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0;
-            z-index: 100;
-        }
-
-        .nav-item {
-            background: none;
-            border: none;
-            color: var(--texto-mutado);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 10px;
-            gap: 4px;
-            cursor: pointer;
-            width: 20%;
-        }
-
-        .nav-item.active {
-            color: var(--cor-principal);
-        }
-
-        .nav-item i { font-size: 18px; }
-
-        /* Modais */
-        .modal-cadastro {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-cadastro-box {
-            background: var(--cor-card);
-            padding: 20px;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .modal-cadastro-box h2 { font-size: 18px; }
-        .modal-cadastro-box p { font-size: 13px; color: var(--texto-mutado); }
-
-        .modal-cadastro-box input[type="text"],
-        .modal-cadastro-box input[type="email"],
-        .modal-cadastro-box input[type="password"] {
-            padding: 12px;
+        .depoimento-box {
+            background: white;
             border: 1px solid var(--borda);
-            background: var(--cor-fundo);
-            color: var(--texto-escuro);
-            border-radius: 6px;
-            outline: none;
+            border-radius: 16px;
+            padding: 16px;
+            width: 280px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .depoimento-user { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        
+        .avatar-fake {
+            color: white; 
+            width: 36px; 
+            height: 36px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: bold;
+            font-size: 14px;
         }
 
-        .modal-cadastro-box button {
-            background: var(--cor-principal);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .btn-fechar-cadastro {
-            background: none !important;
-            color: var(--texto-mutado) !important;
-            font-weight: 500 !important;
-            padding: 4px !important;
-        }
-
-        .aceite-newsletter, .aceite-termos {
-            display: flex;
-            gap: 8px;
-            font-size: 11px;
-            align-items: flex-start;
-            color: var(--texto-mutado);
-        }
-        .aceite-termos a { color: var(--cor-principal); text-decoration: none; }
-
-        /* Banner de Cookies */
-        .cookie-banner {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 32px);
-            max-width: 560px;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(4px);
-            color: white;
-            padding: 12px 16px;
-            border-radius: 8px;
+        .conta-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 12px;
-            z-index: 999;
-        }
-
-        .cookie-texto { font-size: 12px; line-height: 1.4; }
-        .cookie-banner button {
+            padding: 16px;
             background: white;
-            color: black;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 4px;
+            border: 1px solid var(--borda);
+            border-radius: 12px;
+            margin-bottom: 10px;
             font-weight: 600;
-            font-size: 12px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .conta-item div { display: flex; align-items: center; gap: 12px; }
+        .conta-item i.icone-vermelho { color: var(--cor-principal); font-size: 18px; }
+
+        .btn-sair {
+            width: 100%;
+            background-color: var(--cor-principal);
+            color: white;
+            text-align: center;
+            padding: 14px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 15px;
+            border: none;
+            margin-top: 20px;
             cursor: pointer;
         }
 
-        .erro-busca {
-            text-align: center;
-            grid-column: span 2;
-            color: var(--texto-mutado);
-            padding: 20px;
-            font-size: 13px;
+        nav.bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 500px;
+            background-color: var(--cor-principal);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            z-index: 999;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
         }
 
-        /* Aba Perfil / Painel */
-        .perfil-container {
-            text-align: center;
-            padding: 20px 0;
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 11px;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 20%;
+            transition: transform 0.1s ease;
         }
-        .perfil-avatar-grande {
-            font-size: 48px;
-            margin-bottom: 10px;
+
+        .nav-item:active { transform: scale(0.9); }
+        .nav-item.active { color: white; font-weight: bold; }
+        .nav-item i { font-size: 18px; }
+
+        .btn-whatsapp {
+            position: fixed;
+            bottom: 95px;
+            right: 15px;
+            background-color: #25d366;
+            color: white;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            text-decoration: none;
+            z-index: 998;
+        }
+
+        .erro-busca {
+            grid-column: span 2;
+            text-align: center;
+            color: var(--texto-mutado);
+            padding: 30px 10px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .cookie-banner{
+            position:fixed;
+            bottom:70px;
+            left:10px;
+            right:10px;
+            background:#ffffff;
+            border:1px solid #ddd;
+            border-radius:14px;
+            padding:14px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:12px;
+            box-shadow:0 4px 18px rgba(0,0,0,.15);
+            z-index:9999;
+        }
+
+        .cookie-texto{
+            font-size:13px;
+            color:#444;
+            line-height:1.4;
+        }
+
+        .cookie-banner button{
+            background:#cc0a12;
+            color:white;
+            border:none;
+            border-radius:10px;
+            padding:10px 16px;
+            cursor:pointer;
+            font-weight:600;
+        }
+
+        /* TEMA ESCURO */
+        body.tema-escuro {
+            --cor-fundo: #121212;
+            --cor-card: #1e1e1e;
+            --texto-escuro: #ffffff;
+            --texto-mutado: #b0b0b0;
+            --borda: #333333;
+            background: var(--cor-fundo);
+            color: var(--texto-escuro);
+        }
+
+        body.tema-escuro .produto-card,
+        body.tema-escuro .card,
+        body.tema-escuro .conta-item,
+        body.tema-escuro .section-title,
+        body.tema-escuro header,
+        body.tema-escuro .app-page {
+            background: #1e1e1e !important;
+            color: #ffffff !important;
+        }
+
+        body.tema-escuro .preco-antigo {
+            color: #999 !important;
+        }
+
+        body.tema-escuro .card-hot,
+        body.tema-escuro .depoimento-box,
+        body.tema-escuro .info-vendas-barra {
+            background: #1e1e1e !important;
+            border-color: #333 !important;
+        }
+
+        body.tema-escuro .categoria-glass-footer {
+            background: rgba(30,30,30,.9);
+        }
+
+        .modal-cadastro{
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.6);
+            display:none;
+            align-items:center;
+            justify-content:center;
+            z-index:99999;
+        }
+
+        .modal-cadastro-box{
+            background:white;
+            width:90%;
+            max-width:400px;
+            padding:25px;
+            border-radius:16px;
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+        }
+
+        .modal-cadastro-box input{
+            padding:12px;
+            border:1px solid #ddd;
+            border-radius:10px;
+        }
+
+        .modal-cadastro-box button{
+            padding:12px;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            background:#cc0a12;
+            color:white;
+            font-weight:600;
+        }
+
+        .btn-fechar-cadastro{
+            background:#999 !important;
+        }
+
+        .aceite-termos{
+            display:flex;
+            align-items:flex-start;
+            gap:8px;
+            font-size:13px;
+            line-height:1.4;
+        }
+
+        .aceite-termos input{
+            width:auto;
+            margin-top:3px;
+        }
+
+        .aceite-termos a{
+            color:#cc0a12;
+            font-weight:600;
+            text-decoration:none;
+        }
+
+        .aceite-termos a:hover{
+            text-decoration:underline;
         }
     </style>
 </head>
@@ -544,262 +648,1714 @@
         
         <header>
             <div class="header-top">
-                <div class="logo">
-                    <h1>🔥 Ofertas Quentes</h1>
-                </div>
-                <div class="header-actions">
-                    <button onclick="alternarTema()"><i class="fa-regular fa-moon"></i></button>
-                    <button onclick="abrirCadastro()" id="btn-login"><i class="fa-regular fa-user"></i></button>
-                    <span id="nome-perfil" style="font-size: 13px; font-weight: 600;">Visitante</span>
+                <a href="#" class="logo" onclick="mudarAba('inicio', document.querySelector('.nav-item'))">
+                    <span class="logo-tag">%</span>
+                    <div class="logo-texto">
+                        <span class="p1">central de</span>
+                        <span class="p2">promoções</span>
+                    </div>
+                </a>
+                <div class="header-icons">
+                    <i class="fa-regular fa-bell"></i><span class="badge-notificacao">3</span>
+                    <i class="fa-solid fa-cart-shopping"></i>
                 </div>
             </div>
             <div class="search-container">
-                <i class="fa-solid fa-magnifying-glass" style="color: var(--texto-mutado);"></i>
-                <input type="text" id="input-busca" placeholder="O que você está procurando hoje?" oninput="filtrarPesquisa()">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="input-busca" placeholder="Buscar produtos, marcas e ofertas..." oninput="filtrarPesquisa()">
             </div>
         </header>
 
-        <div id="aba-inicio" class="app-page active">
-            
+        <div class="afiliado-banner">
+            ⚠️ <strong>Aviso Importante:</strong> Este site não vende nada. Apenas selecionamos e achamos as melhores ofertas de lojas confiáveis e redirecionamos você.
+        </div>
+
+        <main id="aba-inicio" class="app-page active">
             <div id="wrapper-ofertas-quentes">
-                <div class="secao-titulo">
-                    <span>⚡ Ofertas Quentes</span>
+                <div class="section-title">
+                    <span>🔥 Ofertas Quentes</span>
+                    <a href="#" class="ver-todos" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
                 </div>
-                <div class="carrossel-hot" id="carrossel-hot-deals">
-                    </div>
+                <div class="ofertas-quentes-carrossel" id="carrossel-hot-deals"></div>
             </div>
 
-            <div class="barra-beneficios" id="barra-beneficios">
-                <div class="beneficio-item"><i class="fa-solid fa-shield-halved"></i>Links Seguros</div>
-                <div class="beneficio-item"><i class="fa-solid fa-bolt"></i>Atualizado Hoje</div>
-                <div class="beneficio-item"><i class="fa-solid fa-percent"></i>Zero Taxas</div>
+            <div class="info-vendas-barra" id="barra-beneficios">
+                <div class="info-item"><i class="fa-solid fa-shield-halved"></i> Lojas Seguras</div>
+                <div class="info-item"><i class="fa-solid fa-truck"></i> Achados Frete Grátis</div>
+                <div class="info-item"><i class="fa-solid fa-rotate"></i> Links Atualizados</div>
+                <div class="info-item"><i class="fa-solid fa-award"></i> Acesso Direto</div>
             </div>
 
-            <div class="secao-titulo">
-                <span>📂 Navegar por Categorias</span>
-            </div>
-            <div class="mosaico-categorias" id="mosaico-categorias-container">
-                </div>
-
-            <div class="secao-titulo">
+            <div class="section-title">
                 <span id="titulo-grid-home">⚡ Ofertas Imperdíveis</span>
-                <a href="#" id="link-ver-todos-home" onclick="limparFiltrosEMudarAba(document.querySelectorAll('.nav-item')[2])">Ver todas</a>
+                <a href="#" class="ver-todos" id="link-ver-todos-home" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
             </div>
-            <div class="grid-produtos" id="grid-home-ofertas">
+
+            <div class="grid-produtos" id="grid-home-ofertas"></div>
+
+            <div class="section-title" id="titulo-depoimentos"><span>💬 O que nossos clientes dizem</span></div>
+            <div class="carrossel-depoimentos-container" id="wrapper-depoimentos">
+                <div class="carrossel-depoimentos-track" id="track-depoimentos"></div>
+            </div>
+        </main>
+
+        <main id="aba-categorias" class="app-page">
+            <div class="section-title"><span>📂 Categorias</span></div>
+            <div class="grid-categorias" id="mosaico-categorias-container"></div>
+        </main>
+
+        <main id="aba-ofertas" class="app-page">
+            <div class="section-title"><span id="titulo-aba-ofertas">🛒 Todas as Ofertas</span></div>
+            <div class="grid-produtos" id="grid-todas-ofertas"></div>
+        </main>
+
+        <main id="aba-favoritos" class="app-page">
+            <div class="section-title"><span>❤️ Meus Favoritos</span></div>
+            <div class="grid-produtos" id="grid-favoritos-salvos"></div>
+        </main>
+
+        <main id="aba-conta" class="app-page">
+            <div style="text-align: center; padding: 20px 0 30px 0;">
+                <div id="avatar-usuario" style="width:80px;height:80px;border-radius:50%;background:#cc0a12;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:40px;">
+                    😀
                 </div>
-
-            <div class="secao-titulo" id="titulo-depoimentos" style="margin-top: 24px;">
-                <span>💬 Quem usa, economiza!</span>
+                <h2 id="nome-perfil">Visitante</h2>
+                <button id="btn-login" class="btn-sair" style="margin-top:10px;" onclick="abrirCadastro()">Entrar / Criar Conta</button>
             </div>
-            <div class="wrapper-depoimentos" id="wrapper-depoimentos">
-                <div class="track-depoimentos" id="track-depoimentos">
-                    </div>
-            </div>
-        </div>
+            <div class="section-title"><span>Minha Conta</span></div>
+            <div class="conta-item" onclick="alternarTema()"><div><i class="fa-solid fa-palette icone-vermelho"></i>Aparência</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
+            <div class="conta-item" onclick="mudarAba('favoritos', document.querySelectorAll('.nav-item')[3])"><div><i class="fa-solid fa-heart icone-vermelho"></i> Favoritos</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
+            <div class="conta-item" onclick="abrirPoliticaPrivacidade()"><div><i class="fa-solid fa-file-shield icone-vermelho"></i> Política de Privacidade</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
+            <button class="btn-sair" onclick="logout()">Sair</button>
+        </main>
 
-        <div id="aba-categorias" class="app-page">
-            <div class="secao-titulo"><span>📂 Todas as Categorias</span></div>
-            <div class="mosaico-categorias" id="mosaico-completo-categorias">
-                </div>
-        </div>
-
-        <div id="aba-ofertas" class="app-page">
-            <div class="secao-titulo">
-                <span id="titulo-aba-ofertas">🛒 Todas as Ofertas</span>
-            </div>
-            <div class="grid-produtos" id="grid-todas-ofertas">
-                </div>
-        </div>
-
-        <div id="aba-favoritos" class="app-page">
-            <div class="secao-titulo"><span>❤️ Meus Favoritos</span></div>
-            <div class="grid-produtos" id="grid-favoritos-salvos">
-                </div>
-        </div>
-
-        <div id="aba-perfil" class="app-page">
-            <div class="secao-titulo"><span>👤 Minha Conta</span></div>
-            <div class="perfil-container">
-                <div class="perfil-avatar-grande">🦊</div>
-                <h3 style="margin-bottom: 4px;" id="painel-nome">Visitante</h3>
-                <p style="font-size: 13px; color: var(--texto-mutado); margin-bottom: 20px;">Central do Usuário</p>
-                <button onclick="logout()" style="background: var(--cor-principal); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer;">Sair da Conta</button>
-            </div>
-        </div>
-
-        <nav>
-            <button class="nav-item active" onclick="mudarAba('inicio', this)"><i class="fa-solid fa-house"></i>Início</button>
-            <button class="nav-item" onclick="mudarAba('categorias', this)"><i class="fa-solid fa-layer-group"></i>Categorias</button>
-            <button class="nav-item" onclick="limparFiltrosEMudarAba(this)"><i class="fa-solid fa-tags"></i>Ofertas</button>
-            <button class="nav-item" onclick="mudarAba('favoritos', this)"><i class="fa-solid fa-heart"></i>Favoritos</button>
-            <button class="nav-item" onclick="mudarAba('perfil', this)"><i class="fa-solid fa-user"></i>Perfil</button>
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="mudarAba('inicio', this)"><i class="fa-solid fa-house"></i><span>Início</span></button>
+            <button class="nav-item" onclick="mudarAba('categorias', this)"><i class="fa-solid fa-layer-group"></i><span>Categorias</span></button>
+            <button class="nav-item" onclick="limparFiltrosEMudarAba(this)"><i class="fa-solid fa-fire"></i><span>Ofertas</span></button>
+            <button class="nav-item" onclick="mudarAba('favoritos', this)"><i class="fa-solid fa-heart"></i><span>Favoritos</span></button>
+            <button class="nav-item" onclick="mudarAba('conta', this)"><i class="fa-solid fa-user"></i><span>Conta</span></button>
+            
         </nav>
+
+        <a href="https://wa.me/seu-numero" target="_blank" class="btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
 
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCydy0v27JxNvKBW3aqFa3Uel8Slkdtcx4",
+    authDomain: "central-promocoes.firebaseapp.com",
+    projectId: "central-promocoes",
+    storageBucket: "central-promocoes.firebasestorage.app",
+    messagingSenderId: "396856047778",
+    appId: "1:396856047778:web:8608a6b95f26f160d27ffb"
+  };
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+</script>
 
     <script>
-        // Configuração Fictícia do Firebase (Substitua pelos dados do seu Console Firebase)
-        const firebaseConfig = {
-            apiKey: "AIzaSyFakeKey_SAMPLE_DATA_ONLY",
-            authDomain: "sua-central.firebaseapp.com",
-            projectId: "sua-central",
-            storageBucket: "sua-central.appspot.com",
-            messagingSenderId: "1234567890",
-            appId: "1:1234:web:abcde"
-        };
-        
-        // Inicializa o Firebase caso as chaves válidas estejam configuradas
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        // Mapeamento Dinâmico de Categorias (Necessário para renderizar os Mosaicos)
         const CATEGORIAS_DADOS = [
-            { id: "roupas-masculinas", nome: "Roupas Masc.", img: "https://images.unsplash.com/photo-1490367532201-b9bc1dc483f6?w=400" },
-            { id: "fones", nome: "Fones de Ouvido", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" },
-            { id: "bolsas-masculinas", nome: "Bolsas Masc.", img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" },
-            { id: "bolsas-femininas", nome: "Bolsas Fem.", img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400" },
-            { id: "limpeza", nome: "Limpeza", img: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400" },
-            { id: "brinquedos", nome: "Brinquedos", img: "https://images.unsplash.com/photo-1532330384785-f794e7a3f9c5?w=400" },
-            { id: "acessorios", nome: "Acessórios", img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400" },
-            { id: "pets", nome: "Espaço Pets", img: "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=400" },
-            { id: "sapatos", nome: "Sapatos", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400" },
-            { id: "casa-construcao", nome: "Casa & Construção", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=400" },
-            { id: "beleza", nome: "Beleza", img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400" },
-            { id: "papelaria", nome: "Papelaria", img: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=400" }
+            { id: "roupas-masculinas", nome: "👕 Roupas Masculinas", img: "https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?w=400" },
+            { id: "roupas-femininas", nome: "👗 Femininas", img: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400" },
+            { id: "plus-size", nome: "👚 Plus Size", img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400" },
+            { id: "relogios", nome: "⌚ Relógios", img: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=400" },
+            { id: "mae-bebe", nome: "👶 Mãe & Bebê", img: "https://images.unsplash.com/photo-1519689680058-324335c77eba?w=400" },
+            { id: "viagens-bagagens", nome: "🧳 Viagem", img: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400" },
+            { id: "fones", nome: "🎧 Fones", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" },
+            { id: "bolsas-masculinas", nome: "🎒 Bolsas Masc.", img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" },
+            { id: "bolsas-femininas", nome: "👝 Bolsas Fem.", img: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400" },
+            { id: "limpeza", nome: "🧼 Limpeza", img: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400" },
+            { id: "brinquedos", nome: "🧸 Brinquedos", img: "https://images.unsplash.com/photo-1531747118685-ca8fa6e08806?w=400" },
+            { id: "acessorios", nome: "💎 Acessórios", img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400" },
+            { id: "pets", nome: "🐶 Espaço Pets", img: "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=400" }
         ];
 
-        // Objeto unificado com todos os produtos fornecidos
-        const dados = {
-            "roupas-masculinas": {
-                titulo: "👕 Roupas Masculinas",
-                produtos: [
-                    { id: "bermuda-jeans-01", nome: "Kit 3 Bermudas Jeans Masculinas Lisa", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp", link: "https://s.shopee.com.br/7Kr2CrUeZV", precoAntigo: "189,90", precoNovo: "134,19" },
-                    { id: "bermuda-masculina-02", nome: "3 Bermuda Masculina Adulto Mauricinho Tamanho GG", img: "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mgs322pkjdolf3.webp", link: "https://s.shopee.com.br/7pnInmSkYc", precoAntigo: "75,20", precoNovo: "69,79" },
-                    { id: "samba-cancao-03", nome: "Kit 4 Pijama Masculino Samba Canção", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m79nwcg33w7be3.webp", link: "https://s.shopee.com.br/4feTAsvHlG", precoAntigo: "49,90", precoNovo: "37,99" }
-                ]
-            },
-            "fones": {
-                titulo: "🎧 Fones de Ouvido",
-                produtos: [
-                    { id: "fone-lenovo-gm2-01", nome: "Fone De Ouvido Sem Fio Lenovo Gm2 Pro Bluetooth 5.3 Baixa Latência", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lq7v09g3q36re0.webp", link: "https://s.shopee.com.br/9fEwl96NIs", precoAntigo: "35,29", precoNovo: "24,89" },
-                    { id: "fone-bluetooth-i12-tws-02", nome: "Fone de Ouvido Bluetooth i12 TWS Sem Fio Recarregável Certificado Anatel", img: "https://down-br.img.susercontent.com/file/sg-11134201-7rdvq-lwsw09n00rgncb.webp", link: "https://s.shopee.com.br/1fz9C8vbyP", precoAntigo: "18,90", precoNovo: "10,39" },
-                    { id: "fone-conducao-ossea-03", nome: "Fone De Ouvido Sem Fio Condução Óssea Bluetooth 5.3 Esporte", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lw0mshk30scb45.webp", link: "https://s.shopee.com.br/qRwH1NOnY", precoAntigo: "45,00", precoNovo: "25,90" },
-                    { id: "fone-hmaston-rs27-04", nome: "H'maston RS-27 Fone De Ouvido Bluetooth 5.3 TWS Com Microfone Led", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lsmkug9edzcreb.webp", link: "https://s.shopee.com.br/W0i7PZtz2", precoAntigo: "69,99", precoNovo: "42,99" },
-                    { id: "fone-hmaston-rs53-05", nome: "H'maston RS-53 Fone De Ouvido Sem Fio Bluetooth Com Luz Led", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-luecm06vjxb4ac.webp", link: "https://s.shopee.com.br/LhHv6aXK1", precoAntigo: "85,29", precoNovo: "75,99" },
-                    { id: "fone-mini-pro4-tws-06", nome: "Mini Pro4 TWS Bluetooth Compacto Controle Toque Cancelamento De Ruído", img: "https://down-br.img.susercontent.com/file/sg-11134301-7rfi3-m95aq5l73c6136.webp", link: "https://s.shopee.com.br/AKUdpTyT20", precoAntigo: "28,00", precoNovo: "15,86" }
-                ]
-            },
-            "bolsas-masculinas": {
-                titulo: "🎒 Bolsas Masc.",
-                produtos: [
-                    { id: "mochila-chl-resistente-01", nome: "Mochila CHL Masculino e Feminino Bolsa Viagem Resistente à Água Notebook 888", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-md88nbzw2vb5bf.webp", link: "https://s.shopee.com.br/9Kc6dEhZhS", precoAntigo: "48,00", precoNovo: "44,89" },
-                    { id: "bolsa-mochila-peito-tiracolo-02", nome: "Bolsa Mochila Masculina de Peito Tiracolo Impermeável Transversal", img: "https://down-br.img.susercontent.com/file/sg-11134201-7rdyo-lz4so6mwu2zu93.webp", link: "https://s.shopee.com.br/9zrnQSf2Le", precoAntigo: "49,99", precoNovo: "15,73" },
-                    { id: "kit-mochilas-escolares-03", nome: "Kit 02 Mochilas Escolares Bolsas Resistentes Masculino Feminino", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-ly3rm1mm95xc89.webp", link: "https://s.shopee.com.br/AABDcleP0h", precoAntigo: "58,00", precoNovo: "53,20" },
-                    { id: "bolsa-transversal-lona-04", nome: "Bolsa Transversal de Lona Grande Capacidade Unissex Estilo Escolar", img: "https://down-br.img.susercontent.com/file/sg-11134201-824gl-mee1dmvt4nb4fa.webp", link: "https://s.shopee.com.br/W0i70FCcq", precoAntigo: "80,00", precoNovo: "32,99" },
-                    { id: "mochila-bolsa-reforcada-05", nome: "Mochila Bolsa Reforçada Notebook Resistente Trabalho Faculdade", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lt2igo2upt8be1.webp", link: "https://s.shopee.com.br/LhHuhFpxp", precoAntigo: "29,90", precoNovo: "28,99" }, // Duplicata Corrigida/Removida
-                    { id: "mochila-masc-antifurto-cadeado-06", nome: "Mochila Masculina Impermeável Antifurto com Cadeado CHL 48A-65", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-ly847i77tuslb9.webp", link: "https://s.shopee.com.br/14RW5H6dn", precoAntigo: "55,25", precoNovo: "54,04" }
-                ]
-            },
-            "bolsas-femininas": {
-                titulo: "👝 Bolsas Fem.",
-                produtos: [
-                    { id: "bolsa-fem-transversal-tiracolo-01", nome: "Bolsa Feminina Bolsas Femininas Bolsa Pequena Feminina Bolsa Media Feminina Bolsa Transversal Feminina Tiracolo De Mão", img: "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mh1xn7prp1qf74.webp", link: "https://s.shopee.com.br/5L5xrirptu", precoAntigo: "85,00", precoNovo: "80,99" },
-                    { id: "bolsa-ombro-couro-preto-02", nome: "Bolsa de Ombro Feminina com Alça Ajustável, Bolsa Feminina Elegante com Couro Preto, Bolsa Transversal Tiracolo Presente", img: "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mdy1za2hc6blcd.webp", link: "https://s.shopee.com.br/AUo41DYAPx", precoAntigo: "68,00", precoNovo: "66,48" },
-                    { id: "bolsa-praia-palha-03", nome: "Bolsa de praia feminina bolsa redonda de palha bolsa transversal de verão", img: "https://down-br.img.susercontent.com/file/sg-11134201-7ra2t-m5akn7znns7rcb.webp", link: "https://s.shopee.com.br/9zrnQIa4Qs", precoAntigo: "38,00", precoNovo: "25,80" },
-                    { id: "bolsa-fem-lencinho-bau-04", nome: "Bolsa Feminina Transversal Com Lencinho Bau Tiracolo Espaçosa Bolsa Feminina Estruturada Media Com Alça", img: "https://down-br.img.susercontent.com/file/sg-11134201-8260j-mjgy2f5t1kp0be.webp", link: "https://s.shopee.com.br/AABDcbZR5v", precoAntigo: "120,00", precoNovo: "47,99" },
-                    { id: "bolsa-ombro-pequena-05", nome: "Bolsa de Ombro Pequenas Feminina,Mini Bolsas Sacola Tiracolo Moderna de Couro Impermeável,Shoulder Handbag", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m2jd0pedaa5231.webp", link: "https://s.shopee.com.br/9fEx1gbL6q", precoAntigo: "68,29", precoNovo: "66,49" },
-                    { id: "bolsa-carteiro-nylon-06", nome: "Bolsa Carteiro de Nylon Impermeável de Grande Capacidade — Bolsa Transversal e de Ombro para Estudantes e Uso Diário", img: "https://down-br.img.susercontent.com/file/sg-11134201-824i6-mee1462b4t8h82.webp", link: "https://s.shopee.com.br/9UvWpNbyRr", precoAntigo: "80,00", precoNovo: "31,99" },
-                    { id: "bolsa-fem-kit-2-ziper-07", nome: "Bolsa Feminina kit 2 bolsas COM ZIPER Transversal e de ombro sacola envio imediato", img: "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mgszwd0456gw5f.webp", link: "https://s.shopee.com.br/8zzGESdsSm", precoAntigo: "69,90", precoNovo: "49,63" },
-                    { id: "bolsa-mensageiro-retro-08", nome: "Crachá De Cortesia Unissex Bolsa Mensageiro Retrô Bolsa de Mão com Vários Bolsos Bolsa de Ombro de Grande Capacidade", img: "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mhpno1g6jkee4f.webp", link: "https://s.shopee.com.br/9AIgQldF7p", precoAntigo: "60,00", precoNovo: "30,99" }
-                ]
-            },
-            "limpeza": {
-                titulo: "🧼 Produtos de Limpeza",
-                produtos: [
-                    { id: "toalha-pano-limpeza-microfibra-01", nome: "Toalha Pano Limpeza 30x40 Microfibra 2 Lados Multiuso", img: "https://down-br.img.susercontent.com/file/sg-11134201-8262q-mkjnsirh5gjnd5.webp", link: "https://s.shopee.com.br/70EBsAm9jo", precoAntigo: "14,99", precoNovo: "10,50" },
-                    { id: "aspirador-soprador-portatil-02", nome: "Aspirador e Soprador Portátil 5 em 1 Alta Potência para Carro", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m4fqyduc1c1tf1.webp", link: "https://s.shopee.com.br/7AXc4TlWOr", precoAntigo: "65,00", precoNovo: "37,60" },
-                    { id: "esguicho-alta-pressao-03", nome: "Esguicho de Alta Pressão Ajustável para Mangueira", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-ludqugdg1l5xaf.webp", link: "https://s.shopee.com.br/3fxju2yqVE", precoAntigo: "25,20", precoNovo: "20,90" },
-                    { id: "aspirador-po-sem-fio-usb-04", nome: "Aspirador De Pó Sem Fio Portátil USB Uso Doméstico", img: "https://down-br.img.susercontent.com/file/sg-11134201-825a1-mg3tfogkuu4r4f.webp", link: "https://s.shopee.com.br/3qHA6LyDAH", precoAntigo: "82,00", precoNovo: "75,99" }
-                ]
-            },
-            "brinquedos": {
-                titulo: "🧸 Brinquedos",
-                produtos: [
-                    { id: "brinquedo-agua-praia-01", nome: "verão praia jogando brinquedos de água crianças brinquedos Mini pequeno jato banho água", img: "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mesm9hng2oe8cc.webp", link: "https://s.shopee.com.br/50T7V0XuGj", precoAntigo: "18,00", precoNovo: "12,88" },
-                    { id: "patinho-dancante-musica-02", nome: "Patinho Dançante Com Luzes Pato Dançarino Musica Criança Brinquedo", img: "https://down-br.img.susercontent.com/file/sg-11134201-824im-mdy0b4724mbkc6.webp", link: "https://s.shopee.com.br/30i37KfWKP", precoAntigo: "80,00", precoNovo: "36,90" },
-                    { id: "jogo-caiu-perdeu-torre-03", nome: "Jogo Caiu Perdeu Torre de Madeira 54 Peças Desenvolve Coordenação Motora Brinquedo", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mc0rz4sg495lef.webp", link: "https://s.shopee.com.br/2qOcv1g9fO", precoAntigo: "30,00", precoNovo: "18,67" },
-                    { id: "lousa-magica-tablet-lcd-04", nome: "Lousa Mágica Tela Lcd Tablet Infantil De Escrever E Desenhar 8.5/10/12 Polegadas brinquedo infantil Para menina/menino", img: "https://down-br.img.susercontent.com/file/sg-11134201-7reo6-m8ggjvcs2vm99b.webp", link: "https://s.shopee.com.br/2g5Ciign0N", precoAntigo: "40,00", precoNovo: "13,99" },
-                    { id: "tapete-agua-magico-05", nome: "Tapete de Água Mágico Brinquedo Educativo para Criatividade Reutilizável com 3 Canetas Presente", img: "https://down-br.img.susercontent.com/file/sg-11134201-7rdyb-mdrllx5gsous29.webp", link: "https://s.shopee.com.br/3qHA6rcLdc", precoAntigo: "39,00", precoNovo: "36,49" },
-                    { id: "lanca-bolhas-sabao-06", nome: "Lança Bolhas de Sabão com Luz Brinquedo Infantil Arminha de Bolha Diversão Crianças", img: "https://down-br.img.susercontent.com/file/sg-11134201-7rdwj-mczvuaud962h89.webp", link: "https://s.shopee.com.br/3fxjuYcyyb", precoAntigo: "50,00", precoNovo: "22,99" }
-                ]
-            },
-            "acessorios": {
-                titulo: "💎 Acessórios",
-                produtos: [
-                    { id: "colar-corrente-prata925-coracao-01", nome: "Colar Corrente Cordao Gargantilha Banhado Prata 925 Coração Vazado", img: "https://down-br.img.susercontent.com/file/4b2d426f22c495db39102510fc251110.webp", link: "https://s.shopee.com.br/4VWqs04OSb", precoAntigo: "42,90", precoNovo: "36,90" },
-                    { id: "colar-cordao-ouro18k-coracao-02", nome: "Colar cordão Feminino com coração liso - Elo português 45cm 6mm Folheados a Ouro 18k", img: "https://down-br.img.susercontent.com/file/br-11134207-81ztc-mk8pf9cecxs2b4.webp", link: "https://s.shopee.com.br/LhHuLKFuu", precoAntigo: "50,00", precoNovo: "16,99" },
-                    { id: "corrente-colar-prata925-crucifixo-03", nome: "Corrente Colar de Prata 925 Crucifixo Pequeno Masculino - Cordão Fino Veneziana 50cm 60cm", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1fvgdte5djl55.webp", link: "https://s.shopee.com.br/W0i6eJcZx", precoAntigo: "39,90", precoNovo: "39,50" }
-                ]
-            },
-            "pets": {
-                titulo: "🐶 Espaço Pets",
-                produtos: [
-                    { id: "tapete-sanitario-canino-01", nome: "Tapete Sanitário Canino Higiênico Banheiro Educa Pet Tapete Lavável Banheiro Pet", img: "https://down-br.img.susercontent.com/file/br-11134207-820m4-mnaao9q41ssk0e.webp", link: "https://s.shopee.com.br/2VlmWa8Jss", precoAntigo: "19,90", precoNovo: "18,99" },
-                    { id: "casa-cama-caminha-pet-02", nome: "Casa + Cama Caminha Pet Casinha Para Cachorro Pet Cães e Gatos N°2 Pequenos", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lv53biwapsi74d.webp", link: "https://s.shopee.com.br/2LSMKH8xDr", precoAntigo: "59,98", precoNovo: "39,99" },
-                    { id: "jornal-papel-pet-limpo-03", nome: "Jornal Papel Pet Limpo 1KG. 2KG, 3KG, 4KG, 5KG, Tapete Pet Biodegradável FOLHAS GRANDES 64 ×58", img: "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mgs74eh72lfre4.webp", link: "https://s.shopee.com.br/BNrkIHCcS", precoAntigo: "40,00", precoNovo: "16,80" },
-                    { id: "kit-maquina-tosar-pet-04", nome: "Kit Máquina Para Tosar Pet + Tesoura + Pente + Lixa Máquina Profissional Para Cachorro & Gato", img: "https://down-br.img.susercontent.com/file/sg-11134201-824j4-mfo2tbzizlzef3.webp", link: "https://s.shopee.com.br/14RXzHpxR", precoAntigo: "39,99", precoNovo: "33,68" },
-                    { id: "tapete-higienico-descartavel-05", nome: "Tapete Higiênico Descartável para Cachorro Unidades 60x60 cm - Fralda Pet Xixi Cão Pequeno Médio", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mdmatvwyl0hl5a.webp", link: "https://s.shopee.com.br/9UvWrRhfgO", precoAntigo: "39,90", precoNovo: "19,98" }
-                ]
-            },
-            "sapatos": {
-                titulo: "👟 Sapatos",
-                produtos: [
-                    { id: "mule-fem-bico-quadrado-01", nome: "Mule Feminino Bico Quadrado Sapatilha Sandália Sapato Mocassim Rasteira Casual Ana Brito", img: "https://down-br.img.susercontent.com/file/br-11134207-820l4-mnmurd8bzoxt9f.webp", link: "https://s.shopee.com.br/1LZp7t066F", precoAntigo: "63,00", precoNovo: "61,65" },
-                    { id: "mule-bico-fino-strass-02", nome: "Mule Bico Fino 2 Em 1 Com Strass Sandália Muller Mocassim Sapato", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m5a8uzy0lu9x32.webp", link: "https://s.shopee.com.br/2LSMJiwI4T", precoAntigo: "45,00", precoNovo: "42,90" },
-                    { id: "mocassim-fem-confortavel-03", nome: "Mocassim Feminino Confortável Elegante Leve Moda", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m76vlguash4i96.webp", link: "https://s.shopee.com.br/20pVv6xYkR", precoAntigo: "58,21", precoNovo: "55,07" },
-                    { id: "sapatilha-fem-alpargata-moleca-04", nome: "Sapatilha Feminina Alpargata Moleca Leve Ultra Respirável flexível macia furada furos", img: "https://down-br.img.susercontent.com/file/sg-11134201-7repz-m1ybno7hj33pe1.webp", link: "https://s.shopee.com.br/3B1TJFt7Ng", precoAntigo: "81,12", precoNovo: "47,18" },
-                    { id: "sapatilha-fem-mocassim-fivela-05", nome: "Sapatilha Feminina Mocassim Com Fivela Bico Quadrado - Linha Confort", img: "https://down-br.img.susercontent.com/file/br-11134207-820le-mmlrq7x8dwxy7f.webp", link: "https://s.shopee.com.br/30i36wtkif", precoAntigo: "59,60", precoNovo: "39,99" },
-                    { id: "sapatilha-fem-slingback-verniz-06", nome: "Sapatilha Feminina Slingback Em Verniz Bico Fino Com Fivelas", img: "https://down-br.img.susercontent.com/file/sg-11134201-7rd49-lvnfruqmb3dzd7.webp", link: "https://shopee.com.br/product/511410160/23498052271", precoAntigo: "59,00", precoNovo: "57,00" }
-                ]
-            },
-            "casa-construcao": {
-                titulo: "🏡 Casa e construção",
-                produtos: [
-                    { id: "kit-banheiro-completo-lixeira-01", nome: "Kit Banheiro Completo Lixeira C/ Tampa Detalhes Em Bambu Luxo", img: "https://down-br.img.susercontent.com/file/br-11134207-81ztc-mk811k8aieipfa.webp", link: "https://shopee.com.br/product/511410160/23498052271", precoAntigo: "58,50", precoNovo: "52,15" },
-                    { id: "kit-pote-vidro-hermetico-02", nome: "Kit Pote de Vidro Hermético Retangular 10 / 5 Unid Travas Marmita Fit Microondas Mantimentos", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mdn5xvzwinrl9c.webp", link: "https://shopee.com.br/product/482786640/21699182944", precoAntigo: "88,90", precoNovo: "80,50" },
-                    { id: "jogo-lençol-percal-180fios-03", nome: "Jogo de Lençol Percal 180 Fios 100% Algodão – Todos os Tamanhos", img: "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mflnn6x2u6tgc4.webp", link: "https://shopee.com.br/product/1188215663/20398322397", precoAntigo: "57,37", precoNovo: "55,48" },
-                    { id: "kit-toalha-banho-grande-04", nome: "Kit 6 Toalha de Banho Grande Macia Premium 100% Algodão", img: "https://down-br.img.susercontent.com/file/sg-11134201-7reo2-mdumnv61jg0tf7.webp", link: "https://shopee.com.br/product/523145812/23398794668", precoAntigo: "138,18", precoNovo: "118,83" },
-                    { id: "roupao-plush-microfibra-05", nome: "Roupão Plush Microfibra Adulto Extra Macio Unissex Várias Cores Tamanho Único", img: "https://down-br.img.susercontent.com/file/br-11134207-820lb-mlrtjysnghl02e.webp", link: "https://shopee.com.br/product/695401829/22995887563", precoAntigo: "72,22", precoNovo: "66,40" }
-                ]
-            },
-            "beleza": {
-                titulo: "💄 Beleza",
-                produtos: [
-                    { id: "conjunto-cortador-unhas-01", nome: "Conjunto de cortador de unhas para pedicure, 16 peças, aço inoxidável com bolsa dobrável", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m2b72jhj7q7l5f.webp", link: "https://shopee.com.br/product/1377846021/20299556816", precoAntigo: "80,00", precoNovo: "21,98" },
-                    { id: "kit-sabonete-hidratante-rhenuks-02", nome: "Kit Sabonete + Hidratante + Esfoliante Rhenuks 200ml Corpo e Rosto 10 fragrâncias", img: "https://down-br.img.susercontent.com/file/br-11134207-820ln-mp1bd3ccej2869.webp", link: "https://shopee.com.br/product/1386679095/2334200396", precoAntigo: "35,99", precoNovo: "29,98" },
-                    { id: "escova-secadora-alisador-03", nome: "Escova Secadora Alisador Elétrica Quente Cabelo Com 3 Em1 Hair Styler JORGE APENAS 110V", img: "https://down-br.img.susercontent.com/file/sg-11134201-7rfhe-m965h0w7chpee3.webp", link: "https://shopee.com.br/product/410705973/18277597493", precoAntigo: "300,00", precoNovo: "42,99" },
-                    { id: "escova-cabelo-termica-04", nome: "Escova De Cabelo Térmica Amarela ou Rosa Madeira Mista Com Cerdas De Javali", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mb84a6m4ltkp26.webp", link: "https://shopee.com.br/product/1103946075/22594164922", precoAntigo: "177,40", precoNovo: "19,89" }
-                ]
-            },
-            "papelaria": {
-                titulo: "✏️ Papelaria",
-                produtos: [
-                    { id: "kit-material-escolar-fem-01", nome: "Kit Material Escolar Feminino Completo Com Sem Mochila Escolar Feminina Estojo Escolar Feminino Rosa", img: "https://down-br.img.susercontent.com/file/br-11134207-81ztc-mjhj4dh46qki3d.webp", link: "https://shopee.com.br/product/312485282/22497350407", precoAntigo: "120,30", precoNovo: "105,15" },
-                    { id: "kit-material-escolar-basico-02", nome: "Kit Material Escolar Básico 13 Peças Caderno Universitário Volta as Aulas", img: "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mhpcxkduwr9f2d.webp", link: "https://shopee.com.br/product/1244503758/20097993516", precoAntigo: "79,99", precoNovo: "39,90" },
-                    { id: "estojo-escolar-box-03", nome: "Estojo Escolar Feminino/ Masculino Box Juvenil Martelasse Estojo Escolar Organizador Grande Jumbo Box 2 Compartimentos", img: "https://down-br.img.susercontent.com/file/sg-11134201-7rdxt-md4wjdbblqyf12.webp", link: "https://shopee.com.br/product/1567911874/23098793285", precoAntigo: "50,00", precoNovo: "21,99" },
-                    { id: "estojo-maleta-pintura-infantil-04", nome: "Estojo Maleta Pintura Infantil Lápis Cores Giz Canetinhas e Diversos Tamanhos Desenhos Para Colorir", img: "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lxihn6ip6j0f95.webp", link: "https://shopee.com.br/product/1076565213/21197750336", precoAntigo: "80,00", precoNovo: "35,90" }
-                ]
-            }
-        };
+  // Dados de produtos
+ const dados = {
+"roupas-masculinas": {
+    titulo: "👕 Roupas Masculinas",
+    produtos: [
+   {
+    "id": "bermuda-jeans-01",
+    "nome": "Kit 3 Bermudas Jeans Masculinas Lisa",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-makkcf6hn8qh41.webp",
+    "link": "https://s.shopee.com.br/7Kr2CrUeZV",
+    "precoAntigo": "189,90",
+    "precoNovo": "134,19",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "bermuda-masculina-02",
+    "nome": "3 Bermuda Masculina Adulto Mauricinho Tamanho GG",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mgs322pkjdolf3.webp",
+    "link": "https://s.shopee.com.br/7pnInmSkYc",
+    "precoAntigo": "75,20",
+    "precoNovo": "69,79",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "samba-cancao-03",
+    "nome": "Kit 4 Pijama Masculino Samba Canção",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m79nwc1qbmfg3b.webp",
+    "link": "https://s.shopee.com.br/7fTsbTTNtb",
+    "precoAntigo": "69,90",
+    "precoNovo": "42,28",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "bermuda-moletom-04",
+    "nome": "Kit 2 Bermuda Moletom Plus Size Masculina",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m6oeodw3nn1j3f.webp",
+    "link": "https://s.shopee.com.br/6pulbwWYaS",
+    "precoAntigo": "69,90",
+    "precoNovo": "62,22",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "regata-dryfit-05",
+    "nome": "Kit 2 Regatas Masculinas Dry Fit Academia",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mg2eyjj8xvyf00.webp",
+    "link": "https://s.shopee.com.br/6fbLPdXBvR",
+    "precoAntigo": "59,99",
+    "precoNovo": "33,98",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "cueca-boxer-06",
+    "nome": "Kit 10 Cuecas Boxers Masculina Microfibra",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mbeaha6elrwvf6.webp",
+    "link": "https://s.shopee.com.br/7AXc0YVHuY",
+    "precoAntigo": "99,80",
+    "precoNovo": "47,31",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "short-praia-07",
+    "nome": "Bermuda Short Masculino Praia Secagem Rápida",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98q-lmggaoqrll4bef.webp",
+    "link": "https://s.shopee.com.br/70EBoFVvFX",
+    "precoAntigo": "45,99",
+    "precoNovo": "37,99",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "bermuda-dryfit-08",
+    "nome": "Kit 3 Bermudas Masculinas Dry Fit",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-824ge-me9d1hjn045j71.webp",
+    "link": "https://s.shopee.com.br/3VeJdojFLs",
+    "precoAntigo": "99,90",
+    "precoNovo": "44,96",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "camiseta-basica-09",
+    "nome": "Camiseta Básica Algodão Masculina",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m9digwvkdgjm92.webp",
+    "link": "https://s.shopee.com.br/3LKtRVjsgr",
+    "precoAntigo": "32,20",
+    "precoNovo": "25,90",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "meia-lupo-10",
+    "nome": "Kit 6 Pares Meias Lupo Cano Curto",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lniwqzye82j3a7.webp",
+    "link": "https://s.shopee.com.br/3qHA2Qhyfy",
+    "precoAntigo": "91,35",
+    "precoNovo": "56,89",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "camisa-slim-11",
+    "nome": "Camisa Masculina Slim Fit Luxo",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-me1ceaddsmwye1.webp",
+    "link": "https://s.shopee.com.br/3fxjq7ic0x",
+    "precoAntigo": "68,74",
+    "precoNovo": "59,80",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "calca-jogger-12",
+    "nome": "Calça Jogger Masculina Sarja ou Jeans",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m2gs4kt0ze4m0b.webp",
+    "link": "https://s.shopee.com.br/2g5CeHmQ2n",
+    "precoAntigo": "99,90",
+    "precoNovo": "59,00",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "camisa-social-13",
+    "nome": "Camisa Social Masculina Não Amassa Slim",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mfcsmg9jw0zked.webp",
+    "link": "https://s.shopee.com.br/3B1TFCkW1u",
+    "precoAntigo": "258,00",
+    "precoNovo": "109,80",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "camisa-manga-curta-14",
+    "nome": "Camisa Social Masculina Manga Curta",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81ztc-mjej16pmomx218.webp",
+    "link": "https://s.shopee.com.br/30i32tl9Mt",
+    "precoAntigo": "50,00",
+    "precoNovo": "41,99",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "calca-baggy-15",
+    "nome": "Calça Jeans Baggy Masculina Carpenter",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-824gz-mfbj72fn73f099.webp",
+    "link": "https://s.shopee.com.br/4q9hEGeAeG",
+    "precoAntigo": "150,00",
+    "precoNovo": "69,00",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "camisa-polo-16",
+    "nome": "Kit 2 Camisas Polo Masculina Premium",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lq5op3mkxlb334.webp",
+    "link": "https://s.shopee.com.br/4fqH1xenzF",
+    "precoAntigo": "89,90",
+    "precoNovo": "59,90",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "corta-vento-17",
+    "nome": "Corta Vento Masculino Impermeável",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mg800o9xmgw402.webp",
+    "link": "https://s.shopee.com.br/5AmXcsctyM",
+    "precoAntigo": "119,80",
+    "precoNovo": "59,30",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "cueca-slip-18",
+    "nome": "Kit 10 Cuecas Slip Algodão Masculina",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mb8885tpn1xr6e.webp",
+    "link": "https://s.shopee.com.br/50T7QZdXJL",
+    "precoAntigo": "70,00",
+    "precoNovo": "57,80",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "camiseta-kit-19",
+    "nome": "Kit 10 Camisetas Masculinas P ao GG",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1sgi85s5woa03.webp",
+    "link": "https://s.shopee.com.br/4Au0R2gi0C",
+    "precoAntigo": "250,00",
+    "precoNovo": "120,18",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "polo-malha-gelada-20",
+    "nome": "Camisa Polo Masculina Malha Gelada",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mgchbkzaeh3449.webp",
+    "link": "https://s.shopee.com.br/40aaEjhLLB",
+    "precoAntigo": "64,00",
+    "precoNovo": "59,90",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "camisa-linho-21",
+    "nome": "Camisa Masculina Linho Manga Curta",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m87qvy33bpqpe7.webp",
+    "link": "https://s.shopee.com.br/4VWqpefRKI",
+    "precoAntigo": "99,89",
+    "precoNovo": "49,44",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "camiseta-canelada-22",
+    "nome": "Camiseta Masculina Básica Canelada Slim",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mies89zy9c76fd.webp",
+    "link": "https://s.shopee.com.br/4LDQdLg4fH",
+    "precoAntigo": "89,90",
+    "precoNovo": "29,55",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "cueca-plussize-23",
+    "nome": "Kit Cuecas Plus Size Masculina Microfibra",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mc0phr4kxmlj37.webp",
+    "link": "https://s.shopee.com.br/qdYSutOlc",
+    "precoAntigo": "49,99",
+    "precoNovo": "26,72",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "camiseta-minimalista-24",
+    "nome": "Camiseta Street Minimalista Masculina",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-824il-mfby8u9fgr2m1b.webp",
+    "link": "https://s.shopee.com.br/gK8Gbu26b",
+    "precoAntigo": "39,90",
+    "precoNovo": "33,42",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "blazer-calca-25",
+    "nome": "Blazer + Calça Slim Masculino Original",
+    "img": "https://down-br.img.susercontent.com/file/2d89cbb24cb81c47e9e728a308db3e88.webp",
+    "link": "https://s.shopee.com.br/1BGOrWs85i",
+    "precoAntigo": "199,99",
+    "precoNovo": "142,99",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "regata-ribana-26",
+    "nome": "Kit 2 Regatas Premium Masculina Ribana",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81ztc-mjid2qgedtdv80.webp",
+    "link": "https://s.shopee.com.br/10wyfDslQh",
+    "precoAntigo": "120,00",
+    "precoNovo": "35,77",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "polo-paris-27",
+    "nome": "Camisa Polo Paris Manga Curta Masculina",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m9fz10i1zz0ied.webp",
+    "link": "https://s.shopee.com.br/BNrfgvw7Y",
+    "precoAntigo": "90,00",
+    "precoNovo": "55,00",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "calca-jeans-lycra-28",
+    "nome": "Kit Calças Jeans Masculina Skinny Lycra",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-matue14smvi1e3.webp",
+    "link": "https://s.shopee.com.br/14RTNwZSX",
+    "precoAntigo": "69,99",
+    "precoNovo": "49,99",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "short-academia-29",
+    "nome": "Kit Short Masculino 2 em 1 Academia",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81ztc-mjng8u2ddlom3b.webp",
+    "link": "https://s.shopee.com.br/W0i4IufRe",
+    "precoAntigo": "79,90",
+    "precoNovo": "59,13",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "calca-balao-30",
+    "nome": "Calça Baggy Jeans Balão Masculina",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m7l3k8648nk26d.webp",
+    "link": "https://s.shopee.com.br/LhHrzvImd",
+    "precoAntigo": "149,99",
+    "precoNovo": "79,99",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "short-corrida-31",
+    "nome": "Kit 3 Shorts Masculino 2 em 1 Corrida",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-miblikam48w1f5.webp",
+    "link": "https://s.shopee.com.br/20pVr3oxOz",
+    "precoAntigo": "104,90",
+    "precoNovo": "80,77",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "calca-marmorizada-32",
+    "nome": "Calça Balão Jeans Masculina Marmorizada",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7rdx2-mdo1f8xbc9usb7.webp",
+    "link": "https://s.shopee.com.br/2B8w3MoK40",
+    "precoAntigo": "149,90",
+    "precoNovo": "72,04",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "camiseta-los-angeles-33",
+    "nome": "Camiseta Masculina Los Angeles Street",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mfsopus3s6pw45.webp",
+    "link": "https://s.shopee.com.br/2VlmRyn3O6",
+    "precoAntigo": "78,90",
+    "precoNovo": "27,90",
+    "categoria": "roupas-masculinas",
+    "loja": "shopee"
+      }
+    ] 
+  }, 
 
-        const PRODUTOS_LOJA = [];
+  "roupas-femininas": {
+    titulo: "👗 Roupas Femininas",
+    produtos: [
+      {
+    "id": "body-suplex-01",
+    "nome": "Body kit 2 Feminino Collant Regata Suplex Decote Quadrado Forrado Casual Confortável Moda Elegante",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-md6clcapp535ef.webp",
+    "link": "https://s.shopee.com.br/2B8w41bxEU",
+    "precoAntigo": "80,00",
+    "precoNovo": "37,97",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "calca-pantalona-duna-02",
+    "nome": "Calça Pantalona Feminina Duna Cintura Alta Bolso Visível Não Transparente P-M-G-GG",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-md144av8pzjma0.webp",
+    "link": "https://s.shopee.com.br/20pVricaZT",
+    "precoAntigo": "60,00",
+    "precoNovo": "29,99",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "calcinha-fio-duplo-03",
+    "nome": "Kit de Calcinhas Fio Duplo Levanta Bumbum Fio Dental Confortável Forro em Algodão Sensual",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-824id-mfo5y66ekdmx34.webp",
+    "link": "https://s.shopee.com.br/W0i4xiIcC",
+    "precoAntigo": "115,90",
+    "precoNovo": "53,90",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "camisola-renda-04",
+    "nome": "Kit 2 Camisolas com Renda Feminina Verão Leve Confortável Excelente para Atacado",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mh2h3f53k00516.webp",
+    "link": "https://s.shopee.com.br/LhHseivxB",
+    "precoAntigo": "59,99",
+    "precoNovo": "31,99",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "pantalona-alfaiataria-05",
+    "nome": "Calça Pantalona Alfaiataria Premium Cintura Alta Com Bolso Com Cinto",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7rdxy-mdgmlh09bbx54b.webp",
+    "link": "https://s.shopee.com.br/BNrgLjZIA",
+    "precoAntigo": "129,90",
+    "precoNovo": "49,90",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "short-alfaiataria-06",
+    "nome": "Kit 2 Short Feminino Alfaiataria Social com Cinto Cintura Alta",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m3eac0axf96gbd.webp",
+    "link": "https://s.shopee.com.br/14RU2kCd9",
+    "precoAntigo": "159,90",
+    "precoNovo": "59,90",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "conjunto-alfaiataria-colete-07",
+    "nome": "Conjunto Feminino Social Alfaiataria Colete e Shorts",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mcgj3cm8k7qqcb.webp",
+    "link": "https://s.shopee.com.br/10wyfsgObN",
+    "precoAntigo": "210,00",
+    "precoNovo": "182,00",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "cropped-frente-unica-08",
+    "nome": "Top Cropped Feminino Frente Única com Amarração Moda Gringa",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mh1ks3pa0qh02b.webp",
+    "link": "https://s.shopee.com.br/qdYTZh1wM",
+    "precoAntigo": "30,00",
+    "precoNovo": "23,75",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "short-jeans-marmorizado-09",
+    "nome": "Short Jeans Feminino Marmorizado Cintura Alta Confortável",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mh825z7csv0g25.webp",
+    "link": "https://s.shopee.com.br/gK8HGhfHL",
+    "precoAntigo": "62,00",
+    "precoNovo": "59,99",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "pantalona-bolso-10",
+    "nome": "Calça Pantalona Feminina Com Bolso Cintura Alta",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lyftwd4wlsmd80.webp",
+    "link": "https://s.shopee.com.br/9pYNC78lg8",
+    "precoAntigo": "62,99",
+    "precoNovo": "36,50",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "babydoll-pijama-11",
+    "nome": "Kit 3 Baby Doll Pijamas Femininos Short Doll",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mfquu3z09p8g34.webp",
+    "link": "https://s.shopee.com.br/9fEwzo9P17",
+    "precoAntigo": "33,00",
+    "precoNovo": "23,75",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "short-cargo-moletom-12",
+    "nome": "Short Cargo Feminino Moletom Soltinho Confortável",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mh0krobkfnd070.webp",
+    "link": "https://s.shopee.com.br/9UvWnVA2M6",
+    "precoAntigo": "79,90",
+    "precoNovo": "39,99",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "cropped-copa-2026-13",
+    "nome": "Cropped Top Feminino Personalizado Copa 2026 ESTHER BRAZIL",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mallotfak3v317.webp",
+    "link": "https://s.shopee.com.br/9Kc6bCAfh5",
+    "precoAntigo": "49,90",
+    "precoNovo": "29,94",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "short-jeans-barra-desfiada-14",
+    "nome": "Kit 2 Shorts Jeans Feminino Cintura Alta Barra Desfiada",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mcs8mjvi30oi14.webp",
+    "link": "https://s.shopee.com.br/AUo3zL6EKK",
+    "precoAntigo": "140,00",
+    "precoNovo": "71,60",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "macaquinho-short-saia-15",
+    "nome": "Macaquinho Short Saia Feminino Duna com Bojo",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mctider0ubzmbd.webp",
+    "link": "https://s.shopee.com.br/AKUdn26rfJ",
+    "precoAntigo": "62,50",
+    "precoNovo": "58,99",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "lovito-vestido-boho-16",
+    "nome": "Lovito Vestido Boho de Férias Primavera Verão",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-8260t-mjhxno7jtxxc8c.webp",
+    "link": "https://s.shopee.com.br/AABDaj7V0I",
+    "precoAntigo": "50,00",
+    "precoNovo": "42,19",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "conjunto-canelado-3d-17",
+    "nome": "Conjunto Cropped e Short Canelado 3D Feminino",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m5783o06nvd1a8.webp",
+    "link": "https://s.shopee.com.br/9zrnOQ88LH",
+    "precoAntigo": "49,99",
+    "precoNovo": "47,49",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "calca-alfaiataria-tendencia-18",
+    "nome": "Calça Feminina Alfaiataria Cintura Alta Tendência 2026",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mbzvwoiyhpw957.webp",
+    "link": "https://s.shopee.com.br/8V2zbfDqO0",
+    "precoAntigo": "95,99",
+    "precoNovo": "35,52",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "vestido-longo-estampado-19",
+    "nome": "Vestido Longo Feminino Com Botões Estampado",
+    "img": "https://down-br.img.susercontent.com/file/8c82e45c46e2225ef10270c58ce532e7.webp",
+    "link": "https://s.shopee.com.br/9AIgOtBJ2C",
+    "precoAntigo": "115,00",
+    "precoNovo": "69,00",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "vestido-curto-frente-unica-20",
+    "nome": "Vestido Curto Frente Única Feminino",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m8uvzt9yob9eba.webp",
+    "link": "https://s.shopee.com.br/8pfq0HCZiA",
+    "precoAntigo": "79,90",
+    "precoNovo": "35,15",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "cropped-suplex-forro-21",
+    "nome": "Kit 3 Cropped Feminino Top Regata Liso Básico Suplex Forro Duplo",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lsbmxl5zcz6sae.webp",
+    "link": "https://s.shopee.com.br/8fMPnyDD39",
+    "precoAntigo": "58,00",
+    "precoNovo": "48,99",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "conjunto-alfaiataria-short-22",
+    "nome": "Conjunto Feminino Alfaiataria Short e Colete Tendência 2026",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mf8n24i4placf2.webp",
+    "link": "https://s.shopee.com.br/7AXc1DIv5s",
+    "precoAntigo": "155,00",
+    "precoNovo": "60,45",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "lingerie-renda-sem-bojo-23",
+    "nome": "Conjunto Lingerie Feminino Renda Sem Bojo Com Arco",
+    "img": "https://down-br.img.susercontent.com/file/br-11134201-23020-hy3c054q4knv74.webp",
+    "link": "https://s.shopee.com.br/6pulcbKBlq",
+    "precoAntigo": "40,00",
+    "precoNovo": "35,90",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "calcinha-cos-alto-24",
+    "nome": "Kit 5 Calcinha Cós Alto Feminina Modeladora Microfibra",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mf5n35hjif4781.webp",
+    "link": "https://s.shopee.com.br/6fbLQIKp6p",
+    "precoAntigo": "59,99",
+    "precoNovo": "39,99",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "calca-wide-leg-marmorizada-25",
+    "nome": "Calça Wide Leg Jeans Feminina Marmorizada Cintura Alta",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mi67wyc3ipdt01.webp",
+    "link": "https://s.shopee.com.br/7pnIoRGNk4",
+    "precoAntigo": "129,99",
+    "precoNovo": "61,99",
+    "categoria": "roupas-femininas",
+    "loja": "shopee"
+      }
+    ]
+  },
+
+  "plus-size": {
+    titulo: "👚 plus-size",
+    produtos: [
+      {
+        "id": "vestido-mullet-viscolycra-01",
+    "nome": "Vestido Mullet Manga Curta Viscolycra",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-821dq-mggluoozlz4e7b.webp",
+    "link": "https://s.shopee.com.br/6fbLQdU4pC",
+    "precoAntigo": "35,00",
+    "precoNovo": "29,99",
+    "categoria": "plus-size",
+    "loja": "shopee"
+  },
+  {
+    "id": "shorts-cintura-alta-bolso-02",
+    "nome": "Shorts Feminino Cintura Alta com Bolso",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mggx5nor8e13d3.webp",
+    "link": "https://s.shopee.com.br/6pulcwTRUF",
+    "precoAntigo": "38,90",
+    "precoNovo": "36,99",
+    "categoria": "plus-size",
+    "loja": "shopee"
+  },
+  {
+    "id": "vestido-midi-canelado-03",
+    "nome": "Vestido Midi Canelado Alça Larga",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81ztc-mjdfd5gw2x379e.webp",
+    "link": "https://s.shopee.com.br/6Af4piVyqB",
+    "precoAntigo": "49,99",
+    "precoNovo": "32,50",
+    "categoria": "plus-size",
+    "loja": "shopee"
+  },
+  {
+    "id": "blusa-cropped-bojo-04",
+    "nome": "Blusa Cropped com Bojo",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m7ei9d77tlccf7.webp",
+    "link": "https://s.shopee.com.br/5fioEnXsr6",
+    "precoAntigo": "36,00",
+    "precoNovo": "34,40",
+    "categoria": "plus-size",
+    "loja": "shopee"
+  },
+  {
+    "id": "calca-wide-leg-jeans-05",
+    "nome": "Calça Wide Leg Jeans Cintura Alta",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m7tz7imdmb2s24.webp",
+    "link": "https://s.shopee.com.br/5q2ER6XFW9",
+    "precoAntigo": "58,00",
+    "precoNovo": "55,10",
+    "categoria": "plus-size",
+    "loja": "shopee"
+  },
+  {
+    "id": "blusa-decote-cruzado-06",
+    "nome": "Blusa Decote Cruzado com Bojo",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m5xdyewtp5qoa2.webp",
+    "link": "https://s.shopee.com.br/5L5xqBZ9X4",
+    "precoAntigo": "41,99",
+    "precoNovo": "35,28",
+    "categoria": "plus-size",
+    "loja": "shopee"
+  },
+  {
+    "id": "vestido-midi-evangelico-07",
+    "nome": "Vestido Midi Evangélico Duas Marias",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-maq91r310r67a8.webp",
+    "link": "https://s.shopee.com.br/5VPO2UYWC7",
+    "precoAntigo": "99,90",
+    "precoNovo": "39,90",
+    "categoria": "plus-size",
+    "loja": "shopee"
+  },
+  {
+    "id": "short-basico-malha-08",
+    "nome": "Short Feminino Básico Malha",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-22110-jtno5xxdt1jvfa.webp",
+    "link": "https://s.shopee.com.br/4q9hFGb3Y0",
+    "precoAntigo": "20,00",
+    "precoNovo": "19,60",
+    "categoria": "plus-size",
+    "loja": "shopee"
+  },
+  {
+    "id": "kit-shorts-duna-verao-09",
+    "nome": "Kit 2 Shorts Duna Verão",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mdnj9gqvzzddee.webp",
+    "link": "https://s.shopee.com.br/50T7RZaQD5",
+    "precoAntigo": "90,89",
+    "precoNovo": "49,99",
+    "categoria": "plus-size",
+    "loja": "shopee"
+  },
+  {
+    "id": "vestido-curto-lastex-10",
+    "nome": "Vestido Curto Lastex Soltinho",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mdytujendwcj09.webp",
+    "link": "https://s.shopee.com.br/4Au0S2datw",
+    "precoAntigo": "62,82",
+    "precoNovo": "61,73",
+    "categoria": "plus-size",
+    "loja": "shopee"
+      }
+    ]
+  },
+
+  "relogios": {
+    titulo: "⌚ Relógios",
+    produtos: [
+      {
+      "id": "relogio-masc-luxo-01",
+    "nome": "Relógio Masculino Luxo Aço Inoxidável Quartzo",
+    "img": "https://down-br.img.susercontent.com/file/cn-11134207-7r98o-lu7n69hjquf826.webp",
+    "link": "https://s.shopee.com.br/3VeJf1EwzR",
+    "precoAntigo": "99,89",
+    "precoNovo": "75,99",
+    "categoria": "relogios",
+    "loja": "shopee"
+  },
+  {
+    "id": "relogio-fem-idosos-02",
+    "nome": "Relógio Feminino para Idosos Números Grandes Quartzo",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-me0gm3fyr5s174.webp",
+    "link": "https://s.shopee.com.br/3qHA3dDgJX",
+    "precoAntigo": "22,39",
+    "precoNovo": "18,99",
+    "categoria": "relogios",
+    "loja": "shopee"
+  },
+  {
+    "id": "relogio-esportivo-digital-03",
+    "nome": "Relógio Esportivo Digital Masculino Resistente à Água",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134301-7rd73-m6w07wbk6i6hd5.webp",
+    "link": "https://s.shopee.com.br/2g5CfUI7gK",
+    "precoAntigo": "25,00",
+    "precoNovo": "15,00",
+    "categoria": "relogios",
+    "loja": "shopee"
+  },
+  {
+    "id": "relogio-masc-digital-wr-04",
+    "nome": "Relógio Masculino Digital WR Entrega Rápida",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1zzq6l901gfa2.webp",
+    "link": "https://s.shopee.com.br/2qOcrnHULN",
+    "precoAntigo": "100,00",
+    "precoNovo": "22,99",
+    "categoria": "relogios",
+    "loja": "shopee"
+  },
+  {
+    "id": "kit-relogio-led-pulseira-05",
+    "nome": "Kit Feminino Relógio LED + Pulseira e Brinco",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m8zhe18agwzmbc.webp",
+    "link": "https://s.shopee.com.br/20pVsGKf2G",
+    "precoAntigo": "49,99",
+    "precoNovo": "29,99",
+    "categoria": "relogios",
+    "loja": "shopee"
+  },
+  {
+    "id": "conjunto-relogio-fem-strass-06",
+    "nome": "Conjunto Relógio Feminino com Pulseiras e Strass",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134301-7rcca-m6gn5gu6ay2jf3.webp",
+    "link": "https://s.shopee.com.br/2B8w4ZK1hJ",
+    "precoAntigo": "30,00",
+    "precoNovo": "15,38",
+    "categoria": "relogios",
+    "loja": "shopee"
+  },
+  {
+    "id": "kit-relogio-masc-inox-07",
+    "nome": "Kit Relógio Masculino Aço Inox com Corrente",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7ra1g-mbegptrb839scc.webp",
+    "link": "https://s.shopee.com.br/2LSMGsJOMM",
+    "precoAntigo": "79,99",
+    "precoNovo": "30,70",
+    "categoria": "relogios",
+    "loja": "shopee"
+  },
+  {
+    "id": "relogio-parede-moderno-08",
+    "nome": "Relógio de Parede Moderno Sem Moldura Silencioso",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lvpccj0r6tni0c.webp",
+    "link": "https://s.shopee.com.br/1LZp52NCOC",
+    "precoAntigo": "50,00",
+    "precoNovo": "19,69",
+    "categoria": "relogios",
+    "loja": "shopee"
+  },
+  {
+    "id": "relogio-masc-classico-09",
+    "nome": "Relógio Masculino Clássico Luxo Aço Inoxidável",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7rd48-m79gnclba2lo76.webp",
+    "link": "https://s.shopee.com.br/14RUaSH64",
+    "precoAntigo": "35,00",
+    "precoNovo": "31,00",
+    "categoria": "relogios",
+    "loja": "shopee"
+      }
+    ]
+  },
+    
+  "mae-bebe": {
+    titulo: "👶 Mãe e Bebê",
+    produtos: [  
+      {
+      "id": "mordedor-silicone-01",
+    "nome": "Mordedor Seguro para Bebê em Silicone – 1 Peça, Cor Aleatória",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134301-7rdxg-lxw08gl65bcad1.webp",
+    "link": "https://s.shopee.com.br/4fqH3zpVJ4",
+    "precoAntigo": "25,50",
+    "precoNovo": "14,92",
+    "categoria": "mae-bebe",
+    "loja": "shopee"
+  },
+  {
+    "id": "piscina-inflavel-infantil-02",
+    "nome": "Piscina Inflável Infantil 3 Anéis Transparente 253 Litros Fundo Do Mar Para Crianças, Bebes, Campo, Praia Resistente",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m7k1f1yr0mrucd.webp",
+    "link": "https://s.shopee.com.br/4q9hGIory7",
+    "precoAntigo": "63,35",
+    "precoNovo": "61,65",
+    "categoria": "mae-bebe",
+    "loja": "shopee"
+  },
+  {
+    "id": "toalha-umedecida-pack-03",
+    "nome": "TOALHA UMEDECIDA PACK MEU BEBE ULTRA 500 FOLHAS - Caixa com 10 Pacotes de 50 Unidades",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m5arbrlzifn64a.webp",
+    "link": "https://s.shopee.com.br/40aaGls2f0",
+    "precoAntigo": "52,00",
+    "precoNovo": "51,21",
+    "categoria": "mae-bebe",
+    "loja": "shopee"
+  },
+  {
+    "id": "protetores-quina-silicone-04",
+    "nome": "kit Protetores De Quina Silicone Redondo Para Crianças E Bebes Proteção Promoção",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-820m5-mnib0edka5ts60.webp",
+    "link": "https://s.shopee.com.br/30i34vvqgu",
+    "precoAntigo": "15,98",
+    "precoNovo": "08,99",
+    "categoria": "mae-bebe",
+    "loja": "shopee"
+  },
+  {
+    "id": "toalha-banho-capuz-05",
+    "nome": "Toalha De Banho Infantil Com Capuz Felpuda Infantil Bebe Crianca Bichinhos Grande",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7rdwn-mbv9q67suzx2c7.webp",
+    "link": "https://s.shopee.com.br/3B1THEvDLx",
+    "precoAntigo": "59,90",
+    "precoNovo": "22,89",
+    "categoria": "mae-bebe",
+    "loja": "shopee"
+      }
+    ]
+  },
+
+  "viagens-bagagens": {
+    titulo: "🧳Itens de Viagem",
+    produtos: [
+      {
+ "id": "bolsa-termica-pote-marmita-01",
+    "nome": "Conjunto Bolsa Térmica Pote Marmita Porta Escova e Porta Talheres - Jacki Design",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7rfhx-m96551ro8uxzcb.webp",
+    "link": "https://s.shopee.com.br/2VlmUxrJQr",
+    "precoAntigo": "155,50",
+    "precoNovo": "137,45",
+    "categoria": "viagens-bagagens",
+    "loja": "shopee"
+  },
+  {
+    "id": "bolsa-viagem-dobravel-02",
+    "nome": "Bolsa De Viagem Multifuncional Dobrável De Grande Capacidade Impermeável",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7rdwb-mdh81c8g2js458.webp",
+    "link": "https://s.shopee.com.br/W0i7HyvUX",
+    "precoAntigo": "59,83",
+    "precoNovo": "35,90",
+    "categoria": "viagens-bagagens",
+    "loja": "shopee"
+  },
+  {
+    "id": "bolsa-cosmetico-portatil-03",
+    "nome": "Bolsa De Cosmético Com Grande Capacidade Portátil Para Viagem",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7rblm-lnahqzn00td8fe.webp",
+    "link": "https://s.shopee.com.br/14RWN0pVS",
+    "precoAntigo": "38,00",
+    "precoNovo": "30,00",
+    "categoria": "viagens-bagagens",
+    "loja": "shopee"
+  },
+  {
+    "id": "kit-frascos-viagem-04",
+    "nome": "Kit De Frascos Para Viagem 5 e 7 Peças Creme Cosméticos Higiene Pessoal",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mc3m36c43s914b.webp",
+    "link": "https://s.shopee.com.br/10wyiCx1Tg",
+    "precoAntigo": "20,00",
+    "precoNovo": "15,99",
+    "categoria": "viagens-bagagens",
+    "loja": "shopee"
+  },
+  {
+    "id": "bolsa-viagem-impermeavel-05",
+    "nome": "Bolsa De Viagem Impermeável Grande Capacidade Camada Dupla",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7ra3z-m5960yhhiohsf2.webp",
+    "link": "https://s.shopee.com.br/gK8JayI9e",
+    "precoAntigo": "88,50",
+    "precoNovo": "52,24",
+    "categoria": "viagens-bagagens",
+    "loja": "shopee"
+  },
+  {
+    "id": "mala-viagem-rodinha-06",
+    "nome": "Mala de Viagem Promoção Rodinha 360° Tamanhos 8kg - 20kg",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1y8m0e0q2fl26.webp",
+    "link": "https://s.shopee.com.br/qdYVtxeoh",
+    "precoAntigo": "180,00",
+    "precoNovo": "161,50",
+    "categoria": "viagens-bagagens",
+    "loja": "shopee"
+  },
+  {
+    "id": "garrafa-termica-viagem-07",
+    "nome": "Garrafa Térmica De Viagem Inox 1700ml Com Isolamento a Vácuo",
+    "img": "https://down-br.img.susercontent.com/file/cn-11134207-820l4-me9n7bsb6nly7b.webp",
+    "link": "https://s.shopee.com.br/8KjZRgV6bI",
+    "precoAntigo": "255,25",
+    "precoNovo": "225,47",
+    "categoria": "viagens-bagagens",
+    "loja": "shopee"
+      }  
+    ]
+  },
+
+  "fones": {
+    titulo: "🎧 Fones de Ouvido",
+    produtos: [
+      {
+       "id": "fone-bluetooth-earhook-53-01",
+    "nome": "Fones de Ouvido Sem Fio Bluetooth Ear-Hook 5.3 Mini Estéreo",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1f8p2y5m336a1.webp",
+    "link": "https://s.shopee.com.br/1BGOudXMd6",
+    "precoAntigo": "79,00",
+    "precoNovo": "48,99",
+    "categoria": "fones",
+    "loja": "shopee"
+  },
+  {
+    "id": "kit-fone-13-tws-02",
+    "nome": "Kit Fone 13 TWS Sem Fio Bluetooth 5.0 Air Pro 3 Com Microfone",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m329iu8izeo520.webp",
+    "link": "https://s.shopee.com.br/qdYW1YdJ4",
+    "precoAntigo": "43,45",
+    "precoNovo": "20,42",
+    "categoria": "fones",
+    "loja": "shopee"
+  },
+  {
+    "id": "fone-bluetooth-earhook-54-03",
+    "nome": "Fones de Ouvido Sem Fio Bluetooth Ear-Hook 5.4 Mini Estéreo",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1mitd3usbsa1b.webp",
+    "link": "https://s.shopee.com.br/gK8JiZGe3",
+    "precoAntigo": "79,00",
+    "precoNovo": "46,99",
+    "categoria": "fones",
+    "loja": "shopee"
+  },
+  {
+    "id": "fone-hmaston-rs27-04",
+    "nome": "H'maston RS-27 Fone De Ouvido Bluetooth 5.3 TWS Com Microfone Led",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lsmkug9edzcreb.webp",
+    "link": "https://s.shopee.com.br/W0i7PZtz2",
+    "precoAntigo": "69,99",
+    "precoNovo": "42,99",
+    "categoria": "fones",
+    "loja": "shopee"
+  },
+  {
+    "id": "fone-hmaston-rs53-05",
+    "nome": "H'maston RS-53 Fone De Ouvido Sem Fio Bluetooth Com Luz Led",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-luecm06vjxb4ac.webp",
+    "link": "https://s.shopee.com.br/LhHv6aXK1",
+    "precoAntigo": "85,29",
+    "precoNovo": "75,99",
+    "categoria": "fones",
+    "loja": "shopee"
+  },
+  {
+    "id": "fone-mini-pro4-tws-06",
+    "nome": "Mini Pro4 TWS Bluetooth Compacto Controle Toque Cancelamento De Ruído",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134301-7rfi3-m95aq5l73c6136.webp",
+    "link": "https://s.shopee.com.br/AKUdpTyT20",
+    "precoAntigo": "28,00",
+    "precoNovo": "15,86",
+    "categoria": "fones",
+    "loja": "shopee"
+      }  
+    ]
+  },
+    
+  "bolsas-masculinas": {
+    titulo: "🎒 Bolsas Masc.",
+    produtos: [
+      {
+        "id": "mochila-chl-resistente-01",
+    "nome": "Mochila CHL Masculino e Feminino Bolsa Viagem Resistente à Água Notebook 888",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-md88nbzw2vb5bf.webp",
+    "link": "https://s.shopee.com.br/9Kc6dEhZhS",
+    "precoAntigo": "48,00",
+    "precoNovo": "44,89",
+    "categoria": "bolsas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "bolsa-mochila-peito-tiracolo-02",
+    "nome": "Bolsa Mochila Masculina de Peito Tiracolo Impermeável Transversal",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7rdyo-lz4so6mwu2zu93.webp",
+    "link": "https://s.shopee.com.br/9zrnQSf2Le",
+    "precoAntigo": "49,99",
+    "precoNovo": "15,73",
+    "categoria": "bolsas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "kit-mochilas-escolares-03",
+    "nome": "Kit 02 Mochilas Escolares Bolsas Resistentes Masculino Feminino",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-ly3rm1mm95xc89.webp",
+    "link": "https://s.shopee.com.br/AABDcleP0h",
+    "precoAntigo": "58,00",
+    "precoNovo": "53,20",
+    "categoria": "bolsas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "bolsa-transversal-lona-04",
+    "nome": "Bolsa Transversal de Lona Grande Capacidade Unissex Estilo Escolar",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-824gl-mee1dmvt4nb4fa.webp",
+    "link": "https://s.shopee.com.br/W0i70FCcq",
+    "precoAntigo": "80,00",
+    "precoNovo": "32,99",
+    "categoria": "bolsas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "mochila-bolsa-reforcada-05",
+    "nome": "Mochila Bolsa Reforçada Notebook Resistente Trabalho Faculdade",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lt2igo2upt8be1.webp",
+    "link": "https://s.shopee.com.br/LhHuhFpxp",
+    "precoAntigo": "29,90",
+    "precoNovo": "28,99",
+    "categoria": "bolsas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "mochila-bolsa-reforcada-05",
+    "nome": "Mochila Bolsa Reforçada Notebook Resistente Trabalho Faculdade",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lt2igo2upt8be1.webp",
+    "link": "https://s.shopee.com.br/LhHuhFpxp",
+    "precoAntigo": "29,90",
+    "precoNovo": "28,99",
+    "categoria": "bolsas-masculinas",
+    "loja": "shopee"
+  },
+  {
+    "id": "mochila-masc-antifurto-cadeado-06",
+    "nome": "Mochila Masculina Impermeável Antifurto com Cadeado CHL 48A-65",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-ly847i77tuslb9.webp",
+    "link": "https://s.shopee.com.br/14RW5H6dn",
+    "precoAntigo": "55,25",
+    "precoNovo": "54,04",
+    "categoria": "bolsas-masculinas",
+    "loja": "shopee"
+      }
+    ]
+  },
+
+  "bolsas-femininas": {
+    titulo: "👝 Bolsas Fem.",
+    produtos: [
+      {
+        "id": "bolsa-fem-transversal-tiracolo-01",
+    "nome": "Bolsa Feminina Bolsas Femininas Bolsa Pequena Feminina Bolsa Media Feminina Bolsa Transversal Feminina Tiracolo De Mão",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mh1xn7prp1qf74.webp",
+    "link": "https://s.shopee.com.br/5L5xrirptu",
+    "precoAntigo": "85,00",
+    "precoNovo": "80,99",
+    "categoria": "bolsas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "bolsa-ombro-couro-preto-02",
+    "nome": "Bolsa de Ombro Feminina com Alça Ajustável, Bolsa Feminina Elegante com Couro Preto, Bolsa Transversal Tiracolo Presente",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mdy1za2hc6blcd.webp",
+    "link": "https://s.shopee.com.br/AUo41DYAPx",
+    "precoAntigo": "68,00",
+    "precoNovo": "66,48",
+    "categoria": "bolsas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "bolsa-praia-palha-03",
+    "nome": "Bolsa de praia feminina bolsa redonda de palha bolsa transversal de verão",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7ra2t-m5akn7znns7rcb.webp",
+    "link": "https://s.shopee.com.br/9zrnQIa4Qs",
+    "precoAntigo": "38,00",
+    "precoNovo": "25,80",
+    "categoria": "bolsas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "bolsa-fem-lencinho-bau-04",
+    "nome": "Bolsa Feminina Transversal Com Lencinho Bau Tiracolo Espaçosa Bolsa Feminina Estruturada Media Com Alça",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-8260j-mjgy2f5t1kp0be.webp",
+    "link": "https://s.shopee.com.br/AABDcbZR5v",
+    "precoAntigo": "120,00",
+    "precoNovo": "47,99",
+    "categoria": "bolsas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "bolsa-ombro-pequena-05",
+    "nome": "Bolsa de Ombro Pequenas Feminina,Mini Bolsas Sacola Tiracolo Moderna de Couro Impermeável,Shoulder Handbag",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m2jd0pedaa5231.webp",
+    "link": "https://s.shopee.com.br/9fEx1gbL6q",
+    "precoAntigo": "68,29",
+    "precoNovo": "66,49",
+    "categoria": "bolsas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "bolsa-carteiro-nylon-06",
+    "nome": "Bolsa Carteiro de Nylon Impermeável de Grande Capacidade — Bolsa Transversal e de Ombro para Estudantes e Uso Diário",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-824i6-mee1462b4t8h82.webp",
+    "link": "https://s.shopee.com.br/9UvWpNbyRr",
+    "precoAntigo": "80,00",
+    "precoNovo": "31,99",
+    "categoria": "bolsas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "bolsa-fem-kit-2-ziper-07",
+    "nome": "Bolsa Feminina kit 2 bolsas COM ZIPER Transversal e de ombro sacola envio imediato",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mgszwd0456gw5f.webp",
+    "link": "https://s.shopee.com.br/8zzGESdsSm",
+    "precoAntigo": "69,90",
+    "precoNovo": "49,63",
+    "categoria": "bolsas-femininas",
+    "loja": "shopee"
+  },
+  {
+    "id": "bolsa-mensageiro-retro-08",
+    "nome": "Crachá De Cortesia Unissex Bolsa Mensageiro Retrô Bolsa de Mão com Vários Bolsos Bolsa de Ombro de Grande Capacidade",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mhpno1g6jkee4f.webp",
+    "link": "https://s.shopee.com.br/9AIgQldF7p",
+    "precoAntigo": "60,00",
+    "precoNovo": "30,99",
+    "categoria": "bolsas-femininas",
+    "loja": "shopee"
+      }
+    ]
+  },
+
+  "limpeza": {
+    titulo: "🧼 Produtos de Limpeza",
+    produtos: [
+      {
+  "id": "toalha-pano-limpeza-microfibra-01",
+    "nome": "Toalha Pano Limpeza 30x40 Microfibra 2 Lados Multiuso",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-8262q-mkjnsirh5gjnd5.webp",
+    "link": "https://s.shopee.com.br/70EBsAm9jo",
+    "precoAntigo": "14,99",
+    "precoNovo": "10,50",
+    "categoria": "limpeza",
+    "loja": "shopee"
+  },
+  {
+    "id": "aspirador-soprador-portatil-02",
+    "nome": "Aspirador e Soprador Portátil 5 em 1 Alta Potência para Carro",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m4fqyduc1c1tf1.webp",
+    "link": "https://s.shopee.com.br/7AXc4TlWOr",
+    "precoAntigo": "65,00",
+    "precoNovo": "37,60",
+    "categoria": "limpeza",
+    "loja": "shopee"
+  },
+  {
+    "id": "esguicho-alta-pressao-03",
+    "nome": "Esguicho de Alta Pressão Ajustável para Mangueira",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-ludqugdg1l5xaf.webp",
+    "link": "https://s.shopee.com.br/3fxju2yqVE",
+    "precoAntigo": "25,20",
+    "precoNovo": "20,90",
+    "categoria": "limpeza",
+    "loja": "shopee"
+  },
+  {
+    "id": "aspirador-po-sem-fio-usb-04",
+    "nome": "Aspirador De Pó Sem Fio Portátil USB Uso Doméstico",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-825a1-mg3tfogkuu4r4f.webp",
+    "link": "https://s.shopee.com.br/3qHA6LyDAH",
+    "precoAntigo": "82,00",
+    "precoNovo": "75,99",
+    "categoria": "limpeza",
+    "loja": "shopee"
+      }  
+    ]
+  },
+
+  "brinquedos": {
+    titulo: "🧸 Brinquedos",
+    produtos: [
+      {
+        "id": "brinquedo-agua-praia-01",
+    "nome": "verão praia jogando brinquedos de água crianças brinquedos Mini pequeno jato banho água",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mesm9hng2oe8cc.webp",
+    "link": "https://s.shopee.com.br/50T7V0XuGj",
+    "precoAntigo": "18,00",
+    "precoNovo": "12,88",
+    "categoria": "brinquedos",
+    "loja": "shopee"
+  },
+  {
+    "id": "patinho-dancante-musica-02",
+    "nome": "Patinho Dançante Com Luzes Pato Dançarino Musica Criança Brinquedo",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-824im-mdy0b4724mbkc6.webp",
+    "link": "https://s.shopee.com.br/30i37KfWKP",
+    "precoAntigo": "80,00",
+    "precoNovo": "36,90",
+    "categoria": "brinquedos",
+    "loja": "shopee"
+  },
+  {
+    "id": "jogo-caiu-perdeu-torre-03",
+    "nome": "Jogo Caiu Perdeu Torre de Madeira 54 Peças Desenvolve Coordenação Motora Brinquedo",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mc0rz4sg495lef.webp",
+    "link": "https://s.shopee.com.br/2qOcv1g9fO",
+    "precoAntigo": "30,00",
+    "precoNovo": "18,67",
+    "categoria": "brinquedos",
+    "loja": "shopee"
+  },
+  {
+    "id": "lousa-magica-tablet-lcd-04",
+    "nome": "Lousa Mágica Tela Lcd Tablet Infantil De Escrever E Desenhar 8.5/10/12 Polegadas brinquedo infantil Para menina/menino",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7reo6-m8ggjvcs2vm99b.webp",
+    "link": "https://s.shopee.com.br/2g5Ciign0N",
+    "precoAntigo": "40,00",
+    "precoNovo": "13,99",
+    "categoria": "brinquedos",
+    "loja": "shopee"
+  },
+  {
+    "id": "tapete-agua-magico-05",
+    "nome": "Tapete de Água Mágico Brinquedo Educativo para Criatividade Reutilizável com 3 Canetas Presente",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7rdyb-mdrllx5gsous29.webp",
+    "link": "https://s.shopee.com.br/3qHA6rcLdc",
+    "precoAntigo": "39,00",
+    "precoNovo": "36,49",
+    "categoria": "brinquedos",
+    "loja": "shopee"
+  },
+  {
+    "id": "lanca-bolhas-sabao-06",
+    "nome": "Lança Bolhas de Sabão com Luz Brinquedo Infantil Arminha de Bolha Diversão Crianças",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7rdwj-mczvuaud962h89.webp",
+    "link": "https://s.shopee.com.br/3fxjuYcyyb",
+    "precoAntigo": "50,00",
+    "precoNovo": "22,99",
+    "categoria": "brinquedos",
+    "loja": "shopee"
+      }
+    ]
+  }, 
+    
+  "acessorios": {
+    titulo: "💎 Acessórios",
+    produtos: [
+      {
+        "id": "colar-corrente-prata925-coracao-01",
+    "nome": "Colar Corrente Cordao Gargantilha Banhado Prata 925 Coração Vazado",
+    "img": "https://down-br.img.susercontent.com/file/4b2d426f22c495db39102510fc251110.webp",
+    "link": "https://s.shopee.com.br/4VWqs04OSb",
+    "precoAntigo": "42,90",
+    "precoNovo": "36,90",
+    "categoria": "acessorios",
+    "loja": "shopee"
+  },
+  {
+    "id": "colar-cordao-ouro18k-coracao-02",
+    "nome": "Colar cordão Feminino com coração liso - Elo português 45cm 6mm Folheados a Ouro 18k",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81ztc-mk8pf9cecxs2b4.webp",
+    "link": "https://s.shopee.com.br/LhHuLKFuu",
+    "precoAntigo": "50,00",
+    "precoNovo": "16,99",
+    "categoria": "acessorios",
+    "loja": "shopee"
+  },
+  {
+    "id": "corrente-colar-prata925-crucifixo-03",
+    "nome": "Corrente Colar de Prata 925 Crucifixo Pequeno Masculino - Cordão Fino Veneziana 50cm 60cm",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m1fvgdte5djl55.webp",
+    "link": "https://s.shopee.com.br/W0i6eJcZx",
+    "precoAntigo": "39,90",
+    "precoNovo": "39,50",
+    "categoria": "acessorios",
+    "loja": "shopee"
+      }
+    ]
+  },
+
+  "pets": {
+    titulo: "🐶 Espaço Pets",
+    produtos: [
+      {
+        "id": "tapete-sanitario-canino-01",
+    "nome": "Tapete Sanitário Canino Higiênico Banheiro Educa Pet Tapete Lavável Banheiro Pet",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-820m4-mnaao9q41ssk0e.webp",
+    "link": "https://s.shopee.com.br/2VlmWa8Jss",
+    "precoAntigo": "19,90",
+    "precoNovo": "18,99",
+    "categoria": "pets",
+    "loja": "shopee"
+  },
+  {
+    "id": "casa-cama-caminha-pet-02",
+    "nome": "Casa + Cama Caminha Pet Casinha Para Cachorro Pet Cães e Gatos N°2 Pequenos",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lv53biwapsi74d.webp",
+    "link": "https://s.shopee.com.br/2LSMKH8xDr",
+    "precoAntigo": "59,98",
+    "precoNovo": "39,99",
+    "categoria": "pets",
+    "loja": "shopee"
+  },
+  {
+    "id": "jornal-papel-pet-limpo-03",
+    "nome": "Jornal Papel Pet Limpo 1KG. 2KG, 3KG, 4KG, 5KG, Tapete Pet Biodegradável FOLHAS GRANDES 64 ×58",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mgs74eh72lfre4.webp",
+    "link": "https://s.shopee.com.br/BNrkIHCcS",
+    "precoAntigo": "40,00",
+    "precoNovo": "16,80",
+    "categoria": "pets",
+    "loja": "shopee"
+  },
+  {
+    "id": "kit-maquina-tosar-pet-04",
+    "nome": "Kit Máquina Para Tosar Pet + Tesoura + Pente + Lixa Máquina Profissional Para Cachorro & Gato",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-824j4-mfo2tbzizlzef3.webp",
+    "link": "https://s.shopee.com.br/14RXzHpxR",
+    "precoAntigo": "39,99",
+    "precoNovo": "33,68",
+    "categoria": "pets",
+    "loja": "shopee"
+  },
+  {
+    "id": "tapete-higienico-descartavel-05",
+    "nome": "Tapete Higiênico Descartável para Cachorro Unidades 60x60 cm - Fralda Pet Xixi Cão Pequeno Médio",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mdmatvwyl0hl5a.webp",
+    "link": "https://s.shopee.com.br/9UvWrRhfgO",
+    "precoAntigo": "39,90",
+    "precoNovo": "19,98",
+    "categoria": "pets",
+    "loja": "shopee"
+      }
+    ]
+  },
+
+  "sapatos": {
+    titulo: "👟 Sapatos",
+    produtos: [
+      {
+       "id": "mule-fem-bico-quadrado-01",
+    "nome": "Mule Feminino Bico Quadrado Sapatilha Sandália Sapato Mocassim Rasteira Casual Ana Brito",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-820l4-mnmurd8bzoxt9f.webp",
+    "link": "https://s.shopee.com.br/1LZp7t066F",
+    "precoAntigo": "63,00",
+    "precoNovo": "61,65",
+    "categoria": "sapatos",
+    "loja": "shopee"
+  },
+  {
+    "id": "mule-bico-fino-strass-02",
+    "nome": "Mule Bico Fino 2 Em 1 Com Strass Sandália Muller Mocassim Sapato",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m5a8uzy0lu9x32.webp",
+    "link": "https://s.shopee.com.br/2LSMJiwI4T",
+    "precoAntigo": "45,00",
+    "precoNovo": "42,90",
+    "categoria": "sapatos",
+    "loja": "shopee"
+  },
+  {
+    "id": "mocassim-fem-confortavel-03",
+    "nome": "Mocassim Feminino Confortável Elegante Leve Moda",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m76vlguash4i96.webp",
+    "link": "https://s.shopee.com.br/20pVv6xYkR",
+    "precoAntigo": "58,21",
+    "precoNovo": "55,07",
+    "categoria": "sapatos",
+    "loja": "shopee"
+  },
+  {
+    "id": "sapatilha-fem-alpargata-moleca-04",
+    "nome": "Sapatilha Feminina Alpargata Moleca Leve Ultra Respirável flexível macia furada furos",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7repz-m1ybno7hj33pe1.webp",
+    "link": "https://s.shopee.com.br/3B1TJFt7Ng",
+    "precoAntigo": "81,12",
+    "precoNovo": "47,18",
+    "categoria": "sapatos",
+    "loja": "shopee"
+  },
+  {
+    "id": "sapatilha-fem-mocassim-fivela-05",
+    "nome": "Sapatilha Feminina Mocassim Com Fivela Bico Quadrado - Linha Confort",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-820le-mmlrq7x8dwxy7f.webp",
+    "link": "https://s.shopee.com.br/30i36wtkif",
+    "precoAntigo": "59,60",
+    "precoNovo": "39,99",
+    "categoria": "sapatos",
+    "loja": "shopee"
+  },
+  {
+    "id": "sapatilha-fem-slingback-verniz-06",
+    "nome": "Sapatilha Feminina Slingback Em Verniz Bico Fino Com Fivelas",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7rd49-lvnfruqmb3dzd7.webp",
+    "link": "https://shopee.com.br/product/511410160/23498052271",
+    "precoAntigo": "59,00",
+    "precoNovo": "57,00",
+    "categoria": "sapatos",
+    "loja": "shopee"
+      }
+    ]
+  },
+
+  "casa-construcao": {
+    titulo: "🏡 Casa e construção",
+    produtos: [
+      {
+       "id": "kit-banheiro-completo-lixeira-01",
+    "nome": "Kit Banheiro Completo Lixeira C/ Tampa Detalhes Em Bambu Luxo",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81ztc-mk811k8aieipfa.webp",
+    "link": "https://shopee.com.br/product/511410160/23498052271",
+    "precoAntigo": "58,50",
+    "precoNovo": "52,15",
+    "categoria": "casa-construcao",
+    "loja": "shopee"
+  },
+  {
+    "id": "kit-pote-vidro-hermetico-02",
+    "nome": "Kit Pote de Vidro Hermético Retangular 10 / 5 Unid Travas Marmita Fit Microondas Mantimentos",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mdn5xvzwinrl9c.webp",
+    "link": "https://shopee.com.br/product/482786640/21699182944",
+    "precoAntigo": "88,90",
+    "precoNovo": "80,50",
+    "categoria": "casa-construcao",
+    "loja": "shopee"
+  },
+  {
+    "id": "jogo-lençol-percal-180fios-03",
+    "nome": "Jogo de Lençol Percal 180 Fios 100% Algodão – Todos os Tamanhos",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mflnn6x2u6tgc4.webp",
+    "link": "https://shopee.com.br/product/1188215663/20398322397",
+    "precoAntigo": "57,37",
+    "precoNovo": "55,48",
+    "categoria": "casa-construcao",
+    "loja": "shopee"
+  },
+  {
+    "id": "kit-toalha-banho-grande-04",
+    "nome": "Kit 6 Toalha de Banho Grande Macia Premium 100% Algodão",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7reo2-mdumnv61jg0tf7.webp",
+    "link": "https://shopee.com.br/product/523145812/23398794668",
+    "precoAntigo": "138,18",
+    "precoNovo": "118,83",
+    "categoria": "casa-construcao",
+    "loja": "shopee"
+  },
+  {
+    "id": "roupao-plush-microfibra-05",
+    "nome": "Roupão Plush Microfibra Adulto Extra Macio Unissex Várias Cores Tamanho Único",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-820lb-mlrtjysnghl02e.webp",
+    "link": "https://shopee.com.br/product/695401829/22995887563",
+    "precoAntigo": "72,22",
+    "precoNovo": "66,40",
+    "categoria": "casa-construcao",
+    "loja": "shopee"
+      }
+    ]
+  },
+
+  "beleza": {
+    titulo: "💄 Beleza",
+    produtos: [
+      {
+       "id": "conjunto-cortador-unhas-01",
+    "nome": "Conjunto de cortador de unhas para pedicure, 16 peças, aço inoxidável com bolsa dobrável",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-m2b72jhj7q7l5f.webp",
+    "link": "https://shopee.com.br/product/1377846021/20299556816",
+    "precoAntigo": "80,00",
+    "precoNovo": "21,98",
+    "categoria": "beleza",
+    "loja": "shopee"
+  },
+  {
+    "id": "kit-sabonete-hidratante-rhenuks-02",
+    "nome": "Kit Sabonete + Hidratante + Esfoliante Rhenuks 200ml Corpo e Rosto 10 fragrâncias",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-820ln-mp1bd3ccej2869.webp",
+    "link": "https://shopee.com.br/product/1386679095/2334200396",
+    "precoAntigo": "35,99",
+    "precoNovo": "29,98",
+    "categoria": "beleza",
+    "loja": "shopee"
+  },
+  {
+    "id": "escova-secadora-alisador-03",
+    "nome": "Escova Secadora Alisador Elétrica Quente Cabelo Com 3 Em1 Hair Styler JORGE APENAS 110V",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7rfhe-m965h0w7chpee3.webp",
+    "link": "https://shopee.com.br/product/410705973/18277597493",
+    "precoAntigo": "300,00",
+    "precoNovo": "42,99",
+    "categoria": "beleza",
+    "loja": "shopee"
+  },
+  {
+    "id": "escova-cabelo-termica-04",
+    "nome": "Escova De Cabelo Térmica Amarela ou Rosa Madeira Mista Com Cerdas De Javali",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-mb84a6m4ltkp26.webp",
+    "link": "https://shopee.com.br/product/1103946075/22594164922",
+    "precoAntigo": "177,40",
+    "precoNovo": "19,89",
+    "categoria": "beleza",
+    "loja": "shopee"
+      }
+    ]
+  },
+  
+  "papelaria": {
+    titulo: "✏️ Papelaria",
+    produtos: [
+      {
+        "id": "kit-material-escolar-fem-01",
+    "nome": "Kit Material Escolar Feminino Completo Com Sem Mochila Escolar Feminina Estojo Escolar Feminino Rosa",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81ztc-mjhj4dh46qki3d.webp",
+    "link": "https://shopee.com.br/product/312485282/22497350407",
+    "precoAntigo": "120,30",
+    "precoNovo": "105,15",
+    "categoria": "papelaria",
+    "loja": "shopee"
+  },
+  {
+    "id": "kit-material-escolar-basico-02",
+    "nome": "Kit Material Escolar Básico 13 Peças Caderno Universitário Volta as Aulas",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mhpcxkduwr9f2d.webp",
+    "link": "https://shopee.com.br/product/1244503758/20097993516",
+    "precoAntigo": "79,99",
+    "precoNovo": "39,90",
+    "categoria": "papelaria",
+    "loja": "shopee"
+  },
+  {
+    "id": "estojo-escolar-box-03",
+    "nome": "Estojo Escolar Feminino/ Masculino Box Juvenil Martelasse Estojo Escolar Organizador Grande Jumbo Box 2 Compartimentos",
+    "img": "https://down-br.img.susercontent.com/file/sg-11134201-7rdxt-md4wjdbblqyf12.webp",
+    "link": "https://shopee.com.br/product/1567911874/23098793285",
+    "precoAntigo": "50,00",
+    "precoNovo": "21,99",
+    "categoria": "papelaria",
+    "loja": "shopee"
+  },
+  {
+    "id": "estojo-maleta-pintura-infantil-04",
+    "nome": "Estojo Maleta Pintura Infantil Lápis Cores Giz Canetinhas e Diversos Tamanhos Desenhos Para Colorir",
+    "img": "https://down-br.img.susercontent.com/file/br-11134207-7r98o-lxihn6ip6j0f95.webp",
+    "link": "https://shopee.com.br/product/1076565213/21197750336",
+    "precoAntigo": "80,00",
+    "precoNovo": "35,90",
+    "categoria": "papelaria",
+    "loja": "shopee"
+      }
+    ]
+  }
+};
+        
+const PRODUTOS_LOJA = [];
+
         Object.keys(dados).forEach(chave => {
             if (dados[chave] && dados[chave].produtos) {
                 dados[chave].produtos.forEach(produto => {
@@ -847,6 +2403,8 @@
         }
 
         function filtrarPorCategoria(idCategoria) {
+            console.log("Categoria clicada:", idCategoria);
+            console.log("Primeiro produto:", PRODUTOS_LOJA[0]);
             categoriaAtiva = idCategoria;
             const infoCategoria = CATEGORIAS_DADOS.find(c => c.id === idCategoria);
             const tituloAba = document.getElementById('titulo-aba-ofertas');
@@ -907,30 +2465,35 @@
             if(wrapperDepoimentos) wrapperDepoimentos.style.display = 'block';
         }
 
-        function alternarFavorito(idProduto) {
-            const user = auth.currentUser;
-            if (!user) {
-                mostrarModalLoginObrigatorio();
-                return;
-            }
+function alternarFavorito(idProduto) {
+    console.log("🔥 Botão favorito clicado:", idProduto);
 
-            if (favoritosSalvos.includes(idProduto)) {
-                favoritosSalvos = favoritosSalvos.filter(id => id !== idProduto);
-            } else {
-                favoritosSalvos.push(idProduto);
-            }
+    const user = auth.currentUser;
 
-            localStorage.setItem('favoritosSalvos', JSON.stringify(favoritosSalvos));
-            atualizarIconesCoraoGlobais();
-            renderizarAbaFavoritos();
-        }
+    if (!user) {
+        mostrarModalLoginObrigatorio();
+        return;
+    }
 
+    if (favoritosSalvos.includes(idProduto)) {
+        favoritosSalvos = favoritosSalvos.filter(id => id !== idProduto);
+    } else {
+        favoritosSalvos.push(idProduto);
+    }
+
+    // Salva no localStorage
+    localStorage.setItem('favoritosSalvos', JSON.stringify(favoritosSalvos));
+
+    atualizarIconesCoraoGlobais();
+    renderizarAbaFavoritos();
+}
         function getAvaliacoesRandom() {
-            const num = Math.floor(Math.random() * 15200) + 68;
-            if (num >= 1000) return (num / 1000).toFixed(1) + "k";
-            return num.toLocaleString('pt-BR');
-        }
-
+    const num = Math.floor(Math.random() * 15200) + 68; // de 68 até ~15.000
+    
+    if (num >= 10000) return (num / 1000).toFixed(1) + "k";
+    if (num >= 1000) return (num / 1000).toFixed(1) + "k";
+    return num.toLocaleString('pt-BR');
+}
         function atualizarIconesCoraoGlobais() {
             document.querySelectorAll(`.btn-favorito`).forEach(btn => {
                 const idProd = btn.getAttribute('data-id');
@@ -955,6 +2518,7 @@
             }
 
             const exibicaoHome = listaProdutos.slice(0, 8);
+
             gridHomeContainer.innerHTML = exibicaoHome.map(prod => {
                 const isFav = favoritosSalvos.includes(prod.id);
                 return `
@@ -1032,75 +2596,79 @@
             `).join('');
         }
 
-        function mostrarModalLoginObrigatorio() {
-            const modal = document.getElementById("modal-login-obrigatorio");
-            if (modal) modal.style.display = "flex";
+        function abrirPoliticaPrivacidade() {
+            alert("Link de Políticas não configurado.");
         }
+function mostrarModalLoginObrigatorio() {
+    const modal = document.getElementById("modal-login-obrigatorio");
+    if (modal) {
+        modal.style.display = "flex";
+    } else {
+        console.error("Modal não encontrado!");
+    }
+}
 
-        function fecharModalLoginObrigatorio() {
-            const modal = document.getElementById("modal-login-obrigatorio");
-            if (modal) modal.style.display = "none";
-        }
+function fecharModalLoginObrigatorio() {
+    const modal = document.getElementById("modal-login-obrigatorio");
+    if (modal) modal.style.display = "none";
+}
 
-        function abrirLoginDoModal() {
-            fecharModalLoginObrigatorio();
-            abrirCadastro();
-        }
-
-        function construirEstrutura() {
-            const carrosselContainer = document.getElementById('carrossel-hot-deals');
-            if(carrosselContainer && PRODUTOS_LOJA.length > 0) {
-                const amostraCarrossel = PRODUTOS_LOJA.slice(0, 5);
-                carrosselContainer.innerHTML = amostraCarrossel.map(prod => `
-                    <div class="card-hot">
-                        <span class="tag-desconto">🔥 QUENTE</span>
-                        <img src="${prod.img}" class="produto-img">
-                        <div class="produto-nome">${prod.nome}</div>
-                        <div>
-                            <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
-                            <div class="preco-novo">R$ ${prod.precoNovo}</div>
-                        </div>
-                        <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
-                    </div>
-                `).join('');
-            }
-
-            const mosaicoContainer = document.getElementById('mosaico-categorias-container');
-            const mosaicoCompleto = document.getElementById('mosaico-completo-categorias');
-            
-            const htmlMosaico = CATEGORIAS_DADOS.map(cat => `
-                <div class="categoria-card" onclick="filtrarPorCategoria('${cat.id}')">
-                    <span class="categoria-tag-top">Oferta</span>
-                    <img src="${cat.img}" class="categoria-img">
-                    <div class="categoria-glass-footer"><p>${cat.nome}</p></div>
+function abrirLoginDoModal() {
+    fecharModalLoginObrigatorio();
+    abrirCadastro(); // abre o modal de login/cadastro que você já tem
+}
+function construirEstrutura() {
+    const carrosselContainer = document.getElementById('carrossel-hot-deals');
+    if(carrosselContainer && PRODUTOS_LOJA.length > 0) {
+        const amostraCarrossel = PRODUTOS_LOJA.slice(0, 5);
+        carrosselContainer.innerHTML = amostraCarrossel.map(prod => `
+            <div class="card-hot">
+                <span class="tag-desconto">🔥 QUENTE</span>
+                <img src="${prod.img}" class="produto-img">
+                <div class="produto-nome">${prod.nome}</div>
+                <div>
+                    <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
+                    <div class="preco-novo">R$ ${prod.precoNovo}</div>
                 </div>
-            `).join('');
+                <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
+            </div>
+        `).join('');
+    }
 
-            if(mosaicoContainer) mosaicoContainer.innerHTML = htmlMosaico;
-            if(mosaicoCompleto) mosaicoCompleto.innerHTML = htmlMosaico;
+    const mosaicoContainer = document.getElementById('mosaico-categorias-container');
+    if(mosaicoContainer) {
+        mosaicoContainer.innerHTML = CATEGORIAS_DADOS.map(cat => `
+            <div class="categoria-card" onclick="filtrarPorCategoria('${cat.id}')">
+                <span class="categoria-tag-top">Oferta</span>
+                <img src="${cat.img}" class="categoria-img">
+                <div class="categoria-glass-footer"><p>${cat.nome}</p></div>
+            </div>
+        `).join('');
+    }
 
-            const trackDepoimentos = document.getElementById('track-depoimentos');
-            if(trackDepoimentos) {
-                const listaDuplicada = [...DEPOIMENTOS_DADOS, ...DEPOIMENTOS_DADOS];
-                trackDepoimentos.innerHTML = listaDuplicada.map(dep => `
-                    <div class="depoimento-box">
-                        <div class="depoimento-user">
-                            <div class="avatar-fake" style="background: ${dep.cor};">${dep.letra}</div>
-                            <div>
-                                <h4 style="font-size:13px;">${dep.nome}</h4>
-                                <p style="font-size:11px; color:gray;">Verificado ✅</p>
-                            </div>
-                        </div>
-                        <p style="font-size:12px; color:#444; font-style:italic; line-height:1.4;">${dep.texto}</p>
+    const trackDepoimentos = document.getElementById('track-depoimentos');
+    if(trackDepoimentos) {
+        const listaDuplicada = [...DEPOIMENTOS_DADOS, ...DEPOIMENTOS_DADOS];
+        trackDepoimentos.innerHTML = listaDuplicada.map(dep => `
+            <div class="depoimento-box">
+                <div class="depoimento-user">
+                    <div class="avatar-fake" style="background: ${dep.cor};">${dep.letra}</div>
+                    <div>
+                        <h4 style="font-size:13px;">${dep.nome}</h4>
+                        <p style="font-size:11px; color:gray;">Verificado ✅</p>
                     </div>
-                `).join('');
-            }
+                </div>
+                <p style="font-size:12px; color:#444; font-style:italic; line-height:1.4;">${dep.texto}</p>
+            </div>
+        `).join('');
+    }
 
-            renderizarGridHome(PRODUTOS_LOJA);
-            renderizarGridOfertas(PRODUTOS_LOJA);
-            renderizarAbaFavoritos();
-            atualizarIconesCoraoGlobais();
-        }
+    // ✅ Aqui fora, sempre vai atualizar
+    renderizarGridHome(PRODUTOS_LOJA);
+    renderizarGridOfertas(PRODUTOS_LOJA);
+    renderizarAbaFavoritos();
+    atualizarIconesCoraoGlobais();
+}
 
         document.addEventListener("DOMContentLoaded", construirEstrutura);
 
@@ -1109,104 +2677,136 @@
             document.getElementById("cookie-banner").style.display = "none";
         }
 
-        function alternarTema() {
-            const temaAtual = localStorage.getItem("tema-site") || "claro";
-            if (temaAtual === "claro") {
-                document.body.classList.add("tema-escuro");
-                localStorage.setItem("tema-site", "escuro");
-            } else {
-                document.body.classList.remove("tema-escuro");
-                localStorage.setItem("tema-site", "claro");
-            }
-        }
-
         window.addEventListener("load", () => {
             const aceitou = localStorage.getItem("cookiesAceitos");
             if(aceitou === "sim"){
                 document.getElementById("cookie-banner").style.display = "none";
             }
+        });
+
+        function alternarTema() {
+            const temaAtual = localStorage.getItem("tema-site") || "claro";
+            if (temaAtual === "claro") {
+                document.body.classList.add("tema-escuro");
+                localStorage.setItem("tema-site", "escuro");
+                alert("🌙 Tema escuro ativado");
+            } else {
+                document.body.classList.remove("tema-escuro");
+                localStorage.setItem("tema-site", "claro");
+                alert("☀️ Tema claro ativado");
+            }
+        }
+
+        window.addEventListener("load", () => {
             const temaSalvo = localStorage.getItem("tema-site");
             if (temaSalvo === "escuro") {
                 document.body.classList.add("tema-escuro");
             }
         });
 
-        function criarConta() {
-            const nome = document.getElementById("nome-usuario").value.trim();
-            const email = document.getElementById("email-usuario").value.trim();
-            const senha = document.getElementById("senha-usuario").value;  
-            const aceitou = document.getElementById("aceitou-termos").checked;
-            const recebe = document.getElementById("aceitou-promocoes").checked;
+        const AVATARES = [
+            "🦊", "🐼", "🐱", "🐸", "🐵", "🐧", "🦁", "🐨", "🐯", "🐰", "🦄", "🐻"
+        ];
 
-            if (!nome) return alert("Digite seu nome");
-            if (!email) return alert("Digite um e-mail válido");
-            if (!aceitou) return alert("Você precisa aceitar os termos");
-            if(senha.length < 6){
-                alert("A senha precisa ter pelo menos 6 caracteres.");
-                return;
-            }
+       function criarConta() {
+    const nome = document.getElementById("nome-usuario").value.trim();
+    const email = document.getElementById("email-usuario").value.trim();
+    const senha = document.getElementById("senha-usuario").value;  
+    const aceitou = document.getElementById("aceitou-termos").checked;
+    const recebe = document.getElementById("aceitou-promocoes").checked;
 
-            auth.createUserWithEmailAndPassword(email, senha)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    return db.collection("usuarios").doc(user.uid).set({
-                        nome: nome,
-                        email: email,
-                        recebePromocoes: recebe,
-                        criadoEm: new Date()
-                    });
-                })
-                .then(() => {
-                    document.getElementById("nome-perfil").innerText = nome;
-                    document.getElementById("painel-nome").innerText = nome;
-                    document.getElementById("btn-login").style.display = "none";
-                    alert("Conta criada com sucesso!");
-                    fecharCadastro();
-                })
-                .catch((error) => {
-                    if(error.code === "auth/email-already-in-use"){
-                        auth.signInWithEmailAndPassword(email, senha)
-                            .then(() => {
-                                document.getElementById("nome-perfil").innerText = nome;
-                                document.getElementById("painel-nome").innerText = nome;
-                                document.getElementById("btn-login").style.display = "none";
-                                alert("Login realizado com sucesso!");
-                                fecharCadastro();
-                            })
-                            .catch(() => {
-                                alert("Este e-mail já existe, mas a senha está incorreta.");
-                            });
-                    } else {
-                        alert(error.message);
-                    }
-                });
-        }
+    if (!nome) return alert("Digite seu nome");
+    if (!email) return alert("Digite um e-mail válido");
+    if (!aceitou) return alert("Você precisa aceitar os termos");
+    if(senha.length < 6){
+    alert("A senha precisa ter pelo menos 6 caracteres.");
+    return;
+}
 
-        function login() {
-            const email = document.getElementById("email-usuario").value.trim();
-            const senha = document.getElementById("senha-usuario").value;
+    auth.createUserWithEmailAndPassword(email, senha)
+        .then((userCredential) => {
+            const user = userCredential.user;
 
-            if(!email || !email.includes("@")){
-                alert("E-mail inválido");
-                return;
-            }
-
-            auth.signInWithEmailAndPassword(email, senha)
-                .then(() => {
-                    alert("Login realizado com sucesso!");
-                    fecharCadastro();
-                })
-                .catch((error) => {
-                    alert("Erro ao entrar: " + error.message);
-                });
-        }
-
-        function logout() {
-            auth.signOut().then(() => {
-                alert("Você saiu da conta.");
-                location.reload();
+            return db.collection("usuarios").doc(user.uid).set({
+                nome: nome,
+                email: email,
+                recebePromocoes: recebe,
+                criadoEm: new Date()
             });
-        }
+        })
+        .then(() => {
+
+    document.getElementById("nome-perfil").innerText = nome;
+
+document.getElementById("btn-login").style.display = "none";
+    alert("Conta criada com sucesso!");
+    fecharCadastro();
+})
+.catch((error) => {
+
+    if(error.code === "auth/email-already-in-use"){
+
+        auth.signInWithEmailAndPassword(email, senha)
+            .then(() => {
+
+                document.getElementById("nome-perfil").innerText = nome;
+                document.getElementById("btn-login").style.display = "none";
+
+                alert("Login realizado com sucesso!");
+                fecharCadastro();
+
+            })
+            .catch(() => {
+
+                alert("Este e-mail já existe, mas a senha está incorreta.");
+
+            });
+
+    } else {
+
+        alert(error.message);
+        console.log(error);
+
+    }
+
+});
+           
+}
+       function login() {
+
+    const email = document.getElementById("email-usuario").value.trim();
+    const senha = document.getElementById("senha-usuario").value;
+
+    console.log("EMAIL DIGITADO:", email);
+    console.log("SENHA DIGITADA:", senha);
+
+    if(!email){
+        alert("Digite seu e-mail antes de entrar");
+        return;
+    }
+
+    if(!email.includes("@")){
+        alert("E-mail inválido");
+        return;
+    }
+
+    auth.signInWithEmailAndPassword(email, senha)
+        .then(() => {
+            alert("Login realizado com sucesso!");
+            fecharCadastro();
+        })
+        .catch((error) => {
+            alert("Erro ao entrar: " + error.message);
+            console.log(error);
+        });
+
+}
+        function logout() {
+    auth.signOut().then(() => {
+        alert("Você saiu da conta");
+        document.getElementById("nome-perfil").innerText = "Visitante";
+    });
+}
 
         function abrirCadastro(){
             document.getElementById("modal-cadastro").style.display = "flex";
@@ -1215,22 +2815,60 @@
         function fecharCadastro(){
             document.getElementById("modal-cadastro").style.display = "none";
         }
+        
+          function logout(){
 
-        auth.onAuthStateChanged((user) => {
-            if(user){
-                db.collection("usuarios").doc(user.uid).get().then((doc) => {
-                    if(doc.exists){
-                        const dadosUsuario = doc.data();
-                        document.getElementById("nome-perfil").innerText = dadosUsuario.nome;
-                        document.getElementById("painel-nome").innerText = dadosUsuario.nome;
-                        const btnLogin = document.getElementById("btn-login");
-                        if(btnLogin) btnLogin.style.display = "none";
-                    }
-                });
-            }
+    auth.signOut()
+        .then(() => {
+            alert("Você saiu da conta.");
+            location.reload();
         });
+
+}
+
+       auth.onAuthStateChanged((user) => {
+
+    console.log("USER:", user);
+
+    if(user){
+
+        db.collection("usuarios")
+          .doc(user.uid)
+          .get()
+          .then((doc) => {
+
+              console.log("DOC EXISTS:", doc.exists);
+              console.log("DADOS:", doc.data());
+
+              if(doc.exists){
+
+                  const dados = doc.data();
+
+                  const perfil =
+                      document.getElementById("nome-perfil");
+
+                  console.log("PERFIL:", perfil);
+
+                  perfil.innerText = dados.nome;
+
+                  const btnLogin =
+                      document.getElementById("btn-login");
+
+                  if(btnLogin){
+                      btnLogin.style.display = "none";
+                  }
+
+              }
+
+          });
+
+    }
+
+});
+
     </script>
 
+    <!-- MODAL DE CADASTRO / LOGIN -->
     <div id="modal-cadastro" class="modal-cadastro">
         <div class="modal-cadastro-box">
             <h2>🎉 Crie sua conta grátis</h2>
@@ -1256,7 +2894,8 @@
         </div>
     </div>
 
-    <div id="modal-login-obrigatorio" class="modal-cadastro">
+    <!-- MODAL PARA FAZER LOGIN ANTES DE SALVAR -->
+    <div id="modal-login-obrigatorio" class="modal-cadastro" style="display: none;">
         <div class="modal-cadastro-box" style="text-align: center;">
             <h2>❤️ Salvar favorito</h2>
             <p style="margin: 16px 0; font-size: 15px; color: #444;">
@@ -1272,6 +2911,7 @@
         </div>
     </div>
 
+    <!-- BANNER DE COOKIES -->
     <div id="cookie-banner" class="cookie-banner">
         <div class="cookie-texto">
             🍪 Utilizamos cookies para melhorar sua experiência, analisar visitas e oferecer conteúdos mais relevantes.
