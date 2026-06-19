@@ -2163,28 +2163,16 @@ const PRODUTOS_LOJA = [];
             if(wrapperDepoimentos) wrapperDepoimentos.style.display = 'block';
         }
 
-       function alternarFavorito(idProduto) {
+ function alternarFavorito(idProduto) {
     console.log("🔥 Botão favorito clicado:", idProduto);
 
     const user = auth.currentUser;
 
     if (!user) {
-        console.log("Usuário não logado → mostrando modal");
+        console.log("Não logado → abrindo modal");
         mostrarModalLoginObrigatorio();
         return;
     }
-
-    console.log("Usuário logado → salvando");
-
-    if (favoritosSalvos.includes(idProduto)) {
-        favoritosSalvos = favoritosSalvos.filter(id => id !== idProduto);
-    } else {
-        favoritosSalvos.push(idProduto);
-    }
-
-    atualizarIconesCoraoGlobais();
-    renderizarAbaFavoritos();
-}
 
     // Usuário logado
     if (favoritosSalvos.includes(idProduto)) {
@@ -2577,7 +2565,9 @@ document.getElementById("btn-login").style.display = "none";
       
     </script>
 
-    <!-- MODAL DE CADASTRO -->
+    </script>
+
+    <!-- MODAL DE CADASTRO / LOGIN -->
     <div id="modal-cadastro" class="modal-cadastro">
         <div class="modal-cadastro-box">
             <h2>🎉 Crie sua conta grátis</h2>
@@ -2593,36 +2583,33 @@ document.getElementById("btn-login").style.display = "none";
             <div class="aceite-termos">
                 <input type="checkbox" id="aceitou-termos">
                 <label for="aceitou-termos">
-                    Estou ciente da <a href="LINK_POLITICA">Política de Privacidade</a> e dos <a href="LINK_TERMOS">Termos de Uso</a>
+                    Estou ciente da <a href="#">Política de Privacidade</a> e dos <a href="#">Termos de Uso</a>
                 </label>
-         <button onclick="criarConta()">Criar Conta</button>
+            </div>
 
-<button onclick="login()">
-    Entrar
-</button>
-
-<button onclick="fecharCadastro()" class="btn-fechar-cadastro">
-    Fechar
-</button>
-</div> <!-- fim do modal-cadastro -->
-</div> <!-- fim do modal-cadastro-box -->
-
-<!-- 🔥 MODAL LOGIN OBRIGATÓRIO - FORA DO OUTRO MODAL -->
-<div id="modal-login-obrigatorio" class="modal-cadastro" style="display: none;">
-    <div class="modal-cadastro-box" style="text-align: center;">
-        <h2>❤️ Salvar favorito</h2>
-        <p style="margin: 16px 0; font-size: 15px; color: #444;">
-            Para salvar suas promoções favoritas, você precisa estar logado na sua conta.
-        </p>
-        
-        <button onclick="abrirLoginDoModal()" style="width: 100%; margin-bottom: 10px; padding: 14px;">
-            Fazer Login / Criar Conta
-        </button>
-        <button onclick="fecharModalLoginObrigatorio()" class="btn-fechar-cadastro" style="width: 100%; padding: 14px;">
-            Cancelar
-        </button>
+            <button onclick="criarConta()">Criar Conta</button>
+            <button onclick="login()">Entrar</button>
+            <button onclick="fecharCadastro()" class="btn-fechar-cadastro">Fechar</button>
+        </div>
     </div>
-</div>
+
+    <!-- MODAL PARA FAZER LOGIN ANTES DE SALVAR -->
+    <div id="modal-login-obrigatorio" class="modal-cadastro" style="display: none;">
+        <div class="modal-cadastro-box" style="text-align: center;">
+            <h2>❤️ Salvar favorito</h2>
+            <p style="margin: 16px 0; font-size: 15px; color: #444;">
+                Para salvar suas promoções favoritas, você precisa estar logado.
+            </p>
+            
+            <button onclick="abrirLoginDoModal()" style="width: 100%; margin-bottom: 10px; padding: 14px;">
+                Fazer Login / Criar Conta
+            </button>
+            <button onclick="fecharModalLoginObrigatorio()" class="btn-fechar-cadastro" style="width: 100%; padding: 14px;">
+                Cancelar
+            </button>
+        </div>
+    </div>
+
     <!-- BANNER DE COOKIES -->
     <div id="cookie-banner" class="cookie-banner">
         <div class="cookie-texto">
