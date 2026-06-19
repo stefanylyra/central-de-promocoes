@@ -2074,7 +2074,7 @@ const PRODUTOS_LOJA = [];
             { nome: "Carla Diaz", letra: "C", cor: "#8338ec", texto: "\"O design é muito limpo e direto, clica e já vai para o link com o desconto aplicado. Facilita demais a nossa vida!\"" }
         ];
 
-        let favoritosSalvos = [];
+        let favoritosSalvos = JSON.parse(localStorage.getItem('favoritosSalvos')) || [];
         let categoriaAtiva = null;
 
         function mudarAba(idAba, elementoBotao) {
@@ -2163,23 +2163,24 @@ const PRODUTOS_LOJA = [];
             if(wrapperDepoimentos) wrapperDepoimentos.style.display = 'block';
         }
 
- function alternarFavorito(idProduto) {
+function alternarFavorito(idProduto) {
     console.log("🔥 Botão favorito clicado:", idProduto);
 
     const user = auth.currentUser;
 
     if (!user) {
-        console.log("Não logado → abrindo modal");
         mostrarModalLoginObrigatorio();
         return;
     }
 
-    // Usuário logado
     if (favoritosSalvos.includes(idProduto)) {
         favoritosSalvos = favoritosSalvos.filter(id => id !== idProduto);
     } else {
         favoritosSalvos.push(idProduto);
     }
+
+    // Salva no localStorage
+    localStorage.setItem('favoritosSalvos', JSON.stringify(favoritosSalvos));
 
     atualizarIconesCoraoGlobais();
     renderizarAbaFavoritos();
@@ -2316,56 +2317,58 @@ function abrirLoginDoModal() {
     fecharModalLoginObrigatorio();
     abrirCadastro(); // abre o modal de login/cadastro que você já tem
 }
-        function construirEstrutura() {
-            const carrosselContainer = document.getElementById('carrossel-hot-deals');
-            if(carrosselContainer && PRODUTOS_LOJA.length > 0) {
-                const amostraCarrossel = PRODUTOS_LOJA.slice(0, 5);
-                carrosselContainer.innerHTML = amostraCarrossel.map(prod => `
-                    <div class="card-hot">
-                        <span class="tag-desconto">🔥 QUENTE</span>
-                        <img src="${prod.img}" class="produto-img">
-                        <div class="produto-nome">${prod.nome}</div>
-                        <div>
-                            <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
-                            <div class="preco-novo">R$ ${prod.precoNovo}</div>
-                        </div>
-                        <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
-                    </div>
-                `).join('');
-            }
+function construirEstrutura() {
+    const carrosselContainer = document.getElementById('carrossel-hot-deals');
+    if(carrosselContainer && PRODUTOS_LOJA.length > 0) {
+        const amostraCarrossel = PRODUTOS_LOJA.slice(0, 5);
+        carrosselContainer.innerHTML = amostraCarrossel.map(prod => `
+            <div class="card-hot">
+                <span class="tag-desconto">🔥 QUENTE</span>
+                <img src="${prod.img}" class="produto-img">
+                <div class="produto-nome">${prod.nome}</div>
+                <div>
+                    <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
+                    <div class="preco-novo">R$ ${prod.precoNovo}</div>
+                </div>
+                <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
+            </div>
+        `).join('');
+    }
 
-            const mosaicoContainer = document.getElementById('mosaico-categorias-container');
-            if(mosaicoContainer) {
-                mosaicoContainer.innerHTML = CATEGORIAS_DADOS.map(cat => `
-                    <div class="categoria-card" onclick="filtrarPorCategoria('${cat.id}')">
-                        <span class="categoria-tag-top">Oferta</span>
-                        <img src="${cat.img}" class="categoria-img">
-                        <div class="categoria-glass-footer"><p>${cat.nome}</p></div>
-                    </div>
-                `).join('');
-            }
+    const mosaicoContainer = document.getElementById('mosaico-categorias-container');
+    if(mosaicoContainer) {
+        mosaicoContainer.innerHTML = CATEGORIAS_DADOS.map(cat => `
+            <div class="categoria-card" onclick="filtrarPorCategoria('${cat.id}')">
+                <span class="categoria-tag-top">Oferta</span>
+                <img src="${cat.img}" class="categoria-img">
+                <div class="categoria-glass-footer"><p>${cat.nome}</p></div>
+            </div>
+        `).join('');
+    }
 
-            const trackDepoimentos = document.getElementById('track-depoimentos');
-            if(trackDepoimentos) {
-                const listaDuplicada = [...DEPOIMENTOS_DADOS, ...DEPOIMENTOS_DADOS];
-                trackDepoimentos.innerHTML = listaDuplicada.map(dep => `
-                    <div class="depoimento-box">
-                        <div class="depoimento-user">
-                            <div class="avatar-fake" style="background: ${dep.cor};">${dep.letra}</div>
-                            <div>
-                                <h4 style="font-size:13px;">${dep.nome}</h4>
-                                <p style="font-size:11px; color:gray;">Verificado ✅</p>
-                            </div>
-                        </div>
-                        <p style="font-size:12px; color:#444; font-style:italic; line-height:1.4;">${dep.texto}</p>
+    const trackDepoimentos = document.getElementById('track-depoimentos');
+    if(trackDepoimentos) {
+        const listaDuplicada = [...DEPOIMENTOS_DADOS, ...DEPOIMENTOS_DADOS];
+        trackDepoimentos.innerHTML = listaDuplicada.map(dep => `
+            <div class="depoimento-box">
+                <div class="depoimento-user">
+                    <div class="avatar-fake" style="background: ${dep.cor};">${dep.letra}</div>
+                    <div>
+                        <h4 style="font-size:13px;">${dep.nome}</h4>
+                        <p style="font-size:11px; color:gray;">Verificado ✅</p>
                     </div>
-                `).join('');
-            }
+                </div>
+                <p style="font-size:12px; color:#444; font-style:italic; line-height:1.4;">${dep.texto}</p>
+            </div>
+        `).join('');
+    }
 
-            renderizarGridHome(PRODUTOS_LOJA);
-            renderizarGridOfertas(PRODUTOS_LOJA);
-            renderizarAbaFavoritos();
-        }
+    // ✅ Aqui fora, sempre vai atualizar
+    renderizarGridHome(PRODUTOS_LOJA);
+    renderizarGridOfertas(PRODUTOS_LOJA);
+    renderizarAbaFavoritos();
+    atualizarIconesCoraoGlobais();
+}
 
         document.addEventListener("DOMContentLoaded", construirEstrutura);
 
