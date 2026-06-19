@@ -2185,6 +2185,13 @@ function alternarFavorito(idProduto) {
     atualizarIconesCoraoGlobais();
     renderizarAbaFavoritos();
 }
+        function getAvaliacoesRandom() {
+    const num = Math.floor(Math.random() * 15200) + 68; // de 68 até ~15.000
+    
+    if (num >= 10000) return (num / 1000).toFixed(1) + "k";
+    if (num >= 1000) return (num / 1000).toFixed(1) + "k";
+    return num.toLocaleString('pt-BR');
+}
         function atualizarIconesCoraoGlobais() {
             document.querySelectorAll(`.btn-favorito`).forEach(btn => {
                 const idProd = btn.getAttribute('data-id');
@@ -2219,7 +2226,7 @@ function alternarFavorito(idProduto) {
                         </button>
                         <img src="${prod.img}" class="produto-img">
                         <div class="produto-nome">${prod.nome}</div>
-                        <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(94)</span></div>
+                        <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(${getAvaliacoesRandom()})</span></div>
                         <div>
                             <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
                             <div class="preco-novo">R$ ${prod.precoNovo}</div>
@@ -2248,7 +2255,7 @@ function alternarFavorito(idProduto) {
                         </button>
                         <img src="${prod.img}" class="produto-img">
                         <div class="produto-nome">${prod.nome}</div>
-                        <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(94)</span></div>
+                        <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(${getAvaliacoesRandom()})</span></div>
                         <div>
                             <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
                             <div class="preco-novo">R$ ${prod.precoNovo}</div>
@@ -2277,7 +2284,7 @@ function alternarFavorito(idProduto) {
                     </button>
                     <img src="${prod.img}" class="produto-img">
                     <div class="produto-nome">${prod.nome}</div>
-                    <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(94)</span></div>
+                    <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(${getAvaliacoesRandom()})</span></div>
                     <div>
                         <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
                         <div class="preco-novo">R$ ${prod.precoNovo}</div>
