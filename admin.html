@@ -128,8 +128,18 @@ img {
                 <option value="shein">Shein</option>
                 <option value="aliexpress">AliExpress</option>
             </select>
- <input type="file" id="imgFile">
-        <input id="link" placeholder="Link afiliado">
+        
+<!-- 🖼️ IMAGEM -->
+<p style="margin-top:10px;"><b>Imagem do produto</b></p>
+
+<input id="imgUrl" placeholder="URL da imagem (opcional)">
+
+<p style="font-size:12px;opacity:0.7;">ou envie um arquivo abaixo:</p>
+
+<input type="file" id="imgFile">
+
+<!-- 🔗 LINK -->
+<input id="link" placeholder="Link afiliado">
 
         <button onclick="salvarProduto()">Salvar</button>
     </div>
@@ -237,9 +247,39 @@ async function salvarProduto(){
         let imgUrl = "";
 
         // se escolheu arquivo
-        if(imgFile.files[0]){
-            imgUrl = await uploadImage(imgFile.files[0]);
-        }
+    async function salvarProduto(){
+
+    let imgUrlFinal = "";
+
+    // 1. Se tiver arquivo, usa ele
+    if(imgFile.files[0]){
+        imgUrlFinal = await uploadImage(imgFile.files[0]);
+    }
+
+    // 2. Se não tiver arquivo, usa URL
+    else if(imgUrl.value){
+        imgUrlFinal = imgUrl.value;
+    }
+
+    const produto = {
+        nome: nome.value,
+        precoAntigo: precoAntigo.value,
+        precoNovo: precoNovo.value,
+        img: imgUrlFinal,
+        link: link.value,
+        categoria: categoria.value,
+        loja: loja.value
+    };
+
+    if(editId){
+        await db.collection("produtos").doc(editId).update(produto);
+        editId = null;
+    } else {
+        await db.collection("produtos").add(produto);
+    }
+
+    limpar();
+}
 
         const produto = {
             nome: nome.value,
