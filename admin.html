@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Painel Admin</title>
+<title>Admin Produtos</title>
 
 <style>
 body {
@@ -12,7 +12,7 @@ body {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 950px;
     margin: auto;
     background: white;
     padding: 20px;
@@ -40,6 +40,7 @@ button {
 </style>
 
 </head>
+
 <body>
 
 <div class="container">
@@ -47,9 +48,11 @@ button {
 <h2>🛠 Painel Admin de Produtos</h2>
 
 <input id="nome" placeholder="Nome do produto">
-<input id="preco" placeholder="Preço">
+
 <input id="precoAntigo" placeholder="Preço antigo">
-<input id="imagem" placeholder="URL da imagem">
+<input id="precoNovo" placeholder="Preço novo">
+
+<input id="img" placeholder="URL da imagem">
 <input id="link" placeholder="Link afiliado">
 
 <select id="categoria">
@@ -72,6 +75,13 @@ button {
     <option value="papelaria">✏️ Papelaria</option>
 </select>
 
+<select id="loja">
+    <option value="shopee">Shopee</option>
+    <option value="amazon">Amazon</option>
+    <option value="aliexpress">AliExpress</option>
+    <option value="mercadolivre">Mercado Livre</option>
+</select>
+
 <button onclick="salvarProduto()">💾 Salvar Produto</button>
 
 <hr>
@@ -86,7 +96,7 @@ button {
 
 <script>
 
-// 🔥 SUA CONFIG FIREBASE AQUI
+// 🔥 CONFIG FIREBASE (coloque a sua)
 const firebaseConfig = {
   apiKey: "SUA_API_KEY",
   authDomain: "SEU_PROJETO.firebaseapp.com",
@@ -98,16 +108,17 @@ const db = firebase.firestore();
 
 let editandoId = null;
 
-// 🟢 SALVAR / EDITAR
+// 💾 SALVAR OU EDITAR
 function salvarProduto() {
 
     const produto = {
         nome: nome.value,
-        preco: preco.value,
         precoAntigo: precoAntigo.value,
-        imagem: imagem.value,
+        precoNovo: precoNovo.value,
+        img: img.value,
         link: link.value,
-        categoria: categoria.value
+        categoria: categoria.value,
+        loja: loja.value
     };
 
     if(editandoId){
@@ -120,16 +131,16 @@ function salvarProduto() {
     limparCampos();
 }
 
-// 🧹 LIMPAR FORM
+// 🧹 LIMPAR CAMPOS
 function limparCampos(){
     nome.value = "";
-    preco.value = "";
     precoAntigo.value = "";
-    imagem.value = "";
+    precoNovo.value = "";
+    img.value = "";
     link.value = "";
 }
 
-// 🔥 LISTAGEM EM TEMPO REAL
+// 📦 LISTAR EM TEMPO REAL
 db.collection("produtos").onSnapshot(snapshot => {
 
     lista.innerHTML = "";
@@ -141,17 +152,18 @@ db.collection("produtos").onSnapshot(snapshot => {
         lista.innerHTML += `
         <div class="produto">
             <b>${p.nome}</b><br>
-            💰 R$ ${p.preco}<br>
-            📂 ${p.categoria}<br>
+            💰 De: R$ ${p.precoAntigo} → Por: R$ ${p.precoNovo}<br>
+            📂 ${p.categoria} | 🏪 ${p.loja}<br>
 
             <button onclick="editarProduto(
                 '${doc.id}',
                 '${p.nome}',
-                '${p.preco}',
                 '${p.precoAntigo}',
-                '${p.imagem}',
+                '${p.precoNovo}',
+                '${p.img}',
                 '${p.link}',
-                '${p.categoria}'
+                '${p.categoria}',
+                '${p.loja}'
             )">✏️ Editar</button>
 
             <button onclick="deletarProduto('${doc.id}')">🗑️ Deletar</button>
@@ -162,14 +174,15 @@ db.collection("produtos").onSnapshot(snapshot => {
 });
 
 // ✏️ EDITAR
-function editarProduto(id, nomeP, precoP, precoAntigoP, imagemP, linkP, categoriaP){
+function editarProduto(id, nomeP, precoAntigoP, precoNovoP, imgP, linkP, categoriaP, lojaP){
 
     nome.value = nomeP;
-    preco.value = precoP;
     precoAntigo.value = precoAntigoP;
-    imagem.value = imagemP;
+    precoNovo.value = precoNovoP;
+    img.value = imgP;
     link.value = linkP;
     categoria.value = categoriaP;
+    loja.value = lojaP;
 
     editandoId = id;
 }
