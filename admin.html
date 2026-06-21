@@ -2,21 +2,26 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Admin Produtos</title>
+<title>Admin Marketplace</title>
 
 <style>
 body {
     font-family: Arial;
-    background: #f4f4f4;
+    background: #f2f4f8;
+    margin: 0;
+}
+
+.login-box, .dashboard {
+    max-width: 900px;
+    margin: auto;
     padding: 20px;
 }
 
-.container {
-    max-width: 950px;
-    margin: auto;
+.card {
     background: white;
-    padding: 20px;
+    padding: 15px;
     border-radius: 10px;
+    margin: 10px 0;
 }
 
 input, select {
@@ -27,146 +32,194 @@ input, select {
 
 button {
     padding: 10px;
-    margin-top: 10px;
     cursor: pointer;
+    margin-top: 10px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
 }
 
 .produto {
-    background: #eee;
+    background: white;
     padding: 10px;
-    margin-top: 10px;
-    border-radius: 8px;
+    border-radius: 10px;
+}
+img {
+    width: 100%;
+    border-radius: 10px;
 }
 </style>
-
 </head>
 
 <body>
 
-<div class="container">
+<!-- 🔐 LOGIN -->
+<div class="login-box" id="loginBox">
+    <h2>🔐 Login Admin</h2>
+    <input id="email" placeholder="Email">
+    <input id="senha" type="password" placeholder="Senha">
+    <button onclick="login()">Entrar</button>
+</div>
 
-<h2>🛠 Painel Admin de Produtos</h2>
+<!-- 📊 DASHBOARD -->
+<div class="dashboard" id="dashboard" style="display:none;">
 
-<input id="nome" placeholder="Nome do produto">
+    <h2>📊 Dashboard Admin</h2>
+    <button onclick="logout()">Sair</button>
 
-<input id="precoAntigo" placeholder="Preço antigo">
-<input id="precoNovo" placeholder="Preço novo">
+    <div class="card">
+        <h3>➕ Novo Produto</h3>
 
-<input id="img" placeholder="URL da imagem">
-<input id="link" placeholder="Link afiliado">
+        <input id="nome" placeholder="Nome">
+        <input id="precoAntigo" placeholder="Preço antigo">
+        <input id="precoNovo" placeholder="Preço novo">
 
-<select id="categoria">
-    <option value="roupas-masculinas">👕 Roupas Masculinas</option>
-    <option value="roupas-femininas">👗 Roupas Femininas</option>
-    <option value="plus-size">👚 Plus Size</option>
-    <option value="relogios">⌚ Relógios</option>
-    <option value="mae-bebe">👶 Mãe & Bebê</option>
-    <option value="viagens-bagagens">🧳 Viagem</option>
-    <option value="fones">🎧 Fones</option>
-    <option value="bolsas-masculinas">🎒 Bolsas Masculinas</option>
-    <option value="bolsas-femininas">👝 Bolsas Femininas</option>
-    <option value="limpeza">🧼 Limpeza</option>
-    <option value="brinquedos">🧸 Brinquedos</option>
-    <option value="acessorios">💎 Acessórios</option>
-    <option value="pets">🐶 Pets</option>
-    <option value="sapatos">👟 Sapatos</option>
-    <option value="casa-construcao">🏡 Casa e construção</option>
-    <option value="beleza">💄 Beleza</option>
-    <option value="papelaria">✏️ Papelaria</option>
-</select>
+        <select id="categoria">
+            <option value="roupas-masculinas">👕 Masculinas</option>
+            <option value="roupas-femininas">👗 Femininas</option>
+            <option value="plus-size">👚 Plus Size</option>
+            <option value="relogios">⌚ Relógios</option>
+            <option value="mae-bebe">👶 Mãe & Bebê</option>
+            <option value="viagens-bagagens">🧳 Viagem</option>
+            <option value="fones">🎧 Fones</option>
+            <option value="bolsas-masculinas">🎒 Bolsas Masc.</option>
+            <option value="bolsas-femininas">👝 Bolsas Fem.</option>
+            <option value="limpeza">🧼 Limpeza</option>
+            <option value="brinquedos">🧸 Brinquedos</option>
+            <option value="acessorios">💎 Acessórios</option>
+            <option value="pets">🐶 Pets</option>
+            <option value="sapatos">👟 Sapatos</option>
+            <option value="casa-construcao">🏡 Casa</option>
+            <option value="beleza">💄 Beleza</option>
+            <option value="papelaria">✏️ Papelaria</option>
+        </select>
 
-<select id="loja">
-    <option value="shopee">Shopee</option>
-    <option value="amazon">Amazon</option>
-    <option value="aliexpress">AliExpress</option>
-    <option value="mercadolivre">Mercado Livre</option>
-</select>
+        <select id="loja">
+            <option value="shopee">Shopee</option>
+            <option value="amazon">Amazon</option>
+            <option value="aliexpress">AliExpress</option>
+        </select>
 
-<button onclick="salvarProduto()">💾 Salvar Produto</button>
+        <input type="file" id="imgFile">
+        <input id="link" placeholder="Link afiliado">
 
-<hr>
+        <button onclick="salvarProduto()">Salvar Produto</button>
+    </div>
 
-<h3>📦 Produtos cadastrados</h3>
-<div id="lista"></div>
-
+    <h3>📦 Produtos</h3>
+    <div class="grid" id="lista"></div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
 <script>
 
-// 🔥 CONFIG FIREBASE (coloque a sua)
+// 🔥 FIREBASE
 const firebaseConfig = {
   apiKey: "SUA_API_KEY",
   authDomain: "SEU_PROJETO.firebaseapp.com",
   projectId: "SEU_PROJETO",
+  storageBucket: "SEU_PROJETO.appspot.com"
 };
 
 firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
 const db = firebase.firestore();
+const storage = firebase.storage();
 
-let editandoId = null;
+let editId = null;
 
-// 💾 SALVAR OU EDITAR
-function salvarProduto() {
+// 🔐 LOGIN
+function login(){
+    auth.signInWithEmailAndPassword(email.value, senha.value)
+    .then(() => {
+        loginBox.style.display = "none";
+        dashboard.style.display = "block";
+    })
+    .catch(err => alert("Erro login"));
+}
+
+function logout(){
+    auth.signOut();
+    location.reload();
+}
+
+auth.onAuthStateChanged(user => {
+    if(user){
+        loginBox.style.display = "none";
+        dashboard.style.display = "block";
+    }
+});
+
+// 📤 UPLOAD IMAGEM
+async function uploadImage(file){
+    const ref = storage.ref("produtos/" + Date.now());
+    await ref.put(file);
+    return await ref.getDownloadURL();
+}
+
+// 💾 SALVAR PRODUTO
+async function salvarProduto(){
+
+    let imgUrl = "";
+
+    if(imgFile.files[0]){
+        imgUrl = await uploadImage(imgFile.files[0]);
+    }
 
     const produto = {
         nome: nome.value,
         precoAntigo: precoAntigo.value,
         precoNovo: precoNovo.value,
-        img: img.value,
+        img: imgUrl,
         link: link.value,
         categoria: categoria.value,
         loja: loja.value
     };
 
-    if(editandoId){
-        db.collection("produtos").doc(editandoId).update(produto);
-        editandoId = null;
+    if(editId){
+        db.collection("produtos").doc(editId).update(produto);
+        editId = null;
     } else {
         db.collection("produtos").add(produto);
     }
 
-    limparCampos();
+    limpar();
 }
 
-// 🧹 LIMPAR CAMPOS
-function limparCampos(){
+// 🧹 LIMPAR
+function limpar(){
     nome.value = "";
     precoAntigo.value = "";
     precoNovo.value = "";
-    img.value = "";
     link.value = "";
+    imgFile.value = "";
 }
 
-// 📦 LISTAR EM TEMPO REAL
+// 📦 LISTA EM TEMPO REAL
 db.collection("produtos").onSnapshot(snapshot => {
 
     lista.innerHTML = "";
 
     snapshot.forEach(doc => {
-
         const p = doc.data();
 
         lista.innerHTML += `
         <div class="produto">
+            <img src="${p.img}">
             <b>${p.nome}</b><br>
-            💰 De: R$ ${p.precoAntigo} → Por: R$ ${p.precoNovo}<br>
+            💰 R$ ${p.precoNovo}<br>
             📂 ${p.categoria} | 🏪 ${p.loja}<br>
 
-            <button onclick="editarProduto(
-                '${doc.id}',
-                '${p.nome}',
-                '${p.precoAntigo}',
-                '${p.precoNovo}',
-                '${p.img}',
-                '${p.link}',
-                '${p.categoria}',
-                '${p.loja}'
-            )">✏️ Editar</button>
-
-            <button onclick="deletarProduto('${doc.id}')">🗑️ Deletar</button>
+            <button onclick="editar('${doc.id}', '${p.nome}', '${p.precoAntigo}', '${p.precoNovo}', '${p.link}', '${p.categoria}', '${p.loja}')">Editar</button>
+            <button onclick="deletar('${doc.id}')">Deletar</button>
         </div>
         `;
     });
@@ -174,21 +227,19 @@ db.collection("produtos").onSnapshot(snapshot => {
 });
 
 // ✏️ EDITAR
-function editarProduto(id, nomeP, precoAntigoP, precoNovoP, imgP, linkP, categoriaP, lojaP){
+function editar(id, nomeV, pa, pn, linkV, cat, lojaV){
+    nome.value = nomeV;
+    precoAntigo.value = pa;
+    precoNovo.value = pn;
+    link.value = linkV;
+    categoria.value = cat;
+    loja.value = lojaV;
 
-    nome.value = nomeP;
-    precoAntigo.value = precoAntigoP;
-    precoNovo.value = precoNovoP;
-    img.value = imgP;
-    link.value = linkP;
-    categoria.value = categoriaP;
-    loja.value = lojaP;
-
-    editandoId = id;
+    editId = id;
 }
 
-// 🗑️ DELETAR
-function deletarProduto(id){
+// 🗑️ DELETE
+function deletar(id){
     db.collection("produtos").doc(id).delete();
 }
 
