@@ -935,8 +935,8 @@ const auth = firebase.auth();
             PRODUTOS_LOJA
         );
 
-        construirEstrutura();
-
+renderizarTudo();
+        
     } catch(erro) {
 
         console.error(
@@ -3074,6 +3074,14 @@ document.getElementById("btn-login").style.display = "none";
             alert("Erro ao entrar: " + error.message);
             console.log(error);
         });
+
+}
+       function renderizarTudo() {
+
+    renderizarGridHome(PRODUTOS_LOJA);
+    renderizarGridOfertas(PRODUTOS_LOJA);
+    renderizarAbaFavoritos();
+    atualizarIconesCoraoGlobais();
 
 }
         function logout() {
