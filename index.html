@@ -182,27 +182,22 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 14px;
         }
-.logo-loja {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
 
-    width: 42px;
-    height: 42px;
+        .logo-loja {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 42px;
+            height: 42px;
+            background: white;
+            border-radius: 50%;
+            padding: 6px;
+            object-fit: contain;
+            box-shadow: 0 3px 10px rgba(0,0,0,.20);
+            border: 2px solid white;
+            z-index: 20;
+        }
 
-    background: white;
-    border-radius: 50%;
-
-    padding: 6px;
-
-    object-fit: contain;
-
-    box-shadow: 0 3px 10px rgba(0,0,0,.20);
-
-    border: 2px solid white;
-
-    z-index: 20;
-}
         .produto-card {
             background-color: var(--cor-card);
             border-radius: 16px;
@@ -568,29 +563,16 @@
             --texto-escuro: #ffffff;
             --texto-mutado: #b0b0b0;
             --borda: #333333;
-            background: var(--cor-fundo);
-            color: var(--texto-escuro);
         }
 
         body.tema-escuro .produto-card,
-        body.tema-escuro .card,
-        body.tema-escuro .conta-item,
-        body.tema-escuro .section-title,
+        body.tema-escuro .card-hot,
+        body.tema-escuro .depoimento-box,
+        body.tema-escuro .info-vendas-barra,
         body.tema-escuro header,
         body.tema-escuro .app-page {
             background: #1e1e1e !important;
             color: #ffffff !important;
-        }
-
-        body.tema-escuro .preco-antigo {
-            color: #999 !important;
-        }
-
-        body.tema-escuro .card-hot,
-        body.tema-escuro .depoimento-box,
-        body.tema-escuro .info-vendas-barra {
-            background: #1e1e1e !important;
-            border-color: #333 !important;
         }
 
         body.tema-escuro .categoria-glass-footer {
@@ -657,89 +639,71 @@
             text-decoration:none;
         }
 
-        .aceite-termos a:hover{
-            text-decoration:underline;
-        }
         .lojas-container{
-    padding:16px;
-    background:transparent;
-}
+            padding:16px;
+            background:transparent;
+        }
 
-.titulo-lojas{
-    font-size:18px;
-    font-weight:700;
-    margin-bottom:12px;
-}
+        .titulo-lojas{
+            font-size:18px;
+            font-weight:700;
+            margin-bottom:12px;
+        }
 
-.lojas-wrapper{
-    display:flex;
-    align-items:center;
-    gap:8px;
-}
+        .lojas-wrapper{
+            display:flex;
+            align-items:center;
+            gap:8px;
+        }
 
-.lojas-grid{
-    display:flex;
-    gap:10px;
-    overflow-x:auto;
-    scroll-behavior:smooth;
-    scrollbar-width:none;
-    flex:1;
-}
+        .lojas-grid{
+            display:flex;
+            gap:10px;
+            overflow-x:auto;
+            scroll-behavior:smooth;
+            scrollbar-width:none;
+            flex:1;
+        }
 
-.lojas-grid::-webkit-scrollbar{
-    display:none;
-}
+        .loja-card{
+            min-width:130px;
+            height:52px;
+            background:#fff;
+            border:1px solid var(--borda);
+            border-radius:12px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+            padding:0 12px;
+            flex-shrink:0;
+        }
 
-.loja-card{
-    min-width:130px;
-    height:52px;
-    background:#fff;
-    border:1px solid var(--borda);
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    padding:0 12px;
-    flex-shrink:0;
-}
+        .loja-card img {
+            width: 40px;
+            height: 24px;
+            object-fit: contain;
+            display: block;
+            background: white;
+            padding: 2px;
+            border-radius: 6px;
+        }
 
-.loja-card img {
-    width: 40px;
-    height: 24px;
-    object-fit: contain;
-    display: block;
-    background: white;
-    padding: 2px;
-    border-radius: 6px;
-}
+        .loja-card span{
+            font-size:13px;
+            font-weight:600;
+        }
 
-.loja-card span{
-    font-size:13px;
-    font-weight:600;
-}
-
-.btn-loja-nav{
-    width:34px;
-    height:34px;
-    border:none;
-    border-radius:50%;
-    background:var(--cor-principal);
-    color:#fff;
-    cursor:pointer;
-    flex-shrink:0;
-}
-.loja-card img {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
-    display: block;
-    transition: 0.2s;
-}
-
-.loja-card img:hover {
-    transform: scale(1.1);
-}
+        .btn-loja-nav{
+            width:34px;
+            height:34px;
+            border:none;
+            border-radius:50%;
+            background:var(--cor-principal);
+            color:#fff;
+            cursor:pointer;
+            flex-shrink:0;
+        }
     </style>
 </head>
 <body>
@@ -768,64 +732,28 @@
 
         <div class="afiliado-banner">
             ⚠️ <strong>Aviso Importante:</strong> Este site não vende nada. Apenas selecionamos e achamos as melhores ofertas de lojas confiáveis e redirecionamos você.
-            </div>
+        </div>
         
         <main id="aba-inicio" class="app-page active">
-
-    <div class="lojas-container">
-    
-    <h3 class="titulo-lojas">Filtrar por loja</h3>
-
-    <div class="lojas-wrapper">
-
-        <button class="btn-loja-nav left"
-                onclick="scrollLojas(-250)">
-            <i class="fa-solid fa-chevron-left"></i>
-        </button>
-
-        <div class="lojas-grid" id="lojas-grid">
- <div class="loja-card" onclick="filtrarPorLoja('amazon')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
-                <span>Amazon</span>
+            <div class="lojas-container">
+                <h3 class="titulo-lojas">Filtrar por loja</h3>
+                <div class="lojas-wrapper">
+                    <button class="btn-loja-nav left" onclick="scrollLojas(-250)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="lojas-grid" id="lojas-grid">
+                        <div class="loja-card" onclick="filtrarPorLoja('amazon')"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"><span>Amazon</span></div>
+                        <div class="loja-card" onclick="filtrarPorLoja('mercado-livre')"><img src="https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo_large_plus.webp"><span>Mercado Livre</span></div>
+                        <div class="loja-card" onclick="filtrarPorLoja('shopee')"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg"><span>Shopee</span></div>
+                        <div class="loja-card" onclick="filtrarPorLoja('magalu')"><img src="https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png"><span>Magazine Luiza</span></div>
+                        <div class="loja-card" onclick="filtrarPorLoja('shein')"><img src="https://i.imgur.com/6X1J0xP.png"><span>Shein</span></div>
+                        <div class="loja-card" onclick="filtrarPorLoja('aliexpress')"><img src="https://i.imgur.com/8yqZb1L.png"><span>AliExpress</span></div>
+                    </div>
+                    <button class="btn-loja-nav right" onclick="scrollLojas(250)"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
             </div>
 
-            <div class="loja-card" onclick="filtrarPorLoja('mercado-livre')">
-               <img src="https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo_large_plus.webp">
-                <span>Mercado Livre</span>
-            </div>
-
-            <div class="loja-card" onclick="filtrarPorLoja('shopee')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg">
-                <span>Shopee</span>
-            </div>
-
-            <div class="loja-card" onclick="filtrarPorLoja('magalu')">
-                <img src="https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png">
-                <span>Magazine Luiza</span>
-            </div>
-
-            <div class="loja-card" onclick="filtrarPorLoja('shein')">
-               <img src="https://i.imgur.com/6X1J0xP.png">
-                <span>Shein</span>
-            </div>
-
-            <div class="loja-card" onclick="filtrarPorLoja('aliexpress')">
-                <img src="https://i.imgur.com/8yqZb1L.png">
-                <span>AliExpress</span>
-            </div>
-        </div>
-
-        <button class="btn-loja-nav right"
-                onclick="scrollLojas(250)">
-            <i class="fa-solid fa-chevron-right"></i>
-        </button>
-
-    </div>
-
-</div>
             <div id="wrapper-ofertas-quentes">
                 <div class="section-title">
-                    <span>🔥 Ofertas Quentes</span>
+                    <span>⏰ Ofertas por Tempo Limitado</span>
                     <a href="#" class="ver-todos" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
                 </div>
                 <div class="ofertas-quentes-carrossel" id="carrossel-hot-deals"></div>
@@ -842,7 +770,6 @@
                 <span id="titulo-grid-home">⚡ Ofertas Imperdíveis</span>
                 <a href="#" class="ver-todos" id="link-ver-todos-home" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
             </div>
-
             <div class="grid-produtos" id="grid-home-ofertas"></div>
 
             <div class="section-title" id="titulo-depoimentos"><span>💬 O que nossos clientes dizem</span></div>
@@ -872,7 +799,7 @@
                     😀
                 </div>
                 <h2 id="nome-perfil">Visitante</h2>
-                <button id="btn-login" class="btn-sair" style="margin-top:10px;" onclick="abrirCadastro()">Entrar / Criar Conta</button>
+                <button id="btn-login" class="btn-sair" onclick="abrirCadastro()">Entrar / Criar Conta</button>
             </div>
             <div class="section-title"><span>Minha Conta</span></div>
             <div class="conta-item" onclick="alternarTema()"><div><i class="fa-solid fa-palette icone-vermelho"></i>Aparência</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
@@ -887,347 +814,38 @@
             <button class="nav-item" onclick="limparFiltrosEMudarAba(this)"><i class="fa-solid fa-fire"></i><span>Ofertas</span></button>
             <button class="nav-item" onclick="mudarAba('favoritos', this)"><i class="fa-solid fa-heart"></i><span>Favoritos</span></button>
             <button class="nav-item" onclick="mudarAba('conta', this)"><i class="fa-solid fa-user"></i><span>Conta</span></button>
-            
         </nav>
 
         <a href="https://wa.me/seu-numero" target="_blank" class="btn-whatsapp">
             <i class="fa-brands fa-whatsapp"></i>
         </a>
-
     </div>
 
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script>
-  <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyCydy0v27JxNvKBW3aqFa3Uel8Slkdtcx4",
-  authDomain: "central-promocoes.firebaseapp.com",
-  projectId: "central-promocoes",
-  storageBucket: "central-promocoes.firebasestorage.app",
-  messagingSenderId: "396856047778",
-  appId: "1:396856047778:web:8608a6b95f26f160d27ffb"
-};
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const auth = firebase.auth();
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCydy0v27JxNvKBW3aqFa3Uel8Slkdtcx4",
+            authDomain: "central-promocoes.firebaseapp.com",
+            projectId: "central-promocoes",
+            storageBucket: "central-promocoes.firebasestorage.app",
+            messagingSenderId: "396856047778",
+            appId: "1:396856047778:web:8608a6b95f26f160d27ffb"
+        };
 
-/* =========================
-   VARIÁVEIS GLOBAIS (ÚNICAS)
-========================= */
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
 
-let PRODUTOS_LOJA = [];
-let favoritosSalvos = JSON.parse(localStorage.getItem('favoritosSalvos')) || [];
-let categoriaAtiva = null;
+        // ==================== VARIÁVEIS GLOBAIS ====================
+        let PRODUTOS_LOJA = [];
+        let favoritosSalvos = JSON.parse(localStorage.getItem('favoritosSalvos')) || [];
+        let categoriaAtiva = null;
 
-/* =========================
-   FIRESTORE
-========================= */
-
-function carregarProdutosFirestore() {
-    db.collection("produtos").onSnapshot(snapshot => {
-        PRODUTOS_LOJA = [];
-
-        snapshot.forEach(doc => {
-            PRODUTOS_LOJA.push({
-                id: doc.id,
-                ...doc.data()
-            });
-        });
-
-        console.log("🔥 Produtos atualizados:", PRODUTOS_LOJA);
-        construirEstrutura();
-    });
-}
-
-document.addEventListener("DOMContentLoaded", carregarProdutosFirestore);
-
-/* =========================
-   LOGIN STATE
-========================= */
-
-auth.onAuthStateChanged((user) => {
-    if (user) {
-        db.collection("usuarios").doc(user.uid).get().then(doc => {
-            if (doc.exists) {
-                const dados = doc.data();
-                const perfil = document.getElementById("nome-perfil");
-                if (perfil) perfil.innerText = dados.nome;
-
-                const btnLogin = document.getElementById("btn-login");
-                if (btnLogin) btnLogin.style.display = "none";
-            }
-        });
-    }
-});
-
-/* =========================
-   FAVORITOS
-========================= */
-
-function alternarFavorito(idProduto) {
-    const user = auth.currentUser;
-
-    if (!user) {
-        mostrarModalLoginObrigatorio();
-        return;
-    }
-
-    if (favoritosSalvos.includes(idProduto)) {
-        favoritosSalvos = favoritosSalvos.filter(id => id !== idProduto);
-    } else {
-        favoritosSalvos.push(idProduto);
-    }
-
-    localStorage.setItem('favoritosSalvos', JSON.stringify(favoritosSalvos));
-
-    atualizarIconesCoraoGlobais();
-    renderizarAbaFavoritos();
-}
-
-/* =========================
-   LOGIN / CADASTRO
-========================= */
-
-function criarConta() {
-    const nome = document.getElementById("nome-usuario").value.trim();
-    const email = document.getElementById("email-usuario").value.trim();
-    const senha = document.getElementById("senha-usuario").value;
-    const aceitou = document.getElementById("aceitou-termos").checked;
-    const recebe = document.getElementById("aceitou-promocoes").checked;
-
-    if (!nome) return alert("Digite seu nome");
-    if (!email) return alert("Digite um e-mail válido");
-    if (!aceitou) return alert("Aceite os termos");
-    if (senha.length < 6) return alert("Senha mínima 6 caracteres");
-
-    auth.createUserWithEmailAndPassword(email, senha)
-        .then(userCredential => {
-            return db.collection("usuarios").doc(userCredential.user.uid).set({
-                nome,
-                email,
-                recebePromocoes: recebe,
-                criadoEm: new Date()
-            });
-        })
-        .then(() => {
-            document.getElementById("nome-perfil").innerText = nome;
-            document.getElementById("btn-login").style.display = "none";
-            alert("Conta criada!");
-            fecharCadastro();
-        })
-        .catch(err => alert(err.message));
-}
-
-function login() {
-    const email = document.getElementById("email-usuario").value.trim();
-    const senha = document.getElementById("senha-usuario").value;
-
-    auth.signInWithEmailAndPassword(email, senha)
-        .then(() => {
-            alert("Login realizado!");
-            fecharCadastro();
-        })
-        .catch(err => alert(err.message));
-}
-
-function logout() {
-    auth.signOut().then(() => {
-        location.reload();
-    });
-}
-
-/* =========================
-   MODAIS
-========================= */
-
-function abrirCadastro() {
-    document.getElementById("modal-cadastro").style.display = "flex";
-}
-
-function fecharCadastro() {
-    document.getElementById("modal-cadastro").style.display = "none";
-}
-
-/* =========================
-   ESTRUTURA PRINCIPAL
-========================= */
-
-function construirEstrutura() {
-    renderizarTudo();
-}
-
-/* =========================
-   DADOS FIXOS (CORRIGIDO)
-========================= */
-
-const CATEGORIAS_DADOS = [
-    { id: "roupas-masculinas", nome: "👕 Roupas Masculinas", img: "https://i.pinimg.com/236x/71/ed/3e/71ed3ee11bdaeba6217d655743d0af5b.jpg" },
-    { id: "roupas-femininas", nome: "👗 Femininas", img: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400" },
-    { id: "plus-size", nome: "👚 Plus Size", img: "https://www.plussizefix.com/cdn/shop/articles/eqef_3024x.png?v=1680119668" },
-    { id: "relogios", nome: "⌚ Relógios", img: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=400" },
-    { id: "mae-bebe", nome: "👶 Mãe & Bebê", img: "https://as2.ftcdn.net/jpg/02/58/14/09/220_F_258140947_fIJaSjkd5bG8bI5YiMPqHJINQcrAw7jS.jpg" }
-];
-
-const DEPOIMENTOS_DADOS = [
-    { nome: "Rodrigo Alves", letra: "R", cor: "#e63946", texto: "Mano, esse site é bom demais!" },
-    { nome: "Mariana Costa", letra: "M", cor: "#2a9d8f", texto: "Economizei muito!" }
-];
-
-/* =========================
-   RENDER PRINCIPAL
-========================= */
-
-function renderizarTudo() {
-    renderizarGridHome(PRODUTOS_LOJA);
-    renderizarGridOfertas(PRODUTOS_LOJA);
-    renderizarAbaFavoritos();
-    atualizarIconesCoraoGlobais();
-}
-/* =========================
-   CONSTRUIR UI PRINCIPAL
-========================= */
-
-function construirEstrutura() {
-
-    const carrosselContainer = document.getElementById('carrossel-hot-deals');
-
-    if (carrosselContainer && PRODUTOS_LOJA.length > 0) {
-        const amostraCarrossel = PRODUTOS_LOJA.slice(0, 5);
-
-        carrosselContainer.innerHTML = amostraCarrossel.map(prod => `
-            <div class="card-hot">
-                <span class="tag-desconto">🔥 QUENTE</span>
-                <img src="${prod.img}" class="produto-img">
-                <div class="produto-nome">${prod.nome}</div>
-                <div>
-                    <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
-                    <div class="preco-novo">R$ ${prod.precoNovo}</div>
-                </div>
-                <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
-            </div>
-        `).join('');
-    }
-
-    const mosaicoContainer = document.getElementById('mosaico-categorias-container');
-
-    if (mosaicoContainer) {
-        mosaicoContainer.innerHTML = CATEGORIAS_DADOS.map(cat => `
-            <div class="categoria-card" onclick="filtrarPorCategoria('${cat.id}')">
-                <span class="categoria-tag-top">Oferta</span>
-                <img src="${cat.img}" class="categoria-img">
-                <div class="categoria-glass-footer"><p>${cat.nome}</p></div>
-            </div>
-        `).join('');
-    }
-
-    const trackDepoimentos = document.getElementById('track-depoimentos');
-
-    if (trackDepoimentos) {
-        const listaDuplicada = [...DEPOIMENTOS_DADOS, ...DEPOIMENTOS_DADOS];
-
-        trackDepoimentos.innerHTML = listaDuplicada.map(dep => `
-            <div class="depoimento-box">
-                <div class="depoimento-user">
-                    <div class="avatar-fake" style="background:${dep.cor};">${dep.letra}</div>
-                    <div>
-                        <h4 style="font-size:13px;">${dep.nome}</h4>
-                        <p style="font-size:11px;color:gray;">Verificado ✅</p>
-                    </div>
-                </div>
-                <p style="font-size:12px;color:#444;font-style:italic;">${dep.texto}</p>
-            </div>
-        `).join('');
-    }
-
-    renderizarTudo();
-}
-
-/* =========================
-   MODAL LOGIN
-========================= */
-
-function mostrarModalLoginObrigatorio() {
-    const modal = document.getElementById("modal-login-obrigatorio");
-    if (modal) modal.style.display = "flex";
-}
-
-function fecharModalLoginObrigatorio() {
-    const modal = document.getElementById("modal-login-obrigatorio");
-    if (modal) modal.style.display = "none";
-}
-
-function abrirLoginDoModal() {
-    fecharModalLoginObrigatorio();
-    abrirCadastro();
-}
-
-/* =========================
-   LOGIN / CADASTRO
-========================= */
-
-function criarConta() {
-    const nome = document.getElementById("nome-usuario").value.trim();
-    const email = document.getElementById("email-usuario").value.trim();
-    const senha = document.getElementById("senha-usuario").value;
-    const aceitou = document.getElementById("aceitou-termos").checked;
-    const recebe = document.getElementById("aceitou-promocoes").checked;
-
-    if (!nome) return alert("Digite seu nome");
-    if (!email) return alert("Digite um e-mail válido");
-    if (!aceitou) return alert("Aceite os termos");
-    if (senha.length < 6) return alert("Senha mínima 6 caracteres");
-
-    auth.createUserWithEmailAndPassword(email, senha)
-        .then((userCredential) => {
-
-            return db.collection("usuarios").doc(userCredential.user.uid).set({
-                nome,
-                email,
-                recebePromocoes: recebe,
-                criadoEm: new Date()
-            });
-        })
-        .then(() => {
-            document.getElementById("nome-perfil").innerText = nome;
-            document.getElementById("btn-login").style.display = "none";
-            alert("Conta criada com sucesso!");
-            fecharCadastro();
-        })
-        .catch((error) => alert(error.message));
-}
-
-function login() {
-
-    const email = document.getElementById("email-usuario").value.trim();
-    const senha = document.getElementById("senha-usuario").value;
-
-    if (!email.includes("@")) return alert("E-mail inválido");
-
-    auth.signInWithEmailAndPassword(email, senha)
-        .then(() => {
-            alert("Login realizado!");
-            fecharCadastro();
-        })
-        .catch(err => alert(err.message));
-}
-
-/* =========================
-   LOGOUT (CORRIGIDO - sem duplicação)
-========================= */
-
-function logout() {
-    auth.signOut().then(() => {
-        alert("Você saiu da conta");
-        location.reload();
-    });
-}
-
-</script>
-
-   <script>
+        // ==================== DADOS ESTÁTICOS ====================
         const CATEGORIAS_DADOS = [
             { id: "roupas-masculinas", nome: "👕 Roupas Masculinas", img: "https://i.pinimg.com/236x/71/ed/3e/71ed3ee11bdaeba6217d655743d0af5b.jpg" },
             { id: "roupas-femininas", nome: "👗 Femininas", img: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400" },
@@ -1245,34 +863,201 @@ function logout() {
             { id: "sapatos", nome: "👟 Sapatos", img: "https://blog.etiquetaunica.com.br/wp-content/uploads/2025/10/sapatos-femininos-classicos-que-vao-salvar-o-seu-closet-sandalia-opyum-saint-laurent-011025.jpg" },
             { id: "casa-construcao", nome: "🏡 Casa e construção", img: "https://blog.colombo.com.br/wp-content/uploads/2024/03/decora03.jpg" },
             { id: "beleza", nome: "💄 Beleza", img: "https://nordesteinvesting.com.br/wp-content/uploads/2024/06/BelezaInclusiva.jpg" },
-            { id: "papelaria", nome: "✏️ Papelaria", img: "https://jetofficebrasil.com.br/images/services/papelaria.png" },
+            { id: "papelaria", nome: "✏️ Papelaria", img: "https://jetofficebrasil.com.br/images/services/papelaria.png" }
         ];
-        
-let PRODUTOS_LOJA = [];
-       
+
         const DEPOIMENTOS_DADOS = [
-            { nome: "Rodrigo Alves", letra: "R", cor: "#e63946", texto: "\"Mano, esse site é bom demais. Eu tava atrás de uma promo boa e peguei por aqui bem mais barato. Não perco mais nada!\"" },
-            { nome: "Mariana Costa", letra: "M", cor: "#2a9d8f", texto: "\"Achei que era mentira, mas os links mandam direto para as promoções reais. Economizei muito no frete!\"" },
-            { nome: "Lucas Souza", letra: "L", cor: "#f4a261", texto: "\"Muito prático. Em vez de ficar caçando cupom que não funciona na internet, só entro aqui todo dia e vejo o que mudou.\"" },
-            { nome: "Amanda Lima", letra: "A", cor: "#e9c46a", texto: "\"O grupo de promoções que eu seguia faliu, agora só uso essa central. Os kits de roupa valem super a pena.\"" },
-            { nome: "Bruno Ramos", letra: "B", cor: "#457b9d", texto: "\"Sensacional! Comprei itens de ótima qualidade por menos da metade do preço de loja física comum. Recomendo!\"" },
-            { nome: "Carla Diaz", letra: "C", cor: "#8338ec", texto: "\"O design é muito limpo e direto, clica e já vai para o link com o desconto aplicado. Facilita demais a nossa vida!\"" }
+            { nome: "Rodrigo Alves", letra: "R", cor: "#e63946", texto: "\"Mano, esse site é bom demais. Eu tava atrás de uma promo boa e peguei por aqui bem mais barato.\"" },
+            { nome: "Mariana Costa", letra: "M", cor: "#2a9d8f", texto: "\"Achei que era mentira, mas os links mandam direto para as promoções reais.\"" },
+            { nome: "Lucas Souza", letra: "L", cor: "#f4a261", texto: "\"Muito prático. Em vez de ficar caçando cupom que não funciona.\"" },
+            { nome: "Amanda Lima", letra: "A", cor: "#e9c46a", texto: "\"O grupo de promoções que eu seguia faliu, agora só uso essa central.\"" },
+            { nome: "Bruno Ramos", letra: "B", cor: "#457b9d", texto: "\"Sensacional! Comprei itens de ótima qualidade por menos da metade.\"" },
+            { nome: "Carla Diaz", letra: "C", cor: "#8338ec", texto: "\"O design é muito limpo e direto, clica e já vai para o link com desconto.\"" }
         ];
 
-        let favoritosSalvos = JSON.parse(localStorage.getItem('favoritosSalvos')) || [];
-        let categoriaAtiva = null;
+        // ==================== FIRESTORE ====================
+        function carregarProdutosFirestore() {
+            db.collection("produtos").onSnapshot(snapshot => {
+                PRODUTOS_LOJA = [];
+                snapshot.forEach(doc => {
+                    PRODUTOS_LOJA.push({ id: doc.id, ...doc.data() });
+                });
+                console.log("Produtos carregados:", PRODUTOS_LOJA.length);
+                construirEstrutura();
+            });
+        }
 
+        // ==================== FAVORITOS (exige login) ====================
+        function alternarFavorito(idProduto) {
+            const user = auth.currentUser;
+            if (!user) {
+                mostrarModalLoginObrigatorio();
+                return;
+            }
+
+            if (favoritosSalvos.includes(idProduto)) {
+                favoritosSalvos = favoritosSalvos.filter(id => id !== idProduto);
+            } else {
+                favoritosSalvos.push(idProduto);
+            }
+
+            localStorage.setItem('favoritosSalvos', JSON.stringify(favoritosSalvos));
+            atualizarIconesCoraoGlobais();
+            renderizarAbaFavoritos();
+        }
+
+        // ==================== RENDERIZAÇÃO ====================
+        function construirEstrutura() {
+            // Carrossel Ofertas Quentes
+            const carrosselContainer = document.getElementById('carrossel-hot-deals');
+            if (carrosselContainer && PRODUTOS_LOJA.length > 0) {
+                const amostra = PRODUTOS_LOJA.slice(0, 5);
+                carrosselContainer.innerHTML = amostra.map(prod => `
+                    <div class="card-hot">
+                        <span class="tag-desconto">⏰ LIMITADO</span>
+                        <img src="${prod.img}" class="produto-img">
+                        <div class="produto-nome">${prod.nome}</div>
+                        <div>
+                            <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
+                            <div class="preco-novo">R$ ${prod.precoNovo}</div>
+                        </div>
+                        <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
+                    </div>
+                `).join('');
+            }
+
+            // Categorias
+            const mosaicoContainer = document.getElementById('mosaico-categorias-container');
+            if (mosaicoContainer) {
+                mosaicoContainer.innerHTML = CATEGORIAS_DADOS.map(cat => `
+                    <div class="categoria-card" onclick="filtrarPorCategoria('${cat.id}')">
+                        <span class="categoria-tag-top">Oferta</span>
+                        <img src="${cat.img}" class="categoria-img">
+                        <div class="categoria-glass-footer"><p>${cat.nome}</p></div>
+                    </div>
+                `).join('');
+            }
+
+            // Depoimentos
+            const trackDepoimentos = document.getElementById('track-depoimentos');
+            if (trackDepoimentos) {
+                const duplicados = [...DEPOIMENTOS_DADOS, ...DEPOIMENTOS_DADOS];
+                trackDepoimentos.innerHTML = duplicados.map(dep => `
+                    <div class="depoimento-box">
+                        <div class="depoimento-user">
+                            <div class="avatar-fake" style="background:${dep.cor};">${dep.letra}</div>
+                            <div>
+                                <h4 style="font-size:13px;">${dep.nome}</h4>
+                                <p style="font-size:11px;color:gray;">Verificado ✅</p>
+                            </div>
+                        </div>
+                        <p style="font-size:12px;color:#444;font-style:italic;">${dep.texto}</p>
+                    </div>
+                `).join('');
+            }
+
+            // Grids principais
+            renderizarGridHome(PRODUTOS_LOJA);
+            renderizarGridOfertas(PRODUTOS_LOJA);
+            renderizarAbaFavoritos();
+            atualizarIconesCoraoGlobais();
+        }
+
+        function renderizarGridHome(lista) {
+            const container = document.getElementById('grid-home-ofertas');
+            if (!container) return;
+            if (lista.length === 0) {
+                container.innerHTML = `<div class="erro-busca">Nenhum produto encontrado.</div>`;
+                return;
+            }
+            const exibicao = lista.slice(0, 8);
+            container.innerHTML = exibicao.map(prod => criarCardProduto(prod)).join('');
+        }
+
+        function renderizarGridOfertas(lista) {
+            const container = document.getElementById('grid-todas-ofertas');
+            if (!container) return;
+            if (lista.length === 0) {
+                container.innerHTML = `<div class="erro-busca">Nenhum produto nesta categoria.</div>`;
+                return;
+            }
+            container.innerHTML = lista.map(prod => criarCardProduto(prod)).join('');
+        }
+
+        function renderizarAbaFavoritos() {
+            const container = document.getElementById('grid-favoritos-salvos');
+            if (!container) return;
+            const filtrados = PRODUTOS_LOJA.filter(p => favoritosSalvos.includes(p.id));
+            if (filtrados.length === 0) {
+                container.innerHTML = `<p style="text-align:center;grid-column:span 2;color:#888;padding:30px;">Nenhum favorito ainda.</p>`;
+                return;
+            }
+            container.innerHTML = filtrados.map(prod => criarCardProduto(prod, true)).join('');
+        }
+
+        function criarCardProduto(prod, isFavoritoPage = false) {
+            const isFav = favoritosSalvos.includes(prod.id);
+            return `
+                <div class="produto-card">
+                    <button class="btn-favorito ${isFav ? 'active' : ''}" data-id="${prod.id}" onclick="alternarFavorito('${prod.id}')">
+                        <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+                    </button>
+                    <img src="${prod.img}" class="produto-img">
+                    <img src="${obterLogoLoja(prod.loja)}" class="logo-loja">
+                    <div class="produto-nome">${prod.nome}</div>
+                    <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(${getAvaliacoesRandom()})</span></div>
+                    <div>
+                        <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
+                        <div class="preco-novo">R$ ${prod.precoNovo}</div>
+                    </div>
+                    <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
+                </div>
+            `;
+        }
+
+        function obterLogoLoja(loja) {
+            const logos = {
+                amazon: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
+                shopee: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg",
+                magalu: "https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png",
+                "mercado-livre": "https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo_large_plus.webp",
+                shein: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Shein_logo.svg/512px-Shein_logo.svg.png",
+                aliexpress: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Aliexpress_logo.svg/512px-Aliexpress_logo.svg.png"
+            };
+            return logos[loja] || "";
+        }
+
+        function getAvaliacoesRandom() {
+            const num = Math.floor(Math.random() * 15200) + 68;
+            if (num >= 10000) return (num / 1000).toFixed(1) + "k";
+            if (num >= 1000) return (num / 1000).toFixed(1) + "k";
+            return num.toLocaleString('pt-BR');
+        }
+
+        function atualizarIconesCoraoGlobais() {
+            document.querySelectorAll('.btn-favorito').forEach(btn => {
+                const id = btn.getAttribute('data-id');
+                const icone = btn.querySelector('i');
+                if (favoritosSalvos.includes(id)) {
+                    btn.classList.add('active');
+                    if (icone) icone.className = 'fa-solid fa-heart';
+                } else {
+                    btn.classList.remove('active');
+                    if (icone) icone.className = 'fa-regular fa-heart';
+                }
+            });
+        }
+
+        // ==================== NAVEGAÇÃO ====================
         function mudarAba(idAba, elementoBotao) {
-            document.querySelectorAll('.app-page').forEach(pag => pag.classList.remove('active'));
-            
+            document.querySelectorAll('.app-page').forEach(p => p.classList.remove('active'));
             const target = document.getElementById(`aba-${idAba}`);
-            if(target) target.classList.add('active');
+            if (target) target.classList.add('active');
 
-            if(elementoBotao) {
-                document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+            if (elementoBotao) {
+                document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
                 elementoBotao.classList.add('active');
             }
-            
             document.getElementById('input-busca').value = "";
             restaurarElementosEscondidos();
             window.scrollTo({top: 0, behavior: 'smooth'});
@@ -1286,85 +1071,37 @@ let PRODUTOS_LOJA = [];
         }
 
         function filtrarPorCategoria(idCategoria) {
-            console.log("Categoria clicada:", idCategoria);
-            console.log("Primeiro produto:", PRODUTOS_LOJA[0]);
             categoriaAtiva = idCategoria;
-            const infoCategoria = CATEGORIAS_DADOS.find(c => c.id === idCategoria);
-            const tituloAba = document.getElementById('titulo-aba-ofertas');
-            
-            if(infoCategoria) {
-                tituloAba.innerText = `📂 Categoria: ${infoCategoria.nome}`;
-            }
-
+            const info = CATEGORIAS_DADOS.find(c => c.id === idCategoria);
+            if (info) document.getElementById('titulo-aba-ofertas').innerText = `📂 ${info.nome}`;
             const filtrados = PRODUTOS_LOJA.filter(p => p.categoria === idCategoria);
             renderizarGridOfertas(filtrados);
             mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
         }
 
-        function scrollLojas(valor){
-
-    document
-        .getElementById("lojas-grid")
-        .scrollBy({
-            left: valor,
-            behavior: "smooth"
-        });
-
-}
-        
-        function filtrarPorLoja(loja){
-
-    const produtosFiltrados =
-    PRODUTOS_LOJA.filter(prod => {
-
-        return (
-            prod.loja &&
-            prod.loja.toLowerCase() === loja.toLowerCase()
-        );
-
-    });
-
-    document.getElementById(
-        "titulo-aba-ofertas"
-    ).innerText =
-    "🏪 " + loja.toUpperCase();
-
-    renderizarGridOfertas(
-        produtosFiltrados
-    );
-
-    mudarAba(
-        "ofertas",
-        document.querySelectorAll(".nav-item")[2]
-    );
-
-}
+        function filtrarPorLoja(loja) {
+            const filtrados = PRODUTOS_LOJA.filter(p => (p.loja || "").toLowerCase() === loja.toLowerCase());
+            document.getElementById('titulo-aba-ofertas').innerText = `🏪 ${loja.toUpperCase()}`;
+            renderizarGridOfertas(filtrados);
+            mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
+        }
 
         function filtrarPesquisa() {
             const termo = document.getElementById('input-busca').value.toLowerCase().trim();
-            const containerOfertasQuentes = document.getElementById('wrapper-ofertas-quentes');
-            const barraBeneficios = document.getElementById('barra-beneficios');
-            const tituloGridHome = document.getElementById('titulo-grid-home');
-            const linkVerTodosHome = document.getElementById('link-ver-todos-home');
-            const tituloDepoimentos = document.getElementById('titulo-depoimentos');
-            const wrapperDepoimentos = document.getElementById('wrapper-depoimentos');
-            
- 
             const activePage = document.querySelector('.app-page.active');
 
             if (termo.length > 0) {
                 if (activePage && activePage.id === 'aba-inicio') {
-                    if(containerOfertasQuentes) containerOfertasQuentes.style.display = 'none';
-                    if(barraBeneficios) barraBeneficios.style.display = 'none';
-                    if(tituloGridHome) tituloGridHome.innerText = "🔍 Resultado da Busca";
-                    if(linkVerTodosHome) linkVerTodosHome.style.display = 'none';
-                    if(tituloDepoimentos) tituloDepoimentos.style.display = 'none';
-                    if(wrapperDepoimentos) wrapperDepoimentos.style.display = 'none';
+                    document.getElementById('wrapper-ofertas-quentes').style.display = 'none';
+                    document.getElementById('barra-beneficios').style.display = 'none';
+                    document.getElementById('titulo-grid-home').innerText = "🔍 Resultados";
+                    document.getElementById('link-ver-todos-home').style.display = 'none';
+                    document.getElementById('titulo-depoimentos').style.display = 'none';
+                    document.getElementById('wrapper-depoimentos').style.display = 'none';
                 }
-
-                const produtosFiltrados = PRODUTOS_LOJA.filter(p => p.nome.toLowerCase().includes(termo));
-                renderizarGridHome(produtosFiltrados);
-                renderizarGridOfertas(produtosFiltrados);
+                const filtrados = PRODUTOS_LOJA.filter(p => p.nome.toLowerCase().includes(termo));
+                renderizarGridHome(filtrados);
+                renderizarGridOfertas(filtrados);
             } else {
                 restaurarElementosEscondidos();
                 renderizarGridHome(PRODUTOS_LOJA);
@@ -1373,523 +1110,157 @@ let PRODUTOS_LOJA = [];
         }
 
         function restaurarElementosEscondidos() {
-            const containerOfertasQuentes = document.getElementById('wrapper-ofertas-quentes');
-            const barraBeneficios = document.getElementById('barra-beneficios');
-            const tituloGridHome = document.getElementById('titulo-grid-home');
-            const linkVerTodosHome = document.getElementById('link-ver-todos-home');
-            const tituloDepoimentos = document.getElementById('titulo-depoimentos');
-            const wrapperDepoimentos = document.getElementById('wrapper-depoimentos');
-
-            if(containerOfertasQuentes) containerOfertasQuentes.style.display = 'block';
-            if(barraBeneficios) barraBeneficios.style.display = 'grid';
-            if(tituloGridHome) tituloGridHome.innerText = "⚡ Ofertas Imperdíveis";
-            if(linkVerTodosHome) linkVerTodosHome.style.display = 'block';
-            if(tituloDepoimentos) tituloDepoimentos.style.display = 'flex';
-            if(wrapperDepoimentos) wrapperDepoimentos.style.display = 'block';
+            document.getElementById('wrapper-ofertas-quentes').style.display = 'block';
+            document.getElementById('barra-beneficios').style.display = 'grid';
+            document.getElementById('titulo-grid-home').innerText = "⚡ Ofertas Imperdíveis";
+            document.getElementById('link-ver-todos-home').style.display = 'block';
+            document.getElementById('titulo-depoimentos').style.display = 'flex';
+            document.getElementById('wrapper-depoimentos').style.display = 'block';
         }
 
-function alternarFavorito(idProduto) {
-    console.log("🔥 Botão favorito clicado:", idProduto);
-
-    const user = auth.currentUser;
-
-    if (!user) {
-        mostrarModalLoginObrigatorio();
-        return;
-    }
-
-    if (favoritosSalvos.includes(idProduto)) {
-        favoritosSalvos = favoritosSalvos.filter(id => id !== idProduto);
-    } else {
-        favoritosSalvos.push(idProduto);
-    }
-
-    // Salva no localStorage
-    localStorage.setItem('favoritosSalvos', JSON.stringify(favoritosSalvos));
-
-    atualizarIconesCoraoGlobais();
-    renderizarAbaFavoritos();
-}
-       function obterLogoLoja(loja){
-
-    const logos = {
-
-        amazon:
-        "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
-
-        shopee:
-        "https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg",
-
-        magalu:
-        "https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png",
-
-        "mercado-livre":
-        "https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo_large_plus.webp",
-
-        shein:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Shein_logo.svg/512px-Shein_logo.svg.png",
-
-        aliexpress:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Aliexpress_logo.svg/512px-Aliexpress_logo.svg.png"
-
-    };
-
-    return logos[loja] || "";
-}
-        function getAvaliacoesRandom() {
-    const num = Math.floor(Math.random() * 15200) + 68; // de 68 até ~15.000
-    
-    if (num >= 10000) return (num / 1000).toFixed(1) + "k";
-    if (num >= 1000) return (num / 1000).toFixed(1) + "k";
-    return num.toLocaleString('pt-BR');
-}
-        function atualizarIconesCoraoGlobais() {
-            document.querySelectorAll(`.btn-favorito`).forEach(btn => {
-                const idProd = btn.getAttribute('data-id');
-                const icone = btn.querySelector('i');
-                if(favoritosSalvos.includes(idProd)) {
-                    btn.classList.add('active');
-                    if(icone) icone.className = 'fa-solid fa-heart';
-                } else {
-                    btn.classList.remove('active');
-                    if(icone) icone.className = 'fa-regular fa-heart';
-                }
-            });
+        function scrollLojas(valor) {
+            document.getElementById("lojas-grid").scrollBy({ left: valor, behavior: "smooth" });
         }
 
-        function renderizarGridHome(listaProdutos) {
-            const gridHomeContainer = document.getElementById('grid-home-ofertas');
-            if(!gridHomeContainer) return;
+        // ==================== LOGIN / CADASTRO ====================
+        function abrirCadastro() {
+            document.getElementById("modal-cadastro").style.display = "flex";
+        }
 
-            if(listaProdutos.length === 0) {
-                gridHomeContainer.innerHTML = `<div class="erro-busca">⚠️ Nenhum produto foi encontrado.</div>`;
+        function fecharCadastro() {
+            document.getElementById("modal-cadastro").style.display = "none";
+        }
+
+        function criarConta() {
+            const nome = document.getElementById("nome-usuario").value.trim();
+            const email = document.getElementById("email-usuario").value.trim();
+            const senha = document.getElementById("senha-usuario").value;
+            const aceitou = document.getElementById("aceitou-termos").checked;
+
+            if (!nome || !email || !aceitou || senha.length < 6) {
+                alert("Preencha todos os campos corretamente.");
                 return;
             }
 
-            const exibicaoHome = listaProdutos.slice(0, 8);
-
-            gridHomeContainer.innerHTML = exibicaoHome.map(prod => {
-                const isFav = favoritosSalvos.includes(prod.id);
-                return `
-                    <div class="produto-card">
-                        <button class="btn-favorito ${isFav ? 'active' : ''}" data-id="${prod.id}" onclick="alternarFavorito('${prod.id}')">
-                            <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
-                        </button>
-                        <img src="${prod.img}" class="produto-img">
-
-<img
-    src="${obterLogoLoja(prod.loja)}"
-    class="logo-loja"
->
-                        <div class="produto-nome">${prod.nome}</div>
-                        <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(${getAvaliacoesRandom()})</span></div>
-                        <div>
-                            <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
-                            <div class="preco-novo">R$ ${prod.precoNovo}</div>
-                        </div>
-                        <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
-                    </div>
-                `;
-            }).join('');
+            auth.createUserWithEmailAndPassword(email, senha)
+                .then(userCredential => {
+                    return db.collection("usuarios").doc(userCredential.user.uid).set({
+                        nome, email, criadoEm: new Date()
+                    });
+                })
+                .then(() => {
+                    document.getElementById("nome-perfil").innerText = nome;
+                    document.getElementById("btn-login").style.display = "none";
+                    alert("Conta criada com sucesso!");
+                    fecharCadastro();
+                })
+                .catch(err => alert(err.message));
         }
 
-        function renderizarGridOfertas(listaProdutos) {
-            const gridTodasOfertas = document.getElementById('grid-todas-ofertas');
-            if(!gridTodasOfertas) return;
+        function login() {
+            const email = document.getElementById("email-usuario").value.trim();
+            const senha = document.getElementById("senha-usuario").value;
+            if (!email || !senha) return alert("Preencha email e senha");
 
-            if(listaProdutos.length === 0) {
-                gridTodasOfertas.innerHTML = `<div class="erro-busca">⚠️ Nenhum produto nesta categoria.</div>`;
-                return;
-            }
-
-            gridTodasOfertas.innerHTML = listaProdutos.map(prod => {
-                const isFav = favoritosSalvos.includes(prod.id);
-                return `
-                    <div class="produto-card">
-                        <button class="btn-favorito ${isFav ? 'active' : ''}" data-id="${prod.id}" onclick="alternarFavorito('${prod.id}')">
-                            <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
-                        </button>
-                        <img src="${prod.img}" class="produto-img">
-
-<img
-    src="${obterLogoLoja(prod.loja)}"
-    class="logo-loja"
->
-                        <div class="produto-nome">${prod.nome}</div>
-                        <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(${getAvaliacoesRandom()})</span></div>
-                        <div>
-                            <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
-                            <div class="preco-novo">R$ ${prod.precoNovo}</div>
-                        </div>
-                        <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
-                    </div>
-                `;
-            }).join('');
+            auth.signInWithEmailAndPassword(email, senha)
+                .then(() => {
+                    alert("Login realizado!");
+                    fecharCadastro();
+                })
+                .catch(err => alert(err.message));
         }
 
-        function renderizarAbaFavoritos() {
-            const containerFavoritos = document.getElementById('grid-favoritos-salvos');
-            if(!containerFavoritos) return;
+        function logout() {
+            auth.signOut().then(() => location.reload());
+        }
 
-            const filtrados = PRODUTOS_LOJA.filter(p => favoritosSalvos.includes(p.id));
+        function mostrarModalLoginObrigatorio() {
+            document.getElementById("modal-login-obrigatorio").style.display = "flex";
+        }
 
-            if(filtrados.length === 0) {
-                containerFavoritos.innerHTML = `<p style="text-align: center; grid-column: span 2; color: var(--texto-mutado); padding: 25px; font-size:13px;">Nenhum produto favoritado ainda.</p>`;
-                return;
+        function fecharModalLoginObrigatorio() {
+            document.getElementById("modal-login-obrigatorio").style.display = "none";
+        }
+
+        function abrirLoginDoModal() {
+            fecharModalLoginObrigatorio();
+            abrirCadastro();
+        }
+
+        function alternarTema() {
+            const atual = localStorage.getItem("tema-site") || "claro";
+            if (atual === "claro") {
+                document.body.classList.add("tema-escuro");
+                localStorage.setItem("tema-site", "escuro");
+            } else {
+                document.body.classList.remove("tema-escuro");
+                localStorage.setItem("tema-site", "claro");
             }
-
-            containerFavoritos.innerHTML = filtrados.map(prod => `
-                <div class="produto-card">
-                    <button class="btn-favorito active" data-id="${prod.id}" onclick="alternarFavorito('${prod.id}')">
-                        <i class="fa-solid fa-heart"></i>
-                    </button>
-                   <img src="${prod.img}" class="produto-img">
-
-<img
-    src="${obterLogoLoja(prod.loja)}"
-    class="logo-loja"
->
-                    <div class="produto-nome">${prod.nome}</div>
-                    <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(${getAvaliacoesRandom()})</span></div>
-                    <div>
-                        <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
-                        <div class="preco-novo">R$ ${prod.precoNovo}</div>
-                    </div>
-                    <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
-                </div>
-            `).join('');
         }
 
         function abrirPoliticaPrivacidade() {
-            alert("Link de Políticas não configurado.");
+            alert("Política de Privacidade - Em breve.");
         }
-function mostrarModalLoginObrigatorio() {
-    const modal = document.getElementById("modal-login-obrigatorio");
-    if (modal) {
-        modal.style.display = "flex";
-    } else {
-        console.error("Modal não encontrado!");
-    }
-}
 
-function fecharModalLoginObrigatorio() {
-    const modal = document.getElementById("modal-login-obrigatorio");
-    if (modal) modal.style.display = "none";
-}
+        // ==================== INICIALIZAÇÃO ====================
+        document.addEventListener("DOMContentLoaded", () => {
+            carregarProdutosFirestore();
 
-function abrirLoginDoModal() {
-    fecharModalLoginObrigatorio();
-    abrirCadastro(); // abre o modal de login/cadastro que você já tem
-}
-function construirEstrutura() {
-    const carrosselContainer = document.getElementById('carrossel-hot-deals');
-    if(carrosselContainer && PRODUTOS_LOJA.length > 0) {
-        const amostraCarrossel = PRODUTOS_LOJA.slice(0, 5);
-        carrosselContainer.innerHTML = amostraCarrossel.map(prod => `
-            <div class="card-hot">
-                <span class="tag-desconto">🔥 QUENTE</span>
-                <img src="${prod.img}" class="produto-img">
-                <div class="produto-nome">${prod.nome}</div>
-                <div>
-                    <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
-                    <div class="preco-novo">R$ ${prod.precoNovo}</div>
-                </div>
-                <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
-            </div>
-        `).join('');
-    }
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    db.collection("usuarios").doc(user.uid).get().then(doc => {
+                        if (doc.exists) {
+                            document.getElementById("nome-perfil").innerText = doc.data().nome;
+                            document.getElementById("btn-login").style.display = "none";
+                        }
+                    });
+                }
+            });
 
-    const mosaicoContainer = document.getElementById('mosaico-categorias-container');
-    if(mosaicoContainer) {
-        mosaicoContainer.innerHTML = CATEGORIAS_DADOS.map(cat => `
-            <div class="categoria-card" onclick="filtrarPorCategoria('${cat.id}')">
-                <span class="categoria-tag-top">Oferta</span>
-                <img src="${cat.img}" class="categoria-img">
-                <div class="categoria-glass-footer"><p>${cat.nome}</p></div>
-            </div>
-        `).join('');
-    }
-
-    const trackDepoimentos = document.getElementById('track-depoimentos');
-    if(trackDepoimentos) {
-        const listaDuplicada = [...DEPOIMENTOS_DADOS, ...DEPOIMENTOS_DADOS];
-        trackDepoimentos.innerHTML = listaDuplicada.map(dep => `
-            <div class="depoimento-box">
-                <div class="depoimento-user">
-                    <div class="avatar-fake" style="background: ${dep.cor};">${dep.letra}</div>
-                    <div>
-                        <h4 style="font-size:13px;">${dep.nome}</h4>
-                        <p style="font-size:11px; color:gray;">Verificado ✅</p>
-                    </div>
-                </div>
-                <p style="font-size:12px; color:#444; font-style:italic; line-height:1.4;">${dep.texto}</p>
-            </div>
-        `).join('');
-    }
-
-    // ✅ Aqui fora, sempre vai atualizar
-    renderizarGridHome(PRODUTOS_LOJA);
-    renderizarGridOfertas(PRODUTOS_LOJA);
-    renderizarAbaFavoritos();
-    atualizarIconesCoraoGlobais();
-}
-
-        document.addEventListener(
-    "DOMContentLoaded",
-    carregarProdutosFirestore
-);
+            // Cookie banner
+            if (localStorage.getItem("cookiesAceitos") !== "sim") {
+                document.getElementById("cookie-banner").style.display = "flex";
+            }
+        });
 
         function aceitarCookies() {
             localStorage.setItem("cookiesAceitos", "sim");
             document.getElementById("cookie-banner").style.display = "none";
         }
-
-        window.addEventListener("load", () => {
-            const aceitou = localStorage.getItem("cookiesAceitos");
-            if(aceitou === "sim"){
-                document.getElementById("cookie-banner").style.display = "none";
-            }
-        });
-
-        function alternarTema() {
-            const temaAtual = localStorage.getItem("tema-site") || "claro";
-            if (temaAtual === "claro") {
-                document.body.classList.add("tema-escuro");
-                localStorage.setItem("tema-site", "escuro");
-                alert("🌙 Tema escuro ativado");
-            } else {
-                document.body.classList.remove("tema-escuro");
-                localStorage.setItem("tema-site", "claro");
-                alert("☀️ Tema claro ativado");
-            }
-        }
-
-        window.addEventListener("load", () => {
-            const temaSalvo = localStorage.getItem("tema-site");
-            if (temaSalvo === "escuro") {
-                document.body.classList.add("tema-escuro");
-            }
-        });
-
-        const AVATARES = [
-            "🦊", "🐼", "🐱", "🐸", "🐵", "🐧", "🦁", "🐨", "🐯", "🐰", "🦄", "🐻"
-        ];
-
-       function criarConta() {
-    const nome = document.getElementById("nome-usuario").value.trim();
-    const email = document.getElementById("email-usuario").value.trim();
-    const senha = document.getElementById("senha-usuario").value;  
-    const aceitou = document.getElementById("aceitou-termos").checked;
-    const recebe = document.getElementById("aceitou-promocoes").checked;
-
-    if (!nome) return alert("Digite seu nome");
-    if (!email) return alert("Digite um e-mail válido");
-    if (!aceitou) return alert("Você precisa aceitar os termos");
-    if(senha.length < 6){
-    alert("A senha precisa ter pelo menos 6 caracteres.");
-    return;
-}
-
-    auth.createUserWithEmailAndPassword(email, senha)
-        .then((userCredential) => {
-            const user = userCredential.user;
-
-            return db.collection("usuarios").doc(user.uid).set({
-                nome: nome,
-                email: email,
-                recebePromocoes: recebe,
-                criadoEm: new Date()
-            });
-        })
-        .then(() => {
-
-    document.getElementById("nome-perfil").innerText = nome;
-
-document.getElementById("btn-login").style.display = "none";
-    alert("Conta criada com sucesso!");
-    fecharCadastro();
-})
-.catch((error) => {
-
-    if(error.code === "auth/email-already-in-use"){
-
-        auth.signInWithEmailAndPassword(email, senha)
-            .then(() => {
-
-                document.getElementById("nome-perfil").innerText = nome;
-                document.getElementById("btn-login").style.display = "none";
-
-                alert("Login realizado com sucesso!");
-                fecharCadastro();
-
-            })
-            .catch(() => {
-
-                alert("Este e-mail já existe, mas a senha está incorreta.");
-
-            });
-
-    } else {
-
-        alert(error.message);
-        console.log(error);
-
-    }
-
-});
-           
-}
-       function login() {
-
-    const email = document.getElementById("email-usuario").value.trim();
-    const senha = document.getElementById("senha-usuario").value;
-
-    console.log("EMAIL DIGITADO:", email);
-    console.log("SENHA DIGITADA:", senha);
-
-    if(!email){
-        alert("Digite seu e-mail antes de entrar");
-        return;
-    }
-
-    if(!email.includes("@")){
-        alert("E-mail inválido");
-        return;
-    }
-
-    auth.signInWithEmailAndPassword(email, senha)
-        .then(() => {
-            alert("Login realizado com sucesso!");
-            fecharCadastro();
-        })
-        .catch((error) => {
-            alert("Erro ao entrar: " + error.message);
-            console.log(error);
-        });
-
-}
-       function renderizarTudo() {
-
-    renderizarGridHome(PRODUTOS_LOJA);
-    renderizarGridOfertas(PRODUTOS_LOJA);
-    renderizarAbaFavoritos();
-    atualizarIconesCoraoGlobais();
-
-}
-        function logout() {
-    auth.signOut().then(() => {
-        alert("Você saiu da conta");
-        document.getElementById("nome-perfil").innerText = "Visitante";
-    });
-}
-
-        function abrirCadastro(){
-            document.getElementById("modal-cadastro").style.display = "flex";
-        }
-
-        function fecharCadastro(){
-            document.getElementById("modal-cadastro").style.display = "none";
-        }
-        
-          function logout(){
-
-    auth.signOut()
-        .then(() => {
-            alert("Você saiu da conta.");
-            location.reload();
-        });
-
-}
-
-       auth.onAuthStateChanged((user) => {
-
-    console.log("USER:", user);
-
-    if(user){
-
-        db.collection("usuarios")
-          .doc(user.uid)
-          .get()
-          .then((doc) => {
-
-              console.log("DOC EXISTS:", doc.exists);
-              console.log("DADOS:", doc.data());
-
-              if(doc.exists){
-
-                  const dados = doc.data();
-
-                  const perfil =
-                      document.getElementById("nome-perfil");
-
-                  console.log("PERFIL:", perfil);
-
-                  perfil.innerText = dados.nome;
-
-                  const btnLogin =
-                      document.getElementById("btn-login");
-
-                  if(btnLogin){
-                      btnLogin.style.display = "none";
-                  }
-
-              }
-
-          });
-
-    }
-
-});
-
     </script>
 
-    <!-- MODAL DE CADASTRO / LOGIN -->
+    <!-- Modal Cadastro -->
     <div id="modal-cadastro" class="modal-cadastro">
         <div class="modal-cadastro-box">
             <h2>🎉 Crie sua conta grátis</h2>
-            <p>Salve produtos favoritos e receba ofertas exclusivas.</p>
+            <p>Salve favoritos e receba promoções exclusivas.</p>
             <input type="text" id="nome-usuario" placeholder="Seu nome">
             <input type="email" id="email-usuario" placeholder="Seu e-mail">
             <input type="password" id="senha-usuario" placeholder="Crie uma senha">
-            
-            <div class="aceite-newsletter">
-                <input type="checkbox" id="aceitou-promocoes">
-                <label for="aceitou-promocoes">Quero receber ofertas e promoções por e-mail.</label>
-            </div>
             <div class="aceite-termos">
                 <input type="checkbox" id="aceitou-termos">
-                <label for="aceitou-termos">
-                    Estou ciente da <a href="#">Política de Privacidade</a> e dos <a href="#">Termos de Uso</a>
-                </label>
+                <label for="aceitou-termos">Aceito a <a href="#">Política de Privacidade</a></label>
             </div>
-
             <button onclick="criarConta()">Criar Conta</button>
-            <button onclick="login()">Entrar</button>
+            <button onclick="login()">Já tenho conta - Entrar</button>
             <button onclick="fecharCadastro()" class="btn-fechar-cadastro">Fechar</button>
         </div>
     </div>
 
-    <!-- MODAL PARA FAZER LOGIN ANTES DE SALVAR -->
-    <div id="modal-login-obrigatorio" class="modal-cadastro" style="display: none;">
-        <div class="modal-cadastro-box" style="text-align: center;">
-            <h2>❤️ Salvar favorito</h2>
-            <p style="margin: 16px 0; font-size: 15px; color: #444;">
-                Para salvar suas promoções favoritas, você precisa estar logado.
-            </p>
-            
-            <button onclick="abrirLoginDoModal()" style="width: 100%; margin-bottom: 10px; padding: 14px;">
-                Fazer Login / Criar Conta
-            </button>
-            <button onclick="fecharModalLoginObrigatorio()" class="btn-fechar-cadastro" style="width: 100%; padding: 14px;">
-                Cancelar
-            </button>
+    <!-- Modal Login Obrigatório -->
+    <div id="modal-login-obrigatorio" class="modal-cadastro" style="display:none;">
+        <div class="modal-cadastro-box" style="text-align:center;">
+            <h2>❤️ Salvar Favorito</h2>
+            <p>Você precisa estar logado para salvar favoritos.</p>
+            <button onclick="abrirLoginDoModal()" style="width:100%;margin:10px 0;">Fazer Login / Criar Conta</button>
+            <button onclick="fecharModalLoginObrigatorio()" class="btn-fechar-cadastro" style="width:100%;">Cancelar</button>
         </div>
     </div>
 
-    <!-- BANNER DE COOKIES -->
-    <div id="cookie-banner" class="cookie-banner">
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="cookie-banner" style="display:none;">
         <div class="cookie-texto">
-            🍪 Utilizamos cookies para melhorar sua experiência, analisar visitas e oferecer conteúdos mais relevantes.
+            🍪 Utilizamos cookies para melhorar sua experiência.
         </div>
         <button onclick="aceitarCookies()">Aceitar</button>
     </div>
