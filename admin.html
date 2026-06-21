@@ -2,99 +2,96 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Amazon Admin Final Boss</title>
+<title>Admin - Central de Promoções</title>
 
 <style>
-body{
-    margin:0;
-    font-family:Arial;
-    background:#0b1220;
-    color:white;
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #0b1220;
+    color: white;
 }
+
+.hidden { display:none; }
 
 /* LOGIN */
-#login{
-    position:fixed;
-    inset:0;
+#login {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
     display:flex;
-    justify-content:center;
     align-items:center;
-    background:rgba(0,0,0,.9);
+    justify-content:center;
 }
 
-.card{
+.box {
     background:#111827;
-    padding:25px;
-    border-radius:14px;
-    width:360px;
-}
-
-input,select{
-    width:100%;
-    padding:10px;
-    margin:6px 0;
-    border-radius:8px;
-    border:none;
+    padding:20px;
+    border-radius:10px;
+    width:300px;
 }
 
 /* DASHBOARD */
-#dash{
-    display:none;
-    padding:20px;
-}
-
-.top{
+header {
+    background:#111827;
+    padding:15px;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    background:#111827;
-    padding:15px;
-    border-radius:12px;
 }
 
-/* GRID */
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-    margin-top:15px;
+.container {
+    padding:20px;
 }
 
-.box{
-    background:#111827;
-    padding:15px;
-    border-radius:12px;
-}
-
-/* PRODUTO */
-.prod{
-    display:flex;
-    gap:10px;
+.card {
     background:#1f2937;
-    padding:10px;
+    padding:15px;
     border-radius:10px;
-    margin-bottom:10px;
+    margin-bottom:15px;
 }
 
-.prod img{
-    width:60px;
-    height:60px;
-    object-fit:cover;
-    border-radius:8px;
-}
-
-.btn{
+input, select {
     width:100%;
     padding:10px;
-    margin-top:8px;
+    margin-top:5px;
+    margin-bottom:10px;
+    border-radius:6px;
     border:none;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:bold;
 }
 
-.primary{background:#cc0a12;color:white;}
-.danger{background:#ef4444;color:white;}
+button {
+    padding:10px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.btn {
+    background:#22c55e;
+    color:black;
+}
+
+.btn-danger {
+    background:#ef4444;
+    color:white;
+}
+
+.grid {
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:10px;
+}
+
+.produto {
+    background:#111827;
+    padding:10px;
+    border-radius:10px;
+}
+.produto img {
+    width:100%;
+    border-radius:8px;
+}
 </style>
 </head>
 
@@ -102,74 +99,70 @@ input,select{
 
 <!-- 🔐 LOGIN OCULTO -->
 <div id="login">
-    <div class="card">
-        <h2>🔐 Admin Final Boss</h2>
-
-        <input id="email" value="tete1808sd@gmail.com">
-        <input id="senha" type="password">
-
-        <button class="btn primary" onclick="login()">Entrar</button>
+    <div class="box">
+        <h3>🔐 Admin Login</h3>
+        <input id="email" placeholder="Email">
+        <input id="senha" type="password" placeholder="Senha">
+        <button class="btn" onclick="login()">Entrar</button>
     </div>
 </div>
 
 <!-- 📊 DASHBOARD -->
-<div id="dash">
+<div id="app" class="hidden">
 
-    <div class="top">
-        <h2>🛒 Amazon Admin System</h2>
-        <button class="btn danger" onclick="logout()">Sair</button>
-    </div>
+<header>
+    <h3>🔥 Admin Panel</h3>
+    <button class="btn-danger" onclick="logout()">Sair</button>
+</header>
 
-    <div class="grid">
+<div class="container">
 
-        <!-- FORM -->
-        <div class="box">
-            <h3>➕ Produto</h3>
+    <div class="card">
+        <h3>➕ Novo Produto</h3>
 
-            <input id="nome" placeholder="Nome">
-            <input id="precoAntigo" placeholder="Preço antigo">
-            <input id="precoNovo" placeholder="Preço novo">
-            <input id="img" placeholder="Imagem URL">
-            <input id="link" placeholder="Link afiliado">
+        <input id="id" placeholder="ID (ex: bermuda-jeans-01)">
+        <input id="nome" placeholder="Nome do produto">
 
-<select id="categoria">
-<option value="roupas-masculinas">👕 Masculinas</option>
-<option value="roupas-femininas">👗 Femininas</option>
-<option value="plus-size">👚 Plus Size</option>
-<option value="relogios">⌚ Relógios</option>
-<option value="mae-bebe">👶 Mãe & Bebê</option>
-<option value="viagens-bagagens">🧳 Viagem</option>
-<option value="fones">🎧 Fones</option>
-<option value="bolsas-masculinas">🎒 Bolsas Masc</option>
-<option value="bolsas-femininas">👝 Bolsas Fem</option>
-<option value="limpeza">🧼 Limpeza</option>
-<option value="brinquedos">🧸 Brinquedos</option>
-<option value="acessorios">💎 Acessórios</option>
-<option value="pets">🐶 Pets</option>
-<option value="sapatos">👟 Sapatos</option>
-<option value="casa-construcao">🏡 Casa</option>
-<option value="beleza">💄 Beleza</option>
-<option value="papelaria">✏️ Papelaria</option>
-</select>
+        <input id="img" placeholder="URL da imagem">
+        <input id="link" placeholder="Link afiliado">
 
-    <select id="loja">
+        <input id="precoAntigo" placeholder="Preço antigo">
+        <input id="precoNovo" placeholder="Preço novo">
+
+        <select id="categoria">
+            <option value="roupas-masculinas">👕 Masculinas</option>
+            <option value="roupas-femininas">👗 Femininas</option>
+            <option value="plus-size">👚 Plus Size</option>
+            <option value="relogios">⌚ Relógios</option>
+            <option value="mae-bebe">👶 Mãe & Bebê</option>
+            <option value="viagens-bagagens">🧳 Viagens</option>
+            <option value="fones">🎧 Fones</option>
+            <option value="bolsas-masculinas">🎒 Bolsas Masc</option>
+            <option value="bolsas-femininas">👛 Bolsas Fem</option>
+            <option value="limpeza">🧼 Limpeza</option>
+            <option value="brinquedos">🧸 Brinquedos</option>
+            <option value="acessorios">💎 Acessórios</option>
+            <option value="pets">🐶 Pets</option>
+            <option value="sapatos">👟 Sapatos</option>
+            <option value="casa-construcao">🏡 Casa</option>
+            <option value="beleza">💄 Beleza</option>
+            <option value="papelaria">✏️ Papelaria</option>
+        </select>
+
+        <select id="loja">
                 <option value="amazon">Amazon</option>
                 <option value="shopee">Shopee</option>
                 <option value="mercado-livre">Mercado Livre</option>
                 <option value="shein">Shein</option>
                 <option value="aliexpress">AliExpress</option>
             </select>
-
-            <button class="btn primary" onclick="salvar()">Salvar</button>
-        </div>
-
-        <!-- LISTA -->
-        <div class="box">
-            <h3>📦 Produtos</h3>
-            <div id="lista"></div>
-        </div>
-
+  <button class="btn" onclick="salvar()">Salvar Produto</button>
     </div>
+
+    <h3>📦 Produtos</h3>
+    <div class="grid" id="lista"></div>
+
+</div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -177,11 +170,11 @@ input,select{
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 <script>
-
+// 🔥 FIREBASE (COLOQUE O SEU)
 const firebaseConfig = {
-  apiKey: "SUA_KEY",
-  authDomain: "SEU.firebaseapp.com",
-  projectId: "SEU"
+  apiKey: "SUA_API",
+  authDomain: "SEU_PROJETO.firebaseapp.com",
+  projectId: "SEU_PROJETO"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -189,104 +182,75 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-let editId = null;
+const ADMIN_EMAIL = "tete1808sd@gmail.com";
 
-/* 🔐 LOGIN */
+// 🔐 LOGIN
 function login(){
     auth.signInWithEmailAndPassword(email.value, senha.value)
-    .then(()=>{
-        login.style.display="none";
-        dash.style.display="block";
+    .then(user => {
+        if(user.user.email !== ADMIN_EMAIL){
+            alert("Acesso negado");
+            auth.signOut();
+            return;
+        }
+        openApp();
     })
-    .catch(()=>alert("Erro login"));
+    .catch(()=> alert("Erro login"));
 }
 
-/* LOGOUT */
+function openApp(){
+    login.style.display = "none";
+    app.classList.remove("hidden");
+}
+
 function logout(){
-    auth.signOut().then(()=>location.reload());
+    auth.signOut();
+    location.reload();
 }
 
-/* AUTH */
+// 👁 AUTH STATE
 auth.onAuthStateChanged(user=>{
-    if(user){
-        login.style.display="none";
-        dash.style.display="block";
+    if(user && user.email === ADMIN_EMAIL){
+        openApp();
     }
 });
 
-/* SALVAR */
+// 💾 SALVAR PRODUTO (FORMATO PERFEITO)
 function salvar(){
 
     const produto = {
-        nome:nome.value,
-        precoAntigo:precoAntigo.value,
-        precoNovo:precoNovo.value,
-        img:img.value,
-        link:link.value,
-        categoria:categoria.value,
-        loja:loja.value,
-        criadoEm:new Date()
+        id: id.value,
+        nome: nome.value,
+        img: img.value,
+        link: link.value,
+        precoAntigo: precoAntigo.value,
+        precoNovo: precoNovo.value,
+        categoria: categoria.value,
+        loja: loja.value
     };
 
-    if(editId){
-        db.collection("produtos").doc(editId).update(produto);
-        editId=null;
-    }else{
-        db.collection("produtos").add(produto);
-    }
+    db.collection("produtos").doc(produto.id).set(produto);
 
-    limpar();
+    alert("Produto salvo!");
 }
 
-/* LIMPAR */
-function limpar(){
-    nome.value="";
-    precoAntigo.value="";
-    precoNovo.value="";
-    img.value="";
-    link.value="";
-}
-
-/* LISTA */
+// 📦 LISTAR
 db.collection("produtos").onSnapshot(snapshot=>{
-    lista.innerHTML="";
+    lista.innerHTML = "";
 
     snapshot.forEach(doc=>{
         const p = doc.data();
 
         lista.innerHTML += `
-        <div class="prod">
+        <div class="produto">
             <img src="${p.img}">
-            <div>
-                <b>${p.nome}</b><br>
-                💰 ${p.precoNovo}<br>
-                📦 ${p.categoria}
-            </div>
-
-            <button onclick="editar('${doc.id}','${p.nome}','${p.precoAntigo}','${p.precoNovo}','${p.img}','${p.link}','${p.categoria}','${p.loja}')">✏️</button>
-            <button onclick="deletar('${doc.id}')">🗑️</button>
+            <h4>${p.nome}</h4>
+            <p>R$ ${p.precoNovo}</p>
+            <small>${p.categoria}</small>
         </div>
         `;
     });
 });
-
-/* EDITAR */
-function editar(id,n,pa,pn,imgv,linkv,cat,loja){
-    nome.value=n;
-    precoAntigo.value=pa;
-    precoNovo.value=pn;
-    img.value=imgv;
-    link.value=linkv;
-    categoria.value=cat;
-    loja.value=loja;
-    editId=id;
-}
-
-/* DELETE */
-function deletar(id){
-    db.collection("produtos").doc(id).delete();
-}
-
 </script>
 
 </body>
