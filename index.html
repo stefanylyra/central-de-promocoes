@@ -912,51 +912,35 @@
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
-    async function carregarProdutosFirestore() {
+function carregarProdutosFirestore() {
 
-     db.collection("produtos").onSnapshot(snapshot => {
+    try {
 
-    PRODUTOS_LOJA = [];
+        db.collection("produtos").onSnapshot(snapshot => {
 
-    snapshot.forEach(doc => {
-        PRODUTOS_LOJA.push({
-            id: doc.id,
-            ...doc.data()
-        });
-    });
+            PRODUTOS_LOJA = [];
 
-    console.log("🔥 Atualização em tempo real:", PRODUTOS_LOJA);
-
-    renderizarTudo();
-});
-        PRODUTOS_LOJA = [];
-
-        snapshot.forEach(doc => {
-
-            PRODUTOS_LOJA.push({
-                id: doc.id,
-                ...doc.data()
+            snapshot.forEach(doc => {
+                PRODUTOS_LOJA.push({
+                    id: doc.id,
+                    ...doc.data()
+                });
             });
 
+            console.log("🔥 Atualização em tempo real:", PRODUTOS_LOJA);
+
+            renderizarTudo();
+
         });
 
-        console.log(
-            "Produtos carregados:",
-            PRODUTOS_LOJA
-        );
+    } catch (erro) {
 
-renderizarTudo();
-        
-    } catch(erro) {
-
-        console.error(
-            "Erro ao carregar produtos:",
-            erro
-        );
+        console.error("Erro ao carregar produtos:", erro);
 
     }
 
 }
+    document.addEventListener("DOMContentLoaded", carregarProdutosFirestore);
 </script>
 
    <script>
