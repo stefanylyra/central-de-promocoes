@@ -900,20 +900,22 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyCydy0v27JxNvKBW3aqFa3Uel8Slkdtcx4",
-    authDomain: "central-promocoes.firebaseapp.com",
-    projectId: "central-promocoes",
-    storageBucket: "central-promocoes.firebasestorage.app",
-    messagingSenderId: "396856047778",
-    appId: "1:396856047778:web:8608a6b95f26f160d27ffb"
-  };
+  <script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCydy0v27JxNvKBW3aqFa3Uel8Slkdtcx4",
+  authDomain: "central-promocoes.firebaseapp.com",
+  projectId: "central-promocoes",
+  storageBucket: "central-promocoes.firebasestorage.app",
+  messagingSenderId: "396856047778",
+  appId: "1:396856047778:web:8608a6b95f26f160d27ffb"
+};
+
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 
 /* =========================
-   VARIÁVEIS GLOBAIS
+   VARIÁVEIS GLOBAIS (ÚNICAS)
 ========================= */
 
 let PRODUTOS_LOJA = [];
@@ -925,36 +927,40 @@ let categoriaAtiva = null;
 ========================= */
 
 function carregarProdutosFirestore() {
+    db.collection("produtos").onSnapshot(snapshot => {
+        PRODUTOS_LOJA = [];
 
-    try {
-
-        db.collection("produtos").onSnapshot(snapshot => {
-
-            PRODUTOS_LOJA = [];
-
-            snapshot.forEach(doc => {
-                PRODUTOS_LOJA.push({
-                    id: doc.id,
-                    ...doc.data()
-                });
+        snapshot.forEach(doc => {
+            PRODUTOS_LOJA.push({
+                id: doc.id,
+                ...doc.data()
             });
-
-            console.log("🔥 Atualização em tempo real:", PRODUTOS_LOJA);
-
-            construirEstrutura(); // 🔥 ESSENCIAL (corrige categorias/carrossel/depoimentos)
         });
 
-    } catch (erro) {
-        console.error("Erro ao carregar produtos:", erro);
-    }
+        console.log("🔥 Produtos atualizados:", PRODUTOS_LOJA);
+        construirEstrutura();
+    });
 }
 
+document.addEventListener("DOMContentLoaded", carregarProdutosFirestore);
+
 /* =========================
-   INICIALIZAÇÃO (1x só)
+   LOGIN STATE
 ========================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-    carregarProdutosFirestore();
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        db.collection("usuarios").doc(user.uid).get().then(doc => {
+            if (doc.exists) {
+                const dados = doc.data();
+                const perfil = document.getElementById("nome-perfil");
+                if (perfil) perfil.innerText = dados.nome;
+
+                const btnLogin = document.getElementById("btn-login");
+                if (btnLogin) btnLogin.style.display = "none";
+            }
+        });
+    }
 });
 
 /* =========================
@@ -962,7 +968,6 @@ document.addEventListener("DOMContentLoaded", () => {
 ========================= */
 
 function alternarFavorito(idProduto) {
-
     const user = auth.currentUser;
 
     if (!user) {
@@ -983,36 +988,96 @@ function alternarFavorito(idProduto) {
 }
 
 /* =========================
-   LOGIN STATE (CORRETO)
+   LOGIN / CADASTRO
 ========================= */
 
-auth.onAuthStateChanged((user) => {
+function criarConta() {
+    const nome = document.getElementById("nome-usuario").value.trim();
+    const email = document.getElementById("email-usuario").value.trim();
+    const senha = document.getElementById("senha-usuario").value;
+    const aceitou = document.getElementById("aceitou-termos").checked;
+    const recebe = document.getElementById("aceitou-promocoes").checked;
 
-    console.log("USER:", user);
+    if (!nome) return alert("Digite seu nome");
+    if (!email) return alert("Digite um e-mail válido");
+    if (!aceitou) return alert("Aceite os termos");
+    if (senha.length < 6) return alert("Senha mínima 6 caracteres");
 
-    if (user) {
-
-        db.collection("usuarios")
-            .doc(user.uid)
-            .get()
-            .then((doc) => {
-
-                if (doc.exists) {
-
-                    const dados = doc.data();
-
-                    const perfil = document.getElementById("nome-perfil");
-                    if (perfil) perfil.innerText = dados.nome;
-
-                    const btnLogin = document.getElementById("btn-login");
-                    if (btnLogin) btnLogin.style.display = "none";
-                }
+    auth.createUserWithEmailAndPassword(email, senha)
+        .then(userCredential => {
+            return db.collection("usuarios").doc(userCredential.user.uid).set({
+                nome,
+                email,
+                recebePromocoes: recebe,
+                criadoEm: new Date()
             });
-    }
-});
+        })
+        .then(() => {
+            document.getElementById("nome-perfil").innerText = nome;
+            document.getElementById("btn-login").style.display = "none";
+            alert("Conta criada!");
+            fecharCadastro();
+        })
+        .catch(err => alert(err.message));
+}
+
+function login() {
+    const email = document.getElementById("email-usuario").value.trim();
+    const senha = document.getElementById("senha-usuario").value;
+
+    auth.signInWithEmailAndPassword(email, senha)
+        .then(() => {
+            alert("Login realizado!");
+            fecharCadastro();
+        })
+        .catch(err => alert(err.message));
+}
+
+function logout() {
+    auth.signOut().then(() => {
+        location.reload();
+    });
+}
 
 /* =========================
-   FUNÇÃO CENTRAL DE RENDER
+   MODAIS
+========================= */
+
+function abrirCadastro() {
+    document.getElementById("modal-cadastro").style.display = "flex";
+}
+
+function fecharCadastro() {
+    document.getElementById("modal-cadastro").style.display = "none";
+}
+
+/* =========================
+   ESTRUTURA PRINCIPAL
+========================= */
+
+function construirEstrutura() {
+    renderizarTudo();
+}
+
+/* =========================
+   DADOS FIXOS (CORRIGIDO)
+========================= */
+
+const CATEGORIAS_DADOS = [
+    { id: "roupas-masculinas", nome: "👕 Roupas Masculinas", img: "https://i.pinimg.com/236x/71/ed/3e/71ed3ee11bdaeba6217d655743d0af5b.jpg" },
+    { id: "roupas-femininas", nome: "👗 Femininas", img: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400" },
+    { id: "plus-size", nome: "👚 Plus Size", img: "https://www.plussizefix.com/cdn/shop/articles/eqef_3024x.png?v=1680119668" },
+    { id: "relogios", nome: "⌚ Relógios", img: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=400" },
+    { id: "mae-bebe", nome: "👶 Mãe & Bebê", img: "https://as2.ftcdn.net/jpg/02/58/14/09/220_F_258140947_fIJaSjkd5bG8bI5YiMPqHJINQcrAw7jS.jpg" }
+];
+
+const DEPOIMENTOS_DADOS = [
+    { nome: "Rodrigo Alves", letra: "R", cor: "#e63946", texto: "Mano, esse site é bom demais!" },
+    { nome: "Mariana Costa", letra: "M", cor: "#2a9d8f", texto: "Economizei muito!" }
+];
+
+/* =========================
+   RENDER PRINCIPAL
 ========================= */
 
 function renderizarTudo() {
@@ -1021,7 +1086,6 @@ function renderizarTudo() {
     renderizarAbaFavoritos();
     atualizarIconesCoraoGlobais();
 }
-
 /* =========================
    CONSTRUIR UI PRINCIPAL
 ========================= */
