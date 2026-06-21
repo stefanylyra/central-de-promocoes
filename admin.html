@@ -2,14 +2,10 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Admin Premium</title>
+<title>Admin Marketplace</title>
 
 <style>
-body {
-    font-family: Arial;
-    margin:0;
-    background:#f4f6fb;
-}
+body { font-family: Arial; margin:0; background:#f4f6fb; }
 
 #login {
     max-width:400px;
@@ -22,7 +18,7 @@ body {
 #admin {
     display:none;
     min-height:100vh;
-    display:flex;
+    flex-direction:row;
 }
 
 .sidebar {
@@ -74,7 +70,7 @@ img {
 
 <body>
 
-<!-- 🔐 LOGIN -->
+<!-- LOGIN -->
 <div id="login">
     <h2>Admin Login</h2>
     <input id="email" placeholder="email">
@@ -82,20 +78,20 @@ img {
     <button onclick="login()">Entrar</button>
 </div>
 
-<!-- 📊 ADMIN -->
+<!-- ADMIN -->
 <div id="admin">
 
 <div class="sidebar">
-    <h3>Admin</h3>
+    <h3>Painel</h3>
     <button onclick="logout()">Sair</button>
     <hr>
-    <button onclick="tab('novo')">➕ Novo</button>
-    <button onclick="tab('lista')">📦 Produtos</button>
+    <button onclick="showTab('novo')">Novo Produto</button>
+    <button onclick="showTab('lista')">Produtos</button>
 </div>
 
 <div class="content">
 
-<!-- NOVO -->
+<!-- NOVO PRODUTO -->
 <div id="novo">
 
 <h2>Novo Produto</h2>
@@ -124,23 +120,24 @@ img {
             <option value="papelaria">✏️ Papelaria</option>
         </select>
 
-     <select id="loja">
+   <select id="loja">
 <option value="shopee">Shopee</option>
 <option value="amazon">Amazon</option>
+<option value="magazine">Magazine Luiza</option>
+<option value="mercado-livre">Mercado Livre</option>
+<option value="shein">Shein</option>
 <option value="aliexpress">AliExpress</option>
 </select>
 
 <input id="imgUrl" placeholder="URL da imagem">
-
 <p>ou upload:</p>
 <input type="file" id="imgFile">
 
-<!-- 👀 PREVIEW -->
-<img id="preview" style="display:none;margin-top:10px;max-height:200px;">
+<img id="preview" style="display:none;max-height:200px;margin-top:10px;">
 
 <input id="link" placeholder="Link afiliado">
 
-<button onclick="salvar()">Salvar Produto</button>
+<button onclick="salvar()">Salvar</button>
 
 </div>
 
@@ -153,20 +150,20 @@ img {
 </div>
 </div>
 
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
 <script>
-
-// 🔥 CONFIG
 const firebaseConfig = {
-  apiKey: "SUA_API_KEY",
+  apiKey: "SUA_API_KEY_REAL",
   authDomain: "central-promocoes.firebaseapp.com",
   projectId: "central-promocoes",
   storageBucket: "central-promocoes.appspot.com",
-  appId: "SEU_APP_ID"
+  messagingSenderId: "396856047778",
+  appId: "1:396856047778:web:8608a6b95f26f160d27ffb"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -177,152 +174,118 @@ const storage = firebase.storage();
 
 let editId = null;
 
-// 👁️ PREVIEW IMAGE URL
+// PREVIEW
 imgUrl.oninput = () => {
-    preview.src = imgUrl.value;
     preview.style.display = imgUrl.value ? "block" : "none";
+    preview.src = imgUrl.value;
 };
 
 imgFile.onchange = () => {
     const file = imgFile.files[0];
+    if(!file) return;
 
-    if(file){
-        const reader = new FileReader();
-
-        reader.onload = e => {
-            preview.src = e.target.result;
-            preview.style.display = "block";
-        };
-
-        reader.readAsDataURL(file);
-    }
+    const reader = new FileReader();
+    reader.onload = e => {
+        preview.style.display = "block";
+        preview.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
 };
 
-// 🔐 LOGIN
+// LOGIN
 function login(){
     auth.signInWithEmailAndPassword(email.value, senha.value)
-    .catch(e => alert("Erro login"));
+    .catch(() => alert("Erro login"));
 }
 
-// 🔓 LOGOUT
 function logout(){
     auth.signOut();
 }
 
-// 👤 AUTH CHECK
+// AUTH
 auth.onAuthStateChanged(user => {
-
     const loginBox = document.getElementById("login");
-    const adminPanel = document.getElementById("admin");
+    const adminBox = document.getElementById("admin");
 
     if(!user){
         loginBox.style.display = "block";
-        adminPanel.style.display = "none";
+        adminBox.style.display = "none";
         return;
     }
 
-    if(user.email !== "tete1808sd@gmail.com"){
+    if(user.email === "tete1808sd@gmail.com"){
+        loginBox.style.display = "none";
+        adminBox.style.display = "flex";
+    } else {
         alert("Sem permissão");
         auth.signOut();
-        return;
     }
-
-    loginBox.style.display = "none";
-    adminPanel.style.display = "flex";
 });
-// 📂 TAB
-function tab(t){
-    novo.style.display = t === 'novo' ? "block" : "none";
-    lista.style.display = t === 'lista' ? "block" : "none";
+
+// TAB
+function showTab(t){
+    novo.style.display = t === "novo" ? "block" : "none";
+    lista.style.display = t === "lista" ? "block" : "none";
 }
 
-// 📤 UPLOAD
+// UPLOAD
 async function upload(file){
     const ref = storage.ref("produtos/" + Date.now());
     await ref.put(file);
     return await ref.getDownloadURL();
 }
 
-// 💾 SALVAR
+// SALVAR
 async function salvar(){
 
-    try {
+    let img = "";
 
-        let img = "";
-
-        const file = document.getElementById("imgFile").files[0];
-        const url = document.getElementById("imgUrl").value;
-
-        // 📤 upload file
-        if(file){
-            img = await upload(file);
-        }
-        // 🌐 ou URL
-        else if(url){
-            img = url;
-        }
-
-        const produto = {
-            nome: nome.value,
-            precoAntigo: precoAntigo.value,
-            precoNovo: precoNovo.value,
-            img: img || "",
-            link: link.value,
-            categoria: categoria.value,
-            loja: loja.value
-        };
-
-        await db.collection("produtos").add(produto);
-
-        alert("Produto salvo com sucesso!");
-
-        nome.value = "";
-        precoAntigo.value = "";
-        precoNovo.value = "";
-        imgFile.value = "";
-        imgUrl.value = "";
-        link.value = "";
-
-        preview.style.display = "none";
-
-    } catch (e) {
-        console.error(e);
-        alert("Erro ao salvar produto (veja console)");
+    if(imgFile.files[0]){
+        img = await upload(imgFile.files[0]);
+    } else {
+        img = imgUrl.value;
     }
+
+    const produto = {
+        nome: nome.value,
+        precoAntigo: precoAntigo.value,
+        precoNovo: precoNovo.value,
+        img,
+        link: link.value,
+        categoria: categoria.value,
+        loja: loja.value
+    };
+
+    await db.collection("produtos").add(produto);
+
+    alert("Salvo!");
+
+    nome.value = "";
+    precoAntigo.value = "";
+    precoNovo.value = "";
+    imgUrl.value = "";
+    link.value = "";
+    preview.style.display = "none";
 }
 
-// 📦 LISTAR
-function load(){
-
+// LISTA
 db.collection("produtos").onSnapshot(snap => {
-
     grid.innerHTML = "";
 
     snap.forEach(doc => {
-        let p = doc.data();
+        const p = doc.data();
 
         grid.innerHTML += `
         <div class="card">
-            <img src="${p.img || 'https://via.placeholder.com/300'}">
+            <img src="${p.img}">
             <b>${p.nome}</b><br>
             R$ ${p.precoNovo}<br>
-
-            <button onclick="del('${doc.id}')">Excluir</button>
-        </div>
-        `;
+            ${p.loja}
+            <br>
+            <button onclick="db.collection('produtos').doc('${doc.id}').delete()">Excluir</button>
+        </div>`;
     });
-
 });
-
-}
-
-load();
-
-// 🗑️ DELETE
-function del(id){
-    db.collection("produtos").doc(id).delete();
-}
-
 </script>
 
 </body>
