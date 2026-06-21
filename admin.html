@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Painel Admin</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f4f4f4;
+    padding:20px;
+}
+
+.container{
+    max-width:500px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+}
+
+h2{
+    text-align:center;
+}
+
+input, select{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#cc0a12;
+    color:white;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+.msg{
+    text-align:center;
+    margin-top:10px;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🧠 Painel Admin</h2>
+
+<input id="nome" placeholder="Nome do produto">
+
+<input id="img" placeholder="URL da imagem">
+
+<input id="link" placeholder="Link afiliado">
+
+<input id="precoAntigo" placeholder="Preço antigo">
+
+<input id="precoNovo" placeholder="Preço novo">
+
+<!-- CATEGORIAS -->
+<select id="categoria">
+<option value="">Selecione categoria</option>
+
+<option value="roupas-masculinas">👕 Roupas Masculinas</option>
+<option value="roupas-femininas">👗 Femininas</option>
+<option value="plus-size">👚 Plus Size</option>
+<option value="relogios">⌚ Relógios</option>
+<option value="mae-bebe">👶 Mãe & Bebê</option>
+<option value="viagens-bagagens">🧳 Viagem</option>
+<option value="fones">🎧 Fones</option>
+<option value="bolsas-masculinas">🎒 Bolsas Masc.</option>
+<option value="bolsas-femininas">👝 Bolsas Fem.</option>
+<option value="limpeza">🧼 Limpeza</option>
+<option value="brinquedos">🧸 Brinquedos</option>
+<option value="acessorios">💎 Acessórios</option>
+<option value="pets">🐶 Pets</option>
+<option value="sapatos">👟 Sapatos</option>
+<option value="casa-construcao">🏡 Casa e construção</option>
+<option value="beleza">💄 Beleza</option>
+<option value="papelaria">✏️ Papelaria</option>
+
+</select>
+
+<!-- LOJA -->
+<select id="loja">
+<option value="">Selecione loja</option>
+<option value="amazon">Amazon</option>
+<option value="shopee">Shopee</option>
+<option value="magalu">Magalu</option>
+<option value="mercado-livre">Mercado Livre</option>
+<option value="shein">Shein</option>
+<option value="aliexpress">AliExpress</option>
+</select>
+
+<button onclick="salvarProduto()">Salvar Produto</button>
+
+<div class="msg" id="msg"></div>
+
+</div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "SUA_API_KEY",
+  authDomain: "central-promocoes.firebaseapp.com",
+  projectId: "central-promocoes",
+  storageBucket: "central-promocoes.firebasestorage.app",
+  messagingSenderId: "396856047778",
+  appId: "1:396856047778:web:8608a6b95f26f160d27ffb"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+function salvarProduto(){
+
+    const nome = document.getElementById("nome").value;
+    const img = document.getElementById("img").value;
+    const link = document.getElementById("link").value;
+    const precoAntigo = document.getElementById("precoAntigo").value;
+    const precoNovo = document.getElementById("precoNovo").value;
+    const categoria = document.getElementById("categoria").value;
+    const loja = document.getElementById("loja").value;
+
+    if(!nome || !img || !link || !categoria || !loja){
+        alert("Preencha tudo!");
+        return;
+    }
+
+    db.collection("produtos").add({
+        nome,
+        img,
+        link,
+        precoAntigo,
+        precoNovo,
+        categoria,
+        loja,
+        criadoEm: new Date()
+    })
+    .then(() => {
+        document.getElementById("msg").innerText = "✔ Produto salvo com sucesso!";
+        
+        document.querySelectorAll("input").forEach(i => i.value = "");
+        document.querySelectorAll("select").forEach(i => i.value = "");
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Erro ao salvar");
+    });
+}
+
+</script>
+
+</body>
+</html>
