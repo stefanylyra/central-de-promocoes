@@ -2,23 +2,23 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Admin Marketplace</title>
+<title>Admin Marketplace Pro</title>
 
 <style>
-body { font-family: Arial; margin:0; background:#f4f6fb; }
+body { margin:0; font-family:Arial; background:#f4f6fb; }
 
 #login {
-    max-width:400px;
+    max-width:380px;
     margin:100px auto;
     background:#fff;
     padding:20px;
-    border-radius:10px;
+    border-radius:12px;
 }
 
 #admin {
     display:none;
     min-height:100vh;
-    flex-direction:row;
+    display:flex;
 }
 
 .sidebar {
@@ -31,6 +31,7 @@ body { font-family: Arial; margin:0; background:#f4f6fb; }
 .sidebar button {
     width:100%;
     margin:5px 0;
+    padding:10px;
 }
 
 .content {
@@ -45,7 +46,6 @@ input, select {
 }
 
 button {
-    padding:10px;
     cursor:pointer;
 }
 
@@ -82,16 +82,16 @@ img {
 <div id="admin">
 
 <div class="sidebar">
-    <h3>Painel</h3>
+    <h3>Admin Panel</h3>
     <button onclick="logout()">Sair</button>
     <hr>
-    <button onclick="showTab('novo')">Novo Produto</button>
-    <button onclick="showTab('lista')">Produtos</button>
+    <button onclick="tab('novo')">➕ Novo Produto</button>
+    <button onclick="tab('lista')">📦 Produtos</button>
 </div>
 
 <div class="content">
 
-<!-- NOVO PRODUTO -->
+<!-- NOVO -->
 <div id="novo">
 
 <h2>Novo Produto</h2>
@@ -129,15 +129,11 @@ img {
 <option value="aliexpress">AliExpress</option>
 </select>
 
-<input id="imgUrl" placeholder="URL da imagem">
-<p>ou upload:</p>
-<input type="file" id="imgFile">
-
-<img id="preview" style="display:none;max-height:200px;margin-top:10px;">
+<input id="imgUrl" placeholder="URL da imagem (obrigatório)">
 
 <input id="link" placeholder="Link afiliado">
 
-<button onclick="salvar()">Salvar</button>
+<button onclick="salvar()">Salvar Produto</button>
 
 </div>
 
@@ -154,15 +150,13 @@ img {
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
 <script>
+
 const firebaseConfig = {
   apiKey: "SUA_API_KEY_REAL",
   authDomain: "central-promocoes.firebaseapp.com",
   projectId: "central-promocoes",
-  storageBucket: "central-promocoes.appspot.com",
-  messagingSenderId: "396856047778",
   appId: "1:396856047778:web:8608a6b95f26f160d27ffb"
 };
 
@@ -170,27 +164,6 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
-const storage = firebase.storage();
-
-let editId = null;
-
-// PREVIEW
-imgUrl.oninput = () => {
-    preview.style.display = imgUrl.value ? "block" : "none";
-    preview.src = imgUrl.value;
-};
-
-imgFile.onchange = () => {
-    const file = imgFile.files[0];
-    if(!file) return;
-
-    const reader = new FileReader();
-    reader.onload = e => {
-        preview.style.display = "block";
-        preview.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-};
 
 // LOGIN
 function login(){
@@ -198,12 +171,14 @@ function login(){
     .catch(() => alert("Erro login"));
 }
 
+// LOGOUT
 function logout(){
     auth.signOut();
 }
 
-// AUTH
+// AUTH CHECK
 auth.onAuthStateChanged(user => {
+
     const loginBox = document.getElementById("login");
     const adminBox = document.getElementById("admin");
 
@@ -223,53 +198,39 @@ auth.onAuthStateChanged(user => {
 });
 
 // TAB
-function showTab(t){
+function tab(t){
     novo.style.display = t === "novo" ? "block" : "none";
     lista.style.display = t === "lista" ? "block" : "none";
 }
 
-// UPLOAD
-async function upload(file){
-    const ref = storage.ref("produtos/" + Date.now());
-    await ref.put(file);
-    return await ref.getDownloadURL();
-}
-
-// SALVAR
+// SALVAR PRODUTO
 async function salvar(){
-
-    let img = "";
-
-    if(imgFile.files[0]){
-        img = await upload(imgFile.files[0]);
-    } else {
-        img = imgUrl.value;
-    }
 
     const produto = {
         nome: nome.value,
         precoAntigo: precoAntigo.value,
         precoNovo: precoNovo.value,
-        img,
+        img: imgUrl.value,
         link: link.value,
         categoria: categoria.value,
-        loja: loja.value
+        loja: loja.value,
+        createdAt: Date.now()
     };
 
     await db.collection("produtos").add(produto);
 
-    alert("Salvo!");
+    alert("Produto salvo!");
 
     nome.value = "";
     precoAntigo.value = "";
     precoNovo.value = "";
     imgUrl.value = "";
     link.value = "";
-    preview.style.display = "none";
 }
 
-// LISTA
+// LISTAR
 db.collection("produtos").onSnapshot(snap => {
+
     grid.innerHTML = "";
 
     snap.forEach(doc => {
@@ -280,12 +241,17 @@ db.collection("produtos").onSnapshot(snap => {
             <img src="${p.img}">
             <b>${p.nome}</b><br>
             R$ ${p.precoNovo}<br>
-            ${p.loja}
-            <br>
-            <button onclick="db.collection('produtos').doc('${doc.id}').delete()">Excluir</button>
-        </div>`;
+            ${p.loja}<br>
+
+            <button onclick="db.collection('produtos').doc('${doc.id}').delete()">
+            Excluir
+            </button>
+        </div>
+        `;
     });
+
 });
+
 </script>
 
 </body>
