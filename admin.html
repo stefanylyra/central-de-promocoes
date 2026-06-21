@@ -212,12 +212,29 @@ function logout(){
 // 👤 AUTH CHECK
 auth.onAuthStateChanged(async user => {
 
-    if(!user){
-        login.style.display = "block";
-        admin.style.display = "none";
+    const loginBox = document.getElementById("login");
+    const adminPanel = document.getElementById("admin");
+
+    if(!loginBox || !adminPanel){
+        console.error("IDs login/admin não encontrados no HTML");
         return;
     }
 
+    if(!user){
+        loginBox.style.display = "block";
+        adminPanel.style.display = "none";
+        return;
+    }
+
+    if(user.email === "tete1808sd@gmail.com"){
+        loginBox.style.display = "none";
+        adminPanel.style.display = "flex";
+    } else {
+        alert("Sem permissão");
+        auth.signOut();
+    }
+
+});
     // 🔥 PERMISSÃO POR EMAIL (SEU EMAIL FIXO)
     if(user.email === "tete1808sd@gmail.com"){
         login.style.display = "none";
