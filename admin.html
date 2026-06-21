@@ -2,106 +2,109 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Admin - Central de Promoções</title>
+<title>Admin Premium</title>
 
 <style>
 body {
     font-family: Arial;
-    background: #0f172a;
-    color: white;
-    margin: 0;
+    margin:0;
+    background:#f4f6fb;
 }
 
-.container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 20px;
+#login {
+    max-width:400px;
+    margin:100px auto;
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
 }
 
-.card {
-    background: #1e293b;
-    padding: 15px;
-    border-radius: 12px;
-    margin: 10px 0;
+#admin {
+    display:none;
+    min-height:100vh;
+    display:flex;
+}
+
+.sidebar {
+    width:220px;
+    background:#111;
+    color:#fff;
+    padding:15px;
+}
+
+.sidebar button {
+    width:100%;
+    margin:5px 0;
+}
+
+.content {
+    flex:1;
+    padding:20px;
 }
 
 input, select {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 8px;
-    border: none;
+    width:100%;
+    padding:10px;
+    margin:5px 0;
 }
 
 button {
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 8px;
-    border: none;
-    margin-top: 8px;
-    background: #38bdf8;
-    color: black;
-    font-weight: bold;
-}
-
-button:hover {
-    opacity: 0.8;
+    padding:10px;
+    cursor:pointer;
 }
 
 .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 10px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
 }
 
-.produto {
-    background: #0b1220;
-    padding: 10px;
-    border-radius: 10px;
+.card {
+    background:#fff;
+    padding:10px;
+    border-radius:10px;
 }
 
 img {
-    width: 100%;
-    border-radius: 10px;
+    width:100%;
+    border-radius:10px;
 }
-.topbar {
-    display:flex;
-    justify-content: space-between;
-    align-items:center;
-}
-.hidden { display:none; }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-
 <!-- 🔐 LOGIN -->
-<div id="loginBox" class="card">
-    <h2>🔐 Admin Login</h2>
-    <input id="email" placeholder="Email admin">
-    <input id="senha" type="password" placeholder="Senha">
+<div id="login">
+    <h2>Admin Login</h2>
+    <input id="email" placeholder="email">
+    <input id="senha" type="password" placeholder="senha">
     <button onclick="login()">Entrar</button>
 </div>
 
-<!-- 📊 DASHBOARD -->
-<div id="dashboard" class="hidden">
+<!-- 📊 ADMIN -->
+<div id="admin">
 
-    <div class="topbar">
-        <h2>📊 Admin Panel</h2>
-        <button onclick="logout()">Sair</button>
-    </div>
+<div class="sidebar">
+    <h3>Admin</h3>
+    <button onclick="logout()">Sair</button>
+    <hr>
+    <button onclick="tab('novo')">➕ Novo</button>
+    <button onclick="tab('lista')">📦 Produtos</button>
+</div>
 
-    <!-- ➕ PRODUTO -->
-    <div class="card">
-        <h3>➕ Novo Produto</h3>
+<div class="content">
 
-        <input id="nome" placeholder="Nome produto">
-        <input id="precoAntigo" placeholder="Preço antigo">
-        <input id="precoNovo" placeholder="Preço novo">
+<!-- NOVO -->
+<div id="novo">
 
-        <select id="categoria">
+<h2>Novo Produto</h2>
+
+<input id="nome" placeholder="Nome">
+<input id="precoAntigo" placeholder="Preço antigo">
+<input id="precoNovo" placeholder="Preço novo">
+
+<select id="categoria">
             <option value="roupas-masculinas">👕 Masculinas</option>
             <option value="roupas-femininas">👗 Femininas</option>
             <option value="plus-size">👚 Plus Size</option>
@@ -121,44 +124,33 @@ img {
             <option value="papelaria">✏️ Papelaria</option>
         </select>
 
-        <select id="loja">
-                <option value="amazon">Amazon</option>
-                <option value="shopee">Shopee</option>
-                <option value="mercado-livre">Mercado Livre</option>
-                <option value="shein">Shein</option>
-                <option value="aliexpress">AliExpress</option>
-            </select>
-        
-<!-- 🖼️ IMAGEM -->
-<p style="margin-top:10px;"><b>Imagem do produto</b></p>
+     <select id="loja">
+<option value="shopee">Shopee</option>
+<option value="amazon">Amazon</option>
+<option value="aliexpress">AliExpress</option>
+</select>
 
-<input id="imgUrl" placeholder="URL da imagem (opcional)">
+<input id="imgUrl" placeholder="URL da imagem">
 
-<p style="font-size:12px;opacity:0.7;">ou envie um arquivo abaixo:</p>
-
+<p>ou upload:</p>
 <input type="file" id="imgFile">
 
-<!-- 🔗 LINK -->
+<!-- 👀 PREVIEW -->
+<img id="preview" style="display:none;margin-top:10px;max-height:200px;">
+
 <input id="link" placeholder="Link afiliado">
 
-        <button onclick="salvarProduto()">Salvar</button>
-    </div>
-
-    <!-- ➕ ADMIN -->
-    <div class="card">
-        <h3>👑 Adicionar novo admin</h3>
-        <input id="newAdminEmail" placeholder="Email do novo admin">
-        <button onclick="addAdmin()">Adicionar admin</button>
-    </div>
-
-    <!-- 📦 LISTA -->
-    <div class="card">
-        <h3>📦 Produtos</h3>
-        <div class="grid" id="lista"></div>
-    </div>
+<button onclick="salvar()">Salvar Produto</button>
 
 </div>
 
+<!-- LISTA -->
+<div id="lista" style="display:none;">
+<h2>Produtos</h2>
+<div class="grid" id="grid"></div>
+</div>
+
+</div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -170,14 +162,13 @@ img {
 
 // 🔥 CONFIG
 const firebaseConfig = {
-  apiKey: "AIzaSyCydy0v27JxNvKBW3aqFa3Uel8Slkdtcx4",
+  apiKey: "SUA_API_KEY",
   authDomain: "central-promocoes.firebaseapp.com",
   projectId: "central-promocoes",
-  storageBucket: "central-promocoes.firebasestorage.app",
-  messagingSenderId: "396856047778",
-  appId: "1:396856047778:web:8608a6b95f26f160d27ffb"
+  storageBucket: "central-promocoes.appspot.com",
+  appId: "SEU_APP_ID"
 };
-    
+
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
@@ -186,187 +177,113 @@ const storage = firebase.storage();
 
 let editId = null;
 
-// 👑 CHECK ADMIN
-async function isAdmin(email){
-    const snap = await db.collection("admins").doc(email).get();
-    return snap.exists;
-}
+// 👁️ PREVIEW IMAGE URL
+imgUrl.oninput = () => {
+    preview.src = imgUrl.value;
+    preview.style.display = "block";
+};
 
 // 🔐 LOGIN
-async function login(){
-    try {
-        const res = await auth.signInWithEmailAndPassword(email.value, senha.value);
-
-        const ok = await isAdmin(res.user.email);
-
-        if(!ok){
-            alert("Acesso negado (não é admin)");
-            await auth.signOut();
-            return;
-        }
-
-        showDashboard();
-
-  } catch(e){
-    alert(e.message);
-}
+function login(){
+    auth.signInWithEmailAndPassword(email.value, senha.value)
+    .catch(e => alert("Erro login"));
 }
 
-function showDashboard(){
-    loginBox.classList.add("hidden");
-    dashboard.classList.remove("hidden");
-}
-
-// 🚪 LOGOUT
+// 🔓 LOGOUT
 function logout(){
     auth.signOut();
-    location.reload();
 }
 
-// 🔄 AUTH STATE
-auth.onAuthStateChanged(async user=>{
-    if(user){
-        const ok = await isAdmin(user.email);
-        if(ok) showDashboard();
-        else auth.signOut();
+// 👤 AUTH CHECK
+auth.onAuthStateChanged(async user => {
+
+    if(!user){
+        login.style.display = "block";
+        admin.style.display = "none";
+        return;
     }
+
+    // 🔥 PERMISSÃO POR EMAIL (SEU EMAIL FIXO)
+    if(user.email === "tete1808sd@gmail.com"){
+        login.style.display = "none";
+        admin.style.display = "flex";
+    } else {
+        alert("Sem permissão");
+        auth.signOut();
+    }
+
 });
 
-// 📤 UPLOAD IMG
-async function uploadImage(file){
+// 📂 TAB
+function tab(t){
+    novo.style.display = t === 'novo' ? "block" : "none";
+    lista.style.display = t === 'lista' ? "block" : "none";
+}
+
+// 📤 UPLOAD
+async function upload(file){
     const ref = storage.ref("produtos/" + Date.now());
     await ref.put(file);
     return await ref.getDownloadURL();
 }
 
-// 💾 SALVAR PRODUTO
-async function salvarProduto(){
+// 💾 SALVAR
+async function salvar(){
 
-    try {
+    let img = "";
 
-        let imgUrl = "";
-
-        // se escolheu arquivo
-    async function salvarProduto(){
-
-    let imgUrlFinal = "";
-
-    // 1. Se tiver arquivo, usa ele
     if(imgFile.files[0]){
-        imgUrlFinal = await uploadImage(imgFile.files[0]);
-    }
-
-    // 2. Se não tiver arquivo, usa URL
-    else if(imgUrl.value){
-        imgUrlFinal = imgUrl.value;
+        img = await upload(imgFile.files[0]);
+    } else {
+        img = imgUrl.value;
     }
 
     const produto = {
         nome: nome.value,
         precoAntigo: precoAntigo.value,
         precoNovo: precoNovo.value,
-        img: imgUrlFinal,
+        img,
         link: link.value,
         categoria: categoria.value,
         loja: loja.value
     };
 
-    if(editId){
-        await db.collection("produtos").doc(editId).update(produto);
-        editId = null;
-    } else {
-        await db.collection("produtos").add(produto);
-    }
+    await db.collection("produtos").add(produto);
 
-    limpar();
+    alert("Salvo!");
+    load();
 }
 
-        const produto = {
-            nome: nome.value,
-            precoAntigo: precoAntigo.value,
-            precoNovo: precoNovo.value,
-            img: imgUrl,
-            link: link.value,
-            categoria: categoria.value,
-            loja: loja.value,
-            createdAt: Date.now()
-        };
+// 📦 LISTAR
+function load(){
 
-        if(editId){
-            await db.collection("produtos").doc(editId).update(produto);
-        } else {
-            await db.collection("produtos").add(produto);
-        }
+db.collection("produtos").onSnapshot(snap => {
 
-        limpar();
+    grid.innerHTML = "";
 
-        alert("Produto salvo com sucesso!");
+    snap.forEach(doc => {
+        let p = doc.data();
 
-    } catch(err){
-        console.error(err);
-        alert(err.message);
-    }
-}
-
-// 🧹 LIMPAR
-function limpar(){
-    nome.value = "";
-    precoAntigo.value = "";
-    precoNovo.value = "";
-    link.value = "";
-    imgFile.value = "";
-}
-
-// 📦 LISTA
-db.collection("produtos").orderBy("createdAt","desc")
-.onSnapshot(snap=>{
-    lista.innerHTML = "";
-
-    snap.forEach(doc=>{
-        const p = doc.data();
-
-        lista.innerHTML += `
-        <div class="produto">
+        grid.innerHTML += `
+        <div class="card">
             <img src="${p.img}">
             <b>${p.nome}</b><br>
-            💰 ${p.precoNovo}<br>
-            🏷 ${p.categoria}<br>
+            R$ ${p.precoNovo}<br>
 
-            <button onclick="editar('${doc.id}', '${p.nome}', '${p.precoAntigo}', '${p.precoNovo}', '${p.link}', '${p.categoria}', '${p.loja}')">Editar</button>
-            <button onclick="deletar('${doc.id}')">Excluir</button>
+            <button onclick="del('${doc.id}')">Excluir</button>
         </div>
         `;
     });
+
 });
 
-// ✏️ EDITAR
-function editar(id,nomeV,pa,pn,linkV,cat,lojaV){
-    nome.value = nomeV;
-    precoAntigo.value = pa;
-    precoNovo.value = pn;
-    link.value = linkV;
-    categoria.value = cat;
-    loja.value = lojaV;
-    editId = id;
 }
 
-// 🗑 DELETE
-function deletar(id){
+load();
+
+// 🗑️ DELETE
+function del(id){
     db.collection("produtos").doc(id).delete();
-}
-
-// 👑 ADD ADMIN
-function addAdmin(){
-    const email = newAdminEmail.value.trim();
-    if(!email) return;
-
-    db.collection("admins").doc(email).set({
-        role: "admin",
-        createdAt: Date.now()
-    });
-
-    alert("Admin adicionado!");
-    newAdminEmail.value = "";
 }
 
 </script>
