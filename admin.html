@@ -180,7 +180,22 @@ let editId = null;
 // 👁️ PREVIEW IMAGE URL
 imgUrl.oninput = () => {
     preview.src = imgUrl.value;
-    preview.style.display = "block";
+    preview.style.display = imgUrl.value ? "block" : "none";
+};
+
+imgFile.onchange = () => {
+    const file = imgFile.files[0];
+
+    if(file){
+        const reader = new FileReader();
+
+        reader.onload = e => {
+            preview.src = e.target.result;
+            preview.style.display = "block";
+        };
+
+        reader.readAsDataURL(file);
+    }
 };
 
 // 🔐 LOGIN
@@ -230,28 +245,49 @@ async function upload(file){
 // 💾 SALVAR
 async function salvar(){
 
-    let img = "";
+    try {
 
-    if(imgFile.files[0]){
-        img = await upload(imgFile.files[0]);
-    } else {
-        img = imgUrl.value;
+        let img = "";
+
+        const file = document.getElementById("imgFile").files[0];
+        const url = document.getElementById("imgUrl").value;
+
+        // 📤 upload file
+        if(file){
+            img = await upload(file);
+        }
+        // 🌐 ou URL
+        else if(url){
+            img = url;
+        }
+
+        const produto = {
+            nome: nome.value,
+            precoAntigo: precoAntigo.value,
+            precoNovo: precoNovo.value,
+            img: img || "",
+            link: link.value,
+            categoria: categoria.value,
+            loja: loja.value
+        };
+
+        await db.collection("produtos").add(produto);
+
+        alert("Produto salvo com sucesso!");
+
+        nome.value = "";
+        precoAntigo.value = "";
+        precoNovo.value = "";
+        imgFile.value = "";
+        imgUrl.value = "";
+        link.value = "";
+
+        preview.style.display = "none";
+
+    } catch (e) {
+        console.error(e);
+        alert("Erro ao salvar produto (veja console)");
     }
-
-    const produto = {
-        nome: nome.value,
-        precoAntigo: precoAntigo.value,
-        precoNovo: precoNovo.value,
-        img,
-        link: link.value,
-        categoria: categoria.value,
-        loja: loja.value
-    };
-
-    await db.collection("produtos").add(produto);
-
-    alert("Salvo!");
-    load();
 }
 
 // 📦 LISTAR
@@ -266,7 +302,7 @@ db.collection("produtos").onSnapshot(snap => {
 
         grid.innerHTML += `
         <div class="card">
-            <img src="${p.img}">
+            <img src="${p.img || 'https://via.placeholder.com/300'}">
             <b>${p.nome}</b><br>
             R$ ${p.precoNovo}<br>
 
