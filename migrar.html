@@ -1608,3 +1608,34 @@ const db = getFirestore(app);
     ]
   }
 };
+window.migrarProdutos = async function() {
+
+  let total = 0;
+
+  for (const categoria in dados) {
+
+    const produtos = dados[categoria].produtos;
+
+    for (const produto of produtos) {
+
+      await addDoc(
+        collection(db, "produtos"),
+        produto
+      );
+
+      total++;
+
+      console.log(
+        "Enviado:",
+        produto.nome
+      );
+    }
+  }
+
+  alert(
+    total + " produtos migrados!"
+  );
+};
+  </script>
+</body>
+</html>
