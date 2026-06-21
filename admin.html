@@ -2,96 +2,102 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Admin - Central de Promoções</title>
+<title>Admin Final Boss</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial;
-    background: #0b1220;
-    color: white;
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0b1220;
+    color:white;
 }
-
-.hidden { display:none; }
 
 /* LOGIN */
 #login {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.85);
     display:flex;
     align-items:center;
     justify-content:center;
 }
 
-.box {
+.box{
     background:#111827;
     padding:20px;
-    border-radius:10px;
-    width:300px;
+    border-radius:12px;
+    width:320px;
 }
 
-/* DASHBOARD */
-header {
-    background:#111827;
-    padding:15px;
+/* LAYOUT */
+header{
     display:flex;
     justify-content:space-between;
-    align-items:center;
+    padding:15px;
+    background:#111827;
 }
 
-.container {
+.container{
     padding:20px;
 }
 
-.card {
+/* CARD */
+.card{
     background:#1f2937;
     padding:15px;
-    border-radius:10px;
+    border-radius:12px;
     margin-bottom:15px;
 }
 
-input, select {
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+/* PRODUTO */
+.produto{
+    background:#111827;
+    padding:10px;
+    border-radius:10px;
+}
+
+.produto img{
+    width:100%;
+    border-radius:8px;
+}
+
+/* MODAL */
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.8);
+    display:none;
+    align-items:center;
+    justify-content:center;
+}
+
+.modal-box{
+    background:#111827;
+    padding:20px;
+    width:400px;
+    border-radius:10px;
+}
+input,select,button{
     width:100%;
     padding:10px;
     margin-top:5px;
     margin-bottom:10px;
-    border-radius:6px;
-    border:none;
 }
-
-button {
-    padding:10px;
+button{
     border:none;
-    border-radius:6px;
     cursor:pointer;
+    border-radius:6px;
 }
-
-.btn {
-    background:#22c55e;
-    color:black;
-}
-
-.btn-danger {
-    background:#ef4444;
-    color:white;
-}
-
-.grid {
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap:10px;
-}
-
-.produto {
-    background:#111827;
-    padding:10px;
-    border-radius:10px;
-}
-.produto img {
-    width:100%;
-    border-radius:8px;
-}
+.btn{background:#22c55e}
+.danger{background:#ef4444;color:white}
+.blue{background:#3b82f6}
 </style>
 </head>
 
@@ -100,36 +106,39 @@ button {
 <!-- 🔐 LOGIN OCULTO -->
 <div id="login">
     <div class="box">
-        <h3>🔐 Admin Login</h3>
+        <h3>Admin Login</h3>
         <input id="email" placeholder="Email">
         <input id="senha" type="password" placeholder="Senha">
         <button class="btn" onclick="login()">Entrar</button>
     </div>
 </div>
 
-<!-- 📊 DASHBOARD -->
-<div id="app" class="hidden">
+<!-- DASHBOARD -->
+<div id="app" style="display:none;">
 
 <header>
-    <h3>🔥 Admin Panel</h3>
-    <button class="btn-danger" onclick="logout()">Sair</button>
+    <h3>🔥 Final Boss Admin</h3>
+    <div>
+        <button class="blue" onclick="openUserModal()">+ Usuário</button>
+        <button class="danger" onclick="logout()">Sair</button>
+    </div>
 </header>
 
 <div class="container">
 
-    <div class="card">
-        <h3>➕ Novo Produto</h3>
+<!-- PRODUTO -->
+<div class="card">
+    <h3>➕ Produto</h3>
 
-        <input id="id" placeholder="ID (ex: bermuda-jeans-01)">
-        <input id="nome" placeholder="Nome do produto">
+    <input id="pid" placeholder="ID (ou deixe vazio)">
+    <input id="nome" placeholder="Nome">
+    <input id="img" placeholder="Imagem URL">
+    <input id="link" placeholder="Link afiliado">
 
-        <input id="img" placeholder="URL da imagem">
-        <input id="link" placeholder="Link afiliado">
+    <input id="pAntigo" placeholder="Preço antigo">
+    <input id="pNovo" placeholder="Preço novo">
 
-        <input id="precoAntigo" placeholder="Preço antigo">
-        <input id="precoNovo" placeholder="Preço novo">
-
-        <select id="categoria">
+    <select id="categoria">
             <option value="roupas-masculinas">👕 Masculinas</option>
             <option value="roupas-femininas">👗 Femininas</option>
             <option value="plus-size">👚 Plus Size</option>
@@ -156,13 +165,30 @@ button {
                 <option value="shein">Shein</option>
                 <option value="aliexpress">AliExpress</option>
             </select>
-  <button class="btn" onclick="salvar()">Salvar Produto</button>
-    </div>
+  <button class="btn" onclick="salvarProduto()">Salvar</button>
+</div>
 
-    <h3>📦 Produtos</h3>
-    <div class="grid" id="lista"></div>
+<!-- LISTA -->
+<h3>📦 Produtos</h3>
+<div class="grid" id="lista"></div>
 
 </div>
+</div>
+
+<!-- 👤 MODAL USUÁRIOS -->
+<div class="modal" id="userModal">
+    <div class="modal-box">
+        <h3>Adicionar Usuário</h3>
+
+        <input id="newEmail" placeholder="Email">
+        <select id="role">
+            <option value="staff">Funcionário</option>
+            <option value="admin">Admin</option>
+        </select>
+
+        <button class="btn" onclick="addUser()">Salvar usuário</button>
+        <button class="danger" onclick="closeUserModal()">Fechar</button>
+    </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -170,11 +196,11 @@ button {
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 <script>
-// 🔥 FIREBASE (COLOQUE O SEU)
+
 const firebaseConfig = {
   apiKey: "SUA_API",
-  authDomain: "SEU_PROJETO.firebaseapp.com",
-  projectId: "SEU_PROJETO"
+  authDomain: "SEU.firebaseapp.com",
+  projectId: "SEU"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -182,75 +208,87 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-const ADMIN_EMAIL = "tete1808sd@gmail.com";
-
-// 🔐 LOGIN
+/* LOGIN */
 function login(){
     auth.signInWithEmailAndPassword(email.value, senha.value)
-    .then(user => {
-        if(user.user.email !== ADMIN_EMAIL){
-            alert("Acesso negado");
+    .then(u=>{
+        checkUser(u.user.uid);
+    })
+}
+
+/* CHECAR ROLE */
+function checkUser(uid){
+    db.collection("users").doc(uid).get().then(doc=>{
+        if(!doc.exists){
+            alert("Sem permissão");
             auth.signOut();
             return;
         }
-        openApp();
-    })
-    .catch(()=> alert("Erro login"));
+        login.style.display="none";
+        app.style.display="block";
+    });
 }
 
-function openApp(){
-    login.style.display = "none";
-    app.classList.remove("hidden");
-}
-
+/* LOGOUT */
 function logout(){
     auth.signOut();
     location.reload();
 }
 
-// 👁 AUTH STATE
-auth.onAuthStateChanged(user=>{
-    if(user && user.email === ADMIN_EMAIL){
-        openApp();
-    }
-});
+/* PRODUTO */
+function salvarProduto(){
 
-// 💾 SALVAR PRODUTO (FORMATO PERFEITO)
-function salvar(){
+    const id = pid.value || Date.now().toString();
 
-    const produto = {
-        id: id.value,
-        nome: nome.value,
-        img: img.value,
-        link: link.value,
-        precoAntigo: precoAntigo.value,
-        precoNovo: precoNovo.value,
-        categoria: categoria.value,
-        loja: loja.value
-    };
+    db.collection("produtos").doc(id).set({
+        id,
+        nome:nome.value,
+        img:img.value,
+        link:link.value,
+        precoAntigo:pAntigo.value,
+        precoNovo:pNovo.value,
+        categoria:categoria.value,
+        loja:loja.value
+    });
 
-    db.collection("produtos").doc(produto.id).set(produto);
-
-    alert("Produto salvo!");
+    alert("Salvo!");
 }
 
-// 📦 LISTAR
-db.collection("produtos").onSnapshot(snapshot=>{
-    lista.innerHTML = "";
-
-    snapshot.forEach(doc=>{
-        const p = doc.data();
-
-        lista.innerHTML += `
+/* LISTA */
+db.collection("produtos").onSnapshot(s=>{
+    lista.innerHTML="";
+    s.forEach(d=>{
+        const p=d.data();
+        lista.innerHTML+=`
         <div class="produto">
             <img src="${p.img}">
             <h4>${p.nome}</h4>
             <p>R$ ${p.precoNovo}</p>
-            <small>${p.categoria}</small>
-        </div>
-        `;
+        </div>`;
     });
 });
+
+/* USERS */
+function openUserModal(){
+    userModal.style.display="flex";
+}
+
+function closeUserModal(){
+    userModal.style.display="none";
+}
+
+/* ADD USER */
+function addUser(){
+    const email = newEmail.value;
+
+    // OBS: só funciona se você já tiver lógica de backend/Cloud Function
+    db.collection("users").add({
+        email,
+        role: role.value
+    });
+
+    alert("Usuário criado (configure auth manualmente no Firebase)");
+}
 </script>
 
 </body>
