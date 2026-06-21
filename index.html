@@ -908,10 +908,22 @@
     messagingSenderId: "396856047778",
     appId: "1:396856047778:web:8608a6b95f26f160d27ffb"
   };
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
+
+/* =========================
+   VARIÁVEIS GLOBAIS
+========================= */
+
+let PRODUTOS_LOJA = [];
+let favoritosSalvos = JSON.parse(localStorage.getItem('favoritosSalvos')) || [];
+let categoriaAtiva = null;
+
+/* =========================
+   FIRESTORE
+========================= */
+
 function carregarProdutosFirestore() {
 
     try {
@@ -929,18 +941,226 @@ function carregarProdutosFirestore() {
 
             console.log("🔥 Atualização em tempo real:", PRODUTOS_LOJA);
 
-            renderizarTudo();
-
+            construirEstrutura(); // 🔥 ESSENCIAL (corrige categorias/carrossel/depoimentos)
         });
 
     } catch (erro) {
-
         console.error("Erro ao carregar produtos:", erro);
+    }
+}
 
+/* =========================
+   INICIALIZAÇÃO (1x só)
+========================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+    carregarProdutosFirestore();
+});
+
+/* =========================
+   FAVORITOS
+========================= */
+
+function alternarFavorito(idProduto) {
+
+    const user = auth.currentUser;
+
+    if (!user) {
+        mostrarModalLoginObrigatorio();
+        return;
     }
 
+    if (favoritosSalvos.includes(idProduto)) {
+        favoritosSalvos = favoritosSalvos.filter(id => id !== idProduto);
+    } else {
+        favoritosSalvos.push(idProduto);
+    }
+
+    localStorage.setItem('favoritosSalvos', JSON.stringify(favoritosSalvos));
+
+    atualizarIconesCoraoGlobais();
+    renderizarAbaFavoritos();
 }
-    document.addEventListener("DOMContentLoaded", carregarProdutosFirestore);
+
+/* =========================
+   LOGIN STATE (CORRETO)
+========================= */
+
+auth.onAuthStateChanged((user) => {
+
+    console.log("USER:", user);
+
+    if (user) {
+
+        db.collection("usuarios")
+            .doc(user.uid)
+            .get()
+            .then((doc) => {
+
+                if (doc.exists) {
+
+                    const dados = doc.data();
+
+                    const perfil = document.getElementById("nome-perfil");
+                    if (perfil) perfil.innerText = dados.nome;
+
+                    const btnLogin = document.getElementById("btn-login");
+                    if (btnLogin) btnLogin.style.display = "none";
+                }
+            });
+    }
+});
+
+/* =========================
+   FUNÇÃO CENTRAL DE RENDER
+========================= */
+
+function renderizarTudo() {
+    renderizarGridHome(PRODUTOS_LOJA);
+    renderizarGridOfertas(PRODUTOS_LOJA);
+    renderizarAbaFavoritos();
+    atualizarIconesCoraoGlobais();
+}
+
+/* =========================
+   CONSTRUIR UI PRINCIPAL
+========================= */
+
+function construirEstrutura() {
+
+    const carrosselContainer = document.getElementById('carrossel-hot-deals');
+
+    if (carrosselContainer && PRODUTOS_LOJA.length > 0) {
+        const amostraCarrossel = PRODUTOS_LOJA.slice(0, 5);
+
+        carrosselContainer.innerHTML = amostraCarrossel.map(prod => `
+            <div class="card-hot">
+                <span class="tag-desconto">🔥 QUENTE</span>
+                <img src="${prod.img}" class="produto-img">
+                <div class="produto-nome">${prod.nome}</div>
+                <div>
+                    <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
+                    <div class="preco-novo">R$ ${prod.precoNovo}</div>
+                </div>
+                <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
+            </div>
+        `).join('');
+    }
+
+    const mosaicoContainer = document.getElementById('mosaico-categorias-container');
+
+    if (mosaicoContainer) {
+        mosaicoContainer.innerHTML = CATEGORIAS_DADOS.map(cat => `
+            <div class="categoria-card" onclick="filtrarPorCategoria('${cat.id}')">
+                <span class="categoria-tag-top">Oferta</span>
+                <img src="${cat.img}" class="categoria-img">
+                <div class="categoria-glass-footer"><p>${cat.nome}</p></div>
+            </div>
+        `).join('');
+    }
+
+    const trackDepoimentos = document.getElementById('track-depoimentos');
+
+    if (trackDepoimentos) {
+        const listaDuplicada = [...DEPOIMENTOS_DADOS, ...DEPOIMENTOS_DADOS];
+
+        trackDepoimentos.innerHTML = listaDuplicada.map(dep => `
+            <div class="depoimento-box">
+                <div class="depoimento-user">
+                    <div class="avatar-fake" style="background:${dep.cor};">${dep.letra}</div>
+                    <div>
+                        <h4 style="font-size:13px;">${dep.nome}</h4>
+                        <p style="font-size:11px;color:gray;">Verificado ✅</p>
+                    </div>
+                </div>
+                <p style="font-size:12px;color:#444;font-style:italic;">${dep.texto}</p>
+            </div>
+        `).join('');
+    }
+
+    renderizarTudo();
+}
+
+/* =========================
+   MODAL LOGIN
+========================= */
+
+function mostrarModalLoginObrigatorio() {
+    const modal = document.getElementById("modal-login-obrigatorio");
+    if (modal) modal.style.display = "flex";
+}
+
+function fecharModalLoginObrigatorio() {
+    const modal = document.getElementById("modal-login-obrigatorio");
+    if (modal) modal.style.display = "none";
+}
+
+function abrirLoginDoModal() {
+    fecharModalLoginObrigatorio();
+    abrirCadastro();
+}
+
+/* =========================
+   LOGIN / CADASTRO
+========================= */
+
+function criarConta() {
+    const nome = document.getElementById("nome-usuario").value.trim();
+    const email = document.getElementById("email-usuario").value.trim();
+    const senha = document.getElementById("senha-usuario").value;
+    const aceitou = document.getElementById("aceitou-termos").checked;
+    const recebe = document.getElementById("aceitou-promocoes").checked;
+
+    if (!nome) return alert("Digite seu nome");
+    if (!email) return alert("Digite um e-mail válido");
+    if (!aceitou) return alert("Aceite os termos");
+    if (senha.length < 6) return alert("Senha mínima 6 caracteres");
+
+    auth.createUserWithEmailAndPassword(email, senha)
+        .then((userCredential) => {
+
+            return db.collection("usuarios").doc(userCredential.user.uid).set({
+                nome,
+                email,
+                recebePromocoes: recebe,
+                criadoEm: new Date()
+            });
+        })
+        .then(() => {
+            document.getElementById("nome-perfil").innerText = nome;
+            document.getElementById("btn-login").style.display = "none";
+            alert("Conta criada com sucesso!");
+            fecharCadastro();
+        })
+        .catch((error) => alert(error.message));
+}
+
+function login() {
+
+    const email = document.getElementById("email-usuario").value.trim();
+    const senha = document.getElementById("senha-usuario").value;
+
+    if (!email.includes("@")) return alert("E-mail inválido");
+
+    auth.signInWithEmailAndPassword(email, senha)
+        .then(() => {
+            alert("Login realizado!");
+            fecharCadastro();
+        })
+        .catch(err => alert(err.message));
+}
+
+/* =========================
+   LOGOUT (CORRIGIDO - sem duplicação)
+========================= */
+
+function logout() {
+    auth.signOut().then(() => {
+        alert("Você saiu da conta");
+        location.reload();
+    });
+}
+
 </script>
 
    <script>
