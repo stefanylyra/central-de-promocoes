@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Painel Admin</title>
+<title>Painel Admin PRO</title>
 
 <style>
 body{
@@ -12,41 +12,83 @@ body{
 }
 
 .container{
-    max-width:500px;
+    max-width:600px;
     margin:auto;
     background:#fff;
     padding:20px;
     border-radius:10px;
 }
 
-h2{
+h2,h3{
     text-align:center;
 }
 
 input, select{
     width:100%;
     padding:10px;
-    margin:8px 0;
+    margin:6px 0;
 }
 
 button{
-    width:100%;
-    padding:12px;
-    background:#cc0a12;
-    color:white;
+    padding:10px;
     border:none;
     cursor:pointer;
+    border-radius:6px;
     font-weight:bold;
 }
 
-button:hover{
-    opacity:0.9;
+.btn-salvar{
+    width:100%;
+    background:#cc0a12;
+    color:white;
+    margin-top:10px;
 }
+
+.card{
+    background:#eee;
+    padding:10px;
+    margin:10px 0;
+    border-radius:8px;
+}
+
+.card img{
+    width:80px;
+    height:80px;
+    object-fit:cover;
+    border-radius:6px;
+}
+
+.actions button{
+    margin-right:5px;
+    color:white;
+}
+
+.edit{background:#f0ad4e;}
+.delete{background:#d9534f;}
 
 .msg{
     text-align:center;
     margin-top:10px;
     font-weight:bold;
+    color:green;
+}
+
+/* MODAL */
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-box{
+    background:#fff;
+    padding:20px;
+    width:90%;
+    max-width:400px;
+    border-radius:10px;
 }
 </style>
 </head>
@@ -55,23 +97,19 @@ button:hover{
 
 <div class="container">
 
-<h2>🧠 Painel Admin</h2>
+<h2>🧠 Admin PRO</h2>
 
-<input id="nome" placeholder="Nome do produto">
+<h3>➕ Novo Produto</h3>
 
-<input id="img" placeholder="URL da imagem">
-
+<input id="nome" placeholder="Nome">
+<input id="img" placeholder="URL imagem">
 <input id="link" placeholder="Link afiliado">
-
 <input id="precoAntigo" placeholder="Preço antigo">
-
 <input id="precoNovo" placeholder="Preço novo">
 
-<!-- CATEGORIAS -->
 <select id="categoria">
-<option value="">Selecione categoria</option>
-
-<option value="roupas-masculinas">👕 Roupas Masculinas</option>
+<option value="">Categoria</option>
+<option value="roupas-masculinas">👕 Masculinas</option>
 <option value="roupas-femininas">👗 Femininas</option>
 <option value="plus-size">👚 Plus Size</option>
 <option value="relogios">⌚ Relógios</option>
@@ -85,15 +123,13 @@ button:hover{
 <option value="acessorios">💎 Acessórios</option>
 <option value="pets">🐶 Pets</option>
 <option value="sapatos">👟 Sapatos</option>
-<option value="casa-construcao">🏡 Casa e construção</option>
+<option value="casa-construcao">🏡 Casa</option>
 <option value="beleza">💄 Beleza</option>
 <option value="papelaria">✏️ Papelaria</option>
-
 </select>
 
-<!-- LOJA -->
 <select id="loja">
-<option value="">Selecione loja</option>
+<option value="">Loja</option>
 <option value="amazon">Amazon</option>
 <option value="shopee">Shopee</option>
 <option value="magalu">Magalu</option>
@@ -102,10 +138,33 @@ button:hover{
 <option value="aliexpress">AliExpress</option>
 </select>
 
-<button onclick="salvarProduto()">Salvar Produto</button>
+<button class="btn-salvar" onclick="salvarProduto()">Salvar Produto</button>
 
 <div class="msg" id="msg"></div>
 
+<hr>
+
+<h3>📦 Produtos cadastrados</h3>
+<div id="lista"></div>
+
+</div>
+
+<!-- MODAL EDITAR -->
+<div class="modal" id="modal">
+<div class="modal-box">
+
+<h3>✏️ Editar Produto</h3>
+
+<input id="edit-nome">
+<input id="edit-img">
+<input id="edit-link">
+<input id="edit-precoAntigo">
+<input id="edit-precoNovo">
+
+<button class="btn-salvar" onclick="salvarEdicao()">Salvar alteração</button>
+<button onclick="fecharModal()">Fechar</button>
+
+</div>
 </div>
 
 <!-- FIREBASE -->
@@ -125,41 +184,91 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+let editId = null;
+
+/* ---------------- SALVAR ---------------- */
 function salvarProduto(){
 
-    const nome = document.getElementById("nome").value;
-    const img = document.getElementById("img").value;
-    const link = document.getElementById("link").value;
-    const precoAntigo = document.getElementById("precoAntigo").value;
-    const precoNovo = document.getElementById("precoNovo").value;
-    const categoria = document.getElementById("categoria").value;
-    const loja = document.getElementById("loja").value;
-
-    if(!nome || !img || !link || !categoria || !loja){
-        alert("Preencha tudo!");
-        return;
-    }
-
     db.collection("produtos").add({
-        nome,
-        img,
-        link,
-        precoAntigo,
-        precoNovo,
-        categoria,
-        loja,
+        nome: nome.value,
+        img: img.value,
+        link: link.value,
+        precoAntigo: precoAntigo.value,
+        precoNovo: precoNovo.value,
+        categoria: categoria.value,
+        loja: loja.value,
         criadoEm: new Date()
-    })
-    .then(() => {
-        document.getElementById("msg").innerText = "✔ Produto salvo com sucesso!";
-        
-        document.querySelectorAll("input").forEach(i => i.value = "");
-        document.querySelectorAll("select").forEach(i => i.value = "");
-    })
-    .catch(err => {
-        console.error(err);
-        alert("Erro ao salvar");
     });
+
+    msg.innerText = "✔ Produto salvo!";
+
+    document.querySelectorAll("input").forEach(i => i.value = "");
+    document.querySelectorAll("select").forEach(i => i.value = "");
+}
+
+/* ---------------- LISTAR EM TEMPO REAL ---------------- */
+db.collection("produtos").onSnapshot(snapshot => {
+
+    const lista = document.getElementById("lista");
+    lista.innerHTML = "";
+
+    snapshot.forEach(doc => {
+
+        const p = doc.data();
+
+        lista.innerHTML += `
+        <div class="card">
+            <img src="${p.img}"><br>
+
+            <b>${p.nome}</b><br>
+            <small>${p.categoria} | ${p.loja}</small><br>
+
+            <div class="actions">
+                <button class="edit" onclick="editar('${doc.id}', \`${p.nome}\`, \`${p.img}\`, \`${p.link}\`, \`${p.precoAntigo}\`, \`${p.precoNovo}\`)">Editar</button>
+                <button class="delete" onclick="deletar('${doc.id}')">Excluir</button>
+            </div>
+        </div>
+        `;
+    });
+
+});
+
+/* ---------------- DELETE ---------------- */
+function deletar(id){
+    if(confirm("Excluir produto?")){
+        db.collection("produtos").doc(id).delete();
+    }
+}
+
+/* ---------------- EDITAR ---------------- */
+function editar(id,nome,img,link,pa,pn){
+
+    editId = id;
+
+    document.getElementById("edit-nome").value = nome;
+    document.getElementById("edit-img").value = img;
+    document.getElementById("edit-link").value = link;
+    document.getElementById("edit-precoAntigo").value = pa;
+    document.getElementById("edit-precoNovo").value = pn;
+
+    document.getElementById("modal").style.display = "flex";
+}
+
+function salvarEdicao(){
+
+    db.collection("produtos").doc(editId).update({
+        nome: edit-nome.value,
+        img: edit-img.value,
+        link: edit-link.value,
+        precoAntigo: edit-precoAntigo.value,
+        precoNovo: edit-precoNovo.value
+    });
+
+    fecharModal();
+}
+
+function fecharModal(){
+    document.getElementById("modal").style.display = "none";
 }
 
 </script>
