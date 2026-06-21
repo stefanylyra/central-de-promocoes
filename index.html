@@ -725,12 +725,16 @@
     cursor:pointer;
     flex-shrink:0;
 }
-        .loja-card img {
+.loja-card img {
     width: 28px;
     height: 28px;
     object-fit: contain;
-    background: transparent;
     display: block;
+    transition: 0.2s;
+}
+
+.loja-card img:hover {
+    transform: scale(1.1);
 }
     </style>
 </head>
