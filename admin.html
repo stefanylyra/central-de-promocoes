@@ -232,31 +232,40 @@ async function uploadImage(file){
 // 💾 SALVAR PRODUTO
 async function salvarProduto(){
 
-    let imgUrl = "";
+    try {
 
-    if(imgFile.files[0]){
-        imgUrl = await uploadImage(imgFile.files[0]);
+        let imgUrl = "";
+
+        // se escolheu arquivo
+        if(imgFile.files[0]){
+            imgUrl = await uploadImage(imgFile.files[0]);
+        }
+
+        const produto = {
+            nome: nome.value,
+            precoAntigo: precoAntigo.value,
+            precoNovo: precoNovo.value,
+            img: imgUrl,
+            link: link.value,
+            categoria: categoria.value,
+            loja: loja.value,
+            createdAt: Date.now()
+        };
+
+        if(editId){
+            await db.collection("produtos").doc(editId).update(produto);
+        } else {
+            await db.collection("produtos").add(produto);
+        }
+
+        limpar();
+
+        alert("Produto salvo com sucesso!");
+
+    } catch(err){
+        console.error(err);
+        alert(err.message);
     }
-
-    const produto = {
-        nome: nome.value,
-        precoAntigo: precoAntigo.value,
-        precoNovo: precoNovo.value,
-        img: imgUrl,
-        link: link.value,
-        categoria: categoria.value,
-        loja: loja.value,
-        createdAt: Date.now()
-    };
-
-    if(editId){
-        await db.collection("produtos").doc(editId).update(produto);
-        editId = null;
-    } else {
-        await db.collection("produtos").add(produto);
-    }
-
-    limpar();
 }
 
 // 🧹 LIMPAR
