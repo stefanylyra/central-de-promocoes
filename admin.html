@@ -1,112 +1,137 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Admin Central de Promoções</title>
+<title>Painel Admin</title>
 
 <style>
-body{font-family:Arial;background:#f4f4f4;padding:20px}
-.container{max-width:700px;margin:auto;background:#fff;padding:20px;border-radius:10px}
-input,select{width:100%;padding:10px;margin:6px 0}
-button{padding:10px;border:none;border-radius:6px;cursor:pointer;font-weight:bold}
-.btn{background:#cc0a12;color:#fff;width:100%}
-.card{background:#eee;padding:10px;margin:10px 0;border-radius:8px}
-.card button{margin-right:5px}
-</style>
-</head>
+body {
+    font-family: Arial;
+    background: #f4f4f4;
+    padding: 20px;
+}
 
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+button {
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.produto {
+    background: #eee;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+</style>
+
+</head>
 <body>
 
 <div class="container">
 
-<h2>🧠 Admin Empresa</h2>
+<h2>🛠 Painel Admin de Produtos</h2>
 
-<input id="nome" placeholder="Nome produto">
-<input id="img" placeholder="URL imagem">
-<input id="link" placeholder="Link afiliado">
+<input id="nome" placeholder="Nome do produto">
+<input id="preco" placeholder="Preço">
 <input id="precoAntigo" placeholder="Preço antigo">
-<input id="precoNovo" placeholder="Preço novo">
+<input id="imagem" placeholder="URL da imagem">
+<input id="link" placeholder="Link afiliado">
 
-<!-- CATEGORIAS -->
 <select id="categoria">
-<option value="">Categoria</option>
-<option value="roupas-masculinas">👕 Masculinas</option>
-<option value="roupas-femininas">👗 Femininas</option>
-<option value="plus-size">👚 Plus Size</option>
-<option value="relogios">⌚ Relógios</option>
-<option value="mae-bebe">👶 Mãe & Bebê</option>
-<option value="viagens-bagagens">🧳 Viagem</option>
-<option value="fones">🎧 Fones</option>
-<option value="bolsas-masculinas">🎒 Bolsas Masc.</option>
-<option value="bolsas-femininas">👝 Bolsas Fem.</option>
-<option value="limpeza">🧼 Limpeza</option>
-<option value="brinquedos">🧸 Brinquedos</option>
-<option value="acessorios">💎 Acessórios</option>
-<option value="pets">🐶 Pets</option>
-<option value="sapatos">👟 Sapatos</option>
-<option value="casa-construcao">🏡 Casa e construção</option>
-<option value="beleza">💄 Beleza</option>
-<option value="papelaria">✏️ Papelaria</option>
+    <option value="roupas-masculinas">👕 Roupas Masculinas</option>
+    <option value="roupas-femininas">👗 Roupas Femininas</option>
+    <option value="plus-size">👚 Plus Size</option>
+    <option value="relogios">⌚ Relógios</option>
+    <option value="mae-bebe">👶 Mãe & Bebê</option>
+    <option value="viagens-bagagens">🧳 Viagem</option>
+    <option value="fones">🎧 Fones</option>
+    <option value="bolsas-masculinas">🎒 Bolsas Masculinas</option>
+    <option value="bolsas-femininas">👝 Bolsas Femininas</option>
+    <option value="limpeza">🧼 Limpeza</option>
+    <option value="brinquedos">🧸 Brinquedos</option>
+    <option value="acessorios">💎 Acessórios</option>
+    <option value="pets">🐶 Pets</option>
+    <option value="sapatos">👟 Sapatos</option>
+    <option value="casa-construcao">🏡 Casa e construção</option>
+    <option value="beleza">💄 Beleza</option>
+    <option value="papelaria">✏️ Papelaria</option>
 </select>
 
-<!-- LOJAS -->
-<select id="loja">
-<option value="">Loja</option>
-<option value="amazon">Amazon</option>
-<option value="shopee">Shopee</option>
-<option value="magalu">Magalu</option>
-<option value="mercado-livre">Mercado Livre</option>
-<option value="shein">Shein</option>
-<option value="aliexpress">AliExpress</option>
-</select>
+<button onclick="salvarProduto()">💾 Salvar Produto</button>
 
-<button class="btn" onclick="salvar()">Salvar Produto</button>
+<hr>
 
-<h3>📦 Produtos</h3>
+<h3>📦 Produtos cadastrados</h3>
 <div id="lista"></div>
 
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 <script>
 
+// 🔥 SUA CONFIG FIREBASE AQUI
 const firebaseConfig = {
   apiKey: "SUA_API_KEY",
-  authDomain: "central-promocoes.firebaseapp.com",
-  projectId: "central-promocoes",
+  authDomain: "SEU_PROJETO.firebaseapp.com",
+  projectId: "SEU_PROJETO",
 };
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-/* 🔐 SEGURANÇA SIMPLES (troque seu email aqui) */
-const ADMIN_EMAIL = "SEU_EMAIL@gmail.com";
+let editandoId = null;
 
-/* SALVAR */
-function salvar(){
+// 🟢 SALVAR / EDITAR
+function salvarProduto() {
 
-    db.collection("produtos").add({
+    const produto = {
         nome: nome.value,
-        img: img.value,
-        link: link.value,
+        preco: preco.value,
         precoAntigo: precoAntigo.value,
-        precoNovo: precoNovo.value,
-        categoria: categoria.value,
-        loja: loja.value,
-        ativo: true,
-        criadoEm: new Date()
-    });
+        imagem: imagem.value,
+        link: link.value,
+        categoria: categoria.value
+    };
 
-    alert("Produto salvo!");
+    if(editandoId){
+        db.collection("produtos").doc(editandoId).update(produto);
+        editandoId = null;
+    } else {
+        db.collection("produtos").add(produto);
+    }
+
+    limparCampos();
 }
 
-/* LISTAR */
-db.collection("produtos")
-.onSnapshot(snapshot => {
+// 🧹 LIMPAR FORM
+function limparCampos(){
+    nome.value = "";
+    preco.value = "";
+    precoAntigo.value = "";
+    imagem.value = "";
+    link.value = "";
+}
 
-    const lista = document.getElementById("lista");
+// 🔥 LISTAGEM EM TEMPO REAL
+db.collection("produtos").onSnapshot(snapshot => {
+
     lista.innerHTML = "";
 
     snapshot.forEach(doc => {
@@ -114,19 +139,43 @@ db.collection("produtos")
         const p = doc.data();
 
         lista.innerHTML += `
-        <div class="card">
+        <div class="produto">
             <b>${p.nome}</b><br>
-            <small>${p.categoria} | ${p.loja}</small><br>
+            💰 R$ ${p.preco}<br>
+            📂 ${p.categoria}<br>
 
-            <button onclick="deletar('${doc.id}')">Excluir</button>
+            <button onclick="editarProduto(
+                '${doc.id}',
+                '${p.nome}',
+                '${p.preco}',
+                '${p.precoAntigo}',
+                '${p.imagem}',
+                '${p.link}',
+                '${p.categoria}'
+            )">✏️ Editar</button>
+
+            <button onclick="deletarProduto('${doc.id}')">🗑️ Deletar</button>
         </div>
         `;
     });
 
 });
 
-/* EXCLUIR */
-function deletar(id){
+// ✏️ EDITAR
+function editarProduto(id, nomeP, precoP, precoAntigoP, imagemP, linkP, categoriaP){
+
+    nome.value = nomeP;
+    preco.value = precoP;
+    precoAntigo.value = precoAntigoP;
+    imagem.value = imagemP;
+    link.value = linkP;
+    categoria.value = categoriaP;
+
+    editandoId = id;
+}
+
+// 🗑️ DELETAR
+function deletarProduto(id){
     db.collection("produtos").doc(id).delete();
 }
 
