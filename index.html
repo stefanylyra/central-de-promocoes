@@ -912,6 +912,41 @@
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
+    async function carregarProdutosFirestore() {
+
+    try {
+
+        const snapshot =
+            await db.collection("produtos").get();
+
+        PRODUTOS_LOJA = [];
+
+        snapshot.forEach(doc => {
+
+            PRODUTOS_LOJA.push({
+                id: doc.id,
+                ...doc.data()
+            });
+
+        });
+
+        console.log(
+            "Produtos carregados:",
+            PRODUTOS_LOJA
+        );
+
+        construirEstrutura();
+
+    } catch(erro) {
+
+        console.error(
+            "Erro ao carregar produtos:",
+            erro
+        );
+
+    }
+
+}
 </script>
 
    <script>
@@ -2510,7 +2545,7 @@ const auth = firebase.auth();
   }
 };
         
-const PRODUTOS_LOJA = [];
+let PRODUTOS_LOJA = [];
 
         Object.keys(dados).forEach(chave => {
             if (dados[chave] && dados[chave].produtos) {
@@ -2907,7 +2942,10 @@ function construirEstrutura() {
     atualizarIconesCoraoGlobais();
 }
 
-        document.addEventListener("DOMContentLoaded", construirEstrutura);
+        document.addEventListener(
+    "DOMContentLoaded",
+    carregarProdutosFirestore
+);
 
         function aceitarCookies() {
             localStorage.setItem("cookiesAceitos", "sim");
