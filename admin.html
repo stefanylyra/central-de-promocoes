@@ -2,148 +2,210 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Admin Marketplace</title>
+<title>Admin Master</title>
 
 <style>
 body {
     font-family: Arial;
-    background: #f2f4f8;
     margin: 0;
+    background: #f4f6fb;
 }
 
-.login-box, .dashboard {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
+/* LOGIN OCULTO */
+.login {
+    display:none;
+    max-width:400px;
+    margin:120px auto;
+    background:white;
+    padding:20px;
+    border-radius:12px;
+}
+
+/* DASHBOARD */
+.dashboard {
+    display:none;
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+/* TOPBAR */
+.topbar {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:white;
+    padding:15px;
+    border-radius:10px;
+}
+
+/* GRID */
+.grid {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:20px;
+    margin-top:20px;
 }
 
 .card {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    margin: 10px 0;
+    background:white;
+    padding:15px;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,.05);
 }
 
+/* INPUT */
 input, select {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
+    width:100%;
+    padding:10px;
+    margin:6px 0;
+    border:1px solid #ddd;
+    border-radius:8px;
 }
 
 button {
-    padding: 10px;
-    cursor: pointer;
-    margin-top: 10px;
+    padding:10px;
+    border:none;
+    cursor:pointer;
+    border-radius:8px;
+    font-weight:bold;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-}
+.primary { background:#cc0a12; color:white; }
+.danger { background:#222; color:white; }
 
+/* PRODUTOS */
 .produto {
-    background: white;
-    padding: 10px;
-    border-radius: 10px;
+    display:flex;
+    gap:10px;
+    padding:10px;
+    border-bottom:1px solid #eee;
 }
-img {
-    width: 100%;
-    border-radius: 10px;
+
+.produto img {
+    width:60px;
+    height:60px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+.badge {
+    font-size:11px;
+    background:#eee;
+    padding:3px 6px;
+    border-radius:6px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🔐 LOGIN -->
-<div class="login-box" id="loginBox">
-    <h2>🔐 Login Admin</h2>
+<!-- LOGIN (OCULTO POR PADRÃO) -->
+<div class="login" id="loginBox">
+    <h2>🔐 Admin Master</h2>
     <input id="email" placeholder="Email">
     <input id="senha" type="password" placeholder="Senha">
-    <button onclick="login()">Entrar</button>
+    <button class="primary" onclick="login()">Entrar</button>
 </div>
 
-<!-- 📊 DASHBOARD -->
-<div class="dashboard" id="dashboard" style="display:none;">
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
 
-    <h2>📊 Dashboard Admin</h2>
-    <button onclick="logout()">Sair</button>
+<div class="topbar">
+    <h2>⚡ Painel Master</h2>
+    <button class="danger" onclick="logout()">Sair</button>
+</div>
 
-    <div class="card">
-        <h3>➕ Novo Produto</h3>
+<div class="grid">
 
-        <input id="nome" placeholder="Nome">
-        <input id="precoAntigo" placeholder="Preço antigo">
-        <input id="precoNovo" placeholder="Preço novo">
+<!-- FORM -->
+<div class="card">
+<h3>➕ Novo Produto</h3>
 
-        <select id="categoria">
-            <option value="roupas-masculinas">👕 Masculinas</option>
-            <option value="roupas-femininas">👗 Femininas</option>
-            <option value="plus-size">👚 Plus Size</option>
-            <option value="relogios">⌚ Relógios</option>
-            <option value="mae-bebe">👶 Mãe & Bebê</option>
-            <option value="viagens-bagagens">🧳 Viagem</option>
-            <option value="fones">🎧 Fones</option>
-            <option value="bolsas-masculinas">🎒 Bolsas Masc.</option>
-            <option value="bolsas-femininas">👝 Bolsas Fem.</option>
-            <option value="limpeza">🧼 Limpeza</option>
-            <option value="brinquedos">🧸 Brinquedos</option>
-            <option value="acessorios">💎 Acessórios</option>
-            <option value="pets">🐶 Pets</option>
-            <option value="sapatos">👟 Sapatos</option>
-            <option value="casa-construcao">🏡 Casa</option>
-            <option value="beleza">💄 Beleza</option>
-            <option value="papelaria">✏️ Papelaria</option>
-        </select>
+<input id="nome" placeholder="Nome">
+<input id="precoAntigo" placeholder="Preço antigo">
+<input id="precoNovo" placeholder="Preço novo">
 
-        <select id="loja">
-            <option value="shopee">Shopee</option>
-            <option value="amazon">Amazon</option>
-            <option value="aliexpress">AliExpress</option>
-        </select>
+<select id="categoria">
+<option value="roupas-masculinas">👕 Masculinas</option>
+<option value="roupas-femininas">👗 Femininas</option>
+<option value="plus-size">👚 Plus Size</option>
+<option value="relogios">⌚ Relógios</option>
+<option value="mae-bebe">👶 Mãe & Bebê</option>
+<option value="viagens-bagagens">🧳 Viagem</option>
+<option value="fones">🎧 Fones</option>
+<option value="bolsas-masculinas">🎒 Bolsas Masc</option>
+<option value="bolsas-femininas">👝 Bolsas Fem</option>
+<option value="limpeza">🧼 Limpeza</option>
+<option value="brinquedos">🧸 Brinquedos</option>
+<option value="acessorios">💎 Acessórios</option>
+<option value="pets">🐶 Pets</option>
+<option value="sapatos">👟 Sapatos</option>
+<option value="casa-construcao">🏡 Casa</option>
+<option value="beleza">💄 Beleza</option>
+<option value="papelaria">✏️ Papelaria</option>
+</select>
 
-        <input type="file" id="imgFile">
-        <input id="link" placeholder="Link afiliado">
+<select id="loja">
+<option value="shopee">Shopee</option>
+<option value="amazon">Amazon</option>
+<option value="mercado-livre">Mercado Livre</option>
+<option value="magalu">Magalu</option>
+<option value="shein">Shein</option>
+<option value="aliexpress">AliExpress</option>
+</select>
 
-        <button onclick="salvarProduto()">Salvar Produto</button>
-    </div>
+<input id="img" placeholder="URL imagem">
+<input id="link" placeholder="Link afiliado">
 
-    <h3>📦 Produtos</h3>
-    <div class="grid" id="lista"></div>
+<button class="primary" onclick="salvar()">Salvar</button>
+</div>
+
+<!-- LISTA -->
+<div class="card">
+<h3>📦 Produtos</h3>
+<div id="lista"></div>
+</div>
+
+</div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
 <script>
-
-// 🔥 FIREBASE
 const firebaseConfig = {
-  apiKey: "SUA_API_KEY",
+  apiKey: "SUA_KEY",
   authDomain: "SEU_PROJETO.firebaseapp.com",
-  projectId: "SEU_PROJETO",
-  storageBucket: "SEU_PROJETO.appspot.com"
+  projectId: "SEU_PROJETO"
 };
 
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
-const storage = firebase.storage();
 
 let editId = null;
 
-// 🔐 LOGIN
+/* 🔐 ACESSO OCULTO */
+const params = new URLSearchParams(window.location.search);
+const key = params.get("key");
+
+const ADMIN_KEY = "meuPainel123";
+
+if(key !== ADMIN_KEY){
+    document.body.innerHTML = "<h2 style='text-align:center;margin-top:100px;'>⛔ Acesso negado</h2>";
+}
+
+/* LOGIN */
 function login(){
     auth.signInWithEmailAndPassword(email.value, senha.value)
-    .then(() => {
-        loginBox.style.display = "none";
-        dashboard.style.display = "block";
+    .then(()=>{
+        loginBox.style.display="none";
+        dashboard.style.display="block";
     })
-    .catch(err => alert("Erro login"));
+    .catch(()=>alert("Erro login"));
 }
 
 function logout(){
@@ -151,98 +213,88 @@ function logout(){
     location.reload();
 }
 
-auth.onAuthStateChanged(user => {
+auth.onAuthStateChanged(user=>{
     if(user){
-        loginBox.style.display = "none";
-        dashboard.style.display = "block";
-    }
-});
-
-// 📤 UPLOAD IMAGEM
-async function uploadImage(file){
-    const ref = storage.ref("produtos/" + Date.now());
-    await ref.put(file);
-    return await ref.getDownloadURL();
-}
-
-// 💾 SALVAR PRODUTO
-async function salvarProduto(){
-
-    let imgUrl = "";
-
-    if(imgFile.files[0]){
-        imgUrl = await uploadImage(imgFile.files[0]);
-    }
-
-    const produto = {
-        nome: nome.value,
-        precoAntigo: precoAntigo.value,
-        precoNovo: precoNovo.value,
-        img: imgUrl,
-        link: link.value,
-        categoria: categoria.value,
-        loja: loja.value
-    };
-
-    if(editId){
-        db.collection("produtos").doc(editId).update(produto);
-        editId = null;
+        loginBox.style.display="none";
+        dashboard.style.display="block";
     } else {
-        db.collection("produtos").add(produto);
+        loginBox.style.display="block";
     }
-
-    limpar();
-}
-
-// 🧹 LIMPAR
-function limpar(){
-    nome.value = "";
-    precoAntigo.value = "";
-    precoNovo.value = "";
-    link.value = "";
-    imgFile.value = "";
-}
-
-// 📦 LISTA EM TEMPO REAL
-db.collection("produtos").onSnapshot(snapshot => {
-
-    lista.innerHTML = "";
-
-    snapshot.forEach(doc => {
-        const p = doc.data();
-
-        lista.innerHTML += `
-        <div class="produto">
-            <img src="${p.img}">
-            <b>${p.nome}</b><br>
-            💰 R$ ${p.precoNovo}<br>
-            📂 ${p.categoria} | 🏪 ${p.loja}<br>
-
-            <button onclick="editar('${doc.id}', '${p.nome}', '${p.precoAntigo}', '${p.precoNovo}', '${p.link}', '${p.categoria}', '${p.loja}')">Editar</button>
-            <button onclick="deletar('${doc.id}')">Deletar</button>
-        </div>
-        `;
-    });
-
 });
 
-// ✏️ EDITAR
-function editar(id, nomeV, pa, pn, linkV, cat, lojaV){
-    nome.value = nomeV;
-    precoAntigo.value = pa;
-    precoNovo.value = pn;
-    link.value = linkV;
-    categoria.value = cat;
-    loja.value = lojaV;
+/* SALVAR */
+function salvar(){
 
-    editId = id;
+const produto = {
+    nome: nome.value,
+    precoAntigo: precoAntigo.value,
+    precoNovo: precoNovo.value,
+    img: img.value,
+    link: link.value,
+    categoria: categoria.value,
+    loja: loja.value,
+    criadoEm: new Date()
+};
+
+if(editId){
+    db.collection("produtos").doc(editId).update(produto);
+    editId=null;
+}else{
+    db.collection("produtos").add(produto);
 }
 
-// 🗑️ DELETE
+limpar();
+}
+
+/* LIMPAR */
+function limpar(){
+nome.value="";
+precoAntigo.value="";
+precoNovo.value="";
+img.value="";
+link.value="";
+}
+
+/* LISTA */
+db.collection("produtos").onSnapshot(snap=>{
+lista.innerHTML="";
+
+snap.forEach(doc=>{
+const p = doc.data();
+
+lista.innerHTML += `
+<div class="produto">
+<img src="${p.img}">
+<div>
+<b>${p.nome}</b><br>
+<span class="badge">${p.categoria}</span>
+<span class="badge">${p.loja}</span><br>
+💰 ${p.precoNovo}
+</div>
+<button onclick="editar('${doc.id}','${p.nome}','${p.precoAntigo}','${p.precoNovo}','${p.img}','${p.link}','${p.categoria}','${p.loja}')">Editar</button>
+<button onclick="deletar('${doc.id}')">X</button>
+</div>
+`;
+});
+});
+
+/* EDITAR */
+function editar(id,n,pa,pn,imgv,linkv,cat,loja){
+nome.value=n;
+precoAntigo.value=pa;
+precoNovo.value=pn;
+img.value=imgv;
+link.value=linkv;
+categoria.value=cat;
+loja.value=loja;
+
+editId=id;
+}
+
+/* DELETE */
 function deletar(id){
-    db.collection("produtos").doc(id).delete();
+db.collection("produtos").doc(id).delete();
 }
-
 </script>
 
 </body>
