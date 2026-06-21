@@ -917,7 +917,22 @@ const auth = firebase.auth();
     try {
 
         const snapshot =
-            await db.collection("produtos").get();
+            await db.collection("produtos").onSnapshot(snapshot => {
+
+    PRODUTOS_LOJA = [];
+
+    snapshot.forEach(doc => {
+        PRODUTOS_LOJA.push({
+            id: doc.id,
+            ...doc.data()
+        });
+    });
+
+    console.log("🔥 Atualização em tempo real:", PRODUTOS_LOJA);
+
+    renderizarTudo();
+
+});
 
         PRODUTOS_LOJA = [];
 
