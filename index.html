@@ -182,7 +182,27 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 14px;
         }
+.logo-loja {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 
+    width: 42px;
+    height: 42px;
+
+    background: white;
+    border-radius: 50%;
+
+    padding: 6px;
+
+    object-fit: contain;
+
+    box-shadow: 0 3px 10px rgba(0,0,0,.20);
+
+    border: 2px solid white;
+
+    z-index: 20;
+}
         .produto-card {
             background-color: var(--cor-card);
             border-radius: 16px;
@@ -2655,6 +2675,32 @@ function alternarFavorito(idProduto) {
     atualizarIconesCoraoGlobais();
     renderizarAbaFavoritos();
 }
+       function obterLogoLoja(loja){
+
+    const logos = {
+
+        amazon:
+        "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
+
+        shopee:
+        "https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg",
+
+        magalu:
+        "https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png",
+
+        "mercado-livre":
+        "https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo_large_plus.webp",
+
+        shein:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Shein_logo.svg/512px-Shein_logo.svg.png",
+
+        aliexpress:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Aliexpress_logo.svg/512px-Aliexpress_logo.svg.png"
+
+    };
+
+    return logos[loja] || "";
+}
         function getAvaliacoesRandom() {
     const num = Math.floor(Math.random() * 15200) + 68; // de 68 até ~15.000
     
@@ -2695,6 +2741,11 @@ function alternarFavorito(idProduto) {
                             <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
                         </button>
                         <img src="${prod.img}" class="produto-img">
+
+<img
+    src="${obterLogoLoja(prod.loja)}"
+    class="logo-loja"
+>
                         <div class="produto-nome">${prod.nome}</div>
                         <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(${getAvaliacoesRandom()})</span></div>
                         <div>
@@ -2724,6 +2775,11 @@ function alternarFavorito(idProduto) {
                             <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
                         </button>
                         <img src="${prod.img}" class="produto-img">
+
+<img
+    src="${obterLogoLoja(prod.loja)}"
+    class="logo-loja"
+>
                         <div class="produto-nome">${prod.nome}</div>
                         <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(${getAvaliacoesRandom()})</span></div>
                         <div>
@@ -2752,7 +2808,12 @@ function alternarFavorito(idProduto) {
                     <button class="btn-favorito active" data-id="${prod.id}" onclick="alternarFavorito('${prod.id}')">
                         <i class="fa-solid fa-heart"></i>
                     </button>
-                    <img src="${prod.img}" class="produto-img">
+                   <img src="${prod.img}" class="produto-img">
+
+<img
+    src="${obterLogoLoja(prod.loja)}"
+    class="logo-loja"
+>
                     <div class="produto-nome">${prod.nome}</div>
                     <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(${getAvaliacoesRandom()})</span></div>
                     <div>
