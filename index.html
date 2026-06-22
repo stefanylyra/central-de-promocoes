@@ -813,38 +813,39 @@
     border-color: var(--cor-principal);
     box-shadow: 0 0 0 3px rgba(204, 10, 18, 0.2);
 }
-        /* === LOJAS COLORIDAS (estilo premium) === */
+/* === LOJAS COLORIDAS (VERSÃO CORRIGIDA) === */
 .loja-card {
-    min-width: 110px;
-    height: 58px;
+    min-width: 85px;
+    height: 48px;
     border-radius: 9999px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 16px;
+    padding: 0 12px;
     flex-shrink: 0;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
     transition: all 0.2s ease;
     border: none;
 }
 
 .loja-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
 .loja-card img {
-    height: 32px;
+    height: 26px;
     width: auto;
     object-fit: contain;
+    filter: brightness(1.05);
 }
 
-/* Cores específicas por loja */
-.loja-amazon { background: #000000; }
-.loja-ml     { background: #FFCC00; }
-.loja-shopee { background: #EE4D2D; }
-.loja-magalu { background: #00A1E6; }
-.loja-shein  { background: #FF0099; }
+/* Cores específicas */
+.loja-amazon     { background: #000000; }
+.loja-ml         { background: #FFCC00; }
+.loja-shopee     { background: #EE4D2D; }
+.loja-magalu     { background: #00A1E6; }
+.loja-shein      { background: #FF0099; }
 .loja-aliexpress { background: #FF6200; }
     </style>
 </head>
@@ -880,9 +881,9 @@
             <div class="lojas-container">
                 <h3 class="titulo-lojas">Filtrar por loja</h3>
                 <div class="lojas-wrapper">
-                    <button class="btn-loja-nav left" onclick="scrollLojas(-250)"><i class="fa-solid fa-chevron-left"></i></button>
-                    <div class="lojas-grid" id="lojas-grid">
-                        
+                    <button class="btn-loja-nav left" onclick="scrollLojas(-250)"><i class="fa-solid fa-chevron-left"></i></button>    
+                       
+   <div class="lojas-grid" id="lojas-grid">
     <div class="loja-card loja-amazon" onclick="filtrarPorLoja('amazon')">
         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
     </div>
@@ -896,16 +897,12 @@
         <img src="https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png">
     </div>
     <div class="loja-card loja-shein" onclick="filtrarPorLoja('shein')">
-        <img src="https://i.imgur.com/6X1J0xP.png">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Shein_logo.svg/512px-Shein_logo.svg.png">
     </div>
     <div class="loja-card loja-aliexpress" onclick="filtrarPorLoja('aliexpress')">
-        <img src="https://i.imgur.com/8yqZb1L.png">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Aliexpress_logo.svg/512px-Aliexpress_logo.svg.png">
     </div>
 </div>
-     <button class="btn-loja-nav right" onclick="scrollLojas(250)"><i class="fa-solid fa-chevron-right"></i></button>
-       </div>
-   </div>
-
             <div id="wrapper-ofertas-quentes">
                 <div class="section-title">
                     <span>⏰ Ofertas por Tempo Limitado</span>
