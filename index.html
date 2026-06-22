@@ -813,6 +813,25 @@
     border-color: var(--cor-principal);
     box-shadow: 0 0 0 3px rgba(204, 10, 18, 0.2);
 }
+        /* TEMPO DA POSTAGEM */
+.tempo-postagem{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:rgba(255,255,255,.95);
+    padding:4px 8px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:600;
+    color:#666;
+    z-index:30;
+    box-shadow:0 2px 6px rgba(0,0,0,.12);
+}
+
+.tempo-postagem i{
+    color:#cc0a12;
+    margin-right:4px;
+}
     </style>
 </head>
 <body>
@@ -1146,7 +1165,29 @@
             };
             return logos[loja] || "";
         }
+function tempoDecorrido(dataFirestore) {
 
+    if (!dataFirestore) return "Agora";
+
+    const agora = new Date();
+    const postagem = dataFirestore.toDate();
+
+    const diff = agora - postagem;
+
+    const minutos = Math.floor(diff / 60000);
+    const horas = Math.floor(diff / 3600000);
+    const dias = Math.floor(diff / 86400000);
+    const meses = Math.floor(diff / 2592000000);
+    const anos = Math.floor(diff / 31536000000);
+
+    if (minutos < 1) return "Agora";
+    if (minutos < 60) return `há ${minutos}min`;
+    if (horas < 24) return `há ${horas}h`;
+    if (dias < 30) return `há ${dias}d`;
+    if (meses < 12) return `há ${meses} mês${meses > 1 ? "es" : ""}`;
+
+    return `há ${anos} ano${anos > 1 ? "s" : ""}`;
+}
         function getAvaliacoesRandom() {
             const num = Math.floor(Math.random() * 15200) + 68;
             if (num >= 10000) return (num / 1000).toFixed(1) + "k";
@@ -1325,7 +1366,15 @@
         // ==================== INICIALIZAÇÃO ====================
         document.addEventListener("DOMContentLoaded", () => {
             carregarProdutosFirestore();
+              setInterval(() => {
 
+    renderizarGridHome(PRODUTOS_LOJA);
+
+    renderizarGridOfertas(PRODUTOS_LOJA);
+
+    renderizarAbaFavoritos();
+
+       }, 60000);
             auth.onAuthStateChanged(user => {
                 if (user) {
                     db.collection("usuarios").doc(user.uid).get().then(doc => {
@@ -1433,9 +1482,14 @@ function fecharModal() {
 }
         // ==================== ATUALIZAR CRIAR CARD ====================
         function criarCardProduto(prod, isFavoritoPage = false) {
+            const tempo = tempoDecorrido(prod.criadoEm);
             const isFav = favoritosSalvos.includes(prod.id);
             return `
                 <div class="produto-card" onclick="mostrarDetalhesProduto('${prod.id}')">
+                <div class="tempo-postagem">
+    <i class="fa-regular fa-clock"></i>
+    ${tempo}
+</div>
                     <button class="btn-favorito ${isFav ? 'active' : ''}" data-id="${prod.id}" onclick="event.stopImmediatePropagation(); alternarFavorito('${prod.id}')">
                         <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
                     </button>
