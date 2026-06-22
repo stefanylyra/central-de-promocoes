@@ -1,3 +1,6 @@
+Aqui está o seu novo código com as atualizações aplicadas, mantendo exatamente a estrutura, classes extras e funções inseridas, apenas cuidando da indentação para que tudo fique alinhado e legível.
+
+```html
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -321,4 +324,27 @@
                             Por: ${p.precoNovo || ''}
                         </strong>
                         <br>
-                        <small
+                        <small>
+                            ${p.loja || ''} • ${p.imagensExtras ? p.imagensExtras.length : 0} extra(s)
+                        </small>
+                    </div>
+                    <div class="acoes">
+                        <button
+                            class="btn-editar"
+                            onclick="editar('${doc.id}')">
+                            Editar
+                        </button>
+                        <button
+                            class="btn-excluir"
+                            onclick="if(confirm('Excluir este produto?')) db.collection('produtos').doc('${doc.id}').delete()">
+                            Excluir
+                        </button>
+                    </div>
+                </div>`;
+            });
+        });
+    </script>
+</body>
+</html>
+
+```
