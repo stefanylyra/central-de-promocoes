@@ -704,6 +704,82 @@
             cursor:pointer;
             flex-shrink:0;
         }
+        .modal-produto {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 15px;
+        }
+        .modal-content {
+            background: white;
+            max-width: 520px;
+            width: 100%;
+            border-radius: 20px;
+            max-height: 92vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .modal-header {
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1;
+        }
+        .modal-body {
+            padding: 16px;
+        }
+        .produto-imagem-grande {
+            width: 100%;
+            height: 280px;
+            object-fit: contain;
+            background: #f8f9fa;
+            border-radius: 16px;
+        }
+        .preco-detalhe-antigo {
+            font-size: 18px;
+            text-decoration: line-through;
+            color: #999;
+        }
+        .preco-detalhe-novo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--cor-principal);
+        }
+        .aviso-afiliado {
+            background: #fff3cd;
+            color: #856404;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            margin: 20px 0;
+        }
+        .produtos-similares {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .similar-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 8px;
+            text-align: center;
+            font-size: 13px;
+        }
+        .similar-card img {
+            width: 100%;
+            height: 90px;
+            object-fit: contain;
+        }
     </style>
 </head>
 <body>
@@ -825,7 +901,18 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-
+<!-- MODAL DETALHE DO PRODUTO -->
+    <div id="modal-produto" class="modal-produto">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-nome">Nome do Produto</h3>
+                <button onclick="fecharModal()" style="font-size:24px; background:none; border:none; cursor:pointer;">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Preenchido via JavaScript -->
+            </div>
+        </div>
+    </div>
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyCydy0v27JxNvKBW3aqFa3Uel8Slkdtcx4",
@@ -1227,6 +1314,91 @@
             localStorage.setItem("cookiesAceitos", "sim");
             document.getElementById("cookie-banner").style.display = "none";
         }
+        // ==================== NOVAS FUNÇÕES PARA DETALHES ====================
+
+        function mostrarDetalhesProduto(id) {
+            const prod = PRODUTOS_LOJA.find(p => p.id === id);
+            if (!prod) return;
+
+            const similares = PRODUTOS_LOJA
+                .filter(p => p.id !== id && p.categoria === prod.categoria)
+                .slice(0, 4);
+
+            const html = `
+                <img src="${prod.img}" class="produto-imagem-grande" alt="${prod.nome}">
+                
+                <h2 style="margin:15px 0 8px;">${prod.nome}</h2>
+                
+                <div>
+                    <span class="preco-detalhe-antigo">De: R$ ${prod.precoAntigo}</span><br>
+                    <span class="preco-detalhe-novo">Por: R$ ${prod.precoNovo}</span>
+                </div>
+
+                <div class="aviso-afiliado">
+                    ⚠️ Este site é apenas um agregador de ofertas. Não vendemos produtos.<br>
+                    Você será redirecionado para a loja <strong>${prod.loja.toUpperCase()}</strong>.
+                </div>
+
+                <div style="margin:20px 0; text-align:center;">
+                    <img src="${obterLogoLoja(prod.loja)}" style="height:50px; margin-bottom:10px;">
+                    <p><strong>Promoção na ${prod.loja.toUpperCase()}</strong></p>
+                </div>
+
+                ${prod.descricao ? `<p style="line-height:1.5; color:#444;">${prod.descricao}</p>` : ''}
+
+                <a href="${prod.link}" target="_blank" class="btn-oferta" style="font-size:16px; padding:14px; margin:25px 0;">
+                    🛒 Comprar na ${prod.loja.toUpperCase()}
+                </a>
+
+                <h4 style="margin:25px 0 12px;">Produtos Semelhantes</h4>
+                <div class="produtos-similares">
+                    ${similares.map(p => `
+                        <div class="similar-card" onclick="fecharModal(); setTimeout(() => mostrarDetalhesProduto('${p.id}'), 300)">
+                            <img src="${p.img}">
+                            <p style="margin-top:6px; font-weight:600;">${p.nome.substring(0, 35)}...</p>
+                            <strong style="color:var(--cor-principal)">R$ ${p.precoNovo}</strong>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <small style="display:block; text-align:center; margin-top:25px; color:#888;">
+                    Preços e estoque podem variar. Última atualização: agora.
+                </small>
+            `;
+
+            document.getElementById('modal-body').innerHTML = html;
+            document.getElementById('modal-produto').style.display = 'flex';
+        }
+
+        function fecharModal() {
+            document.getElementById('modal-produto').style.display = 'none';
+        }
+
+        // ==================== ATUALIZAR CRIAR CARD ====================
+        function criarCardProduto(prod, isFavoritoPage = false) {
+            const isFav = favoritosSalvos.includes(prod.id);
+            return `
+                <div class="produto-card" onclick="mostrarDetalhesProduto('${prod.id}')">
+                    <button class="btn-favorito ${isFav ? 'active' : ''}" data-id="${prod.id}" onclick="event.stopImmediatePropagation(); alternarFavorito('${prod.id}')">
+                        <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+                    </button>
+                    <img src="${prod.img}" class="produto-img">
+                    <img src="${obterLogoLoja(prod.loja)}" class="logo-loja">
+                    <div class="produto-nome">${prod.nome}</div>
+                    <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(${getAvaliacoesRandom()})</span></div>
+                    <div>
+                        <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
+                        <div class="preco-novo">R$ ${prod.precoNovo}</div>
+                    </div>
+                    <a href="${prod.link}" target="_blank" class="btn-oferta" onclick="event.stopImmediatePropagation()">Ver Oferta</a>
+                </div>
+            `;
+        }
+
+        // Fechar modal clicando fora
+        document.getElementById('modal-produto').addEventListener('click', function(e) {
+            if (e.target === this) fecharModal();
+        });
     </script>
 
     <!-- Modal Cadastro -->
