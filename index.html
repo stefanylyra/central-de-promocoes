@@ -813,6 +813,39 @@
     border-color: var(--cor-principal);
     box-shadow: 0 0 0 3px rgba(204, 10, 18, 0.2);
 }
+        /* === LOJAS COLORIDAS (estilo premium) === */
+.loja-card {
+    min-width: 110px;
+    height: 58px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.loja-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.loja-card img {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Cores específicas por loja */
+.loja-amazon { background: #000000; }
+.loja-ml     { background: #FFCC00; }
+.loja-shopee { background: #EE4D2D; }
+.loja-magalu { background: #00A1E6; }
+.loja-shein  { background: #FF0099; }
+.loja-aliexpress { background: #FF6200; }
     </style>
 </head>
 <body>
@@ -849,16 +882,29 @@
                 <div class="lojas-wrapper">
                     <button class="btn-loja-nav left" onclick="scrollLojas(-250)"><i class="fa-solid fa-chevron-left"></i></button>
                     <div class="lojas-grid" id="lojas-grid">
-                        <div class="loja-card" onclick="filtrarPorLoja('amazon')"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"><span>Amazon</span></div>
-                        <div class="loja-card" onclick="filtrarPorLoja('mercado-livre')"><img src="https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo_large_plus.webp"><span>Mercado Livre</span></div>
-                        <div class="loja-card" onclick="filtrarPorLoja('shopee')"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg"><span>Shopee</span></div>
-                        <div class="loja-card" onclick="filtrarPorLoja('magalu')"><img src="https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png"><span>Magazine Luiza</span></div>
-                        <div class="loja-card" onclick="filtrarPorLoja('shein')"><img src="https://i.imgur.com/6X1J0xP.png"><span>Shein</span></div>
-                        <div class="loja-card" onclick="filtrarPorLoja('aliexpress')"><img src="https://i.imgur.com/8yqZb1L.png"><span>AliExpress</span></div>
-                    </div>
-                    <button class="btn-loja-nav right" onclick="scrollLojas(250)"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
-            </div>
+                        
+    <div class="loja-card loja-amazon" onclick="filtrarPorLoja('amazon')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
+    </div>
+    <div class="loja-card loja-ml" onclick="filtrarPorLoja('mercado-livre')">
+        <img src="https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo_large_plus.webp">
+    </div>
+    <div class="loja-card loja-shopee" onclick="filtrarPorLoja('shopee')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg">
+    </div>
+    <div class="loja-card loja-magalu" onclick="filtrarPorLoja('magalu')">
+        <img src="https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png">
+    </div>
+    <div class="loja-card loja-shein" onclick="filtrarPorLoja('shein')">
+        <img src="https://i.imgur.com/6X1J0xP.png">
+    </div>
+    <div class="loja-card loja-aliexpress" onclick="filtrarPorLoja('aliexpress')">
+        <img src="https://i.imgur.com/8yqZb1L.png">
+    </div>
+</div>
+     <button class="btn-loja-nav right" onclick="scrollLojas(250)"><i class="fa-solid fa-chevron-right"></i></button>
+       </div>
+   </div>
 
             <div id="wrapper-ofertas-quentes">
                 <div class="section-title">
