@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Admin Marketplace Pro</title>
-
 <style>
 body { margin:0; font-family:Arial; background:#f4f6fb; }
-
 #login {
     max-width:380px;
     margin:100px auto;
@@ -14,60 +12,59 @@ body { margin:0; font-family:Arial; background:#f4f6fb; }
     padding:20px;
     border-radius:12px;
 }
-
 #admin {
     display:none;
     min-height:100vh;
-    display:flex;
+    flex-direction: row;
 }
-
 .sidebar {
     width:220px;
     background:#111;
     color:#fff;
     padding:15px;
 }
-
 .sidebar button {
     width:100%;
     margin:5px 0;
     padding:10px;
 }
-
 .content {
     flex:1;
     padding:20px;
+    overflow-y: auto;
 }
-
 input, select {
     width:100%;
     padding:10px;
-    margin:5px 0;
+    margin:8px 0;
+    box-sizing: border-box;
 }
-
 button {
     cursor:pointer;
+    padding:10px;
 }
-
 .grid {
     display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
+    grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
+    gap:15px;
 }
-
 .card {
     background:#fff;
-    padding:10px;
+    padding:12px;
     border-radius:10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-
 img {
     width:100%;
     border-radius:10px;
 }
+.price-old {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 0.9em;
+}
 </style>
 </head>
-
 <body>
 
 <!-- LOGIN -->
@@ -80,70 +77,65 @@ img {
 
 <!-- ADMIN -->
 <div id="admin">
+    <div class="sidebar">
+        <h3>Admin Panel</h3>
+        <button onclick="logout()">Sair</button>
+        <hr>
+        <button onclick="tab('novo')">➕ Novo Produto</button>
+        <button onclick="tab('lista')">📦 Produtos</button>
+    </div>
+    
+    <div class="content">
+        <!-- NOVO / EDITAR -->
+        <div id="novo">
+            <h2 id="formTitle">Novo Produto</h2>
+            <input id="nome" placeholder="Nome do produto">
+            
+            <input id="precoAntigo" placeholder="Preço antigo (ex: 49.90)" onblur="formatPrice(this)">
+            <input id="precoNovo" placeholder="Preço novo (ex: 29.90)" onblur="formatPrice(this)">
+            
+            <select id="categoria">
+                <option value="roupas-masculinas">👕 Masculinas</option>
+                <option value="roupas-femininas">👗 Femininas</option>
+                <option value="plus-size">👚 Plus Size</option>
+                <option value="relogios">⌚ Relógios</option>
+                <option value="mae-bebe">👶 Mãe & Bebê</option>
+                <option value="viagens-bagagens">🧳 Viagens</option>
+                <option value="fones">🎧 Fones</option>
+                <option value="bolsas-masculinas">🎒 Bolsas Masc</option>
+                <option value="bolsas-femininas">👛 Bolsas Fem</option>
+                <option value="limpeza">🧼 Limpeza</option>
+                <option value="brinquedos">🧸 Brinquedos</option>
+                <option value="acessorios">💎 Acessórios</option>
+                <option value="pets">🐶 Pets</option>
+                <option value="sapatos">👟 Sapatos</option>
+                <option value="casa-construcao">🏡 Casa</option>
+                <option value="beleza">💄 Beleza</option>
+                <option value="papelaria">✏️ Papelaria</option>
+            </select>
+            
+            <select id="loja">
+                <option value="shopee">Shopee</option>
+                <option value="amazon">Amazon</option>
+                <option value="magazine">Magazine Luiza</option>
+                <option value="mercado-livre">Mercado Livre</option>
+                <option value="shein">Shein</option>
+                <option value="aliexpress">AliExpress</option>
+            </select>
+            
+            <input id="imgUrl" placeholder="URL da imagem">
+            <input id="link" placeholder="Link afiliado">
+            
+            <button id="btnSalvar" onclick="salvar()">Salvar Produto</button>
+            <button onclick="cancelarEdicao()" style="background:#ccc; margin-left:10px;">Cancelar</button>
+        </div>
 
-<div class="sidebar">
-    <h3>Admin Panel</h3>
-    <button onclick="logout()">Sair</button>
-    <hr>
-    <button onclick="tab('novo')">➕ Novo Produto</button>
-    <button onclick="tab('lista')">📦 Produtos</button>
-</div>
-
-<div class="content">
-
-<!-- NOVO -->
-<div id="novo">
-
-<h2>Novo Produto</h2>
-
-<input id="nome" placeholder="Nome">
-<input id="precoAntigo" placeholder="Preço antigo">
-<input id="precoNovo" placeholder="Preço novo">
-
-<select id="categoria">
-            <option value="roupas-masculinas">👕 Masculinas</option>
-            <option value="roupas-femininas">👗 Femininas</option>
-            <option value="plus-size">👚 Plus Size</option>
-            <option value="relogios">⌚ Relógios</option>
-            <option value="mae-bebe">👶 Mãe & Bebê</option>
-            <option value="viagens-bagagens">🧳 Viagens</option>
-            <option value="fones">🎧 Fones</option>
-            <option value="bolsas-masculinas">🎒 Bolsas Masc</option>
-            <option value="bolsas-femininas">👛 Bolsas Fem</option>
-            <option value="limpeza">🧼 Limpeza</option>
-            <option value="brinquedos">🧸 Brinquedos</option>
-            <option value="acessorios">💎 Acessórios</option>
-            <option value="pets">🐶 Pets</option>
-            <option value="sapatos">👟 Sapatos</option>
-            <option value="casa-construcao">🏡 Casa</option>
-            <option value="beleza">💄 Beleza</option>
-            <option value="papelaria">✏️ Papelaria</option>
-        </select>
-
-   <select id="loja">
-<option value="shopee">Shopee</option>
-<option value="amazon">Amazon</option>
-<option value="magazine">Magazine Luiza</option>
-<option value="mercado-livre">Mercado Livre</option>
-<option value="shein">Shein</option>
-<option value="aliexpress">AliExpress</option>
-</select>
-
-<input id="imgUrl" placeholder="URL da imagem (obrigatório)">
-
-<input id="link" placeholder="Link afiliado">
-
-<button onclick="salvar()">Salvar Produto</button>
-
-</div>
-
-<!-- LISTA -->
-<div id="lista" style="display:none;">
-<h2>Produtos</h2>
-<div class="grid" id="grid"></div>
-</div>
-
-</div>
+        <!-- LISTA -->
+        <div id="lista" style="display:none;">
+            <h2>Produtos Cadastrados</h2>
+            <div class="grid" id="grid"></div>
+        </div>
+    </div>
 </div>
 
 <!-- FIREBASE -->
@@ -152,8 +144,7 @@ img {
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 <script>
-
-const firebaseConfig = {
+const firebaseConfig = { /* seu config atual */ 
   apiKey: "AIzaSyCydy0v27JxNvKBW3aqFa3Uel8Slkdtcx4",
   authDomain: "central-promocoes.firebaseapp.com",
   projectId: "central-promocoes",
@@ -163,98 +154,145 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// LOGIN
-function login(){
-    auth.signInWithEmailAndPassword(email.value, senha.value)
-    .catch(() => alert("Erro login"));
+let editingId = null;
+
+// ==================== FORMATAÇÃO DE PREÇO ====================
+function formatPrice(input) {
+    let valor = input.value.replace(/[^0-9,]/g, '').replace(',', '.');
+    if (!valor) return;
+    
+    let numero = parseFloat(valor);
+    if (isNaN(numero)) return;
+    
+    input.value = numero.toLocaleString('pt-BR', { 
+        style: 'currency', 
+        currency: 'BRL' 
+    });
 }
 
-// LOGOUT
+// ==================== LOGIN / AUTH ====================
+function login(){
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+    auth.signInWithEmailAndPassword(email, senha).catch(() => alert("Erro no login"));
+}
+
 function logout(){
     auth.signOut();
 }
 
-// AUTH CHECK
 auth.onAuthStateChanged(user => {
-
     const loginBox = document.getElementById("login");
     const adminBox = document.getElementById("admin");
-
     if(!user){
         loginBox.style.display = "block";
         adminBox.style.display = "none";
         return;
     }
-
     if(user.email === "tete1808sd@gmail.com"){
         loginBox.style.display = "none";
         adminBox.style.display = "flex";
+        tab('lista'); // abre na lista por padrão
     } else {
         alert("Sem permissão");
         auth.signOut();
     }
 });
 
-// TAB
+// ==================== TABS ====================
 function tab(t){
-    novo.style.display = t === "novo" ? "block" : "none";
-    lista.style.display = t === "lista" ? "block" : "none";
+    document.getElementById("novo").style.display = t === "novo" ? "block" : "none";
+    document.getElementById("lista").style.display = t === "lista" ? "block" : "none";
 }
 
-// SALVAR PRODUTO
+// ==================== SALVAR / ATUALIZAR ====================
 async function salvar(){
-
     const produto = {
-        nome: nome.value,
-        precoAntigo: precoAntigo.value,
-        precoNovo: precoNovo.value,
-        img: imgUrl.value,
-        link: link.value,
-        categoria: categoria.value,
-        loja: loja.value,
-        createdAt: Date.now()
+        nome: document.getElementById("nome").value,
+        precoAntigo: document.getElementById("precoAntigo").value,
+        precoNovo: document.getElementById("precoNovo").value,
+        img: document.getElementById("imgUrl").value,
+        link: document.getElementById("link").value,
+        categoria: document.getElementById("categoria").value,
+        loja: document.getElementById("loja").value,
+        updatedAt: Date.now()
     };
 
-    await db.collection("produtos").add(produto);
-
-    alert("Produto salvo!");
-
-    nome.value = "";
-    precoAntigo.value = "";
-    precoNovo.value = "";
-    imgUrl.value = "";
-    link.value = "";
+    try {
+        if (editingId) {
+            await db.collection("produtos").doc(editingId).update(produto);
+            alert("Produto atualizado com sucesso!");
+        } else {
+            produto.createdAt = Date.now();
+            await db.collection("produtos").add(produto);
+            alert("Produto salvo com sucesso!");
+        }
+        cancelarEdicao();
+        tab('lista');
+    } catch (e) {
+        alert("Erro ao salvar: " + e.message);
+    }
 }
 
-// LISTAR
+// ==================== EDITAR ====================
+function editar(id) {
+    db.collection("produtos").doc(id).get().then(doc => {
+        if (!doc.exists) return;
+        
+        const p = doc.data();
+        editingId = id;
+        
+        document.getElementById("nome").value = p.nome || "";
+        document.getElementById("precoAntigo").value = p.precoAntigo || "";
+        document.getElementById("precoNovo").value = p.precoNovo || "";
+        document.getElementById("imgUrl").value = p.img || "";
+        document.getElementById("link").value = p.link || "";
+        document.getElementById("categoria").value = p.categoria || "";
+        document.getElementById("loja").value = p.loja || "";
+        
+        document.getElementById("formTitle").textContent = "Editar Produto";
+        document.getElementById("btnSalvar").textContent = "Atualizar Produto";
+        
+        tab('novo');
+    });
+}
+
+function cancelarEdicao(){
+    editingId = null;
+    document.getElementById("formTitle").textContent = "Novo Produto";
+    document.getElementById("btnSalvar").textContent = "Salvar Produto";
+    
+    // limpar campos
+    document.getElementById("nome").value = "";
+    document.getElementById("precoAntigo").value = "";
+    document.getElementById("precoNovo").value = "";
+    document.getElementById("imgUrl").value = "";
+    document.getElementById("link").value = "";
+}
+
+// ==================== LISTAR PRODUTOS ====================
 db.collection("produtos").onSnapshot(snap => {
-
+    const grid = document.getElementById("grid");
     grid.innerHTML = "";
-
+    
     snap.forEach(doc => {
         const p = doc.data();
-
         grid.innerHTML += `
         <div class="card">
-            <img src="${p.img}">
-            <b>${p.nome}</b><br>
-            R$ ${p.precoNovo}<br>
-            ${p.loja}<br>
-
-            <button onclick="db.collection('produtos').doc('${doc.id}').delete()">
-            Excluir
-            </button>
-        </div>
-        `;
+            <img src="${p.img || ''}" onerror="this.src='https://via.placeholder.com/300'">
+            <b>${p.nome || 'Sem nome'}</b><br>
+            <span class="price-old">De: ${p.precoAntigo || ''}</span><br>
+            <strong>Por: ${p.precoNovo || ''}</strong><br>
+            <small>${p.loja || ''}</small><br><br>
+            
+            <button onclick="editar('${doc.id}')" style="background:#28a745; color:white; margin-right:5px;">Editar</button>
+            <button onclick="if(confirm('Excluir este produto?')) db.collection('produtos').doc('${doc.id}').delete()" style="background:#dc3545; color:white;">Excluir</button>
+        </div>`;
     });
-
 });
-
 </script>
-
 </body>
 </html>
