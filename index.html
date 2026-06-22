@@ -780,6 +780,39 @@
             height: 90px;
             object-fit: contain;
         }
+        /* === GALERIA DE IMAGENS NO MODAL === */
+.imagens-galeria {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+.imagem-principal {
+    width: 100%;
+    height: 280px;
+    object-fit: contain;
+    background: #f8f9fa;
+    border-radius: 16px;
+}
+.thumbnails {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 5px 0;
+}
+.thumbnail {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.thumbnail.active {
+    border-color: var(--cor-principal);
+    box-shadow: 0 0 0 3px rgba(204, 10, 18, 0.2);
+}
     </style>
 </head>
 <body>
@@ -1082,25 +1115,25 @@
             container.innerHTML = filtrados.map(prod => criarCardProduto(prod, true)).join('');
         }
 
-        function criarCardProduto(prod, isFavoritoPage = false) {
-            const isFav = favoritosSalvos.includes(prod.id);
-            return `
-                <div class="produto-card">
-                    <button class="btn-favorito ${isFav ? 'active' : ''}" data-id="${prod.id}" onclick="alternarFavorito('${prod.id}')">
-                        <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
-                    </button>
-                    <img src="${prod.img}" class="produto-img">
-                    <img src="${obterLogoLoja(prod.loja)}" class="logo-loja">
-                    <div class="produto-nome">${prod.nome}</div>
-                    <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(${getAvaliacoesRandom()})</span></div>
-                    <div>
-                        <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
-                        <div class="preco-novo">R$ ${prod.precoNovo}</div>
-                    </div>
-                    <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
-                </div>
-            `;
-        }
+     function criarCardProduto(prod, isFavoritoPage = false) {
+    const isFav = favoritosSalvos.includes(prod.id);
+    return `
+        <div class="produto-card" onclick="mostrarDetalhesProduto('${prod.id}')">
+            <button class="btn-favorito ${isFav ? 'active' : ''}" data-id="${prod.id}" onclick="event.stopImmediatePropagation(); alternarFavorito('${prod.id}')">
+                <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+            </button>
+            <img src="${prod.img}" class="produto-img">
+            <img src="${obterLogoLoja(prod.loja)}" class="logo-loja">
+            <div class="produto-nome">${prod.nome}</div>
+            <div class="estrelas"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span>(${getAvaliacoesRandom()})</span></div>
+            <div>
+                <div class="preco-antigo">R$ ${prod.precoAntigo}</div>
+                <div class="preco-novo">R$ ${prod.precoNovo}</div>
+            </div>
+            <a href="${prod.link}" target="_blank" class="btn-oferta" onclick="event.stopImmediatePropagation()">Ver Oferta</a>
+        </div>
+    `;
+}
 
         function obterLogoLoja(loja) {
             const logos = {
@@ -1314,66 +1347,90 @@
             localStorage.setItem("cookiesAceitos", "sim");
             document.getElementById("cookie-banner").style.display = "none";
         }
-        // ==================== NOVAS FUNÇÕES PARA DETALHES ====================
+    // ==================== NOVAS FUNÇÕES PARA DETALHES (COM MÚLTIPLAS IMAGENS) ====================
+function mostrarDetalhesProduto(id) {
+    const prod = PRODUTOS_LOJA.find(p => p.id === id);
+    if (!prod) return;
 
-        function mostrarDetalhesProduto(id) {
-            const prod = PRODUTOS_LOJA.find(p => p.id === id);
-            if (!prod) return;
+    const similares = PRODUTOS_LOJA
+        .filter(p => p.id !== id && p.categoria === prod.categoria)
+        .slice(0, 4);
 
-            const similares = PRODUTOS_LOJA
-                .filter(p => p.id !== id && p.categoria === prod.categoria)
-                .slice(0, 4);
+    // Junta todas as imagens (principal + extras)
+    let todasImagens = [prod.img];
+    if (prod.imagensExtras && Array.isArray(prod.imagensExtras)) {
+        todasImagens = todasImagens.concat(prod.imagensExtras);
+    }
 
-            const html = `
-                <img src="${prod.img}" class="produto-imagem-grande" alt="${prod.nome}">
-                
-                <h2 style="margin:15px 0 8px;">${prod.nome}</h2>
-                
-                <div>
-                    <span class="preco-detalhe-antigo">De: R$ ${prod.precoAntigo}</span><br>
-                    <span class="preco-detalhe-novo">Por: R$ ${prod.precoNovo}</span>
+    const html = `
+        <div class="imagens-galeria">
+            <img id="imagem-principal-modal" src="${todasImagens[0]}" class="imagem-principal" alt="${prod.nome}">
+            
+            ${todasImagens.length > 1 ? `
+            <div class="thumbnails">
+                ${todasImagens.map((url, index) => `
+                    <img src="${url}" 
+                         class="thumbnail ${index === 0 ? 'active' : ''}" 
+                         onclick="trocarImagemModal(this, '${url}')">
+                `).join('')}
+            </div>` : ''}
+        </div>
+        
+        <h2 style="margin:15px 0 8px;">${prod.nome}</h2>
+        
+        <div>
+            <span class="preco-detalhe-antigo">De: R$ ${prod.precoAntigo}</span><br>
+            <span class="preco-detalhe-novo">Por: R$ ${prod.precoNovo}</span>
+        </div>
+
+        <div class="aviso-afiliado">
+            ⚠️ Este site é apenas um agregador de ofertas. Não vendemos produtos.<br>
+            Você será redirecionado para a loja <strong>${prod.loja.toUpperCase()}</strong>.
+        </div>
+
+        <div style="margin:20px 0; text-align:center;">
+            <img src="${obterLogoLoja(prod.loja)}" style="height:50px; margin-bottom:10px;">
+            <p><strong>Promoção na ${prod.loja.toUpperCase()}</strong></p>
+        </div>
+
+        <a href="${prod.link}" target="_blank" class="btn-oferta" style="font-size:16px; padding:14px; margin:25px 0;">
+            🛒 Comprar na ${prod.loja.toUpperCase()}
+        </a>
+
+        <h4 style="margin:25px 0 12px;">Produtos Semelhantes</h4>
+        <div class="produtos-similares">
+            ${similares.map(p => `
+                <div class="similar-card" onclick="fecharModal(); setTimeout(() => mostrarDetalhesProduto('${p.id}'), 300)">
+                    <img src="${p.img}">
+                    <p style="margin-top:6px; font-weight:600;">${p.nome.substring(0, 35)}...</p>
+                    <strong style="color:var(--cor-principal)">R$ ${p.precoNovo}</strong>
                 </div>
+            `).join('')}
+        </div>
 
-                <div class="aviso-afiliado">
-                    ⚠️ Este site é apenas um agregador de ofertas. Não vendemos produtos.<br>
-                    Você será redirecionado para a loja <strong>${prod.loja.toUpperCase()}</strong>.
-                </div>
+        <small style="display:block; text-align:center; margin-top:25px; color:#888;">
+            Preços e estoque podem variar. Última atualização: agora.
+        </small>
+    `;
 
-                <div style="margin:20px 0; text-align:center;">
-                    <img src="${obterLogoLoja(prod.loja)}" style="height:50px; margin-bottom:10px;">
-                    <p><strong>Promoção na ${prod.loja.toUpperCase()}</strong></p>
-                </div>
+    document.getElementById('modal-body').innerHTML = html;
+    document.getElementById('modal-produto').style.display = 'flex';
+}
 
-                ${prod.descricao ? `<p style="line-height:1.5; color:#444;">${prod.descricao}</p>` : ''}
+// Função para trocar imagem ao clicar nas miniaturas
+function trocarImagemModal(elemento, novaSrc) {
+    document.getElementById('imagem-principal-modal').src = novaSrc;
+    
+    // Remove active de todas e adiciona na clicada
+    document.querySelectorAll('.thumbnail').forEach(thumb => {
+        thumb.classList.remove('active');
+    });
+    elemento.classList.add('active');
+}
 
-                <a href="${prod.link}" target="_blank" class="btn-oferta" style="font-size:16px; padding:14px; margin:25px 0;">
-                    🛒 Comprar na ${prod.loja.toUpperCase()}
-                </a>
-
-                <h4 style="margin:25px 0 12px;">Produtos Semelhantes</h4>
-                <div class="produtos-similares">
-                    ${similares.map(p => `
-                        <div class="similar-card" onclick="fecharModal(); setTimeout(() => mostrarDetalhesProduto('${p.id}'), 300)">
-                            <img src="${p.img}">
-                            <p style="margin-top:6px; font-weight:600;">${p.nome.substring(0, 35)}...</p>
-                            <strong style="color:var(--cor-principal)">R$ ${p.precoNovo}</strong>
-                        </div>
-                    `).join('')}
-                </div>
-
-                <small style="display:block; text-align:center; margin-top:25px; color:#888;">
-                    Preços e estoque podem variar. Última atualização: agora.
-                </small>
-            `;
-
-            document.getElementById('modal-body').innerHTML = html;
-            document.getElementById('modal-produto').style.display = 'flex';
-        }
-
-        function fecharModal() {
-            document.getElementById('modal-produto').style.display = 'none';
-        }
-
+function fecharModal() {
+    document.getElementById('modal-produto').style.display = 'none';
+}
         // ==================== ATUALIZAR CRIAR CARD ====================
         function criarCardProduto(prod, isFavoritoPage = false) {
             const isFav = favoritosSalvos.includes(prod.id);
