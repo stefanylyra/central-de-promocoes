@@ -378,53 +378,69 @@ db.collection("produtos").onSnapshot(snap => {
     snap.forEach(doc => {
         const p = doc.data();
         const tempo = tempoDecorrido(p.createdAt);
-       grid.innerHTML += `
-<div class="card">
+db.collection("produtos").onSnapshot(snap => {
 
-    <img src="${p.img || ''}">
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
 
-    <div class="tempo-postagem">
-        ${tempo}
-    </div>
+    snap.forEach(doc => {
 
-    <span class="nome-produto">
-        ${p.nome}
-    </span>
-        <span class="price-old">
-            De: ${p.precoAntigo || ''}
-        </span>
-        <br>
+        const p = doc.data();
 
-        <strong>
-            Por: ${p.precoNovo || ''}
-        </strong>
+        const tempo = tempoDecorrido(p.createdAt);
 
-        <br>
+        grid.innerHTML += `
+        <div class="card">
 
-        <small>
-            ${p.loja || ''} • ${p.imagensExtras ? p.imagensExtras.length : 0} extra(s)
-        </small>
+            <img src="${p.img || ''}" alt="${p.nome || ''}">
 
-    </div>
+            <div class="tempo-postagem">
+                ${tempo}
+            </div>
 
-    <div class="acoes">
+            <div class="info-produto">
 
-        <button
-            class="btn-editar"
-            onclick="editar('${doc.id}')">
-            Editar
-        </button>
+                <span class="nome-produto">
+                    ${p.nome || 'Sem nome'}
+                </span>
 
-        <button
-            class="btn-excluir"
-            onclick="if(confirm('Excluir este produto?')) db.collection('produtos').doc('${doc.id}').delete()">
-            Excluir
-        </button>
+                <span class="price-old">
+                    De: ${p.precoAntigo || ''}
+                </span>
 
-    </div>
+                <br>
 
-</div>`;
+                <strong>
+                    Por: ${p.precoNovo || ''}
+                </strong>
+
+                <br>
+
+                <small>
+                    ${p.loja || ''} • ${p.imagensExtras ? p.imagensExtras.length : 0} extra(s)
+                </small>
+
+            </div>
+
+            <div class="acoes">
+
+                <button
+                    class="btn-editar"
+                    onclick="editar('${doc.id}')">
+                    Editar
+                </button>
+
+                <button
+                    class="btn-excluir"
+                    onclick="if(confirm('Excluir este produto?')) db.collection('produtos').doc('${doc.id}').delete()">
+                    Excluir
+                </button>
+
+            </div>
+
+        </div>`;
     });
+
 });
 </script>
 </body>
