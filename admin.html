@@ -103,6 +103,25 @@ button {
     padding:10px;
 }
 .price-old { text-decoration: line-through; color: #999; }
+    .price-old {
+    text-decoration: line-through;
+    color:#999;
+}
+
+.tempo-postagem{
+    font-size:14px;
+    color:#888;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.nome-produto{
+    font-weight:bold;
+    line-height:1.4;
+    height:55px;
+    overflow:hidden;
+    display:block;
+}
 </style>
 </head>
 <body>
@@ -205,6 +224,36 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 let editingId = null;
+
+    function tempoDecorrido(timestamp) {
+
+    if (!timestamp) return "";
+
+    const agora = Date.now();
+    const diferenca = agora - timestamp;
+
+    const minutos = Math.floor(diferenca / (1000 * 60));
+    const horas = Math.floor(diferenca / (1000 * 60 * 60));
+    const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+    const meses = Math.floor(dias / 30);
+    const anos = Math.floor(dias / 365);
+
+    if (minutos < 1) return "Agora mesmo";
+
+    if (minutos < 60)
+        return `há ${minutos} min`;
+
+    if (horas < 24)
+        return `há ${horas}h`;
+
+    if (dias < 30)
+        return `há ${dias} dia${dias > 1 ? "s" : ""}`;
+
+    if (meses < 12)
+        return `há ${meses} mês${meses > 1 ? "es" : ""}`;
+
+    return `há ${anos} ano${anos > 1 ? "s" : ""}`;
+}
 
 // ==================== FORMATAÇÃO DE PREÇO ====================
 function formatPrice(input) {
@@ -328,17 +377,19 @@ db.collection("produtos").onSnapshot(snap => {
     
     snap.forEach(doc => {
         const p = doc.data();
+        const tempo = tempoDecorrido(p.createdAt);
        grid.innerHTML += `
 <div class="card">
 
-    <img src="${p.img || ''}" alt="${p.nome || ''}">
+    <img src="${p.img || ''}">
 
-    <div class="info-produto">
+    <div class="tempo-postagem">
+        ${tempo}
+    </div>
 
-        <span class="nome-produto">
-            ${p.nome || 'Sem nome'}
-        </span>
-
+    <span class="nome-produto">
+        ${p.nome}
+    </span>
         <span class="price-old">
             De: ${p.precoAntigo || ''}
         </span>
