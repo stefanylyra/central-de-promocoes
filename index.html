@@ -799,15 +799,15 @@
     border-color: var(--cor-principal);
     box-shadow: 0 0 0 3px rgba(204, 10, 18, 0.2);
 }
-/* === LOJAS COLORIDAS (VERSÃO CORRIGIDA E COMPACTA) === */
+/* === LOJAS COLORIDAS (VERSÃO FINAL) === */
 .loja-card {
-    min-width: 78px;
-    height: 46px;
+    min-width: 82px;
+    height: 48px;
     border-radius: 9999px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 10px;
+    padding: 0 12px;
     flex-shrink: 0;
     box-shadow: 0 3px 8px rgba(0,0,0,0.12);
     transition: all 0.2s ease;
@@ -820,12 +820,13 @@
 }
 
 .loja-card img {
-    height: 24px;
+    height: 26px;
     width: auto;
     object-fit: contain;
+    filter: brightness(1.08);
 }
 
-/* Cores por loja */
+/* Cores específicas */
 .loja-amazon     { background: #000000; }
 .loja-ml         { background: #FFCC00; }
 .loja-shopee     { background: #EE4D2D; }
