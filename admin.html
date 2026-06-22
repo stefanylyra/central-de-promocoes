@@ -252,7 +252,9 @@
                 link: document.getElementById("link").value,
                 categoria: document.getElementById("categoria").value,
                 loja: document.getElementById("loja").value,
-                updatedAt: Date.now()
+               
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
             };
 
             try {
@@ -293,7 +295,7 @@
             });
         }
 
-        function cancelarEdicao()){
+        function cancelarEdicao(){
             editingId = null;
             document.getElementById("formTitle").textContent = "Novo Produto";
             document.getElementById("btnSalvar").textContent = "Salvar Produto";
