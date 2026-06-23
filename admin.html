@@ -127,25 +127,43 @@
                 <input id="nome" placeholder="Nome do produto" required>
                 <input id="precoAntigo" placeholder="Preço antigo (ex: 49.90)" onblur="formatPrice(this)">
                 <input id="precoNovo" placeholder="Preço novo (ex: 29.90)" onblur="formatPrice(this)">
-                <select id="categoria">
-                    <option value="roupas-masculinas">👕 Masculinas</option>
-                    <option value="roupas-femininas">👗 Femininas</option>
-                    <option value="plus-size">👚 Plus Size</option>
-                    <option value="relogios">⌚ Relógios</option>
-                    <option value="mae-bebe">👶 Mãe & Bebê</option>
-                    <option value="viagens-bagagens">🧳 Viagens</option>
-                    <option value="fones">🎧 Fones</option>
-                    <option value="bolsas-masculinas">🎒 Bolsas Masc</option>
-                    <option value="bolsas-femininas">👛 Bolsas Fem</option>
-                    <option value="limpeza">🧼 Limpeza</option>
-                    <option value="brinquedos">🧸 Brinquedos</option>
-                    <option value="acessorios">💎 Acessórios</option>
-                    <option value="pets">🐶 Pets</option>
-                    <option value="sapatos">👟 Sapatos</option>
-                    <option value="casa-construcao">🏡 Casa</option>
-                    <option value="beleza">💄 Beleza</option>
-                    <option value="papelaria">✏️ Papelaria</option>
-                </select>
+               <select id="categoria" onchange="carregarSubcategorias()">
+
+    <option value="roupas-masculinas">👕 Roupas Masculinas</option>
+    <option value="roupas-femininas">👗 Roupas Femininas</option>
+    <option value="roupas-infantis">🧒 Roupas Infantis</option>
+    <option value="plus-size">👚 Plus Size</option>
+    <option value="sapatos">👟 Sapatos</option>
+    <option value="relogios">⌚ Relógios</option>
+    <option value="acessorios">💎 Acessórios</option>
+    <option value="bolsas-masculinas">🎒 Bolsas Masculinas</option>
+    <option value="bolsas-femininas">👝 Bolsas Femininas</option>
+    <option value="eletronicos">💻 Eletrônicos</option>
+    <option value="eletrodomesticos">📺 Eletrodomésticos</option>
+    <option value="games">🎮 Games</option>
+    <option value="fitness">🏋️ Fitness</option>
+    <option value="automotivo">🚗 Automotivo</option>
+    <option value="livros">📚 Livros</option>
+    <option value="mae-bebe">👶 Mãe & Bebê</option>
+    <option value="alimentos">🍔 Alimentos</option>
+    <option value="beleza">💄 Beleza</option>
+    <option value="perfumes">🌸 Perfumes</option>
+    <option value="pets">🐶 Pets</option>
+    <option value="brinquedos">🧸 Brinquedos</option>
+    <option value="papelaria">✏️ Papelaria</option>
+    <option value="limpeza">🧼 Limpeza</option>
+    <option value="casa-construcao">🏡 Casa & Construção</option>
+    <option value="viagens-bagagens">🧳 Viagens</option>
+    <option value="festividades">🎉 Festividades</option>
+
+</select>
+                <select id="subcategoria">
+
+    <option value="">
+        Selecione uma subcategoria
+    </option>
+
+</select>
                <select id="loja">
     <option value="shopee">Shopee</option>
     <option value="amazon">Amazon</option>
@@ -191,7 +209,71 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
         let editingId = null;
+const SUBCATEGORIAS = {
 
+    "sapatos": [
+        "Masculino",
+        "Feminino",
+        "Infantil"
+    ],
+
+    "roupas-infantis": [
+        "Masculino",
+        "Feminino"
+    ],
+
+    "beleza": [
+        "Maquiagem",
+        "Cuidados com a Pele"
+    ],
+
+    "eletronicos": [
+        "Fones",
+        "Eletroportáteis",
+        "Computadores",
+        "Caixa de Som",
+        "PC Gamer"
+    ],
+
+    "eletrodomesticos": [
+        "Máquina de Lavar",
+        "TV",
+        "Geladeira",
+        "Microondas",
+        "Fogão"
+    ],
+
+    "festividades": [
+        "Natal",
+        "Copa do Mundo",
+        "Halloween",
+        "Ano Novo",
+        "Aniversário"
+    ],
+
+    "games": [
+        "PlayStation",
+        "Xbox",
+        "Nintendo",
+        "PC Gamer",
+        "Acessórios"
+    ],
+
+    "fitness": [
+        "Musculação",
+        "Suplementos",
+        "Roupas Fitness",
+        "Equipamentos"
+    ],
+
+    "automotivo": [
+        "Acessórios",
+        "Som Automotivo",
+        "Ferramentas",
+        "Cuidados"
+    ]
+
+};
         // ==================== FORMATAÇÃO DE PREÇO ====================
         function formatPrice(input) {
             let valor = input.value.replace(/[^0-9,]/g, '').replace(',', '.');
@@ -273,6 +355,33 @@
             </div>
     `;
 }
+
+        // FUNÇÃO SUBCATEGORIAS
+        
+        function carregarSubcategorias(){
+
+    const categoria =
+        document.getElementById("categoria").value;
+
+    const select =
+        document.getElementById("subcategoria");
+
+    select.innerHTML =
+        '<option value="">Selecione uma subcategoria</option>';
+
+    if(!SUBCATEGORIAS[categoria]) return;
+
+    SUBCATEGORIAS[categoria].forEach(sub => {
+
+        select.innerHTML += `
+            <option value="${sub}">
+                ${sub}
+            </option>
+        `;
+
+    });
+
+}
         // ==================== SALVAR / ATUALIZAR ====================
         async function salvar(){
             const imagensExtras = [];
@@ -286,7 +395,10 @@
                 img: document.getElementById("imgUrl").value, // imagem principal
                 imagensExtras: imagensExtras, // array com até 2 extras
                 link: document.getElementById("link").value,
+                
                 categoria: document.getElementById("categoria").value,
+                subcategoria: document.getElementById("subcategoria").value,
+                
                 loja: document.getElementById("loja").value,
                 
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -320,8 +432,11 @@
                 document.getElementById("precoNovo").value = p.precoNovo || "";
                 document.getElementById("imgUrl").value = p.img || "";
                 document.getElementById("link").value = p.link || "";
-                document.getElementById("categoria").value = p.categoria || "";
                 document.getElementById("loja").value = p.loja || "";
+                document.getElementById("categoria").value = p.categoria || "";
+                carregarSubcategorias();
+                document.getElementById("subcategoria").value = p.subcategoria || "";
+                
                 // Imagens extras
                 document.getElementById("imgExtra1").value = p.imagensExtras && p.imagensExtras[0] ? p.imagensExtras[0] : "";
                 document.getElementById("imgExtra2").value = p.imagensExtras && p.imagensExtras[1] ? p.imagensExtras[1] : "";
@@ -342,6 +457,7 @@
             document.getElementById("imgExtra1").value = "";
             document.getElementById("imgExtra2").value = "";
             document.getElementById("link").value = "";
+            document.getElementById("subcategoria").value = "";
         }
 
         // ==================== LISTAR ====================
@@ -373,9 +489,15 @@
                             Por: ${p.precoNovo || ''}
                         </strong>
                         <br>
-                        <small>
-                            ${p.loja || ''} • ${p.imagensExtras ? p.imagensExtras.length : 0} extra(s)
-                        </small>
+                 <small>
+                     🏪 ${p.loja || ''}
+                        <br>
+                     📂 ${p.categoria || ''}
+                        <br>
+                     🏷️ ${p.subcategoria || ''}
+                        <br>
+                     📷 ${p.imagensExtras ? p.imagensExtras.length : 0} extra(s)
+                </small>
                     </div>
                     <div class="acoes">
                         <button
