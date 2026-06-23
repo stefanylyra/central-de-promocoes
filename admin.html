@@ -244,14 +244,14 @@
         
     function atualizarAnalises(produtos){
 
-    const lojas = {
-        shopee: 0,
-        amazon: 0,
-        "mercado-livre": 0,
-        shein: 0,
-        aliexpress: 0,
-        magazine: 0
-    };
+   const lojas = {
+    shopee: 0,
+    amazon: 0,
+    "mercado-livre": 0,
+    shein: 0,
+    aliexpress: 0,
+    magalu: 0
+};
 
     produtos.forEach(p => {
         if(lojas[p.loja] !== undefined){
@@ -269,8 +269,8 @@
             <p>🔵 Mercado Livre: ${lojas["mercado-livre"]}</p>
             <p>🔴 Shein: ${lojas.shein}</p>
             <p>🟣 AliExpress: ${lojas.aliexpress}</p>
-            <p>🟢 Magazine Luiza: ${lojas.magazine}</p>
-        </div>
+            <p>🟢 Magazine Luiza: ${lojas.magalu}</p>    
+            </div>
     `;
 }
         // ==================== SALVAR / ATUALIZAR ====================
