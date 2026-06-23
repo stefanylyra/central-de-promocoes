@@ -1154,17 +1154,23 @@
     `;
 }
 
-        function obterLogoLoja(loja) {
-            const logos = {
-                amazon: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
-                shopee: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg",
-                magalu: "https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png",
-                "mercado-livre": "https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo_large_plus.webp",
-                shein: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Shein_logo.svg/512px-Shein_logo.svg.png",
-                aliexpress: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Aliexpress_logo.svg/512px-Aliexpress_logo.svg.png"
-            };
-            return logos[loja] || "";
-        }
+      function obterLogoLoja(loja) {
+    if (!loja) return "";
+
+    const lojaNormalizada = loja.toLowerCase().trim();
+
+    const logos = {
+        "amazon": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
+        "shopee": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg",
+        "magalu": "https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png",
+        "magazine": "https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png", // compatibilidade
+        "mercado-livre": "https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo_large_plus.webp",
+        "shein": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Shein_logo.svg/512px-Shein_logo.svg.png",
+        "aliexpress": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Aliexpress_logo.svg/512px-Aliexpress_logo.svg.png"
+    };
+
+    return logos[lojaNormalizada] || "";
+}
 function tempoDecorrido(dataFirestore) {
 
     if (!dataFirestore) return "Agora";
@@ -1240,12 +1246,30 @@ function tempoDecorrido(dataFirestore) {
             mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
         }
 
-        function filtrarPorLoja(loja) {
-            const filtrados = PRODUTOS_LOJA.filter(p => (p.loja || "").toLowerCase() === loja.toLowerCase());
-            document.getElementById('titulo-aba-ofertas').innerText = `🏪 ${loja.toUpperCase()}`;
-            renderizarGridOfertas(filtrados);
-            mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
+      function filtrarPorLoja(loja) {
+    const lojaNormalizada = loja.toLowerCase();
+
+    const produtosFiltrados = PRODUTOS_LOJA.filter(prod => {
+        if (!prod.loja) return false;
+        const lojaProd = prod.loja.toLowerCase();
+        
+        // Mapeamento de compatibilidade
+        const equivalentes = {
+            "magalu": ["magalu", "magazine", "magazine luiza"],
+            "mercado-livre": ["mercado-livre", "mercadolivre", "mercado livre"]
+        };
+
+        if (equivalentes[lojaNormalizada]) {
+            return equivalentes[lojaNormalizada].includes(lojaProd);
         }
+        
+        return lojaProd === lojaNormalizada;
+    });
+
+    document.getElementById("titulo-aba-ofertas").innerText = `🏪 ${loja.toUpperCase()}`;
+    renderizarGridOfertas(produtosFiltrados);
+    mudarAba("ofertas", document.querySelectorAll(".nav-item")[2]);
+}
 
         function filtrarPesquisa() {
             const termo = document.getElementById('input-busca').value.toLowerCase().trim();
