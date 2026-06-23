@@ -1506,7 +1506,9 @@ function fecharModal() {
 }
         // ==================== ATUALIZAR CRIAR CARD ====================
         function criarCardProduto(prod, isFavoritoPage = false) {
-            const tempo = tempoDecorrido(prod.criadoEm);
+            const tempo = tempoDecorrido({
+    toDate: () => new Date(prod.createdAt)
+});
             const isFav = favoritosSalvos.includes(prod.id);
             return `
                 <div class="produto-card" onclick="mostrarDetalhesProduto('${prod.id}')">
