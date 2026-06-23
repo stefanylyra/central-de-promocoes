@@ -119,6 +119,7 @@
             <hr>
             <button onclick="tab('novo')">➕ Novo Produto</button>
             <button onclick="tab('lista')">📦 Produtos</button>
+            <button onclick="tab('analises')">📊 Análises</button>
         </div>
         <div class="content">
             <div id="novo">
@@ -167,7 +168,11 @@
                 <h2>Produtos Cadastrados</h2>
                 <div class="grid" id="grid"></div>
             </div>
-        </div>
+        <div id="analises" style="display:none;">
+    <h2>📊 Análises</h2>
+
+    <div id="resumoLojas"></div>
+</div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -224,11 +229,50 @@
         });
 
         // ==================== TABS ====================
-        function tab(t){
-            document.getElementById("novo").style.display = t === "novo" ? "block" : "none";
-            document.getElementById("lista").style.display = t === "lista" ? "block" : "none";
-        }
+       function tab(t){
+    document.getElementById("novo").style.display =
+        t === "novo" ? "block" : "none";
 
+    document.getElementById("lista").style.display =
+        t === "lista" ? "block" : "none";
+
+    document.getElementById("analises").style.display =
+        t === "analises" ? "block" : "none";
+}
+
+    // outro ai
+        
+    function atualizarAnalises(produtos){
+
+    const lojas = {
+        shopee: 0,
+        amazon: 0,
+        "mercado-livre": 0,
+        shein: 0,
+        aliexpress: 0,
+        magazine: 0
+    };
+
+    produtos.forEach(p => {
+        if(lojas[p.loja] !== undefined){
+            lojas[p.loja]++;
+        }
+    });
+    const total = produtos.length;
+
+    document.getElementById("resumoLojas").innerHTML = `
+        <div class="card">
+            <h3>Total de Produtos: ${total}</h3>
+
+            <p>🟠 Shopee: ${lojas.shopee}</p>
+            <p>🟡 Amazon: ${lojas.amazon}</p>
+            <p>🔵 Mercado Livre: ${lojas["mercado-livre"]}</p>
+            <p>🔴 Shein: ${lojas.shein}</p>
+            <p>🟣 AliExpress: ${lojas.aliexpress}</p>
+            <p>🟢 Magazine Luiza: ${lojas.magazine}</p>
+        </div>
+    `;
+}
         // ==================== SALVAR / ATUALIZAR ====================
         async function salvar(){
             const imagensExtras = [];
@@ -301,12 +345,20 @@
         }
 
         // ==================== LISTAR ====================
-        db.collection("produtos").onSnapshot(snap => {
-            const grid = document.getElementById("grid");
-            grid.innerHTML = "";
-            snap.forEach(doc => {
-                const p = doc.data();
-                grid.innerHTML += `
+       db.collection("produtos").onSnapshot(snap => {
+
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
+
+    const produtos = []; // ← ADICIONE AQUI
+
+    snap.forEach(doc => {
+
+        const p = doc.data();
+
+        produtos.push(p); // ← ADICIONE AQUI
+
+        grid.innerHTML += `
                 <div class="card">
                     <img src="${p.img || ''}" alt="${p.nome || ''}">
                     <div class="info-produto">
@@ -339,6 +391,7 @@
                     </div>
                 </div>`;
             });
+           atualizarAnalises(produtos);
         });
     </script>
 </body>
