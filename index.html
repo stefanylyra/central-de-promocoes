@@ -143,11 +143,10 @@
         .afiliado-banner {
             background-color: #fff3cd;
             color: #856404;
-            padding: 12px 16px;
-            font-size: 12px;
-            text-align: center;
-            border-bottom: 1px solid #ffeeba;
-            font-weight: 500;
+            padding: 14px 16px;
+            font-size: 13px;
+            border-radius: 12px;
+            margin: 16px;
             line-height: 1.4;
         }
 
@@ -579,6 +578,34 @@
             background: rgba(30,30,30,.9);
         }
 
+        /* === CARROSSEL DE BANNERS === */
+        .carrossel-banners {
+            position: relative;
+            width: 100%;
+            height: 230px;
+            overflow: hidden;
+            margin: 20px 0 25px 0;
+            border-radius: 16px;
+        }
+        .banner-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+            display: none;
+        }
+        .banner-slide.active {
+            opacity: 1;
+            display: block;
+        }
+        .banner-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+
         .modal-cadastro{
             position:fixed;
             inset:0;
@@ -704,6 +731,7 @@
             cursor:pointer;
             flex-shrink:0;
         }
+
         .modal-produto {
             position: fixed;
             inset: 0;
@@ -780,88 +808,51 @@
             height: 90px;
             object-fit: contain;
         }
-        /* === GALERIA DE IMAGENS NO MODAL === */
-.imagens-galeria {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 15px;
-}
-.imagem-principal {
-    width: 100%;
-    height: 280px;
-    object-fit: contain;
-    background: #f8f9fa;
-    border-radius: 16px;
-}
-.thumbnails {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    padding: 5px 0;
-}
-.thumbnail {
-    width: 70px;
-    height: 70px;
-    object-fit: contain;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    cursor: pointer;
-    flex-shrink: 0;
-}
-.thumbnail.active {
-    border-color: var(--cor-principal);
-    box-shadow: 0 0 0 3px rgba(204, 10, 18, 0.2);
-}
-        /* TEMPO DA POSTAGEM */
-.tempo-postagem{
-    position:absolute;
-    top:10px;
-    left:10px;
-    background:rgba(255,255,255,.95);
-    padding:4px 8px;
-    border-radius:20px;
-    font-size:11px;
-    font-weight:600;
-    color:#666;
-    z-index:30;
-    box-shadow:0 2px 6px rgba(0,0,0,.12);
-}
-
-.tempo-postagem i{
-    color:#cc0a12;
-    margin-right:4px;
-}
-        /* Carrossel de Banners */
-.carrossel-banners {
-    position: relative;
-    width: 100%;
-    height: 220px;
-    overflow: hidden;
-    margin: 20px 0;
-    border-radius: 16px;
-}
-
-.banner-slide {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.8s ease;
-    display: none;
-}
-
-.banner-slide.active {
-    opacity: 1;
-    display: block;
-}
-
-.banner-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 16px;
-}
+        .imagens-galeria {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        .imagem-principal {
+            width: 100%;
+            height: 280px;
+            object-fit: contain;
+            background: #f8f9fa;
+            border-radius: 16px;
+        }
+        .thumbnails {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 5px 0;
+        }
+        .thumbnail {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .thumbnail.active {
+            border-color: var(--cor-principal);
+            box-shadow: 0 0 0 3px rgba(204, 10, 18, 0.2);
+        }
+        .tempo-postagem{
+            position:absolute;
+            top:10px;
+            left:10px;
+            background:rgba(255,255,255,.95);
+            padding:4px 8px;
+            border-radius:20px;
+            font-size:11px;
+            font-weight:600;
+            color:#666;
+            z-index:30;
+            box-shadow:0 2px 6px rgba(0,0,0,.12);
+        }
     </style>
 </head>
 <body>
@@ -888,8 +879,6 @@
             </div>
         </header>
 
-      
-        
         <main id="aba-inicio" class="app-page active">
             <div class="lojas-container">
                 <h3 class="titulo-lojas">Filtrar por loja</h3>
@@ -914,18 +903,23 @@
                 </div>
                 <div class="ofertas-quentes-carrossel" id="carrossel-hot-deals"></div>
             </div>
-            <!-- === CARROSSEL DE BANNERS PROMOCIONAIS (só na home) === -->
+
+            <!-- CARROSSEL DE BANNERS (4 imagens na ordem que você enviou) -->
             <div id="banner-carousel" class="carrossel-banners">
                 <div class="banner-slide active">
-                    <img src="https://i.imgur.com/VOc0R.png" alt="Banner 1">
+                    <img src="https://p16-cc-web-image-sign-sg.ibyteimg.com/tos-alisg-i-tnf8g33v4j-sg/18461f06a86c4a68ae2efe8b60698b75~tplv-tnf8g33v4j-ai-watermark-resize:2508:1672.image?rk3s=855ced9f&x-expires=1783606517&x-signature=3UVTdIMXNmf7MyDx%2FKmtYLIxIn0%3D" alt="Banner 1">
                 </div>
                 <div class="banner-slide">
-                    <img src="https://i.imgur.com/1RlbS.png" alt="Banner 2">
+                    <img src="https://p16-cc-web-image-sign-sg.ibyteimg.com/tos-alisg-i-tnf8g33v4j-sg/b3dc0e0f7642464583f1d777e280e284~tplv-tnf8g33v4j-ai-watermark-resize:480:480.image?rk3s=8880c87b&x-expires=1784902728&x-signature=XtyzzK8onAOHgOI9ey4jGb92rxo%3D" alt="Banner 2">
                 </div>
                 <div class="banner-slide">
-                    <img src="https://i.imgur.com/t8ljg.png" alt="Banner 3">
+                    <img src="https://p19-cc-web-image-sign-sg.ibyteimg.com/tos-alisg-i-tnf8g33v4j-sg/27177d11db25458b9ce840fa9484fd1a~tplv-tnf8g33v4j-ai-watermark-resize:480:480.image?rk3s=8880c87b&x-expires=1784902366&x-signature=6GakaBpsdP9%2B%2B%2B%2BVeCRI1DaFxsM%3D" alt="Banner 3">
+                </div>
+                <div class="banner-slide">
+                    <img src="https://p19-cc-web-image-sign-sg.ibyteimg.com/tos-alisg-i-tnf8g33v4j-sg/41a5b2c32a34496fa8fa5e5625cf4f1d~tplv-tnf8g33v4j-ai-watermark-resize:2730:1536.image?rk3s=855ced9f&x-expires=1783606673&x-signature=6WcvOb%2BE16jU7ubzKL%2FUVJZvVEU%3D" alt="Banner 4">
                 </div>
             </div>
+
             <div class="info-vendas-barra" id="barra-beneficios">
                 <div class="info-item"><i class="fa-solid fa-shield-halved"></i> Lojas Seguras</div>
                 <div class="info-item"><i class="fa-solid fa-truck"></i> Achados Frete Grátis</div>
@@ -943,8 +937,9 @@
             <div class="carrossel-depoimentos-container" id="wrapper-depoimentos">
                 <div class="carrossel-depoimentos-track" id="track-depoimentos"></div>
             </div>
-                        <!-- Aviso Importante no final -->
-            <div class="afiliado-banner" style="margin: 30px 16px 20px; border-radius: 12px;">
+
+            <!-- AVISO LARANJA NO FINAL DA PÁGINA INICIAL -->
+            <div class="afiliado-banner" style="margin: 30px 16px 40px;">
                 ⚠️ <strong>Aviso Importante:</strong> Este site não vende nada. Apenas selecionamos e achamos as melhores ofertas de lojas confiáveis e redirecionamos você; portanto, estoques e preços podem ser alterados ao longo do tempo! Corram antes que as promoções acabem.
             </div>
         </main>
@@ -996,18 +991,18 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<!-- MODAL DETALHE DO PRODUTO -->
+
+    <!-- MODAL DETALHE DO PRODUTO -->
     <div id="modal-produto" class="modal-produto">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modal-nome">Nome do Produto</h3>
                 <button onclick="fecharModal()" style="font-size:24px; background:none; border:none; cursor:pointer;">&times;</button>
             </div>
-            <div class="modal-body" id="modal-body">
-                <!-- Preenchido via JavaScript -->
-            </div>
+            <div class="modal-body" id="modal-body"></div>
         </div>
     </div>
+
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyCydy0v27JxNvKBW3aqFa3Uel8Slkdtcx4",
@@ -1022,11 +1017,9 @@
         const db = firebase.firestore();
         const auth = firebase.auth();
 
-        // ==================== VARIÁVEIS GLOBAIS ====================
         let PRODUTOS_LOJA = [];
         let favoritosSalvos = JSON.parse(localStorage.getItem('favoritosSalvos')) || [];
         let categoriaAtiva = null;
-
         // ==================== DADOS ESTÁTICOS ====================
       const CATEGORIAS_DADOS = [
     {
@@ -1697,7 +1690,29 @@ function tempoDecorrido(dataFirestore) {
         function abrirPoliticaPrivacidade() {
             alert("Política de Privacidade - Em breve.");
         }
+// ==================== CARROSSEL DE BANNERS ====================
+        let currentBanner = 0;
+        const bannerSlides = document.querySelectorAll('#banner-carousel .banner-slide');
 
+        function showBanner() {
+            bannerSlides.forEach(slide => slide.classList.remove('active'));
+            if (bannerSlides[currentBanner]) bannerSlides[currentBanner].classList.add('active');
+        }
+
+        function nextBanner() {
+            currentBanner = (currentBanner + 1) % bannerSlides.length;
+            showBanner();
+        }
+
+        // ==================== INICIALIZAÇÃO ====================
+        document.addEventListener("DOMContentLoaded", () => {
+            carregarProdutosFirestore();
+
+            // Inicia carrossel de banners
+            if (bannerSlides.length > 0) {
+                showBanner();
+                setInterval(nextBanner, 4500);
+            }
         // ==================== INICIALIZAÇÃO ====================
         document.addEventListener("DOMContentLoaded", () => {
             carregarProdutosFirestore();
