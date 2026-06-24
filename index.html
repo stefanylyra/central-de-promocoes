@@ -1115,6 +1115,7 @@
         id: "festividades",
         nome: "🎉 Festividades",
         img: "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=400"
+        
     }
 ];
 
@@ -1205,15 +1206,8 @@
         }
         
         // mostrar produtos 
-        function mostrarSubcategorias(categoria) {
-    const lista = SUBCATEGORIAS[categoria];
-
-    if (!lista) {
-        filtrarPorCategoria(categoria);
-        return;
-    }
-
-    // renderiza os botões das subcategorias
+    function mostrarSubcategorias(categoria) {
+    filtrarPorCategoria(categoria);
 }
 
         // ==================== FAVORITOS (exige login) ====================
@@ -1259,7 +1253,7 @@
             const mosaicoContainer = document.getElementById('mosaico-categorias-container');
             if (mosaicoContainer) {
                 mosaicoContainer.innerHTML = CATEGORIAS_DADOS.map(cat => `
-                    <div class="categoria-card" onclick="mostrarSubcategorias('${cat.id}')">
+                    <div class="categoria-card" onclick="filtrarPorCategoria('${cat.id}')">
                         <span class="categoria-tag-top">Oferta</span>
                         <img src="${cat.img}" class="categoria-img">
                         <div class="categoria-glass-footer"><p>${cat.nome}</p></div>
