@@ -606,8 +606,8 @@
 .carrossel-banners img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important;     /* Garante que o conteúdo da direita (caixas de presente) apareça */
-    background-color: #fff;             /* Evita fundos transparentes feios se a imagem encolher */
+    object-fit: cover !important;     /* <--- MUDADO DE 'CONTAIN' PARA 'COVER' */
+    background-color: #fff;             
     display: block;
 }
 
