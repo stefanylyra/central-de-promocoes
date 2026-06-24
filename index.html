@@ -1161,6 +1161,41 @@
         "Aniversário"
     ],
 
+    "games": [const SUBCATEGORIAS = {
+    "sapatos": [
+        "Masculino",
+        "Feminino",
+        "Infantil"
+    ],
+    "roupas-infantis": [
+        "Masculino",
+        "Feminino"
+    ],
+    "beleza": [
+        "Maquiagem",
+        "Cuidados com a Pele"
+    ],
+    "eletronicos": [
+        "Fones",
+        "Eletroportáteis",
+        "Computadores",
+        "Caixa de Som",
+        "PC Gamer"
+    ],
+    "eletrodomesticos": [
+        "Máquina de Lavar",
+        "TV",
+        "Geladeira",
+        "Microondas",
+        "Fogão"
+    ],
+    "festividades": [
+        "Natal",
+        "Copa do Mundo",
+        "Halloween",
+        "Ano Novo",
+        "Aniversário"
+    ],
     "games": [
         "PlayStation",
         "Xbox",
@@ -1168,20 +1203,37 @@
         "PC Gamer",
         "Acessórios"
     ],
-
     "fitness": [
         "Musculação",
         "Suplementos",
         "Roupas Fitness",
         "Equipamentos"
     ],
-
     "automotivo": [
         "Acessórios",
         "Som Automotivo",
         "Ferramentas",
         "Cuidados"
-    ]
+    ],
+
+    // ==================== Categorias SEM subcategoria ====================
+    "roupas-masculinas": [],
+    "roupas-femininas": [],
+    "plus-size": [],
+    "relogios": [],
+    "acessorios": [],
+    "bolsas-masculinas": [],
+    "bolsas-femininas": [],
+    "livros": [],
+    "mae-bebe": [],
+    "alimentos": [],
+    "perfumes": [],
+    "pets": [],
+    "brinquedos": [],
+    "papelaria": [],
+    "limpeza": [],
+    "casa-construcao": [],
+    "viagens-bagagens": []
 };
 
         const DEPOIMENTOS_DADOS = [
@@ -1206,46 +1258,50 @@
         }
         
         // mostrar produtos 
-    function mostrarSubcategorias(categoria) {
-    const lista = SUBCATEGORIAS[categoria];
+function mostrarSubcategorias(categoriaId) {
+    categoriaAtiva = categoriaId;
 
-    if (!lista || lista.length === 0) {
-        filtrarPorCategoria(categoria);  // sem subcategoria
+    const info = CATEGORIAS_DADOS.find(c => c.id === categoriaId);
+    if (info) {
+        document.getElementById('titulo-aba-ofertas').innerText = `📂 ${info.nome}`;
+    }
+
+    // Remove subcategorias antigas
+    const subAntigo = document.getElementById('container-subcategorias');
+    if (subAntigo) subAntigo.remove();
+
+    const listaSub = SUBCATEGORIAS[categoriaId] || [];
+
+    if (listaSub.length === 0) {
+        filtrarPorCategoria(categoriaId);
         return;
     }
 
-    // Cria uma área temporária de subcategorias acima dos produtos
+    // Cria os botões de subcategoria
     let htmlSub = `
-        <div style="margin: 15px 0 10px; display: flex; flex-wrap: wrap; gap: 8px; padding: 0 16px;">
-            <button onclick="filtrarPorCategoria('${categoria}')" 
-                    style="padding:8px 14px; border-radius:20px; border:1px solid #ddd; background:#fff; font-size:13px;">
+        <div id="container-subcategorias" style="margin: 15px 0 10px; padding: 0 16px; display: flex; flex-wrap: wrap; gap: 8px;">
+            <button onclick="filtrarPorCategoria('${categoriaId}')" 
+                    class="sub-btn active"
+                    style="padding:8px 16px; border-radius:20px; border:1px solid #ddd; background:#fff; font-size:14px; cursor:pointer;">
                 Todas
             </button>`;
 
-    lista.forEach(sub => {
+    listaSub.forEach(sub => {
         htmlSub += `
-            <button onclick="filtrarPorCategoria('${categoria}', '${sub}')" 
-                    style="padding:8px 14px; border-radius:20px; border:1px solid #ddd; background:#fff; font-size:13px;">
+            <button onclick="filtrarPorCategoria('${categoriaId}', '${sub}')" 
+                    class="sub-btn"
+                    style="padding:8px 16px; border-radius:20px; border:1px solid #ddd; background:#fff; font-size:14px; cursor:pointer;">
                 ${sub}
             </button>`;
     });
 
     htmlSub += `</div>`;
 
-    // Insere antes do grid de produtos
-    const containerOfertas = document.getElementById('aba-ofertas');
-    let divSub = document.getElementById('container-subcategorias');
-    if (!divSub) {
-        divSub = document.createElement('div');
-        divSub.id = 'container-subcategorias';
-        containerOfertas.insertBefore(divSub, document.getElementById('grid-todas-ofertas'));
-    }
-    divSub.innerHTML = htmlSub;
+    const container = document.getElementById('aba-ofertas');
+    if (container) container.insertAdjacentHTML('afterbegin', htmlSub);
 
-    // Mostra todos da categoria inicialmente
-    filtrarPorCategoria(categoria);
+    filtrarPorCategoria(categoriaId);
 }
-
         // ==================== FAVORITOS (exige login) ====================
         function alternarFavorito(idProduto) {
             const user = auth.currentUser;
@@ -1457,17 +1513,18 @@ function tempoDecorrido(dataFirestore) {
             mudarAba('ofertas', elementoBotao);
         }
 
-      function filtrarPorCategoria(idCategoria, subcategoria = null) {
+    function filtrarPorCategoria(idCategoria, subcategoria = null) {
     categoriaAtiva = idCategoria;
+
     const info = CATEGORIAS_DADOS.find(c => c.id === idCategoria);
     if (info) {
-        document.getElementById('titulo-aba-ofertas').innerText = 
-            subcategoria ? `📂 ${info.nome} → ${subcategoria}` : `📂 ${info.nome}`;
+        let titulo = `📂 ${info.nome}`;
+        if (subcategoria) titulo += ` → ${subcategoria}`;
+        document.getElementById('titulo-aba-ofertas').innerText = titulo;
     }
 
     let filtrados = PRODUTOS_LOJA.filter(p => p.categoria === idCategoria);
 
-    // Filtro por subcategoria (se informado)
     if (subcategoria) {
         filtrados = filtrados.filter(p => p.subcategoria === subcategoria);
     }
@@ -1475,7 +1532,6 @@ function tempoDecorrido(dataFirestore) {
     renderizarGridOfertas(filtrados);
     mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
 }
-
       function filtrarPorLoja(loja) {
     const lojaNormalizada = loja.toLowerCase();
 
