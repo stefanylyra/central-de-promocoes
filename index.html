@@ -578,18 +578,18 @@
             background: rgba(30,30,30,.9);
         }
 
-   /* === CARROSSEL DE BANNERS === */
+ /* === CARROSSEL DE BANNERS === */
 .carrossel-banners {
     position: relative;
     width: 100%;
-    height: 260px;           /* Aumentei um pouco a altura */
+    max-width: 100%;
+    height: 280px;           /* Aumentei um pouco para ficar mais bonito */
     overflow: hidden;
-    margin: 12px 16px 8px;   /* Mantém margem igual dos lados */
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* opcional: sombra suave */
+    margin: 12px 0 20px 0;   /* Remove margem lateral para ocupar toda largura */
+    border-radius: 0;        /* Remove bordas arredondadas nas laterais para ficar full */
 }
 
-.banner-slide {
+.carrossel-banners .banner-slide {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -598,16 +598,15 @@
     display: none;
 }
 
-.banner-slide.active {
+.carrossel-banners .banner-slide.active {
     opacity: 1;
     display: block;
 }
 
-.banner-slide img {
+.carrossel-banners img {
     width: 100%;
     height: 100%;
-    object-fit: cover;        /* mantém a imagem preenchendo bem */
-    border-radius: 16px;
+    object-fit: cover;
     display: block;
 }
 
@@ -886,19 +885,19 @@
 
         <main id="aba-inicio" class="app-page active">
 
-            <!-- CARROSSEL NO TOPO (depois da busca e antes de Filtrar por loja) -->
+                      <!-- CARROSSEL NO TOPO -->
             <div id="banner-carousel" class="carrossel-banners" style="margin: 12px 16px 8px;">
                 <div class="banner-slide active">
-                    <img src="https://p16-cc-web-image-sign-sg.ibyteimg.com/tos-alisg-i-tnf8g33v4j-sg/18461f06a86c4a68ae2efe8b60698b75~tplv-tnf8g33v4j-ai-watermark-resize:2508:1672.image?rk3s=855ced9f&x-expires=1783606517&x-signature=3UVTdIMXNmf7MyDx%2FKmtYLIxIn0%3D" alt="Banner 1">
+                    <img src="https://i.imgur.com/rhaN6.png" alt="Banner 1">   <!-- Pessoas com sacolas -->
                 </div>
                 <div class="banner-slide">
-                    <img src="https://p16-cc-web-image-sign-sg.ibyteimg.com/tos-alisg-i-tnf8g33v4j-sg/b3dc0e0f7642464583f1d777e280e284~tplv-tnf8g33v4j-ai-watermark-resize:480:480.image?rk3s=8880c87b&x-expires=1784902728&x-signature=XtyzzK8onAOHgOI9ey4jGb92rxo%3D" alt="Banner 2">
+                    <img src="https://i.imgur.com/zbnw0.png" alt="Banner 2">   <!-- Celular com WhatsApp/Instagram -->
                 </div>
                 <div class="banner-slide">
-                    <img src="https://p19-cc-web-image-sign-sg.ibyteimg.com/tos-alisg-i-tnf8g33v4j-sg/27177d11db25458b9ce840fa9484fd1a~tplv-tnf8g33v4j-ai-watermark-resize:480:480.image?rk3s=8880c87b&x-expires=1784902366&x-signature=6GakaBpsdP9%2B%2B%2B%2BVeCRI1DaFxsM%3D" alt="Banner 3">
+                    <img src="https://i.imgur.com/EgHvy.png" alt="Banner 3">   <!-- Aviso Importante -->
                 </div>
                 <div class="banner-slide">
-                    <img src="https://p19-cc-web-image-sign-sg.ibyteimg.com/tos-alisg-i-tnf8g33v4j-sg/41a5b2c32a34496fa8fa5e5625cf4f1d~tplv-tnf8g33v4j-ai-watermark-resize:2730:1536.image?rk3s=855ced9f&x-expires=1783606673&x-signature=6WcvOb%2BE16jU7ubzKL%2FUVJZvVEU%3D" alt="Banner 4">
+                    <img src="https://i.imgur.com/Xiqcd.png" alt="Banner 4">   <!-- Relógio, tênis e celular -->
                 </div>
             </div>
 
