@@ -578,15 +578,15 @@
             background: rgba(30,30,30,.9);
         }
 
- /* === CARROSSEL DE BANNERS === */
+/* === CARROSSEL DE BANNERS === */
 .carrossel-banners {
     position: relative;
     width: 100%;
-    max-width: 100%;
-    height: 280px;           /* Aumentei um pouco para ficar mais bonito */
+    /* Removido o height fixo de 280px para evitar esticar/cortar */
+    aspect-ratio: 16 / 9;     /* Mantém a proporção perfeita do banner */
     overflow: hidden;
-    margin: 12px 0 20px 0;   /* Remove margem lateral para ocupar toda largura */
-    border-radius: 0;        /* Remove bordas arredondadas nas laterais para ficar full */
+    border-radius: 12px;       /* Bordas arredondadas elegantes iguais aos cards */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .carrossel-banners .banner-slide {
@@ -606,7 +606,8 @@
 .carrossel-banners img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;      /* Mudar de cover para contain impede o corte dos lados */
+    background-color: #fff;   /* Fundo branco caso a imagem mude de proporção */
     display: block;
 }
 
@@ -886,7 +887,7 @@
         <main id="aba-inicio" class="app-page active">
 
                       <!-- CARROSSEL NO TOPO -->
-            <div id="banner-carousel" class="carrossel-banners" style="margin: 12px 16px 8px;">
+            <div id="banner-carousel" class="carrossel-banners" style="margin: 16px; width: calc(100% - 32px);">
                 <div class="banner-slide active">
                     <img src="https://i.imgur.com/rhaN6.png" alt="Banner 1">   <!-- Pessoas com sacolas -->
                 </div>
