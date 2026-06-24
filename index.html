@@ -1207,6 +1207,42 @@
         
         // mostrar produtos 
     function mostrarSubcategorias(categoria) {
+    const lista = SUBCATEGORIAS[categoria];
+
+    if (!lista || lista.length === 0) {
+        filtrarPorCategoria(categoria);  // sem subcategoria
+        return;
+    }
+
+    // Cria uma área temporária de subcategorias acima dos produtos
+    let htmlSub = `
+        <div style="margin: 15px 0 10px; display: flex; flex-wrap: wrap; gap: 8px; padding: 0 16px;">
+            <button onclick="filtrarPorCategoria('${categoria}')" 
+                    style="padding:8px 14px; border-radius:20px; border:1px solid #ddd; background:#fff; font-size:13px;">
+                Todas
+            </button>`;
+
+    lista.forEach(sub => {
+        htmlSub += `
+            <button onclick="filtrarPorCategoria('${categoria}', '${sub}')" 
+                    style="padding:8px 14px; border-radius:20px; border:1px solid #ddd; background:#fff; font-size:13px;">
+                ${sub}
+            </button>`;
+    });
+
+    htmlSub += `</div>`;
+
+    // Insere antes do grid de produtos
+    const containerOfertas = document.getElementById('aba-ofertas');
+    let divSub = document.getElementById('container-subcategorias');
+    if (!divSub) {
+        divSub = document.createElement('div');
+        divSub.id = 'container-subcategorias';
+        containerOfertas.insertBefore(divSub, document.getElementById('grid-todas-ofertas'));
+    }
+    divSub.innerHTML = htmlSub;
+
+    // Mostra todos da categoria inicialmente
     filtrarPorCategoria(categoria);
 }
 
@@ -1253,7 +1289,7 @@
             const mosaicoContainer = document.getElementById('mosaico-categorias-container');
             if (mosaicoContainer) {
                 mosaicoContainer.innerHTML = CATEGORIAS_DADOS.map(cat => `
-                    <div class="categoria-card" onclick="filtrarPorCategoria('${cat.id}')">
+                    <div class="categoria-card" onclick="mostrarSubcategorias('${cat.id}')">
                         <span class="categoria-tag-top">Oferta</span>
                         <img src="${cat.img}" class="categoria-img">
                         <div class="categoria-glass-footer"><p>${cat.nome}</p></div>
@@ -1421,14 +1457,24 @@ function tempoDecorrido(dataFirestore) {
             mudarAba('ofertas', elementoBotao);
         }
 
-        function filtrarPorCategoria(idCategoria) {
-            categoriaAtiva = idCategoria;
-            const info = CATEGORIAS_DADOS.find(c => c.id === idCategoria);
-            if (info) document.getElementById('titulo-aba-ofertas').innerText = `📂 ${info.nome}`;
-            const filtrados = PRODUTOS_LOJA.filter(p => p.categoria === idCategoria);
-            renderizarGridOfertas(filtrados);
-            mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
-        }
+      function filtrarPorCategoria(idCategoria, subcategoria = null) {
+    categoriaAtiva = idCategoria;
+    const info = CATEGORIAS_DADOS.find(c => c.id === idCategoria);
+    if (info) {
+        document.getElementById('titulo-aba-ofertas').innerText = 
+            subcategoria ? `📂 ${info.nome} → ${subcategoria}` : `📂 ${info.nome}`;
+    }
+
+    let filtrados = PRODUTOS_LOJA.filter(p => p.categoria === idCategoria);
+
+    // Filtro por subcategoria (se informado)
+    if (subcategoria) {
+        filtrados = filtrados.filter(p => p.subcategoria === subcategoria);
+    }
+
+    renderizarGridOfertas(filtrados);
+    mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
+}
 
       function filtrarPorLoja(loja) {
     const lojaNormalizada = loja.toLowerCase();
