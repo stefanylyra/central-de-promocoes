@@ -1696,7 +1696,6 @@ function tempoDecorrido(dataFirestore) {
             alert("Política de Privacidade - Em breve.");
         }
 // ==================== CARROSSEL DE BANNERS ====================
-    // ==================== CARROSSEL DE BANNERS ====================
         let currentBanner = 0;
         const bannerSlides = document.querySelectorAll('#banner-carousel .banner-slide');
 
@@ -1710,7 +1709,7 @@ function tempoDecorrido(dataFirestore) {
             showBanner();
         }
 
-        // ==================== INICIALIZAÇÃO ====================
+  // ==================== INICIALIZAÇÃO ====================
         document.addEventListener("DOMContentLoaded", () => {
             carregarProdutosFirestore();
 
@@ -1864,11 +1863,6 @@ function fecharModal() {
             if (e.target === this) fecharModal();
         });
 
-// Inicia o carrossel
-if (slides.length > 0) {
-    showSlide();
-    setInterval(nextSlide, 5000); // Troca a cada 5 segundos
-}
     </script>
 
     <!-- Modal Cadastro -->
