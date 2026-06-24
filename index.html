@@ -578,33 +578,37 @@
             background: rgba(30,30,30,.9);
         }
 
-        /* === CARROSSEL DE BANNERS === */
-        .carrossel-banners {
-            position: relative;
-            width: 100%;
-            height: 230px;
-            overflow: hidden;
-            margin: 20px 0 25px 0;
-            border-radius: 16px;
-        }
-        .banner-slide {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1s ease;
-            display: none;
-        }
-        .banner-slide.active {
-            opacity: 1;
-            display: block;
-        }
-        .banner-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 16px;
-        }
+      /* === CARROSSEL DE BANNERS === */
+.carrossel-banners {
+    position: relative;
+    width: 100%;
+    height: 230px;
+    overflow: hidden;
+    margin: 12px 16px 8px;
+    border-radius: 16px;
+}
+
+.banner-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease;
+    display: none;
+}
+
+.banner-slide.active {
+    opacity: 1;
+    display: block;
+}
+
+.banner-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    display: block;
+}
 
         .modal-cadastro{
             position:fixed;
@@ -1692,6 +1696,7 @@ function tempoDecorrido(dataFirestore) {
             alert("Política de Privacidade - Em breve.");
         }
 // ==================== CARROSSEL DE BANNERS ====================
+    // ==================== CARROSSEL DE BANNERS ====================
         let currentBanner = 0;
         const bannerSlides = document.querySelectorAll('#banner-carousel .banner-slide');
 
@@ -1714,18 +1719,13 @@ function tempoDecorrido(dataFirestore) {
                 showBanner();
                 setInterval(nextBanner, 4500);
             }
-        // ==================== INICIALIZAÇÃO ====================
-        document.addEventListener("DOMContentLoaded", () => {
-            carregarProdutosFirestore();
-              setInterval(() => {
 
-    renderizarGridHome(PRODUTOS_LOJA);
+            setInterval(() => {
+                renderizarGridHome(PRODUTOS_LOJA);
+                renderizarGridOfertas(PRODUTOS_LOJA);
+                renderizarAbaFavoritos();
+            }, 60000);
 
-    renderizarGridOfertas(PRODUTOS_LOJA);
-
-    renderizarAbaFavoritos();
-
-       }, 60000);
             auth.onAuthStateChanged(user => {
                 if (user) {
                     db.collection("usuarios").doc(user.uid).get().then(doc => {
@@ -1863,19 +1863,6 @@ function fecharModal() {
         document.getElementById('modal-produto').addEventListener('click', function(e) {
             if (e.target === this) fecharModal();
         });
-        // Carrossel infinito dos banners
-let currentSlide = 0;
-const slides = document.querySelectorAll('.banner-slide');
-
-function showSlide() {
-    slides.forEach(slide => slide.classList.remove('active'));
-    slides[currentSlide].classList.add('active');
-}
-
-function nextSlide() {
-    currentSlide = (currentSlide + 1) % slides.length;
-    showSlide();
-}
 
 // Inicia o carrossel
 if (slides.length > 0) {
