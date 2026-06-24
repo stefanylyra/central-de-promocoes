@@ -1203,6 +1203,18 @@
                 construirEstrutura();
             });
         }
+        
+        // mostrar produtos 
+        function mostrarSubcategorias(categoria) {
+    const lista = SUBCATEGORIAS[categoria];
+
+    if (!lista) {
+        filtrarPorCategoria(categoria);
+        return;
+    }
+
+    // renderiza os botões das subcategorias
+}
 
         // ==================== FAVORITOS (exige login) ====================
         function alternarFavorito(idProduto) {
@@ -1247,7 +1259,7 @@
             const mosaicoContainer = document.getElementById('mosaico-categorias-container');
             if (mosaicoContainer) {
                 mosaicoContainer.innerHTML = CATEGORIAS_DADOS.map(cat => `
-                    <div class="categoria-card" onclick="filtrarPorCategoria('${cat.id}')">
+                    <div class="categoria-card" onclick="mostrarSubcategorias('${cat.id}')">
                         <span class="categoria-tag-top">Oferta</span>
                         <img src="${cat.img}" class="categoria-img">
                         <div class="categoria-glass-footer"><p>${cat.nome}</p></div>
