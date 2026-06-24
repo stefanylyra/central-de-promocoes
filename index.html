@@ -578,14 +578,15 @@
             background: rgba(30,30,30,.9);
         }
 
-      /* === CARROSSEL DE BANNERS === */
+   /* === CARROSSEL DE BANNERS === */
 .carrossel-banners {
     position: relative;
     width: 100%;
-    height: 230px;
+    height: 260px;           /* Aumentei um pouco a altura */
     overflow: hidden;
-    margin: 12px 16px 8px;
+    margin: 12px 16px 8px;   /* Mantém margem igual dos lados */
     border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* opcional: sombra suave */
 }
 
 .banner-slide {
@@ -605,7 +606,7 @@
 .banner-slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover;        /* mantém a imagem preenchendo bem */
     border-radius: 16px;
     display: block;
 }
