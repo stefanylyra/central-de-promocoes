@@ -1546,10 +1546,9 @@ function mostrarSubcategorias(categoriaId) {
     return logos[lojaNormalizada] || "";
 }
 function tempoDecorrido(dataFirestore) {
-    // Se não tiver data ou for inválida, mostra "Há algum tempo"
-    if (!dataFirestore || !dataFirestore.toDate) {
-        return "Há algum tempo";
-    }
+  if (!dataFirestore || !dataFirestore.toDate) {
+    return "Há 1 mês";  // ou "Produto antigo"
+}
 
     try {
         const agora = new Date();
