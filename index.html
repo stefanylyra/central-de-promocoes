@@ -858,7 +858,7 @@
             z-index:30;
             box-shadow:0 2px 6px rgba(0,0,0,.12);
         }
-        /* ===================== RESPONSIVIDADE ===================== */
+  /* ===================== RESPONSIVIDADE ===================== */
 
 /* MOBILE - Mantém exatamente como está hoje */
 @media (max-width: 768px) {
@@ -875,94 +875,48 @@
         grid-template-columns: repeat(3, 1fr);
     }
     
-    .info-vendas-barra {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
     nav.bottom-nav {
-        max-width: 500px;
-    }
-    
-    .btn-whatsapp {
-        right: 15px;
+        display: flex !important; /* Garante que apareça no mobile */
     }
 }
 
-/* DESKTOP - Layout mais amplo e confortável */
+/* DESKTOP - Layout mais amplo */
 @media (min-width: 769px) {
     body {
         padding: 20px 0;
+        background: #f1f3f5;
     }
     
     .app-container {
         max-width: 1200px;
         margin: 0 auto;
         border-radius: 16px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-        overflow: hidden;
-    }
-    
-    header {
-        padding: 20px 24px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
     }
     
     .grid-produtos {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 24px;
     }
     
     .grid-categorias {
-        grid-template-columns: repeat(5, 1fr);
-        gap: 16px;
+        grid-template-columns: repeat(5, 1fr) !important;
     }
     
     .info-vendas-barra {
         grid-template-columns: repeat(4, 1fr);
     }
     
-    .produto-img {
-        height: 180px;
-    }
-    
-    .section-title {
-        font-size: 22px;
-        margin: 28px 0 18px 0;
-    }
-    
-    .carrossel-banners {
-        width: 100% !important;
-        max-width: 1100px;
-        margin: 20px auto;
-        border-radius: 16px;
-    }
-    
-    .ofertas-quentes-carrossel .card-hot {
-        min-width: 180px;
-        max-width: 180px;
-    }
-    
-    .lojas-grid {
-        gap: 16px;
-    }
-    
-    .loja-card {
-        min-width: 160px;
-    }
-    
     nav.bottom-nav {
-        display: none; /* Esconde a bottom nav no desktop (melhor UX) */
+        display: none; /* Esconde no desktop (melhor experiência) */
     }
     
     .btn-whatsapp {
-        bottom: 30px;
-        right: 30px;
-        width: 60px;
-        height: 60px;
-        font-size: 28px;
-    }
-    
-    .modal-content {
-        max-width: 700px;
+        bottom: 40px;
+        right: 40px;
+        width: 65px;
+        height: 65px;
+        font-size: 30px;
     }
 }
     </style>
@@ -1697,15 +1651,17 @@ function tempoDecorrido(dataFirestore) {
     mudarAba("ofertas", document.querySelectorAll(".nav-item")[2]);
 }
 
-        function filtrarPesquisa() {
+               function filtrarPesquisa() {
             const termo = document.getElementById('input-busca').value.toLowerCase().trim();
             const activePage = document.querySelector('.app-page.active');
 
             if (termo.length > 0) {
                 if (activePage && activePage.id === 'aba-inicio') {
+                    // Esconde banners + outras seções
+                    document.getElementById('banner-carousel').style.display = 'none';
                     document.getElementById('wrapper-ofertas-quentes').style.display = 'none';
                     document.getElementById('barra-beneficios').style.display = 'none';
-                    document.getElementById('titulo-grid-home').innerText = "🔍 Resultados";
+                    document.getElementById('titulo-grid-home').innerText = "🔍 Resultados da Busca";
                     document.getElementById('link-ver-todos-home').style.display = 'none';
                     document.getElementById('titulo-depoimentos').style.display = 'none';
                     document.getElementById('wrapper-depoimentos').style.display = 'none';
@@ -1721,6 +1677,7 @@ function tempoDecorrido(dataFirestore) {
         }
 
         function restaurarElementosEscondidos() {
+            document.getElementById('banner-carousel').style.display = 'block';
             document.getElementById('wrapper-ofertas-quentes').style.display = 'block';
             document.getElementById('barra-beneficios').style.display = 'grid';
             document.getElementById('titulo-grid-home').innerText = "⚡ Ofertas Imperdíveis";
