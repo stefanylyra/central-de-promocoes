@@ -1546,27 +1546,35 @@ function mostrarSubcategorias(categoriaId) {
     return logos[lojaNormalizada] || "";
 }
 function tempoDecorrido(dataFirestore) {
+    // Se não tiver data ou for inválida, mostra "Há algum tempo"
+    if (!dataFirestore || !dataFirestore.toDate) {
+        return "Há algum tempo";
+    }
 
-    if (!dataFirestore) return "Agora";
+    try {
+        const agora = new Date();
+        const postagem = dataFirestore.toDate();
 
-    const agora = new Date();
-    const postagem = dataFirestore.toDate();
+        const diff = agora - postagem;
 
-    const diff = agora - postagem;
+        if (diff < 0) return "Agora"; // proteção contra datas futuras
 
-    const minutos = Math.floor(diff / 60000);
-    const horas = Math.floor(diff / 3600000);
-    const dias = Math.floor(diff / 86400000);
-    const meses = Math.floor(diff / 2592000000);
-    const anos = Math.floor(diff / 31536000000);
+        const minutos = Math.floor(diff / 60000);
+        const horas = Math.floor(diff / 3600000);
+        const dias = Math.floor(diff / 86400000);
+        const meses = Math.floor(diff / (30 * 86400000)); // aproximação
+        const anos = Math.floor(diff / 31536000000);
 
-    if (minutos < 1) return "Agora";
-    if (minutos < 60) return `há ${minutos}min`;
-    if (horas < 24) return `há ${horas}h`;
-    if (dias < 30) return `há ${dias}d`;
-    if (meses < 12) return `há ${meses} mês${meses > 1 ? "es" : ""}`;
+        if (minutos < 1) return "Agora";
+        if (minutos < 60) return `há ${minutos}min`;
+        if (horas < 24) return `há ${horas}h`;
+        if (dias < 30) return `há ${dias}d`;
+        if (meses < 12) return `há ${meses} mês${meses > 1 ? "es" : ""}`;
 
-    return `há ${anos} ano${anos > 1 ? "s" : ""}`;
+        return `há ${anos} ano${anos > 1 ? "s" : ""}`;
+    } catch (e) {
+        return "Há algum tempo";
+    }
 }
         function getAvaliacoesRandom() {
             const num = Math.floor(Math.random() * 15200) + 68;
