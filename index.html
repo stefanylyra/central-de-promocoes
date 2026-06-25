@@ -858,7 +858,7 @@
             z-index:30;
             box-shadow:0 2px 6px rgba(0,0,0,.12);
         }
-  /* ===================== RESPONSIVIDADE ===================== */
+ /* ===================== RESPONSIVIDADE ===================== */
 
 /* MOBILE - Mantém exatamente como está hoje */
 @media (max-width: 768px) {
@@ -874,13 +874,9 @@
     .grid-categorias {
         grid-template-columns: repeat(3, 1fr);
     }
-    
-    nav.bottom-nav {
-        display: flex !important; /* Garante que apareça no mobile */
-    }
 }
 
-/* DESKTOP - Layout mais amplo */
+/* DESKTOP - Layout mais amplo, mas com bottom nav visível */
 @media (min-width: 769px) {
     body {
         padding: 20px 0;
@@ -907,12 +903,20 @@
         grid-template-columns: repeat(4, 1fr);
     }
     
+    /* Bottom Navigation VISÍVEL no desktop também */
     nav.bottom-nav {
-        display: none; /* Esconde no desktop (melhor experiência) */
+        display: flex !important;
+        max-width: 1200px;
+        border-radius: 0 0 16px 16px;
+        padding: 14px 0;
+    }
+    
+    .nav-item {
+        font-size: 13px;
     }
     
     .btn-whatsapp {
-        bottom: 40px;
+        bottom: 90px;
         right: 40px;
         width: 65px;
         height: 65px;
