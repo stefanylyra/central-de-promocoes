@@ -671,70 +671,88 @@
             text-decoration:none;
         }
 
-        .lojas-container{
-            padding:16px;
-            background:transparent;
+                   .lojas-container{
+            padding: 16px;
+            background: transparent;
         }
 
         .titulo-lojas{
-            font-size:18px;
-            font-weight:700;
-            margin-bottom:12px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--texto-escuro);
         }
 
         .lojas-wrapper{
-            display:flex;
-            align-items:center;
-            gap:8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .lojas-grid{
-            display:flex;
-            gap:10px;
-            overflow-x:auto;
-            scroll-behavior:smooth;
-            scrollbar-width:none;
-            flex:1;
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            flex: 1;
+            padding: 6px 0;
         }
 
         .loja-card{
-            min-width:130px;
-            height:52px;
-            background:#fff;
-            border:1px solid var(--borda);
-            border-radius:12px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            gap:8px;
-            padding:0 12px;
-            flex-shrink:0;
+            min-width: 148px;
+            height: 62px;
+            border: none;
+            border-radius: 9999px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 0 18px;
+            flex-shrink: 0;
+            transition: all 0.25s ease;
+            font-weight: 600;
+            font-size: 14.5px;
+            color: #222;
+            cursor: pointer;
+        }
+
+        .loja-card:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
         .loja-card img {
-            width: 40px;
-            height: 24px;
+            width: 42px;
+            height: 30px;
             object-fit: contain;
-            display: block;
-            background: white;
-            padding: 2px;
-            border-radius: 6px;
         }
 
-        .loja-card span{
-            font-size:13px;
-            font-weight:600;
-        }
+        /* Cores específicas */
+        .loja-card.mercadolivre { background: #FFEE00; color: #000; }
+        .loja-card.amazon       { background: #000; color: #fff; }
+        .loja-card.shopee       { background: #EE4D2D; color: #fff; }
+        .loja-card.shein        { background: #FF69B4; color: #fff; }
+        .loja-card.magalu       { background: #00AEEF; color: #fff; }
+        .loja-card.aliexpress   { background: #FF2D55; color: #fff; }
 
         .btn-loja-nav{
-            width:34px;
-            height:34px;
-            border:none;
-            border-radius:50%;
-            background:var(--cor-principal);
-            color:#fff;
-            cursor:pointer;
-            flex-shrink:0;
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 50%;
+            background: var(--cor-principal);
+            color: #fff;
+            cursor: pointer;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(204,10,18,0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-loja-nav:hover {
+            background: #a00;
+            transform: scale(1.05);
         }
 
         .modal-produto {
@@ -976,19 +994,52 @@
 
 </div>
 
-            <div class="lojas-container">
+          ✅ Aqui está tudo pronto!
+1. Substitua toda a seção .lojas-container no HTML:
+HTML<div class="lojas-container">
                 <h3 class="titulo-lojas">Filtrar por loja</h3>
                 <div class="lojas-wrapper">
-                    <button class="btn-loja-nav left" onclick="scrollLojas(-250)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="btn-loja-nav left" onclick="scrollLojas(-280)"><i class="fa-solid fa-chevron-left"></i></button>
+                    
                     <div class="lojas-grid" id="lojas-grid">
-                        <div class="loja-card" onclick="filtrarPorLoja('amazon')"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"><span>Amazon</span></div>
-                        <div class="loja-card" onclick="filtrarPorLoja('mercado-livre')"><img src="https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo_large_plus.webp"><span>Mercado Livre</span></div>
-                        <div class="loja-card" onclick="filtrarPorLoja('shopee')"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg"><span>Shopee</span></div>
-                        <div class="loja-card" onclick="filtrarPorLoja('magalu')"><img src="https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png"><span>Magazine Luiza</span></div>
-                        <div class="loja-card" onclick="filtrarPorLoja('shein')"><img src="https://i.imgur.com/6X1J0xP.png"><span>Shein</span></div>
-                        <div class="loja-card" onclick="filtrarPorLoja('aliexpress')"><img src="https://i.imgur.com/8yqZb1L.png"><span>AliExpress</span></div>
+                        <!-- Mercado Livre -->
+                        <div class="loja-card mercadolivre" onclick="filtrarPorLoja('mercado-livre')">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Mercado_Livre_logo.svg/512px-Mercado_Livre_logo.svg.png" alt="Mercado Livre">
+                            <span>Mercado Livre</span>
+                        </div>
+
+                        <!-- Amazon -->
+                        <div class="loja-card amazon" onclick="filtrarPorLoja('amazon')">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon">
+                            <span>Amazon</span>
+                        </div>
+
+                        <!-- Shopee -->
+                        <div class="loja-card shopee" onclick="filtrarPorLoja('shopee')">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg" alt="Shopee">
+                            <span>Shopee</span>
+                        </div>
+
+                        <!-- Shein -->
+                        <div class="loja-card shein" onclick="filtrarPorLoja('shein')">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Shein_logo.svg/512px-Shein_logo.svg.png" alt="Shein">
+                            <span>Shein</span>
+                        </div>
+
+                        <!-- Magalu -->
+                        <div class="loja-card magalu" onclick="filtrarPorLoja('magalu')">
+                            <img src="https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png" alt="Magazine Luiza">
+                            <span>Magalu</span>
+                        </div>
+
+                        <!-- AliExpress -->
+                        <div class="loja-card aliexpress" onclick="filtrarPorLoja('aliexpress')">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Aliexpress_logo.svg/512px-Aliexpress_logo.svg.png" alt="AliExpress">
+                            <span>AliExpress</span>
+                        </div>
                     </div>
-                    <button class="btn-loja-nav right" onclick="scrollLojas(250)"><i class="fa-solid fa-chevron-right"></i></button>
+
+                    <button class="btn-loja-nav right" onclick="scrollLojas(280)"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
 
