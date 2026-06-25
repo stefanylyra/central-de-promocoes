@@ -858,6 +858,113 @@
             z-index:30;
             box-shadow:0 2px 6px rgba(0,0,0,.12);
         }
+        /* ===================== RESPONSIVIDADE ===================== */
+
+/* MOBILE - Mantém exatamente como está hoje */
+@media (max-width: 768px) {
+    .app-container {
+        max-width: 500px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    }
+    
+    .grid-produtos {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .grid-categorias {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .info-vendas-barra {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    nav.bottom-nav {
+        max-width: 500px;
+    }
+    
+    .btn-whatsapp {
+        right: 15px;
+    }
+}
+
+/* DESKTOP - Layout mais amplo e confortável */
+@media (min-width: 769px) {
+    body {
+        padding: 20px 0;
+    }
+    
+    .app-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+    
+    header {
+        padding: 20px 24px;
+    }
+    
+    .grid-produtos {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+    
+    .grid-categorias {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 16px;
+    }
+    
+    .info-vendas-barra {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .produto-img {
+        height: 180px;
+    }
+    
+    .section-title {
+        font-size: 22px;
+        margin: 28px 0 18px 0;
+    }
+    
+    .carrossel-banners {
+        width: 100% !important;
+        max-width: 1100px;
+        margin: 20px auto;
+        border-radius: 16px;
+    }
+    
+    .ofertas-quentes-carrossel .card-hot {
+        min-width: 180px;
+        max-width: 180px;
+    }
+    
+    .lojas-grid {
+        gap: 16px;
+    }
+    
+    .loja-card {
+        min-width: 160px;
+    }
+    
+    nav.bottom-nav {
+        display: none; /* Esconde a bottom nav no desktop (melhor UX) */
+    }
+    
+    .btn-whatsapp {
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
+    }
+    
+    .modal-content {
+        max-width: 700px;
+    }
+}
     </style>
 </head>
 <body>
