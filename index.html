@@ -992,7 +992,7 @@
                 </a>
                 <div class="header-icons">
                     <i class="fa-regular fa-bell"></i><span class="badge-notificacao">3</span>
-                    <i class="fa-solid fa-cart-shopping"></i>
+                    <i class="fa-solid fa-ticket"></i>
                 </div>
             </div>
             <div class="search-container">
@@ -1429,6 +1429,13 @@ function mostrarSubcategorias(categoriaId) {
     if (info) {
         document.getElementById('titulo-aba-ofertas').innerText = `📂 ${info.nome}`;
     }
+    function abrirCupons() {
+    document.getElementById("modal-cupons").style.display = "flex";
+}
+
+function fecharCupons() {
+    document.getElementById("modal-cupons").style.display = "none";
+}
 
     // Remove subcategorias antigas
     const subAntigo = document.getElementById('container-subcategorias');
@@ -2058,5 +2065,18 @@ function fecharModal() {
         </div>
         <button onclick="aceitarCookies()">Aceitar</button>
     </div>
+    <div id="modal-notificacoes" class="modal-produto">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Notificações</h3>
+            <button onclick="fecharNotificacoes()" style="font-size:24px;background:none;border:none">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>🔔 Nova oferta adicionada hoje</p>
+            <p>🔥 Cupom liberado em Shopee</p>
+            <p>⚡ Últimas promoções do dia atualizadas</p>
+        </div>
+    </div>
+</div>
 </body>
 </html>
