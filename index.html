@@ -1773,6 +1773,18 @@ function tempoDecorrido(dataFirestore) {
 
         // ==================== NAVEGAÇÃO ====================
         function mudarAba(idAba, elementoBotao) {
+            // Abas que exigem login
+if (
+    idAba === "favoritos" ||
+    idAba === "conta" ||
+    idAba === "notificacoes" ||
+    idAba === "cupons"
+) {
+    if (!auth.currentUser) {
+        mostrarModalLoginObrigatorio();
+        return;
+    }
+}
             document.querySelectorAll('.app-page').forEach(p => p.classList.remove('active'));
             const target = document.getElementById(`aba-${idAba}`);
             if (target) target.classList.add('active');
@@ -2037,24 +2049,11 @@ ${n.texto}
 });
 
 }
-  function abrirNotificacoes(){
+function abrirNotificacoes(){
 
-const user=auth.currentUser;
+    mudarAba("notificacoes");
 
-if(!user){
-
-mostrarModalLoginObrigatorio();
-
-return;
-
-}
-
-mudarAba(
-"notificacoes",
-null
-);
-
-renderizarNotificacoes();
+    renderizarNotificacoes();
 
 }
     // ==================== NOVAS FUNÇÕES PARA DETALHES (COM MÚLTIPLAS IMAGENS) ====================
