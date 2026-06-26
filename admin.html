@@ -124,9 +124,9 @@
         <div class="content">
             <div id="novo">
                 <h2 id="formTitle">Novo Produto</h2>
-                <input id="nome" placeholder="Nome do produto" required>
-                <input id="precoAntigo" placeholder="Preço antigo (ex: 49.90)" onblur="formatPrice(this)">
-                <input id="precoNovo" placeholder="Preço novo (ex: 29.90)" onblur="formatPrice(this)">
+              <input id="nome" placeholder="Nome do produto" required>
+              <input id="precoAntigo" placeholder="Preço antigo (ex: 49.90)" onblur="formatPrice(this)">
+              <input id="precoNovo" placeholder="Preço novo (ex: 29.90)" onblur="formatPrice(this)" required>
                <select id="categoria" onchange="carregarSubcategorias()">
 
     <option value="roupas-masculinas">👕 Roupas Masculinas</option>
@@ -418,11 +418,10 @@ const SUBCATEGORIAS = {
 
 }
         // ==================== SALVAR / ATUALIZAR ====================
-       async function salvar() {
+     async function salvar() {
     const btn = document.getElementById("btnSalvar");
     const originalText = btn.textContent;
-    
-    // Previne duplo clique
+
     if (btn.disabled) return;
     btn.disabled = true;
     btn.textContent = "Salvando...";
@@ -431,13 +430,51 @@ const SUBCATEGORIAS = {
     if (document.getElementById("imgExtra1").value) imagensExtras.push(document.getElementById("imgExtra1").value);
     if (document.getElementById("imgExtra2").value) imagensExtras.push(document.getElementById("imgExtra2").value);
 
+    const nome = document.getElementById("nome").value.trim();
+    const precoNovo = document.getElementById("precoNovo").value.trim();
+    const img = document.getElementById("imgUrl").value.trim();
+    const link = document.getElementById("link").value.trim();
+
+    // ==================== VALIDAÇÃO ====================
+    if (!nome) {
+        alert("❌ O nome do produto é obrigatório!");
+        btn.disabled = false;
+        btn.textContent = originalText;
+        document.getElementById("nome").focus();
+        return;
+    }
+
+    if (!precoNovo) {
+        alert("❌ O preço novo é obrigatório!");
+        btn.disabled = false;
+        btn.textContent = originalText;
+        document.getElementById("precoNovo").focus();
+        return;
+    }
+
+    if (!img) {
+        alert("❌ A imagem principal é obrigatória!");
+        btn.disabled = false;
+        btn.textContent = originalText;
+        document.getElementById("imgUrl").focus();
+        return;
+    }
+
+    if (!link) {
+        alert("❌ O link afiliado é obrigatório!");
+        btn.disabled = false;
+        btn.textContent = originalText;
+        document.getElementById("link").focus();
+        return;
+    }
+
     const produto = {
-        nome: document.getElementById("nome").value.trim(),
+        nome: nome,
         precoAntigo: document.getElementById("precoAntigo").value,
-        precoNovo: document.getElementById("precoNovo").value,
-        img: document.getElementById("imgUrl").value,
+        precoNovo: precoNovo,
+        img: img,
         imagensExtras: imagensExtras,
-        link: document.getElementById("link").value,
+        link: link,
         categoria: document.getElementById("categoria").value,
         subcategoria: document.getElementById("subcategoria").value,
         loja: document.getElementById("loja").value,
@@ -445,11 +482,6 @@ const SUBCATEGORIAS = {
     };
 
     try {
-        if (!produto.nome || !produto.img || !produto.link) {
-            alert("❌ Preencha os campos obrigatórios!");
-            return;
-        }
-
         if (editingId) {
             await db.collection("produtos").doc(editingId).update(produto);
             alert("✅ Produto atualizado com sucesso!");
@@ -465,7 +497,6 @@ const SUBCATEGORIAS = {
         console.error(e);
         alert("Erro ao salvar: " + e.message);
     } finally {
-        // Libera o botão novamente
         btn.disabled = false;
         btn.textContent = originalText;
     }
