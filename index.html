@@ -1005,6 +1005,22 @@
     color:#555;
     white-space:pre-line;
 }
+        .filtro-ordenacao {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .filtro-ordenacao {
+        margin-top: 8px;
+    }
+}
     </style>
 </head>
 <body>
@@ -1137,7 +1153,19 @@ class="badge-notificacao">
         </main>
 
         <main id="aba-ofertas" class="app-page">
-            <div class="section-title"><span id="titulo-aba-ofertas">🛒 Todas as Ofertas</span></div>
+            <div class="section-title" style="margin-bottom: 8px;">
+    <span id="titulo-aba-ofertas">🛒 Todas as Ofertas</span>
+    
+    <!-- FILTRO DE ORDENAÇÃO -->
+    <div class="filtro-ordenacao">
+        <span style="font-size:14px; color:#555; margin-right:8px;">Ordenar por:</span>
+        <select id="select-ordenacao" onchange="ordenarProdutos()" 
+                style="padding:8px 12px; border:1px solid #ddd; border-radius:8px; background:white; font-size:14px; cursor:pointer;">
+            <option value="menor">Menor Preço</option>
+            <option value="maior">Maior Preço</option>
+        </select>
+    </div>
+</div>
             <div class="grid-produtos" id="grid-todas-ofertas"></div>
         </main>
 
@@ -2161,6 +2189,91 @@ function fecharModal() {
         document.getElementById('modal-produto').addEventListener('click', function(e) {
             if (e.target === this) fecharModal();
         });
+        let listaAtualOrdenada = []; // guarda a lista atual (após filtro de categoria/busca)
+
+// Função principal de ordenação
+function ordenarProdutos() {
+    const ordem = document.getElementById('select-ordenacao').value;
+    
+    if (listaAtualOrdenada.length === 0) return;
+
+    let ordenados = [...listaAtualOrdenada];
+
+    ordenados.sort((a, b) => {
+        const precoA = parseFloat(a.precoNovo) || 0;
+        const precoB = parseFloat(b.precoNovo) || 0;
+        
+        return ordem === 'menor' ? precoA - precoB : precoB - precoA;
+    });
+
+    renderizarGridOfertas(ordenados);
+}
+
+// Sobrescrevendo algumas funções existentes para integrar o filtro
+function renderizarGridOfertas(lista) {
+    listaAtualOrdenada = [...lista]; // salva para ordenação futura
+    
+    const container = document.getElementById('grid-todas-ofertas');
+    if (!container) return;
+
+    if (lista.length === 0) {
+        container.innerHTML = `<div class="erro-busca">Nenhum produto encontrado.</div>`;
+        return;
+    }
+
+    container.innerHTML = lista.map(prod => criarCardProduto(prod)).join('');
+}
+
+// Atualizar funções de filtro para usar o novo sistema
+function filtrarPorCategoria(idCategoria, subcategoria = null) {
+    categoriaAtiva = idCategoria;
+
+    const info = CATEGORIAS_DADOS.find(c => c.id === idCategoria);
+    if (info) {
+        let titulo = `📂 ${info.nome}`;
+        if (subcategoria) titulo += ` → ${subcategoria}`;
+        document.getElementById('titulo-aba-ofertas').innerText = titulo;
+    }
+
+    let filtrados = PRODUTOS_LOJA.filter(p => p.categoria === idCategoria);
+
+    if (subcategoria) {
+        filtrados = filtrados.filter(p => p.subcategoria === subcategoria);
+    }
+
+    // Reseta select para "Menor Preço"
+    document.getElementById('select-ordenacao').value = 'menor';
+    
+    mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
+    renderizarGridOfertas(filtrados);
+}
+
+function filtrarPorLoja(loja) {
+    // ... (seu código atual) ...
+    const produtosFiltrados = PRODUTOS_LOJA.filter(...); // mantenha seu filtro
+
+    document.getElementById("titulo-aba-ofertas").innerText = `🏪 ${loja.toUpperCase()}`;
+    document.getElementById('select-ordenacao').value = 'menor';
+    mudarAba("ofertas", document.querySelectorAll(".nav-item")[2]);
+    renderizarGridOfertas(produtosFiltrados);
+}
+
+// Também na busca
+function filtrarPesquisa() {
+    const termo = document.getElementById('input-busca').value.toLowerCase().trim();
+    
+    if (termo.length > 0) {
+        // ... seu código de esconder elementos ...
+        const filtrados = PRODUTOS_LOJA.filter(p => 
+            p.nome.toLowerCase().includes(termo)
+        );
+        document.getElementById('select-ordenacao').value = 'menor';
+        renderizarGridOfertas(filtrados);
+    } else {
+        restaurarElementosEscondidos();
+        renderizarGridOfertas(PRODUTOS_LOJA);
+    }
+}
 
     </script>
 
