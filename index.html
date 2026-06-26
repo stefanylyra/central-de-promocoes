@@ -1612,33 +1612,40 @@ function mostrarSubcategorias(categoriaId) {
     return logos[lojaNormalizada] || "";
 }
 function tempoDecorrido(dataFirestore) {
-  if (!dataFirestore || !dataFirestore.toDate) {
-    return "Há 1 mês";  // ou "Produto antigo"
-}
-
     try {
+        // CASO 1: não existe data (produtos antigos)
+        if (!dataFirestore || !dataFirestore.toDate) {
+            return "há 1 mês"; 
+        }
+
         const agora = new Date();
         const postagem = dataFirestore.toDate();
 
+        // validação extra (evita NaN)
+        if (isNaN(postagem.getTime())) {
+            return "há 1 mês";
+        }
+
         const diff = agora - postagem;
 
-        if (diff < 0) return "Agora"; // proteção contra datas futuras
+        if (diff < 0) return "agora";
 
         const minutos = Math.floor(diff / 60000);
         const horas = Math.floor(diff / 3600000);
         const dias = Math.floor(diff / 86400000);
-        const meses = Math.floor(diff / (30 * 86400000)); // aproximação
-        const anos = Math.floor(diff / 31536000000);
+        const meses = Math.floor(dias / 30);
+        const anos = Math.floor(dias / 365);
 
-        if (minutos < 1) return "Agora";
-        if (minutos < 60) return `há ${minutos}min`;
-        if (horas < 24) return `há ${horas}h`;
-        if (dias < 30) return `há ${dias}d`;
+        if (minutos < 1) return "agora";
+        if (minutos < 60) return `há ${minutos} min`;
+        if (horas < 24) return `há ${horas} h`;
+        if (dias < 30) return `há ${dias} d`;
         if (meses < 12) return `há ${meses} mês${meses > 1 ? "es" : ""}`;
 
         return `há ${anos} ano${anos > 1 ? "s" : ""}`;
+
     } catch (e) {
-        return "Há 1 mês";
+        return "há 1 mês";
     }
 }
         function getAvaliacoesRandom() {
