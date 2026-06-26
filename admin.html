@@ -178,7 +178,7 @@
                 <input id="imgExtra1" placeholder="URL da imagem extra 1 (opcional)">
                 <input id="imgExtra2" placeholder="URL da imagem extra 2 (opcional)">
                 <input id="link" placeholder="Link afiliado" required>
-                <button id="btnSalvar" onclick="salvar()">Salvar Produto</button>
+                <button id="btnSalvar">Salvar Produto</button>
                 <button onclick="cancelarEdicao()" style="background:#ccc;">Cancelar</button>
             </div>
 
@@ -326,7 +326,10 @@ const SUBCATEGORIAS = {
             auth.signOut();
         }
 
+        document.getElementById("btnSalvar").addEventListener("click", salvar);
+
         auth.onAuthStateChanged(user => {
+
             if(!user){
                 document.getElementById("login").style.display = "block";
                 document.getElementById("admin").style.display = "none";
@@ -415,43 +418,58 @@ const SUBCATEGORIAS = {
 
 }
         // ==================== SALVAR / ATUALIZAR ====================
-        async function salvar(){
-            const imagensExtras = [];
-            if (document.getElementById("imgExtra1").value) imagensExtras.push(document.getElementById("imgExtra1").value);
-            if (document.getElementById("imgExtra2").value) imagensExtras.push(document.getElementById("imgExtra2").value);
+       async function salvar() {
+    const btn = document.getElementById("btnSalvar");
+    const originalText = btn.textContent;
+    
+    // Previne duplo clique
+    if (btn.disabled) return;
+    btn.disabled = true;
+    btn.textContent = "Salvando...";
 
-            const produto = {
-                nome: document.getElementById("nome").value,
-                precoAntigo: document.getElementById("precoAntigo").value,
-                precoNovo: document.getElementById("precoNovo").value,
-                img: document.getElementById("imgUrl").value, // imagem principal
-                imagensExtras: imagensExtras, // array com até 2 extras
-                link: document.getElementById("link").value,
-                
-                categoria: document.getElementById("categoria").value,
-                subcategoria: document.getElementById("subcategoria").value,
-                
-                loja: document.getElementById("loja").value,
-                
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            };
+    const imagensExtras = [];
+    if (document.getElementById("imgExtra1").value) imagensExtras.push(document.getElementById("imgExtra1").value);
+    if (document.getElementById("imgExtra2").value) imagensExtras.push(document.getElementById("imgExtra2").value);
 
-            try {
-                if (editingId) {
-                    await db.collection("produtos").doc(editingId).update(produto);
-                    alert("✅ Produto updated!");
-                } else {
-                    produto.createdAt = Date.now();
-                    await db.collection("produtos").add(produto);
-                    alert("✅ Produto salvo!");
-                }
-                cancelarEdicao();
-                tab('lista');
-            } catch (e) {
-                alert("Erro ao salvar: " + e.message);
-            }
+    const produto = {
+        nome: document.getElementById("nome").value.trim(),
+        precoAntigo: document.getElementById("precoAntigo").value,
+        precoNovo: document.getElementById("precoNovo").value,
+        img: document.getElementById("imgUrl").value,
+        imagensExtras: imagensExtras,
+        link: document.getElementById("link").value,
+        categoria: document.getElementById("categoria").value,
+        subcategoria: document.getElementById("subcategoria").value,
+        loja: document.getElementById("loja").value,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    try {
+        if (!produto.nome || !produto.img || !produto.link) {
+            alert("❌ Preencha os campos obrigatórios!");
+            return;
         }
+
+        if (editingId) {
+            await db.collection("produtos").doc(editingId).update(produto);
+            alert("✅ Produto atualizado com sucesso!");
+        } else {
+            produto.createdAt = Date.now();
+            await db.collection("produtos").add(produto);
+            alert("✅ Produto salvo com sucesso!");
+        }
+
+        cancelarEdicao();
+        tab('lista');
+    } catch (e) {
+        console.error(e);
+        alert("Erro ao salvar: " + e.message);
+    } finally {
+        // Libera o botão novamente
+        btn.disabled = false;
+        btn.textContent = originalText;
+    }
+}
 
         // ==================== EDITAR ====================
         function editar(id) {
@@ -547,6 +565,7 @@ const SUBCATEGORIAS = {
             });
            atualizarAnalises(produtos);
         });
+        document.getElementById("btnSalvar").addEventListener("click", salvar);
     </script>
 </body>
 </html>
