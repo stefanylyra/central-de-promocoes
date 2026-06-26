@@ -1021,6 +1021,15 @@
         margin-top: 8px;
     }
 }
+        /* Filtro de Ordenação */
+.section-title {
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+#select-ordenacao {
+    min-width: 140px;
+}
     </style>
 </head>
 <body>
@@ -1152,22 +1161,22 @@ class="badge-notificacao">
             <div class="grid-categorias" id="mosaico-categorias-container"></div>
         </main>
 
-        <main id="aba-ofertas" class="app-page">
-            <div class="section-title" style="margin-bottom: 8px;">
-    <span id="titulo-aba-ofertas">🛒 Todas as Ofertas</span>
-    
-    <!-- FILTRO DE ORDENAÇÃO -->
-    <div class="filtro-ordenacao">
-        <span style="font-size:14px; color:#555; margin-right:8px;">Ordenar por:</span>
-        <select id="select-ordenacao" onchange="ordenarProdutos()" 
-                style="padding:8px 12px; border:1px solid #ddd; border-radius:8px; background:white; font-size:14px; cursor:pointer;">
-            <option value="menor">Menor Preço</option>
-            <option value="maior">Maior Preço</option>
-        </select>
+    <main id="aba-ofertas" class="app-page">
+    <div class="section-title" style="margin-bottom: 12px; flex-wrap: wrap; gap: 12px;">
+        <span id="titulo-aba-ofertas">🛒 Todas as Ofertas</span>
+        
+        <!-- FILTRO DE PREÇO -->
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 14px;">
+            <span style="color:#555; white-space: nowrap;">Ordenar por:</span>
+            <select id="select-ordenacao" onchange="ordenarProdutos()" 
+                    style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; background: white; font-size: 14px; cursor: pointer;">
+                <option value="menor">Menor Preço</option>
+                <option value="maior">Maior Preço</option>
+            </select>
+        </div>
     </div>
-</div>
-            <div class="grid-produtos" id="grid-todas-ofertas"></div>
-        </main>
+    <div class="grid-produtos" id="grid-todas-ofertas"></div>
+</main>
 
         <main id="aba-favoritos" class="app-page">
             <div class="section-title"><span>❤️ Meus Favoritos</span></div>
@@ -1673,15 +1682,35 @@ function fecharCupons() {
             container.innerHTML = exibicao.map(prod => criarCardProduto(prod)).join('');
         }
 
-        function renderizarGridOfertas(lista) {
-            const container = document.getElementById('grid-todas-ofertas');
-            if (!container) return;
-            if (lista.length === 0) {
-                container.innerHTML = `<div class="erro-busca">Nenhum produto nesta categoria.</div>`;
-                return;
-            }
-            container.innerHTML = lista.map(prod => criarCardProduto(prod)).join('');
-        }
+     function renderizarGridOfertas(lista) {
+    window.listaAtualOrdenada = [...lista]; // Salva para ordenação
+    
+    const container = document.getElementById('grid-todas-ofertas');
+    if (!container) return;
+    
+    if (lista.length === 0) {
+        container.innerHTML = `<div class="erro-busca">Nenhum produto encontrado.</div>`;
+        return;
+    }
+    
+    container.innerHTML = lista.map(prod => criarCardProduto(prod)).join('');
+}
+        // Função de ordenação por preço
+function ordenarProdutos() {
+    const ordem = document.getElementById('select-ordenacao').value;
+    if (!window.listaAtualOrdenada || window.listaAtualOrdenada.length === 0) return;
+
+    let ordenados = [...window.listaAtualOrdenada];
+
+    ordenados.sort((a, b) => {
+        const precoA = parseFloat(a.precoNovo) || 0;
+        const precoB = parseFloat(b.precoNovo) || 0;
+        return ordem === 'menor' ? precoA - precoB : precoB - precoA;
+    });
+
+    const container = document.getElementById('grid-todas-ofertas');
+    container.innerHTML = ordenados.map(prod => criarCardProduto(prod)).join('');
+}
 
         function renderizarAbaFavoritos() {
             const container = document.getElementById('grid-favoritos-salvos');
@@ -1815,14 +1844,15 @@ if (
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        function limparFiltrosEMudarAba(elementoBotao) {
-            categoriaAtiva = null;
-            document.getElementById('titulo-aba-ofertas').innerText = "🛒 Todas as Ofertas";
-            renderizarGridOfertas(PRODUTOS_LOJA);
-            mudarAba('ofertas', elementoBotao);
-        }
+       function limparFiltrosEMudarAba(elementoBotao) {
+    categoriaAtiva = null;
+    document.getElementById('titulo-aba-ofertas').innerText = "🛒 Todas as Ofertas";
+    document.getElementById('select-ordenacao').value = 'menor';
+    renderizarGridOfertas(PRODUTOS_LOJA);
+    mudarAba('ofertas', elementoBotao);
+}
 
-    function filtrarPorCategoria(idCategoria, subcategoria = null) {
+  function filtrarPorCategoria(idCategoria, subcategoria = null) {
     categoriaAtiva = idCategoria;
 
     const info = CATEGORIAS_DADOS.find(c => c.id === idCategoria);
@@ -1838,17 +1868,18 @@ if (
         filtrados = filtrados.filter(p => p.subcategoria === subcategoria);
     }
 
+    document.getElementById('select-ordenacao').value = 'menor';
     renderizarGridOfertas(filtrados);
     mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
 }
-      function filtrarPorLoja(loja) {
+        
+function filtrarPorLoja(loja) {
     const lojaNormalizada = loja.toLowerCase();
 
     const produtosFiltrados = PRODUTOS_LOJA.filter(prod => {
         if (!prod.loja) return false;
         const lojaProd = prod.loja.toLowerCase();
         
-        // Mapeamento de compatibilidade
         const equivalentes = {
             "magalu": ["magalu", "magazine", "magazine luiza"],
             "mercado-livre": ["mercado-livre", "mercadolivre", "mercado livre"]
@@ -1857,40 +1888,37 @@ if (
         if (equivalentes[lojaNormalizada]) {
             return equivalentes[lojaNormalizada].includes(lojaProd);
         }
-        
         return lojaProd === lojaNormalizada;
     });
 
     document.getElementById("titulo-aba-ofertas").innerText = `🏪 ${loja.toUpperCase()}`;
+    document.getElementById('select-ordenacao').value = 'menor';
     renderizarGridOfertas(produtosFiltrados);
     mudarAba("ofertas", document.querySelectorAll(".nav-item")[2]);
 }
 
-               function filtrarPesquisa() {
-            const termo = document.getElementById('input-busca').value.toLowerCase().trim();
-            const activePage = document.querySelector('.app-page.active');
+           function filtrarPesquisa() {
+    const termo = document.getElementById('input-busca').value.toLowerCase().trim();
+    const activePage = document.querySelector('.app-page.active');
 
-            if (termo.length > 0) {
-                if (activePage && activePage.id === 'aba-inicio') {
-                    // Esconde banners + outras seções
-                    document.getElementById('banner-carousel').style.display = 'none';
-                    document.getElementById('wrapper-ofertas-quentes').style.display = 'none';
-                    document.getElementById('barra-beneficios').style.display = 'none';
-                    document.getElementById('titulo-grid-home').innerText = "🔍 Resultados da Busca";
-                    document.getElementById('link-ver-todos-home').style.display = 'none';
-                    document.getElementById('titulo-depoimentos').style.display = 'none';
-                    document.getElementById('wrapper-depoimentos').style.display = 'none';
-                }
-                const filtrados = PRODUTOS_LOJA.filter(p => p.nome.toLowerCase().includes(termo));
-                renderizarGridHome(filtrados);
-                renderizarGridOfertas(filtrados);
-            } else {
-                restaurarElementosEscondidos();
-                renderizarGridHome(PRODUTOS_LOJA);
-                renderizarGridOfertas(categoriaAtiva ? PRODUTOS_LOJA.filter(p => p.categoria === categoriaAtiva) : PRODUTOS_LOJA);
-            }
+    if (termo.length > 0) {
+        if (activePage && activePage.id === 'aba-inicio') {
+            document.getElementById('banner-carousel').style.display = 'none';
+            document.getElementById('wrapper-ofertas-quentes').style.display = 'none';
+            document.getElementById('barra-beneficios').style.display = 'none';
+            document.getElementById('titulo-grid-home').innerText = "🔍 Resultados da Busca";
+            document.getElementById('link-ver-todos-home').style.display = 'none';
+            document.getElementById('titulo-depoimentos').style.display = 'none';
+            document.getElementById('wrapper-depoimentos').style.display = 'none';
         }
-
+        const filtrados = PRODUTOS_LOJA.filter(p => p.nome.toLowerCase().includes(termo));
+        document.getElementById('select-ordenacao').value = 'menor';
+        renderizarGridOfertas(filtrados);
+    } else {
+        restaurarElementosEscondidos();
+        renderizarGridOfertas(categoriaAtiva ? PRODUTOS_LOJA.filter(p => p.categoria === categoriaAtiva) : PRODUTOS_LOJA);
+    }
+}
         function restaurarElementosEscondidos() {
             document.getElementById('banner-carousel').style.display = 'block';
             document.getElementById('wrapper-ofertas-quentes').style.display = 'block';
