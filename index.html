@@ -699,39 +699,77 @@
         }
 
         .loja-card{
-            min-width: 160px;     /* Largura maior (comprimento) */
-            height: 62px;         /* Altura boa */
-            border: none;
-            border-radius: 9999px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 20px;
-            flex-shrink: 0;
-            transition: all 0.25s ease;
-            cursor: pointer;
-        }
+    min-width: 150px;
+    height: 58px;
 
-        .loja-card:hover {
-            transform: translateY(-3px) scale(1.04);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-        .loja-card img {
-            width: 48px;
-            height: 34px;
-            object-fit: contain;
-        }
+    padding:0 24px;
 
-        /* Cores específicas */
-        .loja-card.mercadolivre { background: #FFEE00; }
-        .loja-card.amazon       { background: #000; }
-        .loja-card.shopee       { background: #EE4D2D; }
-        .loja-card.shein        { background: #FF69B4; }
-        .loja-card.magalu       { background: #00AEEF; }
-        .loja-card.aliexpress   { background: #FF2D55; }
+    flex-shrink:0;
 
+    border:none;
+    border-radius:999px;
+
+    cursor:pointer;
+
+    background:#fff;
+
+    transition:.25s;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,.08);
+}
+
+    .loja-card:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.15);
+
+}
+     .loja-card img{
+
+    max-width:110px;
+
+    max-height:30px;
+
+    width:auto;
+
+    height:auto;
+
+    object-fit:contain;
+
+    display:block;
+
+}
+
+       .loja-card.mercadolivre{
+    background:#FFE600;
+}
+
+.loja-card.amazon{
+    background:#111;
+}
+
+.loja-card.shopee{
+    background:#EE4D2D;
+}
+
+.loja-card.shein{
+    background:#F45D9A;
+}
+
+.loja-card.magalu{
+    background:#0088FF;
+}
+
+.loja-card.aliexpress{
+    background:#FF285A;
+}
         .btn-loja-nav{
             width: 44px;
             height: 44px;
