@@ -1638,9 +1638,15 @@ function fecharCupons() {
 
             // Grids principais
             renderizarGridHome(PRODUTOS_LOJA);
-            renderizarGridOfertas(PRODUTOS_LOJA);
-            renderizarAbaFavoritos();
-            atualizarIconesCoraoGlobais();
+
+if (categoriaAtiva) {
+    filtrarPorCategoria(categoriaAtiva);
+} else {
+    renderizarGridOfertas(PRODUTOS_LOJA);
+}
+
+renderizarAbaFavoritos();
+atualizarIconesCoraoGlobais();
         }
 
         function renderizarGridHome(lista) {
@@ -1989,11 +1995,17 @@ if (
                 setInterval(nextBanner, 4500);
             }
 
-            setInterval(() => {
-                renderizarGridHome(PRODUTOS_LOJA);
-                renderizarGridOfertas(PRODUTOS_LOJA);
-                renderizarAbaFavoritos();
-            }, 60000);
+          setInterval(() => {
+    renderizarGridHome(PRODUTOS_LOJA);
+
+    if (categoriaAtiva) {
+        filtrarPorCategoria(categoriaAtiva);
+    } else {
+        renderizarGridOfertas(PRODUTOS_LOJA);
+    }
+
+    renderizarAbaFavoritos();
+}, 60000);
 
             auth.onAuthStateChanged(user => {
                 if (user) {
