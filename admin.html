@@ -181,10 +181,40 @@
                 <button onclick="cancelarEdicao()" style="background:#ccc;">Cancelar</button>
             </div>
 
-            <div id="lista" style="display:none;">
-                <h2>Produtos Cadastrados</h2>
-                <div class="grid" id="grid"></div>
-            </div>
+           <div id="lista" style="display:none;">
+
+    <h2>Produtos Cadastrados</h2>
+
+    <div class="grid" id="grid"></div>
+
+    <div
+        style="margin-top:20px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        gap:15px;">
+
+        <button onclick="paginaAnterior()">
+
+            ◀ Anterior
+
+        </button>
+
+        <span id="numeroPagina">
+
+            Página 1
+
+        </span>
+
+        <button onclick="proximaPagina()">
+
+            Próxima ▶
+
+        </button>
+
+    </div>
+
+</div>
         <div id="analises" style="display:none;">
     <h2>📊 Análises</h2>
 
@@ -208,6 +238,13 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
         let editingId = null;
+        const PRODUTOS_POR_PAGINA = 50;
+
+let paginaAtual = 1;
+
+let todosProdutos = [];
+
+        
 const SUBCATEGORIAS = {
 
     "sapatos": [
@@ -484,62 +521,160 @@ const SUBCATEGORIAS = {
             document.getElementById("link").value = "";
             document.getElementById("subcategoria").value = "";
         }
-
-        // ==================== LISTAR ====================
-       db.collection("produtos").onSnapshot(snap => {
+        function renderizarPagina() {
 
     const grid = document.getElementById("grid");
+
     grid.innerHTML = "";
 
-    const produtos = []; // ← ADICIONE AQUI
+    const inicio = (paginaAtual - 1) * PRODUTOS_POR_PAGINA;
+
+    const fim = inicio + PRODUTOS_POR_PAGINA;
+
+    const pagina = todosProdutos.slice(inicio, fim);
+
+    let html = "";
+
+    pagina.forEach(item => {
+
+        const doc = item.doc;
+        const p = item.dados;
+
+        html += `
+            <div class="card">
+
+                <img loading="lazy"
+                     src="${p.img || ''}"
+                     alt="${p.nome || ''}">
+
+                <div class="info-produto">
+
+                    <span class="nome-produto">
+
+                        ${p.nome || 'Sem nome'}
+
+                    </span>
+
+                    <span class="price-old">
+
+                        De: ${p.precoAntigo || ''}
+
+                    </span>
+
+                    <br>
+
+                    <strong>
+
+                        Por: ${p.precoNovo || ''}
+
+                    </strong>
+
+                    <br>
+
+                    <small>
+
+                        🏪 ${p.loja || ''}<br>
+
+                        📂 ${p.categoria || ''}<br>
+
+                        🏷️ ${p.subcategoria || ''}<br>
+
+                        📷 ${p.imagensExtras ? p.imagensExtras.length : 0} extra(s)
+
+                    </small>
+
+                </div>
+
+                <div class="acoes">
+
+                    <button
+                        class="btn-editar"
+                        onclick="editar('${doc}')">
+
+                        Editar
+
+                    </button>
+
+                    <button
+                        class="btn-excluir"
+                        onclick="if(confirm('Excluir este produto?')) db.collection('produtos').doc('${doc}').delete()">
+
+                        Excluir
+
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+    });
+
+    grid.innerHTML = html;
+            const totalPaginas =
+    Math.ceil(todosProdutos.length / PRODUTOS_POR_PAGINA);
+
+document.getElementById("numeroPagina").innerHTML =
+`Página ${paginaAtual} de ${totalPaginas}`;
+
+}
+
+        function proximaPagina() {
+
+    const totalPaginas =
+        Math.ceil(todosProdutos.length / PRODUTOS_POR_PAGINA);
+
+    if (paginaAtual < totalPaginas) {
+
+        paginaAtual++;
+
+        renderizarPagina();
+
+    }
+
+}
+
+function paginaAnterior() {
+
+    if (paginaAtual > 1) {
+
+        paginaAtual--;
+
+        renderizarPagina();
+
+    }
+
+}
+
+        // ==================== LISTAR ====================
+db.collection("produtos")
+.orderBy("createdAt", "desc")
+.get()
+.then(snap => {
+
+    todosProdutos = [];
+
+    const produtos = [];
 
     snap.forEach(doc => {
 
         const p = doc.data();
 
-        produtos.push(p); // ← ADICIONE AQUI
+        produtos.push(p);
 
-        grid.innerHTML += `
-                <div class="card">
-                    <img src="${p.img || ''}" alt="${p.nome || ''}">
-                    <div class="info-produto">
-                        <span class="nome-produto">
-                            ${p.nome || 'Sem nome'}
-                        </span>
-                        <span class="price-old">
-                            De: ${p.precoAntigo || ''}
-                        </span>
-                        <br>
-                        <strong>
-                            Por: ${p.precoNovo || ''}
-                        </strong>
-                        <br>
-                 <small>
-                     🏪 ${p.loja || ''}
-                        <br>
-                     📂 ${p.categoria || ''}
-                        <br>
-                     🏷️ ${p.subcategoria || ''}
-                        <br>
-                     📷 ${p.imagensExtras ? p.imagensExtras.length : 0} extra(s)
-                </small>
-                    </div>
-                    <div class="acoes">
-                        <button
-                            class="btn-editar"
-                            onclick="editar('${doc.id}')">
-                            Editar
-                        </button>
-                        <button
-                            class="btn-excluir"
-                            onclick="if(confirm('Excluir este produto?')) db.collection('produtos').doc('${doc.id}').delete()">
-                            Excluir
-                        </button>
-                    </div>
-                </div>`;
-            });
-           atualizarAnalises(produtos);
+        todosProdutos.push({
+            doc: doc.id,
+            dados: p
         });
+
+    });
+
+    atualizarAnalises(produtos);
+
+    renderizarPagina();
+
+});
+        
     </script>
 </body>
 </html>
