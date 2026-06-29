@@ -672,10 +672,51 @@ function popularCategorias(){
     });
 
 }
+        function aplicarFiltros(){
+
+    const texto =
+        document.getElementById("pesquisa")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const categoria =
+        document.getElementById("filtroCategoria").value;
+
+    const loja =
+        document.getElementById("filtroLoja").value;
+
+    produtosFiltrados = todosProdutos.filter(item => {
+
+        const p = item.dados;
+
+        const nome =
+            (p.nome || "").toLowerCase();
+
+        const passouNome =
+            nome.includes(texto);
+
+        const passouCategoria =
+            !categoria || p.categoria === categoria;
+
+        const passouLoja =
+            !loja || p.loja === loja;
+
+        return passouNome &&
+               passouCategoria &&
+               passouLoja;
+
+    });
+
+    paginaAtual = 1;
+
+    renderizarPagina();
+
+}
         function proximaPagina() {
 
-    const totalPaginas =
-        Math.ceil(produtosFiltrados.length / PRODUTOS_POR_PAGINA)
+   const totalPaginas =
+Math.ceil(produtosFiltrados.length / PRODUTOS_POR_PAGINA);
 
     if (paginaAtual < totalPaginas) {
 
