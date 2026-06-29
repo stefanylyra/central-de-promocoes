@@ -71,6 +71,9 @@
             object-fit: cover;
             border-radius: 10px;
         }
+        .card{
+    will-change: transform;
+}
         .nome-produto {
             font-weight: bold;
             line-height: 1.4;
@@ -327,7 +330,6 @@ const SUBCATEGORIAS = {
             auth.signOut();
         }
 
-        document.getElementById("btnSalvar").addEventListener("click", salvar);
 
         auth.onAuthStateChanged(user => {
 
@@ -489,7 +491,7 @@ const SUBCATEGORIAS = {
         } else {
             produto.createdAt = Date.now();
             await db.collection("produtos").add(produto);
-            alert("✅ Produto salvo com sucesso!");
+            console.log("Produto salvo!");
         }
 
         cancelarEdicao();
@@ -546,55 +548,42 @@ const SUBCATEGORIAS = {
        db.collection("produtos").onSnapshot(snap => {
 
     const grid = document.getElementById("grid");
-    grid.innerHTML = "";
+   grid.innerHTML = "";
 
-    const produtos = []; // ← ADICIONE AQUI
+let html = "";
 
-    snap.forEach(doc => {
+snap.forEach(doc => {
 
-        const p = doc.data();
+    const p = doc.data();
 
-        produtos.push(p); // ← ADICIONE AQUI
+    produtos.push(p);
 
-        grid.innerHTML += `
-                <div class="card">
-                    <img src="${p.img || ''}" alt="${p.nome || ''}">
-                    <div class="info-produto">
-                        <span class="nome-produto">
-                            ${p.nome || 'Sem nome'}
-                        </span>
-                        <span class="price-old">
-                            De: ${p.precoAntigo || ''}
-                        </span>
-                        <br>
-                        <strong>
-                            Por: ${p.precoNovo || ''}
-                        </strong>
-                        <br>
-                 <small>
-                     🏪 ${p.loja || ''}
-                        <br>
-                     📂 ${p.categoria || ''}
-                        <br>
-                     🏷️ ${p.subcategoria || ''}
-                        <br>
-                     📷 ${p.imagensExtras ? p.imagensExtras.length : 0} extra(s)
+    html += `
+        <div class="card">
+            <img loading="lazy" decoding="async" src="${p.img || ''}" alt="${p.nome || ''}">
+            <div class="info-produto">
+                <span class="nome-produto">${p.nome || 'Sem nome'}</span>
+                <span class="price-old">De: ${p.precoAntigo || ''}</span><br>
+                <strong>Por: ${p.precoNovo || ''}</strong><br>
+                <small>
+                    🏪 ${p.loja || ''}<br>
+                    📂 ${p.categoria || ''}<br>
+                    🏷️ ${p.subcategoria || ''}<br>
+                    📷 ${p.imagensExtras ? p.imagensExtras.length : 0} extra(s)
                 </small>
-                    </div>
-                    <div class="acoes">
-                        <button
-                            class="btn-editar"
-                            onclick="editar('${doc.id}')">
-                            Editar
-                        </button>
-                        <button
-                            class="btn-excluir"
-                            onclick="if(confirm('Excluir este produto?')) db.collection('produtos').doc('${doc.id}').delete()">
-                            Excluir
-                        </button>
-                    </div>
-                </div>`;
-            });
+            </div>
+            <div class="acoes">
+                <button class="btn-editar" onclick="editar('${doc.id}')">Editar</button>
+                <button class="btn-excluir"
+                    onclick="if(confirm('Excluir este produto?')) db.collection('produtos').doc('${doc.id}').delete()">
+                    Excluir
+                </button>
+            </div>
+        </div>
+    `;
+});
+
+grid.innerHTML = html;
            atualizarAnalises(produtos);
         });
         document.getElementById("btnSalvar").addEventListener("click", salvar);
