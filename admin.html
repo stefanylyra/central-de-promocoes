@@ -181,9 +181,44 @@
                 <button onclick="cancelarEdicao()" style="background:#ccc;">Cancelar</button>
             </div>
 
-           <div id="lista" style="display:none;">
+         <div id="lista" style="display:none;">
 
     <h2>Produtos Cadastrados</h2>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;">
+
+        <input
+            id="pesquisa"
+            placeholder="🔍 Pesquisar produto..."
+            oninput="aplicarFiltros()"
+            style="flex:2;">
+
+        <select
+            id="filtroCategoria"
+            onchange="aplicarFiltros()"
+            style="flex:1;">
+
+            <option value="">Todas Categorias</option>
+
+        </select>
+
+        <select
+            id="filtroLoja"
+            onchange="aplicarFiltros()"
+            style="flex:1;">
+
+            <option value="">Todas Lojas</option>
+
+            <option value="shopee">Shopee</option>
+            <option value="amazon">Amazon</option>
+            <option value="magalu">Magazine Luiza</option>
+            <option value="mercado-livre">Mercado Livre</option>
+            <option value="shein">Shein</option>
+            <option value="aliexpress">AliExpress</option>
+
+        </select>
+
+    </div>
 
     <div class="grid" id="grid"></div>
 
@@ -238,11 +273,12 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
         let editingId = null;
+        
         const PRODUTOS_POR_PAGINA = 50;
 
-let paginaAtual = 1;
-
-let todosProdutos = [];
+        let paginaAtual = 1;
+        let todosProdutos = [];
+        let produtosFiltrados = [];
 
         
 const SUBCATEGORIAS = {
@@ -531,8 +567,7 @@ const SUBCATEGORIAS = {
 
     const fim = inicio + PRODUTOS_POR_PAGINA;
 
-    const pagina = todosProdutos.slice(inicio, fim);
-
+const pagina = produtosFiltrados.slice(inicio, fim);
     let html = "";
 
     pagina.forEach(item => {
@@ -612,17 +647,35 @@ const SUBCATEGORIAS = {
 
     grid.innerHTML = html;
             const totalPaginas =
-    Math.ceil(todosProdutos.length / PRODUTOS_POR_PAGINA);
+    Math.ceil(produtosFiltrados.length / PRODUTOS_POR_PAGINA)
 
 document.getElementById("numeroPagina").innerHTML =
 `Página ${paginaAtual} de ${totalPaginas}`;
 
 }
+        
+function popularCategorias(){
 
+    const select =
+        document.getElementById("filtroCategoria");
+
+    const categorias =
+        [...new Set(todosProdutos.map(p => p.dados.categoria).filter(Boolean))];
+
+    categorias.sort();
+
+    categorias.forEach(cat=>{
+
+        select.innerHTML +=
+        `<option value="${cat}">${cat}</option>`;
+
+    });
+
+}
         function proximaPagina() {
 
     const totalPaginas =
-        Math.ceil(todosProdutos.length / PRODUTOS_POR_PAGINA);
+        Math.ceil(produtosFiltrados.length / PRODUTOS_POR_PAGINA)
 
     if (paginaAtual < totalPaginas) {
 
@@ -669,9 +722,13 @@ db.collection("produtos")
 
     });
 
-    atualizarAnalises(produtos);
+   atualizarAnalises(produtos);
 
-    renderizarPagina();
+popularCategorias();
+
+produtosFiltrados = [...todosProdutos];
+
+renderizarPagina();
 
 });
         
