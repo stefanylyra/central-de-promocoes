@@ -1156,7 +1156,7 @@ class="badge-notificacao">
             <div class="conta-item" onclick="alternarTema()"><div><i class="fa-solid fa-palette icone-vermelho"></i>Aparência</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
             <div class="conta-item" onclick="mudarAba('favoritos', document.querySelectorAll('.nav-item')[3])"><div><i class="fa-solid fa-heart icone-vermelho"></i> Favoritos</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
             <div class="conta-item" onclick="abrirPoliticaPrivacidade()"><div><i class="fa-solid fa-file-shield icone-vermelho"></i> Política de Privacidade</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
-            <button id="btn-sair" class="btn-sair" onclick="logout()">Sair</button>
+            <button class="btn-sair" onclick="logout()">Sair</button>
         </main>
 
         <nav class="bottom-nav">
@@ -1967,43 +1967,17 @@ if (
     renderizarAbaFavoritos();
 }, 60000);
 
-           auth.onAuthStateChanged(user => {
-
-    const btnLogin = document.getElementById("btn-login");
-    const btnSair = document.getElementById("btn-sair");
-    const nomePerfil = document.getElementById("nome-perfil");
-    const avatar = document.getElementById("avatar-usuario");
-
-    if (user) {
-
-        // 🔥 LOGADO
-        db.collection("usuarios").doc(user.uid).get().then(doc => {
-            if (doc.exists) {
-                const nome = doc.data().nome;
-
-                if (nomePerfil) nomePerfil.innerText = nome;
-
-                // avatar com inicial
-                if (avatar) {
-                    avatar.innerText = nome.charAt(0).toUpperCase();
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    db.collection("usuarios").doc(user.uid).get().then(doc => {
+                        if (doc.exists) {
+                            document.getElementById("nome-perfil").innerText = doc.data().nome;
+                            document.getElementById("btn-login").style.display = "none";
+                        }
+                    });
                 }
-            }
-        });
+            });
 
-        if (btnLogin) btnLogin.style.display = "none";
-        if (btnSair) btnSair.style.display = "block";
-
-    } else {
-
-        // ❌ DESLOGADO (visitante)
-        if (nomePerfil) nomePerfil.innerText = "Visitante";
-
-        if (avatar) avatar.innerText = "😀";
-
-        if (btnLogin) btnLogin.style.display = "block";
-        if (btnSair) btnSair.style.display = "none";
-    }
-});
             // Cookie banner
             if (localStorage.getItem("cookiesAceitos") !== "sim") {
                 document.getElementById("cookie-banner").style.display = "flex";
