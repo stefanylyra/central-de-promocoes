@@ -1106,6 +1106,248 @@ cursor:pointer;
 padding:20px;
 
 }
+        .modal-avaliacao{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(0,0,0,.55);
+
+display:none;
+
+align-items:center;
+
+justify-content:center;
+
+z-index:9999;
+
+}
+
+.modal-avaliacao.active{
+
+display:flex;
+
+}
+
+.modal-avaliacao-box{
+
+width:95%;
+
+max-width:620px;
+
+background:white;
+
+border-radius:20px;
+
+overflow:hidden;
+
+animation:fadeUp .25s;
+
+}
+
+.modal-avaliacao-topo{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:18px;
+
+border-bottom:1px solid #ececec;
+
+}
+
+.modal-avaliacao-topo h2{
+
+margin:0;
+
+font-size:22px;
+
+}
+
+.modal-avaliacao-topo button{
+
+border:none;
+
+background:none;
+
+font-size:24px;
+
+cursor:pointer;
+
+}
+
+.modal-avaliacao-corpo{
+
+padding:25px;
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(25px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+        .campo-avaliacao{
+
+margin-bottom:22px;
+
+}
+
+.campo-avaliacao label{
+
+display:block;
+
+font-weight:600;
+
+margin-bottom:8px;
+
+}
+
+.estrelas-avaliacao{
+
+display:flex;
+
+gap:8px;
+
+font-size:34px;
+
+cursor:pointer;
+
+}
+
+.estrela{
+
+color:#d5d5d5;
+
+transition:.2s;
+
+}
+
+.estrela.ativa{
+
+color:#FFD700;
+
+}
+
+#texto-avaliacao{
+
+width:100%;
+
+padding:12px;
+
+border-radius:10px;
+
+border:1px solid #ddd;
+
+resize:none;
+
+font-size:15px;
+
+}
+
+#contador-texto{
+
+text-align:right;
+
+font-size:13px;
+
+color:#777;
+
+margin-top:6px;
+
+}
+
+#loja-avaliacao{
+
+width:100%;
+
+padding:12px;
+
+border-radius:10px;
+
+border:1px solid #ddd;
+
+}
+
+.campo-preco{
+
+display:flex;
+
+align-items:center;
+
+border:1px solid #ddd;
+
+border-radius:10px;
+
+padding:0 12px;
+
+}
+
+.campo-preco span{
+
+font-weight:bold;
+
+margin-right:10px;
+
+}
+
+.campo-preco input{
+
+flex:1;
+
+border:none;
+
+padding:12px 0;
+
+outline:none;
+
+}
+
+.btn-postar-avaliacao{
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+border-radius:12px;
+
+background:#cc0a12;
+
+color:white;
+
+font-size:16px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
     </style>
 </head>
 <body>
@@ -1900,6 +2142,164 @@ if (
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
+        function abrirNovaAvaliacao(){
+
+    if(!auth.currentUser){
+
+        mostrarModalLoginObrigatorio();
+
+        return;
+
+    }
+
+    document.getElementById("modal-avaliacao").classList.add("active");
+
+}
+
+function fecharNovaAvaliacao(){
+
+    document.getElementById("modal-avaliacao").classList.remove("active");
+
+}
+let notaAvaliacao = 0;
+
+const estrelas = document.querySelectorAll(".estrela");
+
+estrelas.forEach(estrela=>{
+
+    estrela.addEventListener("click",()=>{
+
+        notaAvaliacao = Number(estrela.dataset.star);
+
+        estrelas.forEach(e=>{
+
+            if(Number(e.dataset.star)<=notaAvaliacao){
+
+                e.classList.remove("fa-regular");
+
+                e.classList.add("fa-solid");
+
+                e.classList.add("ativa");
+
+            }else{
+
+                e.classList.remove("fa-solid");
+
+                e.classList.add("fa-regular");
+
+                e.classList.remove("ativa");
+
+            }
+
+        });
+
+    });
+
+});
+
+document.getElementById("texto-avaliacao").addEventListener("input",function(){
+
+    document.getElementById("contador-texto").textContent=
+
+    this.value.length+" / 500";
+
+});
+        document.getElementById("preco-avaliacao").addEventListener("blur", function(){
+
+    let valor = this.value
+        .replace(/\./g,"")
+        .replace(",",".")
+        .trim();
+
+    if(valor===""){
+
+        return;
+
+    }
+
+    let numero = parseFloat(valor);
+
+    if(isNaN(numero)){
+
+        this.value="";
+
+        return;
+
+    }
+
+    this.value = numero.toLocaleString("pt-BR",{
+
+        minimumFractionDigits:2,
+
+        maximumFractionDigits:2
+
+    });
+
+});
+        document.getElementById("imagem-avaliacao").addEventListener("change",function(){
+
+    if(this.files.length>2){
+
+        alert("Você pode adicionar no máximo 2 imagens.");
+
+        this.value="";
+
+    }
+
+});
+        document.querySelector(".btn-postar-avaliacao").addEventListener("click",function(){
+
+    const texto=document.getElementById("texto-avaliacao").value.trim();
+
+    const loja=document.getElementById("loja-avaliacao").value;
+
+    const preco=document.getElementById("preco-avaliacao").value;
+
+    const imagens=document.getElementById("imagem-avaliacao").files;
+
+    if(notaAvaliacao===0){
+
+        alert("Escolha uma quantidade de estrelas.");
+
+        return;
+
+    }
+
+    if(texto===""){
+
+        alert("Escreva sua avaliação.");
+
+        return;
+
+    }
+
+    if(loja===""){
+
+        alert("Escolha a loja.");
+
+        return;
+
+    }
+
+    if(preco===""){
+
+        alert("Informe quanto pagou.");
+
+        return;
+
+    }
+
+    if(imagens.length===0){
+
+        alert("Adicione pelo menos uma imagem.");
+
+        return;
+
+    }
+
+    alert("Na próxima etapa salvaremos sua avaliação no Firebase.");
+
+});
         function limparFiltrosEMudarAba(elementoBotao) {
             categoriaAtiva = null;
             document.getElementById('titulo-aba-ofertas').innerText = "🛒 Todas as Ofertas";
@@ -2330,6 +2730,130 @@ function fecharModal() {
             <p>⚡ Últimas promoções do dia atualizadas</p>
         </div>
     </div>
+</div>
+    <!-- MODAL NOVA AVALIAÇÃO -->
+
+<div id="modal-avaliacao" class="modal-avaliacao">
+
+    <div class="modal-avaliacao-box">
+
+        <div class="modal-avaliacao-topo">
+
+            <h2>Nova avaliação</h2>
+
+            <button onclick="fecharNovaAvaliacao()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+    <div class="modal-avaliacao-corpo">
+
+    <!-- ESTRELAS -->
+    <div class="campo-avaliacao">
+
+        <label>Sua avaliação</label>
+
+        <div class="estrelas-avaliacao">
+
+            <i class="fa-regular fa-star estrela" data-star="1"></i>
+            <i class="fa-regular fa-star estrela" data-star="2"></i>
+            <i class="fa-regular fa-star estrela" data-star="3"></i>
+            <i class="fa-regular fa-star estrela" data-star="4"></i>
+            <i class="fa-regular fa-star estrela" data-star="5"></i>
+
+        </div>
+
+    </div>
+
+    <!-- TEXTO -->
+
+    <div class="campo-avaliacao">
+
+        <label>Fale um pouquinho sobre seu recebido</label>
+
+        <textarea
+            id="texto-avaliacao"
+            maxlength="500"
+            rows="8"
+            placeholder="Conte sua experiência..."></textarea>
+
+        <div id="contador-texto">
+
+            0 / 500
+
+        </div>
+
+    </div>
+
+    <!-- LOJA -->
+
+    <div class="campo-avaliacao">
+
+        <label>Qual loja comprou?</label>
+
+        <select id="loja-avaliacao">
+
+            <option value="">Selecione</option>
+
+            <option>Amazon</option>
+
+            <option>Shopee</option>
+
+            <option>Magalu</option>
+
+            <option>Mercado Livre</option>
+
+        </select>
+
+    </div>
+
+    <!-- PREÇO -->
+
+    <div class="campo-avaliacao">
+
+        <label>Quanto pagou?</label>
+
+        <div class="campo-preco">
+
+            <span>R$</span>
+
+            <input
+                type="text"
+                id="preco-avaliacao"
+                placeholder="0,00">
+
+        </div>
+
+    </div>
+
+    <!-- IMAGENS -->
+
+    <div class="campo-avaliacao">
+
+        <label>Adicionar imagens</label>
+
+        <input
+            type="file"
+            id="imagem-avaliacao"
+            accept="image/*"
+            multiple>
+
+        <small>Obrigatório pelo menos uma foto (máximo 2).</small>
+
+    </div>
+
+    <button
+        class="btn-postar-avaliacao">
+
+        Postar avaliação
+
+    </button>
+
+</div>
+
+    </div>
+
 </div>
 </body>
 </html>
