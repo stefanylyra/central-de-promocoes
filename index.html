@@ -2170,40 +2170,28 @@ function fecharNovaAvaliacao(){
 }
 let notaAvaliacao = 0;
 
-const estrelas = document.querySelectorAll(".estrela");
+// Espera o DOM carregar completamente antes de pegar as estrelas
+document.addEventListener("DOMContentLoaded", () => {
+    const estrelas = document.querySelectorAll(".estrela");
+    
+    estrelas.forEach(estrela => {
+        estrela.addEventListener("click", () => {
+            notaAvaliacao = Number(estrela.dataset.star);
 
-estrelas.forEach(estrela=>{
-
-    estrela.addEventListener("click",()=>{
-
-        notaAvaliacao = Number(estrela.dataset.star);
-
-        estrelas.forEach(e=>{
-
-            if(Number(e.dataset.star)<=notaAvaliacao){
-
-                e.classList.remove("fa-regular");
-
-                e.classList.add("fa-solid");
-
-                e.classList.add("ativa");
-
-            }else{
-
-                e.classList.remove("fa-solid");
-
-                e.classList.add("fa-regular");
-
-                e.classList.remove("ativa");
-
-            }
-
+            estrelas.forEach(e => {
+                if (Number(e.dataset.star) <= notaAvaliacao) {
+                    e.classList.remove("fa-regular");
+                    e.classList.add("fa-solid");
+                    e.classList.add("ativa");
+                } else {
+                    e.classList.remove("fa-solid");
+                    e.classList.add("fa-regular");
+                    e.classList.remove("ativa");
+                }
+            });
         });
-
     });
-
 });
-
 document.getElementById("texto-avaliacao").addEventListener("input",function(){
 
     document.getElementById("contador-texto").textContent=
@@ -2687,6 +2675,10 @@ function fecharModal() {
         document.getElementById('modal-produto').addEventListener('click', function(e) {
             if (e.target === this) fecharModal();
         });
+        // Garantia de inicialização
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("✅ Página carregada - Produtos:", PRODUTOS_LOJA.length);
+});
 
     </script>
 
