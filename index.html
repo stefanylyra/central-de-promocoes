@@ -1532,15 +1532,13 @@ function atualizarUIAuth(user) {
     const btnSair = document.getElementById("btn-sair");
 
     if (user) {
-        // LOGADO
         btnLogin.style.display = "none";
         btnSair.style.display = "block";
     } else {
-        // DESLOGADO
         btnLogin.style.display = "block";
         btnSair.style.display = "none";
     }
-}        
+}
         // ==================== FAVORITOS (exige login) ====================
         function alternarFavorito(idProduto) {
             const user = auth.currentUser;
@@ -1980,7 +1978,7 @@ if (
     renderizarAbaFavoritos();
 }, 60000);
 
-            auth.onAuthStateChanged(user => {
+auth.onAuthStateChanged(user => {
     atualizarUIAuth(user);
 
     if (user) {
