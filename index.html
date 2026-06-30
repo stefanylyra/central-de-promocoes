@@ -1001,353 +1001,6 @@
     color:#555;
     white-space:pre-line;
 }
-        .avaliacoes-topo{
-
-padding:25px;
-
-text-align:center;
-
-}
-
-.avaliacoes-topo h2{
-
-font-size:27px;
-
-margin-bottom:8px;
-
-}
-
-.avaliacoes-topo p{
-
-color:#777;
-
-line-height:1.5;
-
-}
-
-.criar-avaliacao{
-
-margin:18px;
-
-padding:15px;
-
-background:white;
-
-border-radius:18px;
-
-display:flex;
-
-align-items:center;
-
-gap:12px;
-
-border:1px solid #ececec;
-
-cursor:pointer;
-
-}
-
-.avatar-publicacao{
-
-width:48px;
-
-height:48px;
-
-border-radius:50%;
-
-background:#cc0a12;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-color:white;
-
-font-size:22px;
-
-}
-
-.criar-avaliacao input{
-
-flex:1;
-
-height:42px;
-
-border-radius:999px;
-
-border:1px solid #e6e6e6;
-
-padding:0 18px;
-
-background:#fafafa;
-
-cursor:pointer;
-
-}
-
-.criar-avaliacao button{
-
-border:none;
-
-background:none;
-
-font-size:24px;
-
-color:#cc0a12;
-
-cursor:pointer;
-
-}
-
-#feed-avaliacoes{
-
-padding:20px;
-
-}
-        .modal-avaliacao{
-
-position:fixed;
-
-top:0;
-
-left:0;
-
-width:100%;
-
-height:100%;
-
-background:rgba(0,0,0,.55);
-
-display:none;
-
-align-items:center;
-
-justify-content:center;
-
-z-index:9999;
-
-}
-
-.modal-avaliacao.active{
-
-display:flex;
-
-}
-
-.modal-avaliacao-box{
-
-width:95%;
-
-max-width:620px;
-
-background:white;
-
-border-radius:20px;
-
-overflow:hidden;
-
-animation:fadeUp .25s;
-
-}
-
-.modal-avaliacao-topo{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-padding:18px;
-
-border-bottom:1px solid #ececec;
-
-}
-
-.modal-avaliacao-topo h2{
-
-margin:0;
-
-font-size:22px;
-
-}
-
-.modal-avaliacao-topo button{
-
-border:none;
-
-background:none;
-
-font-size:24px;
-
-cursor:pointer;
-
-}
-
-.modal-avaliacao-corpo{
-
-padding:25px;
-
-}
-
-@keyframes fadeUp{
-
-from{
-
-opacity:0;
-
-transform:translateY(25px);
-
-}
-
-to{
-
-opacity:1;
-
-transform:translateY(0);
-
-}
-
-}
-        .campo-avaliacao{
-
-margin-bottom:22px;
-
-}
-
-.campo-avaliacao label{
-
-display:block;
-
-font-weight:600;
-
-margin-bottom:8px;
-
-}
-
-.estrelas-avaliacao{
-
-display:flex;
-
-gap:8px;
-
-font-size:34px;
-
-cursor:pointer;
-
-}
-
-.estrela{
-
-color:#d5d5d5;
-
-transition:.2s;
-
-}
-
-.estrela.ativa{
-
-color:#FFD700;
-
-}
-
-#texto-avaliacao{
-
-width:100%;
-
-padding:12px;
-
-border-radius:10px;
-
-border:1px solid #ddd;
-
-resize:none;
-
-font-size:15px;
-
-}
-
-#contador-texto{
-
-text-align:right;
-
-font-size:13px;
-
-color:#777;
-
-margin-top:6px;
-
-}
-
-#loja-avaliacao{
-
-width:100%;
-
-padding:12px;
-
-border-radius:10px;
-
-border:1px solid #ddd;
-
-}
-
-.campo-preco{
-
-display:flex;
-
-align-items:center;
-
-border:1px solid #ddd;
-
-border-radius:10px;
-
-padding:0 12px;
-
-}
-
-.campo-preco span{
-
-font-weight:bold;
-
-margin-right:10px;
-
-}
-
-.campo-preco input{
-
-flex:1;
-
-border:none;
-
-padding:12px 0;
-
-outline:none;
-
-}
-
-.btn-postar-avaliacao{
-
-width:100%;
-
-padding:14px;
-
-border:none;
-
-border-radius:12px;
-
-background:#cc0a12;
-
-color:white;
-
-font-size:16px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-}
     </style>
 </head>
 <body>
@@ -1439,7 +1092,7 @@ class="badge-notificacao">
             <div id="wrapper-ofertas-quentes">
                 <div class="section-title">
                     <span>⏰ Ofertas por Tempo Limitado</span>
-                    <a href="#" class="ver-todos" onclick="mudarAba(ID_ABA_OFERTAS, document.querySelectorAll(".nav-item")[2]);">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
+                    <a href="#" class="ver-todos" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
                 </div>
                 <div class="ofertas-quentes-carrossel" id="carrossel-hot-deals"></div>
             </div>
@@ -1453,7 +1106,7 @@ class="badge-notificacao">
 
             <div class="section-title">
                 <span id="titulo-grid-home">⚡ Ofertas Imperdíveis</span>
-                <a href="#" class="ver-todos" id="link-ver-todos-home" onclick="mudarAba(ID_ABA_OFERTAS, document.querySelectorAll(".nav-item")[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
+                <a href="#" class="ver-todos" id="link-ver-todos-home" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
             </div>
             <div class="grid-produtos" id="grid-home-ofertas"></div>
 
@@ -1472,50 +1125,11 @@ class="badge-notificacao">
             <div class="section-title"><span>📂 Categorias</span></div>
             <div class="grid-categorias" id="mosaico-categorias-container"></div>
         </main>
-<main id="aba-ofertas" class="app-page">   <!-- ← mude para aba-ofertas -->
-    <div class="section-title">
-        <span id="titulo-aba-avaliacoes">🛒 Todas as Ofertas</span>   <!-- ← mude o id também -->
-    </div>
-    <div class="grid-produtos" id="grid-todas-ofertas"></div>   <!-- ← mude o id -->
-</main>
 
-      <main id="aba-avaliacoes" class="app-page">
-
-    <div class="avaliacoes-topo">
-
-        <h2>Ajude a comunidade a economizar 👏</h2>
-
-        <p>
-            Gostou do produto?
-            Avalie seu recebido e ajude outras pessoas na compra.
-        </p>
-
-    </div>
-
-    <div class="criar-avaliacao" onclick="abrirNovaAvaliacao()">
-
-        <div class="avatar-publicacao">
-
-            <i class="fa-solid fa-user"></i>
-
-        </div>
-
-        <input
-            type="text"
-            placeholder="Conte sobre seu recebido!"
-            readonly>
-
-        <button>
-
-            <i class="fa-regular fa-image"></i>
-
-        </button>
-
-    </div>
-
-    <div id="feed-avaliacoes"></div>
-
-</main>
+        <main id="aba-ofertas" class="app-page">
+            <div class="section-title"><span id="titulo-aba-ofertas">🛒 Todas as Ofertas</span></div>
+            <div class="grid-produtos" id="grid-todas-ofertas"></div>
+        </main>
 
         <main id="aba-favoritos" class="app-page">
             <div class="section-title"><span>❤️ Meus Favoritos</span></div>
@@ -1548,7 +1162,7 @@ class="badge-notificacao">
         <nav class="bottom-nav">
             <button class="nav-item active" onclick="mudarAba('inicio', this)"><i class="fa-solid fa-house"></i><span>Início</span></button>
             <button class="nav-item" onclick="mudarAba('categorias', this)"><i class="fa-solid fa-layer-group"></i><span>Categorias</span></button>
-           <button class="nav-item"onclick="mudarAba('avaliacoes', this)"><i class="fa-solid fa-star"></i><span>Avaliações</span></button>
+            <button class="nav-item" onclick="limparFiltrosEMudarAba(this)"><i class="fa-solid fa-fire"></i><span>Ofertas</span></button>
             <button class="nav-item" onclick="mudarAba('favoritos', this)"><i class="fa-solid fa-heart"></i><span>Favoritos</span></button>
             <button class="nav-item" onclick="mudarAba('conta', this)"><i class="fa-solid fa-user"></i><span>Conta</span></button>
         </nav>
@@ -1575,7 +1189,6 @@ class="badge-notificacao">
     </div>
 
     <script>
-        const ID_ABA_OFERTAS = 'aba-ofertas';
         const firebaseConfig = {
             apiKey: "AIzaSyCydy0v27JxNvKBW3aqFa3Uel8Slkdtcx4",
             authDomain: "central-promocoes.firebaseapp.com",
@@ -1868,7 +1481,7 @@ function mostrarSubcategorias(categoriaId) {
 
     const info = CATEGORIAS_DADOS.find(c => c.id === categoriaId);
     if (info) {
-        document.getElementById('titulo-aba-avaliacoes').innerText = `📂 ${info.nome}`;
+        document.getElementById('titulo-aba-ofertas').innerText = `📂 ${info.nome}`;
     }
     function abrirCupons() {
     document.getElementById("modal-cupons").style.display = "flex";
@@ -1909,7 +1522,7 @@ function fecharCupons() {
 
     htmlSub += `</div>`;
 
-    const container = document.getElementById('aba-avaliacoes');
+    const container = document.getElementById('aba-ofertas');
     if (container) container.insertAdjacentHTML('afterbegin', htmlSub);
 
     filtrarPorCategoria(categoriaId);
@@ -2149,157 +1762,11 @@ if (
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        function abrirNovaAvaliacao(){
-
-    if(!auth.currentUser){
-
-        mostrarModalLoginObrigatorio();
-
-        return;
-
-    }
-
-    document.getElementById("modal-avaliacao").classList.add("active");
-
-}
-
-function fecharNovaAvaliacao(){
-
-    document.getElementById("modal-avaliacao").classList.remove("active");
-
-}
-let notaAvaliacao = 0;
-
-// Espera o DOM carregar completamente antes de pegar as estrelas
-document.addEventListener("DOMContentLoaded", () => {
-    const estrelas = document.querySelectorAll(".estrela");
-    
-    estrelas.forEach(estrela => {
-        estrela.addEventListener("click", () => {
-            notaAvaliacao = Number(estrela.dataset.star);
-
-            estrelas.forEach(e => {
-                if (Number(e.dataset.star) <= notaAvaliacao) {
-                    e.classList.remove("fa-regular");
-                    e.classList.add("fa-solid");
-                    e.classList.add("ativa");
-                } else {
-                    e.classList.remove("fa-solid");
-                    e.classList.add("fa-regular");
-                    e.classList.remove("ativa");
-                }
-            });
-        });
-    });
-});
-document.getElementById("texto-avaliacao").addEventListener("input",function(){
-
-    document.getElementById("contador-texto").textContent=
-
-    this.value.length+" / 500";
-
-});
-        document.getElementById("preco-avaliacao").addEventListener("blur", function(){
-
-    let valor = this.value
-        .replace(/\./g,"")
-        .replace(",",".")
-        .trim();
-
-    if(valor===""){
-
-        return;
-
-    }
-
-    let numero = parseFloat(valor);
-
-    if(isNaN(numero)){
-
-        this.value="";
-
-        return;
-
-    }
-
-    this.value = numero.toLocaleString("pt-BR",{
-
-        minimumFractionDigits:2,
-
-        maximumFractionDigits:2
-
-    });
-
-});
-        document.getElementById("imagem-avaliacao").addEventListener("change",function(){
-
-    if(this.files.length>2){
-
-        alert("Você pode adicionar no máximo 2 imagens.");
-
-        this.value="";
-
-    }
-
-});
-        document.querySelector(".btn-postar-avaliacao").addEventListener("click",function(){
-
-    const texto=document.getElementById("texto-avaliacao").value.trim();
-
-    const loja=document.getElementById("loja-avaliacao").value;
-
-    const preco=document.getElementById("preco-avaliacao").value;
-
-    const imagens=document.getElementById("imagem-avaliacao").files;
-
-    if(notaAvaliacao===0){
-
-        alert("Escolha uma quantidade de estrelas.");
-
-        return;
-
-    }
-
-    if(texto===""){
-
-        alert("Escreva sua avaliação.");
-
-        return;
-
-    }
-
-    if(loja===""){
-
-        alert("Escolha a loja.");
-
-        return;
-
-    }
-
-    if(preco===""){
-
-        alert("Informe quanto pagou.");
-
-        return;
-
-    }
-
-    if(imagens.length===0){
-
-        alert("Adicione pelo menos uma imagem.");
-
-        return;
-
-    }
-
-    alert("Na próxima etapa salvaremos sua avaliação no Firebase.");
-
-});
         function limparFiltrosEMudarAba(elementoBotao) {
             categoriaAtiva = null;
-            document.getElementById('titulo-aba-avaliacoes').innerText = "🛒 Todas as Ofertas";
+            document.getElementById('titulo-aba-ofertas').innerText = "🛒 Todas as Ofertas";
             renderizarGridOfertas(PRODUTOS_LOJA);
-            mudarAba(ID_ABA_OFERTAS, elementoBotao);
+            mudarAba('ofertas', elementoBotao);
         }
 
     function filtrarPorCategoria(idCategoria, subcategoria = null) {
@@ -2309,7 +1776,7 @@ document.getElementById("texto-avaliacao").addEventListener("input",function(){
     if (info) {
         let titulo = `📂 ${info.nome}`;
         if (subcategoria) titulo += ` → ${subcategoria}`;
-        document.getElementById('titulo-aba-avaliacoes').innerText = titulo;
+        document.getElementById('titulo-aba-ofertas').innerText = titulo;
     }
 
     let filtrados = PRODUTOS_LOJA.filter(p => p.categoria === idCategoria);
@@ -2319,7 +1786,7 @@ document.getElementById("texto-avaliacao").addEventListener("input",function(){
     }
 
     renderizarGridOfertas(filtrados);
-    mudarAba(ID_ABA_OFERTAS, document.querySelectorAll('.nav-item')[2]);
+    mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
 }
       function filtrarPorLoja(loja) {
     const lojaNormalizada = loja.toLowerCase();
@@ -2341,9 +1808,9 @@ document.getElementById("texto-avaliacao").addEventListener("input",function(){
         return lojaProd === lojaNormalizada;
     });
 
-    document.getElementById("titulo-aba-avaliacoes").innerText = `🏪 ${loja.toUpperCase()}`;
+    document.getElementById("titulo-aba-ofertas").innerText = `🏪 ${loja.toUpperCase()}`;
     renderizarGridOfertas(produtosFiltrados);
-    mudarAba("avaliacoes", document.querySelectorAll(".nav-item")[2]);
+    mudarAba("ofertas", document.querySelectorAll(".nav-item")[2]);
 }
 
                function filtrarPesquisa() {
@@ -2675,10 +2142,6 @@ function fecharModal() {
         document.getElementById('modal-produto').addEventListener('click', function(e) {
             if (e.target === this) fecharModal();
         });
-        // Garantia de inicialização
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ Página carregada - Produtos:", PRODUTOS_LOJA.length);
-});
 
     </script>
 
@@ -2729,130 +2192,6 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>⚡ Últimas promoções do dia atualizadas</p>
         </div>
     </div>
-</div>
-    <!-- MODAL NOVA AVALIAÇÃO -->
-
-<div id="modal-avaliacao" class="modal-avaliacao">
-
-    <div class="modal-avaliacao-box">
-
-        <div class="modal-avaliacao-topo">
-
-            <h2>Nova avaliação</h2>
-
-            <button onclick="fecharNovaAvaliacao()">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-        </div>
-
-    <div class="modal-avaliacao-corpo">
-
-    <!-- ESTRELAS -->
-    <div class="campo-avaliacao">
-
-        <label>Sua avaliação</label>
-
-        <div class="estrelas-avaliacao">
-
-            <i class="fa-regular fa-star estrela" data-star="1"></i>
-            <i class="fa-regular fa-star estrela" data-star="2"></i>
-            <i class="fa-regular fa-star estrela" data-star="3"></i>
-            <i class="fa-regular fa-star estrela" data-star="4"></i>
-            <i class="fa-regular fa-star estrela" data-star="5"></i>
-
-        </div>
-
-    </div>
-
-    <!-- TEXTO -->
-
-    <div class="campo-avaliacao">
-
-        <label>Fale um pouquinho sobre seu recebido</label>
-
-        <textarea
-            id="texto-avaliacao"
-            maxlength="500"
-            rows="8"
-            placeholder="Conte sua experiência..."></textarea>
-
-        <div id="contador-texto">
-
-            0 / 500
-
-        </div>
-
-    </div>
-
-    <!-- LOJA -->
-
-    <div class="campo-avaliacao">
-
-        <label>Qual loja comprou?</label>
-
-        <select id="loja-avaliacao">
-
-            <option value="">Selecione</option>
-
-            <option>Amazon</option>
-
-            <option>Shopee</option>
-
-            <option>Magalu</option>
-
-            <option>Mercado Livre</option>
-
-        </select>
-
-    </div>
-
-    <!-- PREÇO -->
-
-    <div class="campo-avaliacao">
-
-        <label>Quanto pagou?</label>
-
-        <div class="campo-preco">
-
-            <span>R$</span>
-
-            <input
-                type="text"
-                id="preco-avaliacao"
-                placeholder="0,00">
-
-        </div>
-
-    </div>
-
-    <!-- IMAGENS -->
-
-    <div class="campo-avaliacao">
-
-        <label>Adicionar imagens</label>
-
-        <input
-            type="file"
-            id="imagem-avaliacao"
-            accept="image/*"
-            multiple>
-
-        <small>Obrigatório pelo menos uma foto (máximo 2).</small>
-
-    </div>
-
-    <button
-        class="btn-postar-avaliacao">
-
-        Postar avaliação
-
-    </button>
-
-</div>
-
-    </div>
-
 </div>
 </body>
 </html>
