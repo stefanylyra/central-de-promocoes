@@ -1439,7 +1439,7 @@ class="badge-notificacao">
             <div id="wrapper-ofertas-quentes">
                 <div class="section-title">
                     <span>⏰ Ofertas por Tempo Limitado</span>
-                    <a href="#" class="ver-todos" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
+                    <a href="#" class="ver-todos" onclick="mudarAba(ID_ABA_OFERTAS, document.querySelectorAll(".nav-item")[2]);">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
                 </div>
                 <div class="ofertas-quentes-carrossel" id="carrossel-hot-deals"></div>
             </div>
@@ -1453,7 +1453,7 @@ class="badge-notificacao">
 
             <div class="section-title">
                 <span id="titulo-grid-home">⚡ Ofertas Imperdíveis</span>
-                <a href="#" class="ver-todos" id="link-ver-todos-home" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
+                <a href="#" class="ver-todos" id="link-ver-todos-home" onclick="mudarAba(ID_ABA_OFERTAS, document.querySelectorAll(".nav-item")[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
             </div>
             <div class="grid-produtos" id="grid-home-ofertas"></div>
 
@@ -2311,7 +2311,7 @@ document.getElementById("texto-avaliacao").addEventListener("input",function(){
             categoriaAtiva = null;
             document.getElementById('titulo-aba-ofertas').innerText = "🛒 Todas as Ofertas";
             renderizarGridOfertas(PRODUTOS_LOJA);
-            mudarAba('ofertas', elementoBotao);
+            mudarAba(ID_ABA_OFERTAS, elementoBotao);
         }
 
     function filtrarPorCategoria(idCategoria, subcategoria = null) {
@@ -2331,7 +2331,7 @@ document.getElementById("texto-avaliacao").addEventListener("input",function(){
     }
 
     renderizarGridOfertas(filtrados);
-    mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
+    mudarAba(ID_ABA_OFERTAS, document.querySelectorAll('.nav-item')[2]);
 }
       function filtrarPorLoja(loja) {
     const lojaNormalizada = loja.toLowerCase();
