@@ -1474,7 +1474,7 @@ class="badge-notificacao">
         </main>
 <main id="aba-ofertas" class="app-page">   <!-- ← mude para aba-ofertas -->
     <div class="section-title">
-        <span id="titulo-aba-ofertas">🛒 Todas as Ofertas</span>   <!-- ← mude o id também -->
+        <span id="titulo-aba-avaliacoes">🛒 Todas as Ofertas</span>   <!-- ← mude o id também -->
     </div>
     <div class="grid-produtos" id="grid-todas-ofertas"></div>   <!-- ← mude o id -->
 </main>
@@ -1868,7 +1868,7 @@ function mostrarSubcategorias(categoriaId) {
 
     const info = CATEGORIAS_DADOS.find(c => c.id === categoriaId);
     if (info) {
-        document.getElementById('titulo-aba-ofertas').innerText = `📂 ${info.nome}`;
+        document.getElementById('titulo-aba-avaliacoes').innerText = `📂 ${info.nome}`;
     }
     function abrirCupons() {
     document.getElementById("modal-cupons").style.display = "flex";
@@ -1909,7 +1909,7 @@ function fecharCupons() {
 
     htmlSub += `</div>`;
 
-    const container = document.getElementById('aba-ofertas');
+    const container = document.getElementById('aba-avaliacoes');
     if (container) container.insertAdjacentHTML('afterbegin', htmlSub);
 
     filtrarPorCategoria(categoriaId);
@@ -2297,7 +2297,7 @@ document.getElementById("texto-avaliacao").addEventListener("input",function(){
 });
         function limparFiltrosEMudarAba(elementoBotao) {
             categoriaAtiva = null;
-            document.getElementById('titulo-aba-ofertas').innerText = "🛒 Todas as Ofertas";
+            document.getElementById('titulo-aba-avaliacoes').innerText = "🛒 Todas as Ofertas";
             renderizarGridOfertas(PRODUTOS_LOJA);
             mudarAba(ID_ABA_OFERTAS, elementoBotao);
         }
@@ -2309,7 +2309,7 @@ document.getElementById("texto-avaliacao").addEventListener("input",function(){
     if (info) {
         let titulo = `📂 ${info.nome}`;
         if (subcategoria) titulo += ` → ${subcategoria}`;
-        document.getElementById('titulo-aba-ofertas').innerText = titulo;
+        document.getElementById('titulo-aba-avaliacoes').innerText = titulo;
     }
 
     let filtrados = PRODUTOS_LOJA.filter(p => p.categoria === idCategoria);
@@ -2341,9 +2341,9 @@ document.getElementById("texto-avaliacao").addEventListener("input",function(){
         return lojaProd === lojaNormalizada;
     });
 
-    document.getElementById("titulo-aba-ofertas").innerText = `🏪 ${loja.toUpperCase()}`;
+    document.getElementById("titulo-aba-avaliacoes").innerText = `🏪 ${loja.toUpperCase()}`;
     renderizarGridOfertas(produtosFiltrados);
-    mudarAba("ofertas", document.querySelectorAll(".nav-item")[2]);
+    mudarAba("avaliacoes", document.querySelectorAll(".nav-item")[2]);
 }
 
                function filtrarPesquisa() {
