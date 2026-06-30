@@ -1472,24 +1472,11 @@ class="badge-notificacao">
             <div class="section-title"><span>📂 Categorias</span></div>
             <div class="grid-categorias" id="mosaico-categorias-container"></div>
         </main>
-        <main id="aba-produtos" class="app-page">
-
+<main id="aba-ofertas" class="app-page">   <!-- ← mude para aba-ofertas -->
     <div class="section-title">
-
-        <span id="titulo-aba-produtos">
-
-            🛒 Produtos
-
-        </span>
-
+        <span id="titulo-aba-ofertas">🛒 Todas as Ofertas</span>   <!-- ← mude o id também -->
     </div>
-
-    <div
-        class="grid-produtos"
-        id="grid-produtos-filtrados">
-
-    </div>
-
+    <div class="grid-produtos" id="grid-todas-ofertas"></div>   <!-- ← mude o id -->
 </main>
 
       <main id="aba-avaliacoes" class="app-page">
@@ -1588,6 +1575,7 @@ class="badge-notificacao">
     </div>
 
     <script>
+        const ID_ABA_OFERTAS = 'aba-ofertas';
         const firebaseConfig = {
             apiKey: "AIzaSyCydy0v27JxNvKBW3aqFa3Uel8Slkdtcx4",
             authDomain: "central-promocoes.firebaseapp.com",
