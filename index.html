@@ -1156,7 +1156,7 @@ class="badge-notificacao">
             <div class="conta-item" onclick="alternarTema()"><div><i class="fa-solid fa-palette icone-vermelho"></i>Aparência</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
             <div class="conta-item" onclick="mudarAba('favoritos', document.querySelectorAll('.nav-item')[3])"><div><i class="fa-solid fa-heart icone-vermelho"></i> Favoritos</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
             <div class="conta-item" onclick="abrirPoliticaPrivacidade()"><div><i class="fa-solid fa-file-shield icone-vermelho"></i> Política de Privacidade</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
-            <button class="btn-sair" onclick="logout()">Sair</button>
+            <button id="btn-sair" style="display:none;" onclick="logout()">Sair</button>
         </main>
 
         <nav class="bottom-nav">
@@ -1527,6 +1527,20 @@ function fecharCupons() {
 
     filtrarPorCategoria(categoriaId);
 }
+function atualizarUIAuth(user) {
+    const btnLogin = document.getElementById("btn-login");
+    const btnSair = document.getElementById("btn-sair");
+
+    if (user) {
+        // LOGADO
+        btnLogin.style.display = "none";
+        btnSair.style.display = "block";
+    } else {
+        // DESLOGADO
+        btnLogin.style.display = "block";
+        btnSair.style.display = "none";
+    }
+}        
         // ==================== FAVORITOS (exige login) ====================
         function alternarFavorito(idProduto) {
             const user = auth.currentUser;
@@ -1880,7 +1894,6 @@ if (
                 })
                 .then(() => {
                     document.getElementById("nome-perfil").innerText = nome;
-                    document.getElementById("btn-login").style.display = "none";
                     alert("Conta criada com sucesso!");
                     fecharCadastro();
                 })
@@ -1968,15 +1981,18 @@ if (
 }, 60000);
 
             auth.onAuthStateChanged(user => {
-                if (user) {
-                    db.collection("usuarios").doc(user.uid).get().then(doc => {
-                        if (doc.exists) {
-                            document.getElementById("nome-perfil").innerText = doc.data().nome;
-                            document.getElementById("btn-login").style.display = "none";
-                        }
-                    });
-                }
-            });
+    atualizarUIAuth(user);
+
+    if (user) {
+        db.collection("usuarios").doc(user.uid).get().then(doc => {
+            if (doc.exists) {
+                document.getElementById("nome-perfil").innerText = doc.data().nome;
+            }
+        });
+    } else {
+        document.getElementById("nome-perfil").innerText = "Visitante";
+    }
+});
 
             // Cookie banner
             if (localStorage.getItem("cookiesAceitos") !== "sim") {
