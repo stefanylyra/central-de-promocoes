@@ -1155,7 +1155,14 @@ class="badge-notificacao">
             <div class="section-title"><span>Minha Conta</span></div>
             <div class="conta-item" onclick="alternarTema()"><div><i class="fa-solid fa-palette icone-vermelho"></i>Aparência</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
             <div class="conta-item" onclick="mudarAba('favoritos', document.querySelectorAll('.nav-item')[3])"><div><i class="fa-solid fa-heart icone-vermelho"></i> Favoritos</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
-            <div class="conta-item" onclick="abrirPoliticaPrivacidade()"><div><i class="fa-solid fa-file-shield icone-vermelho"></i> Política de Privacidade</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
+           <div class="conta-item">
+  <a href="privacidade.html" style="text-decoration:none; color:inherit; display:flex; justify-content:space-between; width:100%;">
+    <div>
+      <i class="fa-solid fa-file-shield icone-vermelho"></i> Política de Privacidade
+    </div>
+    <i class="fa-solid fa-chevron-right" style="color:#ccc;"></i>
+  </a>
+</div>
             <button id="btn-sair" style="display:none;" onclick="logout()">Sair</button>
         </main>
 
@@ -1221,9 +1228,7 @@ texto:`Que bom ter você aqui!
 {
 id:2,
 titulo:"📜 Política de Privacidade",
-texto:`ESPAÇO PARA VOCÊ ESCREVER DEPOIS.
-
-😀`
+texto:`Leia nossa Política de Privacidade completa em: privacidade.html`
 },
 
 {
@@ -1939,9 +1944,6 @@ if (
             }
         }
 
-        function abrirPoliticaPrivacidade() {
-            alert("Política de Privacidade - Em breve.");
-        }
 // ==================== CARROSSEL DE BANNERS ====================
         let currentBanner = 0;
         const bannerSlides = document.querySelectorAll('#banner-carousel .banner-slide');
@@ -2168,8 +2170,11 @@ function fecharModal() {
             <input type="email" id="email-usuario" placeholder="Seu e-mail">
             <input type="password" id="senha-usuario" placeholder="Crie uma senha">
             <div class="aceite-termos">
-                <input type="checkbox" id="aceitou-termos">
-                <label for="aceitou-termos">Aceito a <a href="#">Política de Privacidade</a></label>
+             <input type="checkbox" id="aceitou-termos">
+
+<label for="aceitou-termos">
+  Aceito a <a href="privacidade.html">Política de Privacidade</a>
+</label>
             </div>
             <button onclick="criarConta()">Criar Conta</button>
             <button onclick="login()">Já tenho conta - Entrar</button>
