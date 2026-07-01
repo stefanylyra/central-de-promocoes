@@ -1170,6 +1170,11 @@ class="badge-notificacao">
     </div>
 
     <div class="grid-categorias" id="mosaico-categorias-container"></div>
+    <div
+    class="grid-produtos"
+    id="grid-busca-categorias"
+    style="display:none;">
+</div>
 
 </main>
 
@@ -1933,15 +1938,49 @@ if (
                     document.getElementById('link-ver-todos-home').style.display = 'none';
                     document.getElementById('titulo-depoimentos').style.display = 'none';
                     document.getElementById('wrapper-depoimentos').style.display = 'none';
-                }
-                const filtrados = PRODUTOS_LOJA.filter(p => p.nome.toLowerCase().includes(termo));
-                renderizarGridHome(filtrados);
-                renderizarGridOfertas(filtrados);
-            } else {
-                restaurarElementosEscondidos();
-                renderizarGridHome(PRODUTOS_LOJA);
-                renderizarGridOfertas(categoriaAtiva ? PRODUTOS_LOJA.filter(p => p.categoria === categoriaAtiva) : PRODUTOS_LOJA);
-            }
+             const filtrados = PRODUTOS_LOJA.filter(p =>
+    p.nome.toLowerCase().includes(termo)
+);
+
+renderizarGridHome(filtrados);
+renderizarGridOfertas(filtrados);
+
+// Se estiver na aba Categorias
+if (activePage && activePage.id === "aba-categorias") {
+
+    document.getElementById("mosaico-categorias-container").style.display = "none";
+
+    document.querySelector(".lojas-container").style.display = "none";
+
+    const gridBusca = document.getElementById("grid-busca-categorias");
+
+    gridBusca.style.display = "grid";
+
+    gridBusca.innerHTML = filtrados.map(prod => criarCardProduto(prod)).join("");
+
+    if (filtrados.length === 0) {
+        gridBusca.innerHTML =
+            `<div class="erro-busca">Nenhum produto encontrado.</div>`;
+    }
+}
+else {
+
+    restaurarElementosEscondidos();
+
+    renderizarGridHome(PRODUTOS_LOJA);
+
+    renderizarGridOfertas(
+        categoriaAtiva
+            ? PRODUTOS_LOJA.filter(p => p.categoria === categoriaAtiva)
+            : PRODUTOS_LOJA
+    );
+
+    document.getElementById("mosaico-categorias-container").style.display = "grid";
+
+    document.querySelector(".lojas-container").style.display = "block";
+
+    document.getElementById("grid-busca-categorias").style.display = "none";
+}
         }
 
         function restaurarElementosEscondidos() {
