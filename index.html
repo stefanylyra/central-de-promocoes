@@ -1108,6 +1108,56 @@
     }
 
 }
+        /* Seletor de Aparência */
+.aparencia-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+}
+
+.theme-toggle {
+    display: flex;
+    background: #f1f3f5;
+    border-radius: 999px;
+    padding: 4px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.theme-btn {
+    border: none;
+    background: white;
+    color: #333;
+    width: 52px;
+    height: 42px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.theme-btn:hover {
+    transform: translateY(-1px);
+}
+
+.theme-btn.active {
+    background: var(--cor-principal);
+    color: white;
+    box-shadow: 0 4px 12px rgba(204, 10, 18, 0.3);
+}
+
+body.tema-escuro .theme-toggle {
+    background: #2a2a2a;
+}
+
+body.tema-escuro .theme-btn {
+    background: #1e1e1e;
+    color: #ddd;
+}
     </style>
 </head>
 <body>
@@ -1282,7 +1332,25 @@ class="badge-notificacao">
                 <button id="btn-login" class="btn-sair" onclick="abrirCadastro()">Entrar / Criar Conta</button>
             </div>
             <div class="section-title"><span>Minha Conta</span></div>
-            <div class="conta-item" onclick="alternarTema()"><div><i class="fa-solid fa-palette icone-vermelho"></i>Aparência</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
+            <!-- NOVO SELETOR DE APARÊNCIA -->
+<div class="conta-item aparencia-container">
+    <div style="display:flex; align-items:center; gap:12px;">
+        <i class="fa-solid fa-palette icone-vermelho"></i>
+        <span>Aparência</span>
+    </div>
+    
+    <div class="theme-toggle">
+        <button onclick="setTheme('claro')" id="btn-claro" class="theme-btn active">
+            <i class="fa-solid fa-sun"></i>
+        </button>
+        <button onclick="setTheme('escuro')" id="btn-escuro" class="theme-btn">
+            <i class="fa-solid fa-moon"></i>
+        </button>
+        <button onclick="setTheme('auto')" id="btn-auto" class="theme-btn">
+            Auto
+        </button>
+    </div>
+</div>
             <div class="conta-item" onclick="mudarAba('favoritos', document.querySelectorAll('.nav-item')[3])"><div><i class="fa-solid fa-heart icone-vermelho"></i> Favoritos</div><i class="fa-solid fa-chevron-right" style="color:#ccc;"></i></div>
            <div class="conta-item">
   <a href="privacidade.html" style="text-decoration:none; color:inherit; display:flex; justify-content:space-between; width:100%;">
@@ -2266,16 +2334,45 @@ else {
             abrirCadastro();
         }
 
-        function alternarTema() {
-            const atual = localStorage.getItem("tema-site") || "claro";
-            if (atual === "claro") {
-                document.body.classList.add("tema-escuro");
-                localStorage.setItem("tema-site", "escuro");
-            } else {
-                document.body.classList.remove("tema-escuro");
-                localStorage.setItem("tema-site", "claro");
-            }
+       // ==================== TEMA ====================
+function detectSystemTheme() {
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'escuro' : 'claro';
+}
+
+function setTheme(tema) {
+    const body = document.body;
+    localStorage.setItem("tema-site", tema);
+    
+    // Remove classes
+    body.classList.remove("tema-escuro");
+    
+    if (tema === 'escuro') {
+        body.classList.add("tema-escuro");
+    } else if (tema === 'auto') {
+        if (detectSystemTheme() === 'escuro') {
+            body.classList.add("tema-escuro");
         }
+    }
+    
+    // Atualiza botões ativos
+    document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+    
+    if (tema === 'claro') document.getElementById('btn-claro').classList.add('active');
+    else if (tema === 'escuro') document.getElementById('btn-escuro').classList.add('active');
+    else document.getElementById('btn-auto').classList.add('active');
+}
+
+// Inicialização do tema
+function initTheme() {
+    const savedTheme = localStorage.getItem("tema-site") || 'auto';
+    setTheme(savedTheme);
+}
+
+// Chame no final do DOMContentLoaded:
+document.addEventListener("DOMContentLoaded", () => {
+    // ... seu código existente
+    initTheme();
+});
 
 // ==================== CARROSSEL DE BANNERS ====================
         let currentBanner = 0;
