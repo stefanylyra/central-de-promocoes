@@ -766,6 +766,36 @@
      .loja-card.shopee { background: #FFFFFF; }
 
      .loja-card.magalu { background: #FFFFFF; }
+
+        /* ================= SUBCATEGORIAS ================= */
+
+.sub-btn{
+    padding:10px 18px;
+    border:none;
+    border-radius:999px;
+    background:#cc0a12;
+    color:#fff;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.sub-btn:hover{
+    background:#a8070f;
+}
+
+.sub-btn.active{
+    background:#8b0000;
+}
+
+#container-subcategorias{
+    margin:15px 0 10px;
+    padding:0 16px;
+    display:none;
+    flex-wrap:wrap;
+    gap:8px;
+}
         
         .btn-loja-nav{
             width: 44px;
@@ -1496,38 +1526,88 @@ Boas compras!`
                 construirEstrutura();
             });
         }
-        
-        // mostrar produtos 
-function mostrarSubcategorias(categoriaId) {
-    categoriaAtiva = categoriaId;
-
-    const info = CATEGORIAS_DADOS.find(c => c.id === categoriaId);
-    if (info) {
-        document.getElementById('titulo-aba-ofertas').innerText = `📂 ${info.nome}`;
-    }
-    function abrirCupons() {
+            function abrirCupons() {
     document.getElementById("modal-cupons").style.display = "flex";
 }
 
 function fecharCupons() {
     document.getElementById("modal-cupons").style.display = "none";
 }
+function mostrarSubcategorias(categoriaId){
 
-    // Remove subcategorias antigas
-    const subAntigo = document.getElementById('container-subcategorias');
-    if (subAntigo) subAntigo.remove();
+    categoriaAtiva=categoriaId;
 
-    const listaSub = SUBCATEGORIAS[categoriaId] || [];
+    const info=CATEGORIAS_DADOS.find(c=>c.id===categoriaId);
 
-    if (listaSub.length === 0) {
-        filtrarPorCategoria(categoriaId);
-        return;
+    if(info){
+        document.getElementById("titulo-aba-ofertas").innerText=`📂 ${info.nome}`;
     }
+
+    const antigo=document.getElementById("container-subcategorias");
+
+    if(antigo){
+        antigo.remove();
+    }
+
+    const lista=SUBCATEGORIAS[categoriaId] || [];
+
+    if(lista.length===0){
+
+        filtrarPorCategoria(categoriaId);
+
+        return;
+
+    }
+
+    let html=`
+
+<div style="padding:0 16px;margin-top:15px;">
+
+<button
+class="sub-btn"
+onclick="toggleSubcategorias()">
+
+Todas ▼
+
+</button>
+
+</div>
+
+<div id="container-subcategorias">
+
+`;
+
+    lista.forEach(sub=>{
+
+        html+=`
+
+<button
+
+class="sub-btn"
+
+onclick="filtrarPorCategoria('${categoriaId}','${sub}')">
+
+${sub}
+
+</button>
+
+`;
+
+    });
+
+    html+="</div>";
+
+    document
+    .getElementById("aba-ofertas")
+    .insertAdjacentHTML("afterbegin",html);
+
+    filtrarPorCategoria(categoriaId);
+
+}
 
     // Cria os botões de subcategoria
     let htmlSub = `
         <div id="container-subcategorias" style="margin: 15px 0 10px; padding: 0 16px; display: flex; flex-wrap: wrap; gap: 8px;">
-            <button onclick="filtrarPorCategoria('${categoriaId}')" 
                     class="sub-btn active"
                     style="padding:8px 16px; border-radius:20px; border:1px solid #ddd; background:#fff; font-size:14px; cursor:pointer;">
                 Todas
@@ -1845,6 +1925,23 @@ if (
     document.getElementById("titulo-aba-ofertas").innerText = `🏪 ${loja.toUpperCase()}`;
     renderizarGridOfertas(produtosFiltrados);
     mudarAba("ofertas", document.querySelectorAll(".nav-item")[2]);
+}
+        function toggleSubcategorias(){
+
+    const container=document.getElementById("container-subcategorias");
+
+    if(!container) return;
+
+    if(container.style.display==="flex"){
+
+        container.style.display="none";
+
+    }else{
+
+        container.style.display="flex";
+
+    }
+
 }
 
                function filtrarPesquisa() {
