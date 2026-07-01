@@ -1031,6 +1031,83 @@
     color:#555;
     white-space:pre-line;
 }
+        .topo-filtros-categoria{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-end;
+
+    padding:0 16px;
+
+    margin-top:15px;
+
+    margin-bottom:10px;
+
+}
+
+.lado-direito{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-end;
+
+}
+
+.texto-ordenar{
+
+    font-size:12px;
+
+    color:#777;
+
+    margin-bottom:4px;
+
+    font-weight:600;
+
+}
+
+#ordenacao-produtos{
+
+    padding:8px 14px;
+
+    border-radius:10px;
+
+    border:1px solid #ddd;
+
+    font-size:14px;
+
+    cursor:pointer;
+
+    background:white;
+
+}
+
+#ordenacao-produtos:focus{
+
+    outline:none;
+
+    border-color:#cc0a12;
+
+}
+
+@media(max-width:480px){
+
+    .topo-filtros-categoria{
+
+        gap:12px;
+
+    }
+
+    #ordenacao-produtos{
+
+        width:170px;
+
+    }
+
+}
     </style>
 </head>
 <body>
@@ -1566,12 +1643,46 @@ function mostrarSubcategorias(categoriaId){
 let html = `
 <div id="bloco-subcategorias">
 
-    <div style="padding:0 16px;margin-top:15px;">
-        <button
-            class="sub-btn"
-            onclick="toggleSubcategorias()">
-            Todas ▼
-        </button>
+    <div class="topo-filtros-categoria">
+
+        <div class="lado-esquerdo">
+            <button
+                class="sub-btn"
+                onclick="toggleSubcategorias()">
+                Todas ▼
+            </button>
+        </div>
+
+        <div class="lado-direito">
+
+            <span class="texto-ordenar">
+                Ordenar por
+            </span>
+
+            <select
+                id="ordenacao-produtos"
+                onchange="ordenarProdutosCategoria()">
+
+                <option value="recentes">
+                    Mais Recentes
+                </option>
+
+                <option value="relevantes">
+                    Mais Relevantes
+                </option>
+
+                <option value="menor">
+                    Menor Preço
+                </option>
+
+                <option value="maior">
+                    Maior Preço
+                </option>
+
+            </select>
+
+        </div>
+
     </div>
 
     <div id="container-subcategorias">
@@ -1881,6 +1992,43 @@ if (
 
     renderizarGridOfertas(filtrados);
     mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
+}
+        function ordenarProdutosCategoria(){
+
+    let produtos = PRODUTOS_LOJA.filter(p => p.categoria === categoriaAtiva);
+
+    const ordem = document.getElementById("ordenacao-produtos").value;
+
+    if(ordem === "menor"){
+
+        produtos.sort((a,b)=>
+            parseFloat(a.precoNovo.replace(",","."))
+            -
+            parseFloat(b.precoNovo.replace(",","."))
+        );
+
+    }
+
+    if(ordem === "maior"){
+
+        produtos.sort((a,b)=>
+            parseFloat(b.precoNovo.replace(",","."))
+            -
+            parseFloat(a.precoNovo.replace(",","."))
+        );
+
+    }
+
+    if(ordem === "recentes"){
+
+        produtos.sort((a,b)=>
+            new Date(b.createdAt)-new Date(a.createdAt)
+        );
+
+    }
+
+    renderizarGridOfertas(produtos);
+
 }
       function filtrarPorLoja(loja) {
     const lojaNormalizada = loja.toLowerCase();
