@@ -1065,29 +1065,6 @@ class="badge-notificacao">
     </div>
 
 </div>
-                                        <div class="lojas-container">
-                <h3 class="titulo-lojas">Filtrar por loja</h3>
-                <div class="lojas-wrapper">
-                    <button class="btn-loja-nav left" onclick="scrollLojas(-280)"><i class="fa-solid fa-chevron-left"></i></button>
-                    
-                    <div class="lojas-grid" id="lojas-grid">
-                        <div class="loja-card mercadolivre" onclick="filtrarPorLoja('mercado-livre')">
-                            <img src="imagens/logos/mercado-livre.png" alt="Mercado Livre">
-                        </div>
-                        <div class="loja-card amazon" onclick="filtrarPorLoja('amazon')">
-                            <img src="imagens/logos/amazon.png" alt="Amazon">
-                        </div>
-                        <div class="loja-card shopee" onclick="filtrarPorLoja('shopee')">
-                           <img src="imagens/logos/shopee.png" alt="Shopee">
-                        </div>
-                        <div class="loja-card magalu" onclick="filtrarPorLoja('magalu')">
-                            <img src="imagens/logos/magalu.png" alt="Magalu">
-                        </div>
-                    </div>
-
-                    <button class="btn-loja-nav right" onclick="scrollLojas(280)"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
-            </div>
             
             <div id="wrapper-ofertas-quentes">
                 <div class="section-title">
@@ -1120,11 +1097,51 @@ class="badge-notificacao">
                 ⚠️ <strong>Aviso Importante:</strong> Este site não vende nada. Apenas selecionamos e achamos as melhores ofertas de lojas confiáveis e redirecionamos você; portanto, estoques e preços podem ser alterados ao longo do tempo! Corram antes que as promoções acabem.
             </div>
         </main>
+<main id="aba-categorias" class="app-page">
 
-        <main id="aba-categorias" class="app-page">
-            <div class="section-title"><span>📂 Categorias</span></div>
-            <div class="grid-categorias" id="mosaico-categorias-container"></div>
-        </main>
+    <div class="lojas-container">
+        <h3 class="titulo-lojas">Filtrar por loja</h3>
+
+        <div class="lojas-wrapper">
+
+            <button class="btn-loja-nav left" onclick="scrollLojas(-280)">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <div class="lojas-grid" id="lojas-grid">
+
+                <div class="loja-card mercadolivre" onclick="filtrarPorLoja('mercado-livre')">
+                    <img src="imagens/logos/mercado-livre.png" alt="Mercado Livre">
+                </div>
+
+                <div class="loja-card amazon" onclick="filtrarPorLoja('amazon')">
+                    <img src="imagens/logos/amazon.png" alt="Amazon">
+                </div>
+
+                <div class="loja-card shopee" onclick="filtrarPorLoja('shopee')">
+                    <img src="imagens/logos/shopee.png" alt="Shopee">
+                </div>
+
+                <div class="loja-card magalu" onclick="filtrarPorLoja('magalu')">
+                    <img src="imagens/logos/magalu.png" alt="Magalu">
+                </div>
+
+            </div>
+
+            <button class="btn-loja-nav right" onclick="scrollLojas(280)">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+        </div>
+    </div>
+
+    <div class="section-title">
+        <span>📂 Categorias</span>
+    </div>
+
+    <div class="grid-categorias" id="mosaico-categorias-container"></div>
+
+</main>
 
         <main id="aba-ofertas" class="app-page">
             <div class="section-title"><span id="titulo-aba-ofertas">🛒 Todas as Ofertas</span></div>
