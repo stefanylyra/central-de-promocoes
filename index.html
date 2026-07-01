@@ -1999,9 +1999,13 @@ if (
 }
         function atualizarProdutosCategoria(){
 
-    let produtos = PRODUTOS_LOJA.filter(
-        p => p.categoria === categoriaAtiva
-    );
+  let produtos = PRODUTOS_LOJA.filter(p => {
+
+    if(!categoriaAtiva) return true;
+
+    return p.categoria === categoriaAtiva;
+
+});
 
     if(subcategoriaAtiva){
 
