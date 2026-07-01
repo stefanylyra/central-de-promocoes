@@ -1338,9 +1338,15 @@ class="badge-notificacao">
         const db = firebase.firestore();
         const auth = firebase.auth();
 
-        let PRODUTOS_LOJA = [];
-        let favoritosSalvos = JSON.parse(localStorage.getItem('favoritosSalvos')) || [];
-        let categoriaAtiva = null;
+let PRODUTOS_LOJA = [];
+
+let favoritosSalvos = JSON.parse(localStorage.getItem('favoritosSalvos')) || [];
+
+let categoriaAtiva = null;
+
+let subcategoriaAtiva = null;
+
+let ordenacaoAtiva = "recentes";
         let notificacoes = [
 {
 id:1,
@@ -1976,6 +1982,7 @@ if (
 
     function filtrarPorCategoria(idCategoria, subcategoria = null) {
     categoriaAtiva = idCategoria;
+    subcategoriaAtiva = subcategoria;
 
     const info = CATEGORIAS_DADOS.find(c => c.id === idCategoria);
     if (info) {
@@ -1984,50 +1991,93 @@ if (
         document.getElementById('titulo-aba-ofertas').innerText = titulo;
     }
 
-    let filtrados = PRODUTOS_LOJA.filter(p => p.categoria === idCategoria);
-
-    if (subcategoria) {
-        filtrados = filtrados.filter(p => p.subcategoria === subcategoria);
-    }
-
-    renderizarGridOfertas(filtrados);
-    mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
+  atualizarProdutosCategoria();
+        
+    mudarAba(
+        'ofertas',
+        document.querySelectorAll('.nav-item')[2]);
 }
-        function ordenarProdutosCategoria(){
+        function atualizarProdutosCategoria(){
 
-    let produtos = PRODUTOS_LOJA.filter(p => p.categoria === categoriaAtiva);
+    let produtos = PRODUTOS_LOJA.filter(
+        p => p.categoria === categoriaAtiva
+    );
 
-    const ordem = document.getElementById("ordenacao-produtos").value;
+    if(subcategoriaAtiva){
 
-    if(ordem === "menor"){
-
-        produtos.sort((a,b)=>
-            parseFloat(a.precoNovo.replace(",","."))
-            -
-            parseFloat(b.precoNovo.replace(",","."))
+        produtos = produtos.filter(
+            p => p.subcategoria === subcategoriaAtiva
         );
 
     }
 
-    if(ordem === "maior"){
+    switch(ordenacaoAtiva){
 
-        produtos.sort((a,b)=>
-            parseFloat(b.precoNovo.replace(",","."))
-            -
-            parseFloat(a.precoNovo.replace(",","."))
-        );
+        case "menor":
 
-    }
+            produtos.sort((a,b)=>{
 
-    if(ordem === "recentes"){
+                const pa = parseFloat(
+                    String(a.precoNovo).replace(".","").replace(",",".")
+                );
 
-        produtos.sort((a,b)=>
-            new Date(b.createdAt)-new Date(a.createdAt)
-        );
+                const pb = parseFloat(
+                    String(b.precoNovo).replace(".","").replace(",",".")
+                );
+
+                return pa-pb;
+
+            });
+
+        break;
+
+        case "maior":
+
+            produtos.sort((a,b)=>{
+
+                const pa = parseFloat(
+                    String(a.precoNovo).replace(".","").replace(",",".")
+                );
+
+                const pb = parseFloat(
+                    String(b.precoNovo).replace(".","").replace(",",".")
+                );
+
+                return pb-pa;
+
+            });
+
+        break;
+
+        case "relevantes":
+
+            produtos.sort((a,b)=>{
+
+                return (b.desconto || 0) - (a.desconto || 0);
+
+            });
+
+        break;
+
+        default:
+
+            produtos.sort((a,b)=>{
+
+                return new Date(b.createdAt)-new Date(a.createdAt);
+
+            });
 
     }
 
     renderizarGridOfertas(produtos);
+
+}
+ function ordenarProdutosCategoria(){
+
+    ordenacaoAtiva =
+        document.getElementById("ordenacao-produtos").value;
+
+    atualizarProdutosCategoria();
 
 }
       function filtrarPorLoja(loja) {
