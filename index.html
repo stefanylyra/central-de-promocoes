@@ -1605,30 +1605,7 @@ ${sub}
 
 }
 
-    // Cria os botões de subcategoria
-    let htmlSub = `
-        <div id="container-subcategorias" style="margin: 15px 0 10px; padding: 0 16px; display: flex; flex-wrap: wrap; gap: 8px;">
-                    class="sub-btn active"
-                    style="padding:8px 16px; border-radius:20px; border:1px solid #ddd; background:#fff; font-size:14px; cursor:pointer;">
-                Todas
-            </button>`;
 
-    listaSub.forEach(sub => {
-        htmlSub += `
-            <button onclick="filtrarPorCategoria('${categoriaId}', '${sub}')" 
-                    class="sub-btn"
-                    style="padding:8px 16px; border-radius:20px; border:1px solid #ddd; background:#fff; font-size:14px; cursor:pointer;">
-                ${sub}
-            </button>`;
-    });
-
-    htmlSub += `</div>`;
-
-    const container = document.getElementById('aba-ofertas');
-    if (container) container.insertAdjacentHTML('afterbegin', htmlSub);
-
-    filtrarPorCategoria(categoriaId);
-}
 function atualizarUIAuth(user) {
     const btnLogin = document.getElementById("btn-login");
     const btnSair = document.getElementById("btn-sair");
