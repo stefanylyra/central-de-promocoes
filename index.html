@@ -555,29 +555,52 @@
             font-weight:600;
         }
 
-        /* TEMA ESCURO */
-        body.tema-escuro {
-            --cor-fundo: #121212;
-            --cor-card: #1e1e1e;
-            --texto-escuro: #ffffff;
-            --texto-mutado: #b0b0b0;
-            --borda: #333333;
-        }
+ /* ==================== MODO ESCURO ==================== */
 
-        body.tema-escuro .produto-card,
-        body.tema-escuro .card-hot,
-        body.tema-escuro .depoimento-box,
-        body.tema-escuro .info-vendas-barra,
-        body.tema-escuro header,
-        body.tema-escuro .app-page {
-            background: #1e1e1e !important;
-            color: #ffffff !important;
-        }
 
-        body.tema-escuro .categoria-glass-footer {
-            background: rgba(30,30,30,.9);
-        }
+body.tema-escuro .section-title,
+body.tema-escuro .section-title span,
+body.tema-escuro .conta-item,
+body.tema-escuro .conta-item span,
+body.tema-escuro .conta-item div,
+body.tema-escuro .titulo-lojas,
+body.tema-escuro .categoria-glass-footer p,
+body.tema-escuro h2,
+body.tema-escuro h3,
+body.tema-escuro .produto-nome,
+body.tema-escuro .nav-item span {
+    color: #ffffff !important;
+}
 
+
+body.tema-escuro .texto-ordenar,
+body.tema-escuro .ver-todos,
+body.tema-escuro .cookie-texto,
+body.tema-escuro .notificacao-texto {
+    color: #b0b0b0 !important;
+}
+
+
+body.tema-escuro .conta-item {
+    background: #1e1e1e !important;
+    border-color: #333333 !important;
+    color: #ffffff !important;
+}
+
+/* Hover nos itens da conta */
+body.tema-escuro .conta-item:hover {
+    background: #2a2a2a !important;
+}
+
+
+body.tema-escuro .categoria-glass-footer {
+    background: rgba(30, 30, 30, 0.95) !important;
+}
+
+body.tema-escuro .categoria-glass-footer p {
+    color: #ffffff !important;
+}
+        
 /* === CARROSSEL DE BANNERS === */
 .carrossel-banners {
     position: relative;
