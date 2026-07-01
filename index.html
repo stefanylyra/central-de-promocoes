@@ -1543,7 +1543,7 @@ function mostrarSubcategorias(categoriaId){
         document.getElementById("titulo-aba-ofertas").innerText=`📂 ${info.nome}`;
     }
 
-    const antigo=document.getElementById("container-subcategorias");
+    const antigo = document.getElementById("bloco-subcategorias");
 
     if(antigo){
         antigo.remove();
@@ -1561,20 +1561,18 @@ function mostrarSubcategorias(categoriaId){
 
     let html=`
 
-<div style="padding:0 16px;margin-top:15px;">
+let html = `
+<div id="bloco-subcategorias">
 
-<button
-class="sub-btn"
-onclick="toggleSubcategorias()">
+    <div style="padding:0 16px;margin-top:15px;">
+        <button
+            class="sub-btn"
+            onclick="toggleSubcategorias()">
+            Todas ▼
+        </button>
+    </div>
 
-Todas ▼
-
-</button>
-
-</div>
-
-<div id="container-subcategorias">
-
+    <div id="container-subcategorias">
 `;
 
     lista.forEach(sub=>{
@@ -1595,7 +1593,10 @@ ${sub}
 
     });
 
-    html+="</div>";
+  html += `
+    </div>
+</div>
+`;
 
     document
     .getElementById("aba-ofertas")
