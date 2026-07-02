@@ -386,12 +386,25 @@ const SUBCATEGORIAS = {
         }
 
         // ==================== LOGIN ====================
-        function login(){
-            const email = document.getElementById("email").value;
-            const senha = document.getElementById("senha").value;
-            auth.signInWithEmailAndPassword(email, senha).catch(() => alert("Erro no login"));
-        }
+      function login() {
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
 
+    auth.signInWithEmailAndPassword(email, senha)
+        .then(() => {
+            console.log("Login realizado.");
+        })
+        .catch((erro) => {
+            console.log("Código:", erro.code);
+            console.log("Mensagem:", erro.message);
+            console.log(erro);
+
+            alert(
+                "Código: " + erro.code +
+                "\n\nMensagem: " + erro.message
+            );
+        });
+}
         function logout(){
             auth.signOut();
         }
