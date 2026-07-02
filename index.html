@@ -2646,46 +2646,47 @@ function renderizarCupons() {
     if (!container) return;
 
     let html = `
-        <div style="padding: 0 16px 16px;">
-            <div style="background:#cc0a12; color:white; padding:12px 16px; border-radius:12px; margin-bottom:20px; display:flex; align-items:center; gap:12px;">
-                <span style="font-size:28px;">%</span>
+        <div style="padding: 16px;">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+                <div style="background:#cc0a12; color:white; padding:8px 14px; border-radius:10px; font-size:24px;">%</div>
                 <div>
-                    <strong style="font-size:22px;">Cupons</strong>
-                    <p style="margin:0; opacity:0.9; font-size:14px;">Economize ainda mais com cupons de desconto exclusivos.</p>
+                    <h2 style="margin:0;">Cupons</h2>
+                    <p style="color:#555; margin-top:4px;">Economize ainda mais com cupons de desconto exclusivos.</p>
                 </div>
             </div>
     `;
 
     CUPONS.forEach(cupom => {
         html += `
-        <div style="border: 2px dashed #e74c3c; border-radius: 16px; background: white; padding: 18px; margin-bottom: 18px; position: relative;">
+        <div style="background:white; border:2px dashed #cc0a12; border-radius:16px; padding:18px; margin-bottom:18px;">
             
-            <div style="display: flex; gap: 16px;">
-                <!-- Logo -->
-                <div style="width: 85px; text-align: center; padding-top: 8px;">
-                    <img src="${obterLogoLoja(cupom.loja)}" style="max-height: 55px; width: auto;">
+            <div style="display:flex; gap:16px;">
+                <div style="width:80px;">
+                    <img src="${obterLogoLoja(cupom.loja)}" style="max-height:60px; width:auto;">
                 </div>
-
-                <!-- Direita -->
-                <div style="flex: 1;">
-                    <div style="font-size: 21px; font-weight: 800; color: #cc0a12;">${cupom.desconto}</div>
-                    <div style="font-size: 14.5px; color: #333; margin: 6px 0 14px;">${cupom.descricao}</div>
-
-                    <!-- Box do Código -->
-                    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 10px; padding: 12px; text-align: center; margin-bottom: 14px;">
-                        <small style="color: #666;">Código</small><br>
-                        <strong style="font-size: 17.5px; color: #cc0a12;">${cupom.codigo}</strong>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <small style="color: #777;">Válido até ${cupom.validoAte}</small>
+                
+                <div style="flex:1;">
+                    <div style="font-size:21px; font-weight:700; color:#cc0a12;">${cupom.desconto}</div>
+                    <div style="color:#333; margin:8px 0 16px;">${cupom.descricao}</div>
+                    
+                    <div style="display:flex; justify-content:flex-end; margin-bottom:12px;">
                         <button onclick="copiarCodigo('${cupom.codigo}', this)" 
-                                style="background:#cc0a12; color:white; border:none; padding:10px 20px; border-radius:30px; font-weight:600; cursor:pointer;">
+                                style="background:#cc0a12; color:white; border:none; padding:11px 24px; border-radius:30px; font-weight:600; cursor:pointer;">
                             Copiar Código
                         </button>
                     </div>
+                    
+                    <!-- Código agora embaixo do botão -->
+                    <div style="text-align:center; background:#f8f9fa; padding:10px; border-radius:8px;">
+                        <small style="color:#666;">Código: </small>
+                        <strong style="color:#cc0a12; font-size:16px;">${cupom.codigo}</strong>
+                    </div>
                 </div>
             </div>
+            
+            <small style="display:block; text-align:right; margin-top:12px; color:#888;">
+                Válido até ${cupom.validoAte}
+            </small>
         </div>`;
     });
 
