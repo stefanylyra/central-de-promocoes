@@ -1888,11 +1888,10 @@ function atualizarUIAuth(user) {
             const carrosselContainer = document.getElementById('carrossel-hot-deals');
             if (carrosselContainer && PRODUTOS_LOJA.length > 0) {
                const amostra = [...PRODUTOS_LOJA]
-                   .sort((a,b)=>(b.createdAt?.seconds || 0)-(a.createdAt?.seconds || 0))
-                   .slice(0,10);
+    .sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0))
+    .slice(0, 10);
                 const produtosLoop = [...amostra, ...amostra];
               carrosselContainer.innerHTML = produtosLoop.map(prod => `
-                iniciarCarrosselHotDeals();
                     <div class="card-hot">
                         <span class="tag-desconto">⏰ LIMITADO</span>
                         <img src="${prod.img}" class="produto-img">
@@ -1904,6 +1903,7 @@ function atualizarUIAuth(user) {
                         <a href="${prod.link}" target="_blank" class="btn-oferta">Ver Oferta</a>
                     </div>
                 `).join('');
+                iniciarCarrosselHotDeals(amostra.length);
             }
 
             // Categorias
@@ -1916,7 +1916,7 @@ function atualizarUIAuth(user) {
                         <div class="categoria-glass-footer"><p>${cat.nome}</p></div>
                     </div>
                 `).join('');
-                iniciarCarrosselHotDeals(amostra.length);
+
             }
 
             // Depoimentos
@@ -2186,11 +2186,7 @@ if (
             restaurarElementosEscondidos();
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
-let intervaloHotDeals;
 
-function iniciarCarrosselHotDeals(){
-
-}
         function limparFiltrosEMudarAba(elementoBotao) {
             categoriaAtiva = null;
             document.getElementById('titulo-aba-ofertas').innerText = "🛒 Todas as Ofertas";
