@@ -1236,7 +1236,7 @@ class="badge-notificacao">
 </span>
 
 </div>
-                    <i class="fa-solid fa-ticket"></i>
+    <i class="fa-solid fa-ticket" onclick="abrirCupons()" style="cursor:pointer;"></i>
                 </div>
             </div>
             <div class="search-container">
@@ -1380,6 +1380,12 @@ class="badge-notificacao">
     <div id="lista-notificacoes"></div>
 
 </main>
+        <main id="aba-cupons" class="app-page">
+    <div class="section-title">
+        <span>🎟️ Meus Cupons</span>
+    </div>
+    <div id="lista-cupons" style="padding: 16px; display: flex; flex-direction: column; gap: 16px;"></div>
+</main>
         <main id="aba-conta" class="app-page">
             <div style="text-align: center; padding: 20px 0 30px 0;">
                 <div id="avatar-usuario" style="width:80px;height:80px;border-radius:50%;background:#cc0a12;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:40px;">
@@ -1511,6 +1517,41 @@ Sempre confira preço e estoque antes da compra.
 
 Boas compras!`
 }
+];
+        // ==================== CUPONS ====================
+let CUPONS = [
+    {
+        loja: "amazon",
+        nome: "Amazon",
+        desconto: "10% OFF",
+        descricao: "Em produtos selecionados",
+        codigo: "AMZ10",
+        validoAte: "30/06/2025"
+    },
+    {
+        loja: "shopee",
+        nome: "Shopee",
+        desconto: "R$ 30,00 OFF",
+        descricao: "Compras acima de R$ 199",
+        codigo: "SHOPEE30",
+        validoAte: "01/07/2025"
+    },
+    {
+        loja: "mercado-livre",
+        nome: "Mercado Livre",
+        desconto: "R$ 50,00 OFF",
+        descricao: "Compras acima de R$ 299",
+        codigo: "ML50",
+        validoAte: "05/07/2025"
+    },
+    {
+        loja: "magalu",
+        nome: "Magalu",
+        desconto: "15% OFF",
+        descricao: "Em todo o site",
+        codigo: "MAG15",
+        validoAte: "10/07/2025"
+    }
 ];
         // ==================== DADOS ESTÁTICOS ====================
       const CATEGORIAS_DADOS = [
@@ -2595,6 +2636,59 @@ function abrirNotificacoes(){
 
     renderizarNotificacoes();
 
+}
+        function abrirCupons() {
+    mudarAba('cupons', null);
+    renderizarCupons();
+}
+
+function renderizarCupons() {
+    const container = document.getElementById('lista-cupons');
+    if (!container) return;
+
+    let html = '';
+
+    CUPONS.forEach(cupom => {
+        html += `
+        <div style="background:white; border-radius:16px; padding:16px; border:1px solid #eaeaea; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                <img src="${obterLogoLoja(cupom.loja)}" style="height:40px; width:auto;">
+                <div>
+                    <strong style="font-size:17px;">${cupom.nome}</strong>
+                    <div style="color:#cc0a12; font-weight:700; font-size:18px;">${cupom.desconto}</div>
+                </div>
+            </div>
+            
+            <p style="margin:8px 0; color:#555; font-size:14px;">${cupom.descricao}</p>
+            
+            <div style="background:#f8f9fa; padding:10px; border-radius:10px; text-align:center; margin:12px 0;">
+                <strong style="font-size:15px;">Código: <span style="color:#cc0a12;">${cupom.codigo}</span></strong>
+            </div>
+            
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <small style="color:#888;">Válido até ${cupom.validoAte}</small>
+                <button onclick="copiarCodigo('${cupom.codigo}', this)" 
+                        style="background:#cc0a12; color:white; border:none; padding:10px 20px; border-radius:25px; font-weight:600; cursor:pointer;">
+                    Copiar Código
+                </button>
+            </div>
+        </div>`;
+    });
+
+    container.innerHTML = html;
+}
+
+function copiarCodigo(codigo, botao) {
+    navigator.clipboard.writeText(codigo).then(() => {
+        const textoOriginal = botao.textContent;
+        botao.textContent = "✓ Copiado!";
+        botao.style.background = "#28a745";
+        
+        setTimeout(() => {
+            botao.textContent = textoOriginal;
+            botao.style.background = "#cc0a12";
+        }, 2000);
+    });
 }
     // ==================== NOVAS FUNÇÕES PARA DETALHES (COM MÚLTIPLAS IMAGENS) ====================
 function mostrarDetalhesProduto(id) {
