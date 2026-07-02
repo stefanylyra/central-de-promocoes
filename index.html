@@ -2095,7 +2095,7 @@ function iniciarCarrosselHotDeals(totalProdutos){
 
     clearInterval(intervaloHotDeals);
 
-    let indice = 0;
+    let velocidade = 0.6;
 
     const card = carrossel.querySelector(".card-hot");
 
@@ -2104,39 +2104,17 @@ function iniciarCarrosselHotDeals(totalProdutos){
     const largura =
         card.offsetWidth + 12;
 
-    intervaloHotDeals = setInterval(()=>{
+   intervaloHotDeals = setInterval(() => {
 
-        indice++;
+    carrossel.scrollLeft += velocidade;
 
-        carrossel.scrollTo({
+    if (carrossel.scrollLeft >= largura * totalProdutos) {
 
-            left: indice * largura,
+        carrossel.scrollLeft = 0;
 
-            behavior:"smooth"
+    }
 
-        });
-
-        if(indice >= totalProdutos){
-
-            setTimeout(()=>{
-
-                carrossel.style.scrollBehavior="auto";
-
-                carrossel.scrollLeft=0;
-
-                indice=0;
-
-                requestAnimationFrame(()=>{
-
-                    carrossel.style.scrollBehavior="smooth";
-
-                });
-
-            },450);
-
-        }
-
-    },2500);
+}, 16);
     carrossel.addEventListener("mouseenter",()=>{
 
     clearInterval(intervaloHotDeals);
