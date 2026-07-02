@@ -2646,43 +2646,41 @@ function renderizarCupons() {
     if (!container) return;
 
     let html = `
-        <div style="padding:16px;">
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
-                <div style="background:#cc0a12; color:white; padding:6px 12px; border-radius:8px; font-weight:bold; font-size:20px;">%</div>
+        <div style="padding: 0 16px 16px;">
+            <div style="background:#cc0a12; color:white; padding:12px 16px; border-radius:12px; margin-bottom:20px; display:flex; align-items:center; gap:12px;">
+                <span style="font-size:28px;">%</span>
                 <div>
-                    <h2 style="margin:0; font-size:24px;">Cupons</h2>
-                    <p style="color:#666; margin:4px 0 0;">Economize ainda mais com cupons de desconto exclusivos.</p>
+                    <strong style="font-size:22px;">Cupons</strong>
+                    <p style="margin:0; opacity:0.9; font-size:14px;">Economize ainda mais com cupons de desconto exclusivos.</p>
                 </div>
             </div>
     `;
 
     CUPONS.forEach(cupom => {
         html += `
-        <div style="background:white; border:2px dashed #e74c3c; border-radius:14px; padding:18px; margin-bottom:18px; box-shadow:0 3px 10px rgba(0,0,0,0.06);">
+        <div style="border: 2px dashed #e74c3c; border-radius: 16px; background: white; padding: 18px; margin-bottom: 18px; position: relative;">
             
-            <div style="display:flex; align-items:start; gap:16px;">
+            <div style="display: flex; gap: 16px;">
                 <!-- Logo -->
-                <div style="width:78px; flex-shrink:0; padding-top:4px;">
-                    <img src="${obterLogoLoja(cupom.loja)}" style="max-height:58px; width:auto;">
+                <div style="width: 85px; text-align: center; padding-top: 8px;">
+                    <img src="${obterLogoLoja(cupom.loja)}" style="max-height: 55px; width: auto;">
                 </div>
 
-                <!-- Conteúdo principal -->
-                <div style="flex:1; min-width:0;">
-                    <div style="font-size:21px; font-weight:800; color:#cc0a12;">${cupom.desconto}</div>
-                    <div style="font-size:14.5px; color:#333; margin:6px 0 12px;">${cupom.descricao}</div>
-                    
-                    <!-- Código -->
-                    <div style="background:#f8f9fa; border:1px solid #ddd; border-radius:8px; padding:10px 14px; text-align:center; margin-bottom:14px;">
-                        <small style="color:#777; font-size:13px;">Código</small><br>
-                        <strong style="font-size:17px; color:#cc0a12; letter-spacing:2px;">${cupom.codigo}</strong>
+                <!-- Direita -->
+                <div style="flex: 1;">
+                    <div style="font-size: 21px; font-weight: 800; color: #cc0a12;">${cupom.desconto}</div>
+                    <div style="font-size: 14.5px; color: #333; margin: 6px 0 14px;">${cupom.descricao}</div>
+
+                    <!-- Box do Código -->
+                    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 10px; padding: 12px; text-align: center; margin-bottom: 14px;">
+                        <small style="color: #666;">Código</small><br>
+                        <strong style="font-size: 17.5px; color: #cc0a12;">${cupom.codigo}</strong>
                     </div>
 
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div style="font-size:13px; color:#777;">
-                            Válido até ${cupom.validoAte}
-                        </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <small style="color: #777;">Válido até ${cupom.validoAte}</small>
                         <button onclick="copiarCodigo('${cupom.codigo}', this)" 
-                                style="background:#cc0a12; color:white; border:none; padding:11px 20px; border-radius:30px; font-weight:600; font-size:14px; cursor:pointer;">
+                                style="background:#cc0a12; color:white; border:none; padding:10px 20px; border-radius:30px; font-weight:600; cursor:pointer;">
                             Copiar Código
                         </button>
                     </div>
@@ -2691,7 +2689,6 @@ function renderizarCupons() {
         </div>`;
     });
 
-    html += `</div>`;
     container.innerHTML = html;
 }
         
