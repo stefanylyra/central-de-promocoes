@@ -176,11 +176,11 @@
             font-weight: 600;
         }
 
-        .grid-produtos {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-        }
+     .grid-produtos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);   /* ← mudado para 3 */
+    gap: 14px;
+}
 
         .logo-loja {
             position: absolute;
@@ -990,8 +990,8 @@ body.tema-escuro .categoria-glass-footer p {
         box-shadow: 0 0 20px rgba(0,0,0,0.05);
     }
     
-    .grid-produtos {
-        grid-template-columns: repeat(2, 1fr);
+  .grid-produtos {
+        grid-template-columns: repeat(3, 1fr);   /* ← 3 colunas no celular */
     }
     
     .grid-categorias {
@@ -1287,7 +1287,15 @@ class="badge-notificacao">
                 <span id="titulo-grid-home">⚡ Ofertas Imperdíveis</span>
                 <a href="#" class="ver-todos" id="link-ver-todos-home" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
             </div>
-            <div class="grid-produtos" id="grid-home-ofertas"></div>
+          <div class="grid-produtos" id="grid-home-ofertas"></div>
+
+<!-- NOVO BOTÃO -->
+<div style="text-align: center; margin: 25px 0 10px;">
+    <button id="btn-ver-mais" 
+            style="background: var(--cor-principal); color: white; border: none; padding: 14px 32px; border-radius: 25px; font-size: 15px; font-weight: 600; cursor: pointer;">
+        Ver mais ofertas
+    </button>
+</div>
 
             <div class="section-title" id="titulo-depoimentos"><span>💬 O que nossos clientes dizem</span></div>
             <div class="carrossel-depoimentos-container" id="wrapper-depoimentos">
@@ -1921,7 +1929,8 @@ function atualizarUIAuth(user) {
             }
 
             // Grids principais
-            renderizarGridHome(PRODUTOS_LOJA);
+           produtosMostradosHome = 9;           // reset para 3 linhas
+renderizarGridHome(PRODUTOS_LOJA);
 
 if (categoriaAtiva) {
     filtrarPorCategoria(categoriaAtiva);
@@ -1933,17 +1942,26 @@ renderizarAbaFavoritos();
 atualizarIconesCoraoGlobais();
         }
 
-        function renderizarGridHome(lista) {
-            const container = document.getElementById('grid-home-ofertas');
-            if (!container) return;
-            if (lista.length === 0) {
-                container.innerHTML = `<div class="erro-busca">Nenhum produto encontrado.</div>`;
-                return;
-            }
-            const exibicao = lista.slice(0, 8);
-            container.innerHTML = exibicao.map(prod => criarCardProduto(prod)).join('');
-        }
+       let produtosMostradosHome = 9;   // ← começa com 9 (3 linhas de 3)
 
+function renderizarGridHome(lista) {
+    const container = document.getElementById('grid-home-ofertas');
+    if (!container) return;
+
+    if (lista.length === 0) {
+        container.innerHTML = `<div class="erro-busca">Nenhum produto encontrado.</div>`;
+        return;
+    }
+
+    const exibicao = lista.slice(0, produtosMostradosHome);
+    container.innerHTML = exibicao.map(prod => criarCardProduto(prod)).join('');
+
+    // Mostra/esconde o botão
+    const btn = document.getElementById('btn-ver-mais');
+    if (btn) {
+        btn.style.display = (produtosMostradosHome >= lista.length) ? 'none' : 'block';
+    }
+}
         function renderizarGridOfertas(lista) {
             const container = document.getElementById('grid-todas-ofertas');
             if (!container) return;
@@ -2633,7 +2651,13 @@ function fecharModal() {
         document.getElementById('modal-produto').addEventListener('click', function(e) {
             if (e.target === this) fecharModal();
         });
-
+// === VER MAIS OFERTAS ===
+document.addEventListener('click', function(e) {
+    if (e.target && e.target.id === 'btn-ver-mais') {
+        produtosMostradosHome += 6;   // carrega mais 6 por vez (2 linhas)
+        renderizarGridHome(PRODUTOS_LOJA);
+    }
+});
     </script>
 
     <!-- Modal Cadastro -->
