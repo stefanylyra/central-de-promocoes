@@ -284,14 +284,18 @@
             display: block;
         }
 
-        .ofertas-quentes-carrossel {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            scrollbar-width: none;
-        }
-        .ofertas-quentes-carrossel::-webkit-scrollbar { display: none; }
+  .ofertas-quentes-carrossel{
+    display:flex;
+    gap:12px;
+    overflow-x:hidden;
+    overflow-y:hidden;
+    scroll-behavior:smooth;
+    padding-bottom:10px;
+}
+
+.ofertas-quentes-carrossel::-webkit-scrollbar{
+    display:none;
+}
         
         .card-hot {
             background: white;
@@ -736,7 +740,7 @@ body.tema-escuro .categoria-glass-footer p {
         .lojas-grid{
             display:flex;
             gap:14px;
-            overflow-x:auto;
+            overflow:hidden;
             scroll-behavior:smooth;
             scrollbar-width:none;
             flex:1;
@@ -1883,8 +1887,12 @@ function atualizarUIAuth(user) {
             // Carrossel Ofertas Quentes
             const carrosselContainer = document.getElementById('carrossel-hot-deals');
             if (carrosselContainer && PRODUTOS_LOJA.length > 0) {
-                const amostra = PRODUTOS_LOJA.slice(0, 5);
-                carrosselContainer.innerHTML = amostra.map(prod => `
+               const amostra = [...PRODUTOS_LOJA]
+                   .sort((a,b)=>(b.createdAt?.seconds || 0)-(a.createdAt?.seconds || 0))
+                   .slice(0,10);
+                const produtosLoop = [...amostra, ...amostra];
+              carrosselContainer.innerHTML = produtosLoop.map(prod => `
+                iniciarCarrosselHotDeals();
                     <div class="card-hot">
                         <span class="tag-desconto">⏰ LIMITADO</span>
                         <img src="${prod.img}" class="produto-img">
@@ -1908,6 +1916,7 @@ function atualizarUIAuth(user) {
                         <div class="categoria-glass-footer"><p>${cat.nome}</p></div>
                     </div>
                 `).join('');
+                iniciarCarrosselHotDeals(amostra.length);
             }
 
             // Depoimentos
@@ -2076,7 +2085,82 @@ function tempoDecorrido(dataFirestore) {
                 }
             });
         }
+let intervaloHotDeals = null;
 
+function iniciarCarrosselHotDeals(totalProdutos){
+
+    const carrossel = document.getElementById("carrossel-hot-deals");
+
+    if(!carrossel) return;
+
+    clearInterval(intervaloHotDeals);
+
+    let indice = 0;
+
+    const card = carrossel.querySelector(".card-hot");
+
+    if(!card) return;
+
+    const largura =
+        card.offsetWidth + 12;
+
+    intervaloHotDeals = setInterval(()=>{
+
+        indice++;
+
+        carrossel.scrollTo({
+
+            left: indice * largura,
+
+            behavior:"smooth"
+
+        });
+
+        if(indice >= totalProdutos){
+
+            setTimeout(()=>{
+
+                carrossel.style.scrollBehavior="auto";
+
+                carrossel.scrollLeft=0;
+
+                indice=0;
+
+                requestAnimationFrame(()=>{
+
+                    carrossel.style.scrollBehavior="smooth";
+
+                });
+
+            },450);
+
+        }
+
+    },2500);
+    carrossel.addEventListener("mouseenter",()=>{
+
+    clearInterval(intervaloHotDeals);
+
+});
+
+carrossel.addEventListener("mouseleave",()=>{
+
+    iniciarCarrosselHotDeals(totalProdutos);
+
+});
+    carrossel.addEventListener("touchstart",()=>{
+
+    clearInterval(intervaloHotDeals);
+
+});
+
+carrossel.addEventListener("touchend",()=>{
+
+    iniciarCarrosselHotDeals(totalProdutos);
+
+});
+
+}
         // ==================== NAVEGAÇÃO ====================
         function mudarAba(idAba, elementoBotao) {
             // Abas que exigem login
@@ -2102,7 +2186,11 @@ if (
             restaurarElementosEscondidos();
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
+let intervaloHotDeals;
 
+function iniciarCarrosselHotDeals(){
+
+}
         function limparFiltrosEMudarAba(elementoBotao) {
             categoriaAtiva = null;
             document.getElementById('titulo-aba-ofertas').innerText = "🛒 Todas as Ofertas";
