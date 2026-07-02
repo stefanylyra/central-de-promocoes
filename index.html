@@ -2646,38 +2646,49 @@ function renderizarCupons() {
     const container = document.getElementById('lista-cupons');
     if (!container) return;
 
-    let html = '';
+    let html = `
+        <div style="margin-bottom:20px; padding:0 16px;">
+            <h2 style="font-size:22px; margin:0;">🎟️ Cupons de Desconto</h2>
+            <p style="color:#555; margin-top:6px;">Economize ainda mais com cupons exclusivos.</p>
+        </div>
+    `;
 
     CUPONS.forEach(cupom => {
         html += `
-        <div style="background:white; border-radius:16px; padding:16px; border:1px solid #eaeaea; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
-                <img src="${obterLogoLoja(cupom.loja)}" style="height:40px; width:auto;">
-                <div>
-                    <strong style="font-size:17px;">${cupom.nome}</strong>
-                    <div style="color:#cc0a12; font-weight:700; font-size:18px;">${cupom.desconto}</div>
+        <div style="background:white; border:2px dashed #cc0a12; border-radius:16px; padding:18px; margin-bottom:16px; position:relative; box-shadow:0 4px 12px rgba(204,10,18,0.08);">
+            <div style="display:flex; align-items:center; gap:14px;">
+                <img src="${obterLogoLoja(cupom.loja)}" style="height:48px; width:auto; object-fit:contain;">
+                
+                <div style="flex:1;">
+                    <div style="font-size:20px; font-weight:700; color:#cc0a12;">${cupom.desconto}</div>
+                    <div style="font-size:14px; color:#333; margin-top:4px;">${cupom.descricao}</div>
                 </div>
             </div>
-            
-            <p style="margin:8px 0; color:#555; font-size:14px;">${cupom.descricao}</p>
-            
-            <div style="background:#f8f9fa; padding:10px; border-radius:10px; text-align:center; margin:12px 0;">
-                <strong style="font-size:15px;">Código: <span style="color:#cc0a12;">${cupom.codigo}</span></strong>
+
+            <div style="margin:16px 0; padding:12px; background:#f8f9fa; border-radius:10px; text-align:center;">
+                <small style="color:#666;">Código</small><br>
+                <strong style="font-size:18px; letter-spacing:2px; color:#cc0a12;">${cupom.codigo}</strong>
             </div>
-            
+
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <small style="color:#888;">Válido até ${cupom.validoAte}</small>
                 <button onclick="copiarCodigo('${cupom.codigo}', this)" 
-                        style="background:#cc0a12; color:white; border:none; padding:10px 20px; border-radius:25px; font-weight:600; cursor:pointer;">
-                    Copiar Código
+                        style="background:#cc0a12; color:white; border:none; padding:11px 24px; border-radius:999px; font-weight:700; font-size:14px; cursor:pointer;">
+                    📋 Copiar Código
                 </button>
             </div>
         </div>`;
     });
 
+    // Dica no final
+    html += `
+        <div style="background:#fff3cd; color:#856404; padding:14px; border-radius:12px; font-size:13px; margin-top:10px;">
+            💡 Dica: Os cupons podem ter regras específicas e estão sujeitos à disponibilidade de estoque.
+        </div>
+    `;
+
     container.innerHTML = html;
 }
-
 function copiarCodigo(codigo, botao) {
     navigator.clipboard.writeText(codigo).then(() => {
         const textoOriginal = botao.textContent;
