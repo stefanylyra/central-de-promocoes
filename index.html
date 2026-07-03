@@ -1381,13 +1381,14 @@ class="badge-notificacao">
 
 </main>
         <main id="aba-conta" class="app-page">
-            <div style="text-align: center; padding: 20px 0 30px 0;">
-                <div id="avatar-usuario" style="width:80px;height:80px;border-radius:50%;background:#cc0a12;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:40px;">
-                    😀
-                </div>
-                <h2 id="nome-perfil">Visitante</h2>
-                <button id="btn-login" class="btn-sair" onclick="abrirCadastro()">Entrar / Criar Conta</button>
-            </div>
+           <div style="text-align: center; padding: 20px 0 30px 0;">
+    <div id="avatar-usuario" 
+         style="width:80px;height:80px;border-radius:50%;background:#cc0a12;color:white;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:40px;font-weight:bold;">
+        😀
+    </div>
+    <h2 id="nome-perfil">Visitante</h2>
+    <button id="btn-login" class="btn-sair" onclick="abrirCadastro()">Entrar / Criar Conta</button>
+</div>
             <div class="section-title"><span>Minha Conta</span></div>
             <!-- NOVO SELETOR DE APARÊNCIA -->
 <div class="conta-item aparencia-container">
@@ -1854,13 +1855,30 @@ ${sub}
 function atualizarUIAuth(user) {
     const btnLogin = document.getElementById("btn-login");
     const btnSair = document.getElementById("btn-sair");
+    const avatar = document.getElementById("avatar-usuario");
+    const nomePerfil = document.getElementById("nome-perfil");
 
     if (user) {
         btnLogin.style.display = "none";
         btnSair.style.display = "block";
+
+        // Busca o nome do Firestore
+        db.collection("usuarios").doc(user.uid).get().then(doc => {
+            if (doc.exists) {
+                const nome = doc.data().nome || "Usuário";
+                nomePerfil.innerText = nome;
+
+                const avatarData = gerarAvatar(nome);
+                avatar.innerHTML = avatarData.letra;
+                avatar.style.backgroundColor = avatarData.cor;
+            }
+        });
     } else {
         btnLogin.style.display = "block";
         btnSair.style.display = "none";
+        nomePerfil.innerText = "Visitante";
+        avatar.innerHTML = "👤";
+        avatar.style.backgroundColor = "#666666";
     }
 }
         // ==================== FAVORITOS (exige login) ====================
@@ -2420,11 +2438,18 @@ else {
                         nome, email, criadoEm: new Date()
                     });
                 })
-                .then(() => {
-                    document.getElementById("nome-perfil").innerText = nome;
-                    alert("Conta criada com sucesso!");
-                    fecharCadastro();
-                })
+               .then(() => {
+    document.getElementById("nome-perfil").innerText = nome;
+    
+    // Atualiza avatar imediatamente
+    const avatar = document.getElementById("avatar-usuario");
+    const avatarData = gerarAvatar(nome);
+    avatar.innerHTML = avatarData.letra;
+    avatar.style.backgroundColor = avatarData.cor;
+
+    alert("Conta criada com sucesso!");
+    fecharCadastro();
+})
                 .catch(err => alert(err.message));
         }
 
@@ -2719,6 +2744,30 @@ document.addEventListener('click', function(e) {
         renderizarGridHome(PRODUTOS_LOJA);
     }
 });
+
+        // ==================== AVATAR COM PRIMEIRA LETRA ====================
+function gerarAvatar(nome) {
+    if (!nome || nome.trim() === "") {
+        return { letra: "👤", cor: "#666666" };
+    }
+
+    const letra = nome.trim().charAt(0).toUpperCase();
+    
+    // Cores bonitas por letra (pode ajustar)
+    const cores = {
+        'A': '#ef476f', 'B': '#ffd166', 'C': '#06d6a0', 'D': '#118ab2',
+        'E': '#073b4c', 'F': '#e63946', 'G': '#f77f00', 'H': '#8338ec',
+        'I': '#3a86ff', 'J': '#fb5607', 'K': '#ff006e', 'L': '#8338ec',
+        'M': '#06d6a0', 'N': '#ffd166', 'O': '#ef476f', 'P': '#118ab2',
+        'Q': '#e63946', 'R': '#f77f00', 'S': '#3a86ff', 'T': '#8338ec',
+        'U': '#06d6a0', 'V': '#ffd166', 'W': '#ef476f', 'X': '#118ab2',
+        'Y': '#e63946', 'Z': '#f77f00'
+    };
+
+    const cor = cores[letra] || '#cc0a12'; // cor padrão se não tiver na lista
+
+    return { letra, cor };
+}
     </script>
 
     <!-- Modal Cadastro -->
