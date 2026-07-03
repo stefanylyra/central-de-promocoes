@@ -1210,72 +1210,75 @@ body.tema-escuro .theme-btn {
 /* ==================== PÁGINA DE CUPONS - ESTILO TICKET ==================== */
 
 #aba-cupons {
-    padding: 12px 16px 90px;
+    padding: 14px 16px 95px;
+    background: var(--cor-fundo);
 }
 
 .cupons-header {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin: 6px 0 18px;
+    margin: 4px 0 18px;
 }
 
 .cupons-header-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 9px;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
     background: var(--cor-principal);
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 900;
+    line-height: 1;
     flex-shrink: 0;
 }
 
 .cupons-header-texto h2 {
     font-size: 22px;
     line-height: 1;
-    margin: 0 0 5px;
+    margin: 0 0 6px;
     color: var(--texto-escuro);
+    font-weight: 900;
 }
 
 .cupons-header-texto p {
     font-size: 12px;
     color: var(--texto-mutado);
     margin: 0;
+    line-height: 1.25;
 }
 
 .lista-cupons {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 0;
 }
 
 .cupom-card {
     position: relative;
     display: grid;
-    grid-template-columns: 82px 1fr 118px;
-    align-items: stretch;
-    min-height: 104px;
+    grid-template-columns: 76px minmax(0, 1fr) 118px;
+    min-height: 92px;
     background: #ffffff;
-    border: 1.5px dashed rgba(204, 10, 18, 0.38);
-    border-radius: 14px;
+    border: 1.4px dashed rgba(204, 10, 18, 0.38);
+    border-radius: 13px;
     overflow: visible;
     box-shadow: 0 2px 7px rgba(0, 0, 0, 0.035);
 }
 
+/* Recortes do ticket na divisória */
 .cupom-card::before,
 .cupom-card::after {
     content: "";
     position: absolute;
-    left: 80px;
-    width: 14px;
-    height: 14px;
+    left: 69px;
+    width: 15px;
+    height: 15px;
     background: var(--cor-fundo);
-    border: 1.5px dashed rgba(204, 10, 18, 0.38);
+    border: 1.4px dashed rgba(204, 10, 18, 0.38);
     border-radius: 50%;
     z-index: 5;
 }
@@ -1288,24 +1291,33 @@ body.tema-escuro .theme-btn {
     bottom: -8px;
 }
 
+/* Esconde metade dos círculos para parecer recorte */
+.cupom-card::before {
+    clip-path: inset(50% 0 0 0);
+}
+
+.cupom-card::after {
+    clip-path: inset(0 0 50% 0);
+}
+
 .cupom-logo-area {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 14px 10px;
-    border-right: 1.5px dashed rgba(204, 10, 18, 0.28);
+    padding: 12px 8px;
+    border-right: 1.4px dashed rgba(204, 10, 18, 0.28);
 }
 
 .cupom-logo-box {
     width: 58px;
     height: 58px;
-    border-radius: 9px;
-    border: 1px solid #eeeeee;
+    border-radius: 10px;
     background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    padding: 7px;
 }
 
 .cupom-logo-box img {
@@ -1316,31 +1328,32 @@ body.tema-escuro .theme-btn {
 }
 
 .cupom-info {
-    padding: 14px 8px 12px 14px;
+    padding: 11px 6px 10px 12px;
     min-width: 0;
 }
 
 .cupom-desconto {
     color: var(--cor-principal);
-    font-size: 19px;
+    font-size: 17px;
     font-weight: 900;
     line-height: 1.05;
     margin-bottom: 4px;
+    text-transform: uppercase;
 }
 
 .cupom-descricao {
     color: var(--texto-escuro);
-    font-size: 12px;
-    font-weight: 800;
+    font-size: 11px;
+    font-weight: 900;
     line-height: 1.2;
     margin-bottom: 4px;
 }
 
 .cupom-regras {
     color: var(--texto-mutado);
-    font-size: 10.5px;
+    font-size: 9.8px;
     line-height: 1.25;
-    max-width: 170px;
+    max-width: 160px;
 }
 
 .cupom-validade {
@@ -1348,8 +1361,13 @@ body.tema-escuro .theme-btn {
     align-items: center;
     gap: 4px;
     color: #777777;
-    font-size: 10px;
+    font-size: 9.5px;
+    line-height: 1;
     margin-top: 7px;
+}
+
+.cupom-validade i {
+    font-size: 9px;
 }
 
 .cupom-acoes {
@@ -1357,35 +1375,40 @@ body.tema-escuro .theme-btn {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 9px;
-    padding: 12px 12px 12px 6px;
+    gap: 8px;
+    padding: 10px 10px 10px 4px;
 }
 
 .btn-copiar-cupom {
     width: 100%;
-    min-height: 34px;
+    min-height: 32px;
     border: none;
-    border-radius: 8px;
+    border-radius: 7px;
     background: var(--cor-principal);
     color: #ffffff;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 800;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 5px;
     box-shadow: 0 3px 8px rgba(204, 10, 18, 0.22);
+    white-space: nowrap;
 }
 
 .btn-copiar-cupom:hover {
     background: #b0080f;
 }
 
+.btn-copiar-cupom i {
+    font-size: 10px;
+}
+
 .cupom-codigo-box {
     width: 100%;
-    min-height: 38px;
-    border: 1.5px dashed rgba(204, 10, 18, 0.45);
+    min-height: 35px;
+    border: 1.4px dashed rgba(204, 10, 18, 0.45);
     border-radius: 8px;
     background: #ffffff;
     display: flex;
@@ -1395,20 +1418,20 @@ body.tema-escuro .theme-btn {
 
 .cupom-codigo {
     color: var(--cor-principal);
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 900;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.3px;
+    text-align: center;
 }
 
-/* Dica inferior igual à segunda imagem */
+/* Dica inferior igual ao modelo */
 .cupons-dica {
     display: flex;
     gap: 10px;
     align-items: flex-start;
-    margin: 12px 12px 0;
-    padding: 0;
+    margin: 12px 10px 0;
     color: #555555;
-    font-size: 10.5px;
+    font-size: 10px;
     line-height: 1.35;
 }
 
@@ -1422,6 +1445,10 @@ body.tema-escuro .theme-btn {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+}
+
+.cupons-dica p {
+    margin: 0;
 }
 
 /* Modo escuro */
@@ -1441,12 +1468,55 @@ body.tema-escuro .cupons-header-texto h2 {
     color: #ffffff;
 }
 
+body.tema-escuro .cupom-regras,
+body.tema-escuro .cupom-validade,
+body.tema-escuro .cupons-header-texto p,
 body.tema-escuro .cupons-dica {
     color: #b0b0b0;
 }
 
 body.tema-escuro .cupons-dica-icon {
     background: rgba(204, 10, 18, 0.2);
+}
+
+/* Celulares pequenos */
+@media (max-width: 380px) {
+    .cupom-card {
+        grid-template-columns: 68px minmax(0, 1fr) 102px;
+        min-height: 90px;
+    }
+
+    .cupom-card::before,
+    .cupom-card::after {
+        left: 61px;
+    }
+
+    .cupom-logo-box {
+        width: 50px;
+        height: 50px;
+    }
+
+    .cupom-desconto {
+        font-size: 15.5px;
+    }
+
+    .cupom-descricao {
+        font-size: 10px;
+    }
+
+    .cupom-regras,
+    .cupom-validade {
+        font-size: 9px;
+    }
+
+    .btn-copiar-cupom {
+        font-size: 9px;
+        min-height: 31px;
+    }
+
+    .cupom-codigo {
+        font-size: 10px;
+    }
 }
 
 /* Ajuste para celulares menores */
@@ -1516,7 +1586,7 @@ class="badge-notificacao">
 </span>
 
 </div>
-    <i class="fa-solid fa-ticket" onclick="abrirCupons()" style="cursor:pointer;"></i>
+    <i class="fa-solid fa-ticket-simple" onclick="abrirCupons()" style="cursor:pointer;"></i>
                 </div>
             </div>
             <div class="search-container">
@@ -1805,6 +1875,7 @@ Boas compras!`
 }
 ];
         // ==================== CUPONS ====================
+        
 let CUPONS = [
     {
         loja: "amazon",
@@ -1834,7 +1905,7 @@ let CUPONS = [
         validoAte: "05/07/2025"
     },
     {
-        loja: "Magalu",
+        loja: "magalu",
         nome: "Magalu",
         desconto: "15% OFF",
         titulo: "Em todo o site",
@@ -2343,23 +2414,25 @@ function renderizarGridHome(lista) {
     `;
 }
 
-      function obterLogoLoja(loja) {
+     function obterLogoLoja(loja) {
     if (!loja) return "";
 
     const lojaNormalizada = loja.toLowerCase().trim();
 
-const logos = {
-    "amazon": "[upload.wikimedia.org](https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg)",
-    "shopee": "[upload.wikimedia.org](https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg)",
-    "magalu": "[logodownload.org](https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png)",
-    "mercado-livre": "[http2.mlstatic.com](https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo_large_plus.webp)",
-    "shein": "[upload.wikimedia.org](https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Shein_logo.svg/512px-Shein_logo.svg.png)",
-    "aliexpress": "[upload.wikimedia.org](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Aliexpress_logo.svg/512px-Aliexpress_logo.svg.png)"
-};
-
+    const logos = {
+        "amazon": "[upload.wikimedia.org](https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg)",
+        "shopee": "[upload.wikimedia.org](https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg)",
+        "magalu": "[logodownload.org](https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png)",
+        "mercado-livre": "[http2.mlstatic.com](https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo_large_plus.webp)",
+        "mercadolivre": "[http2.mlstatic.com](https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo_large_plus.webp)",
+        "mercado livre": "[http2.mlstatic.com](https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo_large_plus.webp)",
+        "shein": "[upload.wikimedia.org](https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Shein_logo.svg/512px-Shein_logo.svg.png)",
+        "aliexpress": "[upload.wikimedia.org](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Aliexpress_logo.svg/512px-Aliexpress_logo.svg.png)"
+    };
 
     return logos[lojaNormalizada] || "";
 }
+
 function tempoDecorrido(dataFirestore) {
     try {
         // CASO 1: não existe data (produtos antigos)
@@ -2928,19 +3001,17 @@ function abrirNotificacoes(){
     renderizarNotificacoes();
 
 }
-        function abrirCupons() {
-    mudarAba('cupons', null);
+function abrirCupons() {
+    mudarAba("cupons", null);
     renderizarCupons();
 }
+
 
 function renderizarCupons() {
     const container = document.getElementById("lista-cupons");
     if (!container) return;
 
     const html = CUPONS.map(cupom => {
-        const titulo = cupom.titulo || cupom.descricao || "";
-        const descricao = cupom.descricao || "";
-
         return `
             <div class="cupom-card">
                 <div class="cupom-logo-area">
@@ -2951,8 +3022,14 @@ function renderizarCupons() {
 
                 <div class="cupom-info">
                     <div class="cupom-desconto">${cupom.desconto}</div>
-                    <div class="cupom-descricao">${titulo}</div>
-                    <div class="cupom-regras">${descricao}</div>
+
+                    <div class="cupom-descricao">
+                        ${cupom.titulo}
+                    </div>
+
+                    <div class="cupom-regras">
+                        ${cupom.descricao}
+                    </div>
 
                     <div class="cupom-validade">
                         <i class="fa-regular fa-clock"></i>
