@@ -2348,15 +2348,15 @@ function renderizarGridHome(lista) {
 
     const lojaNormalizada = loja.toLowerCase().trim();
 
-    const logos = {
-        "amazon": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
-        "shopee": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg",
-        "magalu": "https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png",
-        "magazine": "https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png", // compatibilidade
-        "mercado-livre": "https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo_large_plus.webp",
-        "shein": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Shein_logo.svg/512px-Shein_logo.svg.png",
-        "aliexpress": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Aliexpress_logo.svg/512px-Aliexpress_logo.svg.png"
-    };
+const logos = {
+    "amazon": "[upload.wikimedia.org](https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg)",
+    "shopee": "[upload.wikimedia.org](https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg)",
+    "magalu": "[logodownload.org](https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo.png)",
+    "mercado-livre": "[http2.mlstatic.com](https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.121/mercadolibre/logo_large_plus.webp)",
+    "shein": "[upload.wikimedia.org](https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Shein_logo.svg/512px-Shein_logo.svg.png)",
+    "aliexpress": "[upload.wikimedia.org](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Aliexpress_logo.svg/512px-Aliexpress_logo.svg.png)"
+};
+
 
     return logos[lojaNormalizada] || "";
 }
