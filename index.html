@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Central de PromoÃ§Ãµes</title>
+    <title>Central de Promoções</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -178,7 +178,7 @@
 
      .grid-produtos {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);   /* â† mudado para 3 */
+    grid-template-columns: repeat(3, 1fr);   /* ← mudado para 3 */
     gap: 14px;
 }
 
@@ -630,9 +630,9 @@ body.tema-escuro .categoria-glass-footer p {
 /* === CARROSSEL DE BANNERS === */
 .carrossel-banners {
     position: relative;
-    width: calc(100% - 32px) !important; /* ForÃ§a o banner a ser menor que a tela */
+    width: calc(100% - 32px) !important; /* Força o banner a ser menor que a tela */
     margin: 16px auto !important;        /* O 'auto' centraliza perfeitamente, criando bordas iguais */
-    aspect-ratio: 16 / 9;                /* MantÃ©m a proporÃ§Ã£o do seu banner original */
+    aspect-ratio: 16 / 9;                /* Mantém a proporção do seu banner original */
     overflow: hidden;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -797,13 +797,13 @@ body.tema-escuro .categoria-glass-footer p {
 }
         @media (max-width: 768px) {
     .loja-card {
-        min-width: 115px;  /* menor sÃ³ no celular */
+        min-width: 115px;  /* menor só no celular */
         height: 44px;
         padding: 0 16px;
     }
 
     .loja-card img {
-        max-width: 90px;  /* ajusta o logo pra nÃ£o â€œestourarâ€ */
+        max-width: 90px;  /* ajusta o logo pra não “estourar” */
         max-height: 26px;
     }
 }
@@ -987,7 +987,7 @@ body.tema-escuro .categoria-glass-footer p {
         }
  /* ===================== RESPONSIVIDADE ===================== */
 
-/* MOBILE - MantÃ©m exatamente como estÃ¡ hoje */
+/* MOBILE - Mantém exatamente como está hoje */
 @media (max-width: 768px) {
     .app-container {
         max-width: 500px;
@@ -995,7 +995,7 @@ body.tema-escuro .categoria-glass-footer p {
     }
     
   .grid-produtos {
-        grid-template-columns: repeat(3, 1fr);   /* â† 3 colunas no celular */
+        grid-template-columns: repeat(3, 1fr);   /* ← 3 colunas no celular */
     }
     
     .grid-categorias {
@@ -1003,7 +1003,7 @@ body.tema-escuro .categoria-glass-footer p {
     }
 }
 
-/* DESKTOP - Layout mais amplo, mas com bottom nav visÃ­vel */
+/* DESKTOP - Layout mais amplo, mas com bottom nav visível */
 @media (min-width: 769px) {
     body {
         padding: 20px 0;
@@ -1030,7 +1030,7 @@ body.tema-escuro .categoria-glass-footer p {
         grid-template-columns: repeat(4, 1fr);
     }
     
-    /* Bottom Navigation VISÃVEL no desktop tambÃ©m */
+    /* Bottom Navigation VISÍVEL no desktop também */
     nav.bottom-nav {
         display: flex !important;
         max-width: 1200px;
@@ -1157,7 +1157,7 @@ body.tema-escuro .categoria-glass-footer p {
     }
 
 }
-        /* Seletor de AparÃªncia */
+        /* Seletor de Aparência */
 .aparencia-container {
     flex-direction: column;
     align-items: flex-start;
@@ -1207,116 +1207,6 @@ body.tema-escuro .theme-btn {
     background: #1e1e1e;
     color: #ddd;
 }
-        /* Container dos Cupons */
-.lista-cupons {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 10px;
-}
-
-/* Card de Cupom Estilo "Ticket" */
-.cupom-card {
-    display: flex;
-    align-items: center;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    position: relative;
-    overflow: hidden;
-    min-height: 100px;
-    border: 1px solid #eaeaea;
-}
-
-/* Lado Esquerdo - InformaÃ§Ãµes do Desconto */
-.cupom-esquerda {
-    flex: 1;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 4px;
-}
-
-.cupom-porcentagem {
-    font-size: 24px;
-    font-weight: 800;
-    color: var(--cor-principal); /* Vermelho */
-    line-height: 1;
-}
-
-.cupom-detalhe {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--texto-escuro);
-}
-
-.cupom-regras {
-    font-size: 11px;
-    color: var(--texto-mutado);
-}
-
-/* Linha DivisÃ³ria Pontilhada com os Recortes */
-.cupom-divisor {
-    width: 1px;
-    border-left: 2px dashed #e0e0e0;
-    height: 70%;
-    position: relative;
-}
-
-/* Os semicÃ­rculos que dÃ£o o efeito de rasgo de ingresso */
-.cupom-card::before,
-.cupom-card::after {
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    background-color: var(--cor-fundo); /* Mesma cor do fundo do app */
-    border-radius: 50%;
-    left: calc(100% - 108px); /* Alinha perfeitamente com a divisÃ³ria do botÃ£o */
-    border: 1px solid #eaeaea;
-    z-index: 2;
-}
-
-.cupom-card::before {
-    top: -8px;
-    box-shadow: inset 0 -3px 5px rgba(0,0,0,0.03);
-}
-
-.cupom-card::after {
-    bottom: -8px;
-    box-shadow: inset 0 3px 5px rgba(0,0,0,0.03);
-}
-
-/* Lado Direito - AÃ§Ã£o/BotÃ£o */
-.cupom-direita {
-    width: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    z-index: 1;
-}
-
-.btn-resgatar {
-    background-color: var(--cor-principal);
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    width: 100%;
-    text-align: center;
-    transition: background 0.2s ease;
-    box-shadow: 0 3px 6px rgba(204, 10, 18, 0.2);
-}
-
-.btn-resgatar:hover {
-    background-color: #b0080f;
-}
     </style>
 </head>
 <body>
@@ -1329,7 +1219,7 @@ body.tema-escuro .theme-btn {
                     <span class="logo-tag">%</span>
                     <div class="logo-texto">
                         <span class="p1">central de</span>
-                        <span class="p2">promoÃ§Ãµes</span>
+                        <span class="p2">promoções</span>
                     </div>
                 </a>
                 <div class="header-icons">
@@ -1346,7 +1236,7 @@ class="badge-notificacao">
 </span>
 
 </div>
-    <i class="fa-solid fa-ticket" onclick="abrirCupons()" style="cursor:pointer;"></i>
+                    <i class="fa-solid fa-ticket"></i>
                 </div>
             </div>
             <div class="search-container">
@@ -1362,7 +1252,7 @@ class="badge-notificacao">
 
     <div class="banner-slide active">
         <img src="https://i.ibb.co/jk5J2fKw/image-Pippit-202606241327-1.png"
-             alt="Central de PromoÃ§Ãµes - As melhores ofertas">
+             alt="Central de Promoções - As melhores ofertas">
     </div>
 
     <div class="banner-slide">
@@ -1372,19 +1262,19 @@ class="badge-notificacao">
 
     <div class="banner-slide">
         <img src="https://i.ibb.co/zhssCbQ0/image-Pippit-202606241115-1.png"
-             alt="As Melhores Ofertas EstÃ£o Aqui">
+             alt="As Melhores Ofertas Estão Aqui">
     </div>
 
     <div class="banner-slide">
         <img src="https://i.ibb.co/RTZTKD6n/image-Pippit-202606241327.png"
-             alt="Acompanhe nossas promoÃ§Ãµes no Instagram e WhatsApp">
+             alt="Acompanhe nossas promoções no Instagram e WhatsApp">
     </div>
 
 </div>
             
             <div id="wrapper-ofertas-quentes">
                 <div class="section-title">
-                    <span>â° Ofertas por Tempo Limitado</span>
+                    <span>⏰ Ofertas por Tempo Limitado</span>
                     <a href="#" class="ver-todos" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
                 </div>
                 <div class="ofertas-quentes-carrossel" id="carrossel-hot-deals"></div>
@@ -1392,18 +1282,18 @@ class="badge-notificacao">
 
             <div class="info-vendas-barra" id="barra-beneficios">
                 <div class="info-item"><i class="fa-solid fa-shield-halved"></i> Lojas Seguras</div>
-                <div class="info-item"><i class="fa-solid fa-truck"></i> Achados Frete GrÃ¡tis</div>
+                <div class="info-item"><i class="fa-solid fa-truck"></i> Achados Frete Grátis</div>
                 <div class="info-item"><i class="fa-solid fa-rotate"></i> Links Atualizados</div>
                 <div class="info-item"><i class="fa-solid fa-award"></i> Acesso Direto</div>
             </div>
 
             <div class="section-title">
-                <span id="titulo-grid-home">âš¡ Ofertas ImperdÃ­veis</span>
+                <span id="titulo-grid-home">⚡ Ofertas Imperdíveis</span>
                 <a href="#" class="ver-todos" id="link-ver-todos-home" onclick="mudarAba('ofertas', document.querySelectorAll('.nav-item')[2])">Ver todos <i class="fa-solid fa-chevron-right"></i></a>
             </div>
           <div class="grid-produtos" id="grid-home-ofertas"></div>
 
-<!-- NOVO BOTÃƒO -->
+<!-- NOVO BOTÃO -->
 <div style="text-align: center; margin: 25px 0 10px;">
     <button id="btn-ver-mais" 
             style="background: var(--cor-principal); color: white; border: none; padding: 14px 32px; border-radius: 25px; font-size: 15px; font-weight: 600; cursor: pointer;">
@@ -1411,14 +1301,14 @@ class="badge-notificacao">
     </button>
 </div>
 
-            <div class="section-title" id="titulo-depoimentos"><span>ðŸ’¬ O que nossos clientes dizem</span></div>
+            <div class="section-title" id="titulo-depoimentos"><span>💬 O que nossos clientes dizem</span></div>
             <div class="carrossel-depoimentos-container" id="wrapper-depoimentos">
                 <div class="carrossel-depoimentos-track" id="track-depoimentos"></div>
             </div>
 
-            <!-- AVISO LARANJA NO FINAL DA PÃGINA INICIAL -->
+            <!-- AVISO LARANJA NO FINAL DA PÁGINA INICIAL -->
             <div class="afiliado-banner" style="margin: 30px 16px 40px;">
-                âš ï¸ <strong>Aviso Importante:</strong> Este site nÃ£o vende nada. Apenas selecionamos e achamos as melhores ofertas de lojas confiÃ¡veis e redirecionamos vocÃª; portanto, estoques e preÃ§os podem ser alterados ao longo do tempo! Corram antes que as promoÃ§Ãµes acabem.
+                ⚠️ <strong>Aviso Importante:</strong> Este site não vende nada. Apenas selecionamos e achamos as melhores ofertas de lojas confiáveis e redirecionamos você; portanto, estoques e preços podem ser alterados ao longo do tempo! Corram antes que as promoções acabem.
             </div>
         </main>
 <main id="aba-categorias" class="app-page">
@@ -1460,7 +1350,7 @@ class="badge-notificacao">
     </div>
 
     <div class="section-title">
-        <span>ðŸ“‚ Categorias</span>
+        <span>📂 Categorias</span>
     </div>
 
     <div class="grid-categorias" id="mosaico-categorias-container"></div>
@@ -1473,43 +1363,37 @@ class="badge-notificacao">
 </main>
 
         <main id="aba-ofertas" class="app-page">
-            <div class="section-title"><span id="titulo-aba-ofertas">ðŸ›’ Todas as Ofertas</span></div>
+            <div class="section-title"><span id="titulo-aba-ofertas">🛒 Todas as Ofertas</span></div>
             <div class="grid-produtos" id="grid-todas-ofertas"></div>
         </main>
 
         <main id="aba-favoritos" class="app-page">
-            <div class="section-title"><span>â¤ï¸ Meus Favoritos</span></div>
+            <div class="section-title"><span>❤️ Meus Favoritos</span></div>
             <div class="grid-produtos" id="grid-favoritos-salvos"></div>
         </main>
 <main id="aba-notificacoes" class="app-page">
 
     <div class="section-title">
-        <span>ðŸ”” NotificaÃ§Ãµes</span>
+        <span>🔔 Notificações</span>
     </div>
 
     <div id="lista-notificacoes"></div>
 
 </main>
-        <main id="aba-cupons" class="app-page">
-    <div class="section-title">
-        <span>ðŸŽŸï¸ Meus Cupons</span>
-    </div>
-    <div id="lista-cupons" style="padding: 16px; display: flex; flex-direction: column; gap: 16px;"></div>
-</main>
         <main id="aba-conta" class="app-page">
             <div style="text-align: center; padding: 20px 0 30px 0;">
                 <div id="avatar-usuario" style="width:80px;height:80px;border-radius:50%;background:#cc0a12;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:40px;">
-                    ðŸ˜€
+                    😀
                 </div>
                 <h2 id="nome-perfil">Visitante</h2>
                 <button id="btn-login" class="btn-sair" onclick="abrirCadastro()">Entrar / Criar Conta</button>
             </div>
             <div class="section-title"><span>Minha Conta</span></div>
-            <!-- NOVO SELETOR DE APARÃŠNCIA -->
+            <!-- NOVO SELETOR DE APARÊNCIA -->
 <div class="conta-item aparencia-container">
     <div style="display:flex; align-items:center; gap:12px;">
         <i class="fa-solid fa-palette icone-vermelho"></i>
-        <span>AparÃªncia</span>
+        <span>Aparência</span>
     </div>
     
     <div class="theme-toggle">
@@ -1528,7 +1412,7 @@ class="badge-notificacao">
            <div class="conta-item">
   <a href="privacidade.html" style="text-decoration:none; color:inherit; display:flex; justify-content:space-between; width:100%;">
     <div>
-      <i class="fa-solid fa-file-shield icone-vermelho"></i> PolÃ­tica de Privacidade
+      <i class="fa-solid fa-file-shield icone-vermelho"></i> Política de Privacidade
     </div>
     <i class="fa-solid fa-chevron-right" style="color:#ccc;"></i>
   </a>
@@ -1537,7 +1421,7 @@ class="badge-notificacao">
         </main>
 
         <nav class="bottom-nav">
-            <button class="nav-item active" onclick="mudarAba('inicio', this)"><i class="fa-solid fa-house"></i><span>InÃ­cio</span></button>
+            <button class="nav-item active" onclick="mudarAba('inicio', this)"><i class="fa-solid fa-house"></i><span>Início</span></button>
             <button class="nav-item" onclick="mudarAba('categorias', this)"><i class="fa-solid fa-layer-group"></i><span>Categorias</span></button>
             <button class="nav-item" onclick="limparFiltrosEMudarAba(this)"><i class="fa-solid fa-fire"></i><span>Ofertas</span></button>
             <button class="nav-item" onclick="mudarAba('favoritos', this)"><i class="fa-solid fa-heart"></i><span>Favoritos</span></button>
@@ -1591,78 +1475,44 @@ let ordenacaoAtiva = "recentes";
         let notificacoes = [
 {
 id:1,
-titulo:"ðŸŽ‰ Bem-vindo(a) Ã  Central de PromoÃ§Ãµes!",
-texto:`Que bom ter vocÃª aqui!
+titulo:"🎉 Bem-vindo(a) à Central de Promoções!",
+texto:`Que bom ter você aqui!
 
-ðŸ›ï¸ Todos os dias procuramos promoÃ§Ãµes reais.
+🛍️ Todos os dias procuramos promoções reais.
 
-ðŸ”¥ Aproveite para favoritar produtos.
+🔥 Aproveite para favoritar produtos.
 
-â¤ï¸ Seja muito bem-vindo!`
+❤️ Seja muito bem-vindo!`
 },
 
 {
 id:2,
-titulo:"ðŸ“œ PolÃ­tica de Privacidade",
-texto:`Coletamos apenas dados bÃ¡sicos de navegaÃ§Ã£o para melhorar a experiÃªncia do usuÃ¡rio. NÃ£o vendemos ou compartilhamos dados pessoais.`
+titulo:"📜 Política de Privacidade",
+texto:`Coletamos apenas dados básicos de navegação para melhorar a experiência do usuário. Não vendemos ou compartilhamos dados pessoais.`
 },
 
 {
 id:3,
-titulo:"ðŸ’¡ Como funciona nosso site",
-texto:`A Central de PromoÃ§Ãµes NÃƒO vende produtos.
+titulo:"💡 Como funciona nosso site",
+texto:`A Central de Promoções NÃO vende produtos.
 
-NÃ³s apenas encontramos promoÃ§Ãµes nas lojas oficiais.
+Nós apenas encontramos promoções nas lojas oficiais.
 
-ðŸ›’ Amazon
+🛒 Amazon
 
-ðŸ›ï¸ Shopee
+🛍️ Shopee
 
-ðŸ’™ Magalu
+💙 Magalu
 
-ðŸ’› Mercado Livre
+💛 Mercado Livre
 
 
-Sempre confira preÃ§o e estoque antes da compra.
+Sempre confira preço e estoque antes da compra.
 
 Boas compras!`
 }
 ];
-        // ==================== CUPONS ====================
-let CUPONS = [
-    {
-        loja: "amazon",
-        nome: "Amazon",
-        desconto: "10% OFF",
-        descricao: "Em produtos selecionados",
-        codigo: "AMZ10",
-        validoAte: "30/06/2025"
-    },
-    {
-        loja: "shopee",
-        nome: "Shopee",
-        desconto: "R$ 30,00 OFF",
-        descricao: "Compras acima de R$ 199",
-        codigo: "SHOPEE30",
-        validoAte: "01/07/2025"
-    },
-    {
-        loja: "mercado-livre",
-        nome: "Mercado Livre",
-        desconto: "R$ 50,00 OFF",
-        descricao: "Compras acima de R$ 299",
-        codigo: "ML50",
-        validoAte: "05/07/2025"
-    },
-    {
-       loja: "magalu",           // â† alterado
-        desconto: "15% OFF",
-        descricao: "Em todo o site",
-        codigo: "MAG15",
-        validoAte: "10/07/2025"
-    }
-];
-        // ==================== DADOS ESTÃTICOS ====================
+        // ==================== DADOS ESTÁTICOS ====================
       const CATEGORIAS_DADOS = [
     {
         id: "roupas-masculinas",
@@ -1686,12 +1536,12 @@ let CUPONS = [
     },
     {
         id: "relogios",
-        nome: " RelÃ³gios",
+        nome: " Relógios",
         img: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=400"
     },
     {
         id: "acessorios",
-        nome: " AcessÃ³rios",
+        nome: " Acessórios",
         img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400"
     },
     {
@@ -1701,12 +1551,12 @@ let CUPONS = [
     },
     {
         id: "eletronicos",
-        nome: " EletrÃ´nicos",
+        nome: " Eletrônicos",
         img: "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=400"
     },
     {
         id: "eletrodomesticos",
-        nome: " EletrodomÃ©sticos",
+        nome: " Eletrodomésticos",
         img: "https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=400"
     },
     {
@@ -1721,7 +1571,7 @@ let CUPONS = [
     },
     {
         id: "mae-bebe",
-        nome: " MÃ£e & BebÃª",
+        nome: " Mãe & Bebê",
         img: "https://as2.ftcdn.net/jpg/02/58/14/09/220_F_258140947_fIJaSjkd5bG8bI5YiMPqHJINQcrAw7jS.jpg"
     },
     {
@@ -1751,7 +1601,7 @@ let CUPONS = [
     },
     {
         id: "casa-construcao",
-        nome: " Casa & ConstruÃ§Ã£o",
+        nome: " Casa & Construção",
         img: "https://blog.colombo.com.br/wp-content/uploads/2024/03/decora03.jpg"
     },
     {
@@ -1785,7 +1635,7 @@ let CUPONS = [
             ],
             "eletronicos": [
                 "Fones",
-                "EletroportÃ¡teis",
+                "Eletroportáteis",
                 "Computadores",
                 "Caixa de Som",
                 "Games",
@@ -1793,45 +1643,45 @@ let CUPONS = [
                 "PC Gamer"
             ],
             "eletrodomesticos": [
-                "MÃ¡quina de Lavar",
+                "Máquina de Lavar",
                 "TV",
                 "Geladeira",
                 "Microondas",
                 "Forno",
-                "FogÃ£o"
+                "Fogão"
             ],
             "festividades": [
                 "Natal",
                 "Copa do Mundo",
                 "Halloween",
                 "Ano Novo",
-                "AniversÃ¡rio"
+                "Aniversário"
             ],
         
             "fitness": [
-                "MusculaÃ§Ã£o",
+                "Musculação",
                 "Suplementos",
                 "Roupas Fitness",
                 "Equipamentos"
             ],
             "automotivo": [
-                "AcessÃ³rios",
+                "Acessórios",
                 "Som Automotivo",
                 "Ferramentas",
                 "Cuidados"
             ],
             "acessorios": [
                 "Brincos",
-                "CordÃµes",
+                "Cordões",
                 "Pulseiras"
                 ],
                  
             "roupas-masculinas": [
                 "Camisas",
                 "Casacos",
-                "Ãntimas",
+                "Íntimas",
                 "Conjuntos",
-                "CalÃ§as"
+                "Calças"
             ],
                  
            "casa-construcao": [
@@ -1845,8 +1695,8 @@ let CUPONS = [
             "roupas-femininas": [
                 "Camisas",
                 "Casacos",
-                "Ãntimas",
-                "CalÃ§as",
+                "Íntimas",
+                "Calças",
                 "Shorts",
                 "Saias",
                 "Conjuntos",
@@ -1870,12 +1720,12 @@ let CUPONS = [
         };
         
         const DEPOIMENTOS_DADOS = [
-            { nome: "Rodrigo Alves", letra: "R", cor: "#e63946", texto: "\"Mano, esse site Ã© bom demais. Eu tava atrÃ¡s de uma promo boa e peguei por aqui bem mais barato.\"" },
-            { nome: "Mariana Costa", letra: "M", cor: "#2a9d8f", texto: "\"Achei que era mentira, mas os links mandam direto para as promoÃ§Ãµes reais.\"" },
-            { nome: "Lucas Souza", letra: "L", cor: "#f4a261", texto: "\"Muito prÃ¡tico. Em vez de ficar caÃ§ando cupom que nÃ£o funciona.\"" },
-            { nome: "Amanda Lima", letra: "A", cor: "#e9c46a", texto: "\"O grupo de promoÃ§Ãµes que eu seguia faliu, agora sÃ³ uso essa central.\"" },
-            { nome: "Bruno Ramos", letra: "B", cor: "#457b9d", texto: "\"Sensacional! Comprei itens de Ã³tima qualidade por menos da metade.\"" },
-            { nome: "Carla Diaz", letra: "C", cor: "#8338ec", texto: "\"O design Ã© muito limpo e direto, clica e jÃ¡ vai para o link com desconto.\"" }
+            { nome: "Rodrigo Alves", letra: "R", cor: "#e63946", texto: "\"Mano, esse site é bom demais. Eu tava atrás de uma promo boa e peguei por aqui bem mais barato.\"" },
+            { nome: "Mariana Costa", letra: "M", cor: "#2a9d8f", texto: "\"Achei que era mentira, mas os links mandam direto para as promoções reais.\"" },
+            { nome: "Lucas Souza", letra: "L", cor: "#f4a261", texto: "\"Muito prático. Em vez de ficar caçando cupom que não funciona.\"" },
+            { nome: "Amanda Lima", letra: "A", cor: "#e9c46a", texto: "\"O grupo de promoções que eu seguia faliu, agora só uso essa central.\"" },
+            { nome: "Bruno Ramos", letra: "B", cor: "#457b9d", texto: "\"Sensacional! Comprei itens de ótima qualidade por menos da metade.\"" },
+            { nome: "Carla Diaz", letra: "C", cor: "#8338ec", texto: "\"O design é muito limpo e direto, clica e já vai para o link com desconto.\"" }
         ];
 
         // ==================== FIRESTORE ====================
@@ -1903,7 +1753,7 @@ function mostrarSubcategorias(categoriaId){
     const info=CATEGORIAS_DADOS.find(c=>c.id===categoriaId);
 
     if(info){
-        document.getElementById("titulo-aba-ofertas").innerText=`ðŸ“‚ ${info.nome}`;
+        document.getElementById("titulo-aba-ofertas").innerText=`📂 ${info.nome}`;
     }
 
     const antigo = document.getElementById("bloco-subcategorias");
@@ -1930,7 +1780,7 @@ let html = `
             <button
                 class="sub-btn"
                 onclick="toggleSubcategorias()">
-                Todas â–¼
+                Todas ▼
             </button>
         </div>
 
@@ -1953,11 +1803,11 @@ let html = `
                 </option>
 
                 <option value="menor">
-                    Menor PreÃ§o
+                    Menor Preço
                 </option>
 
                 <option value="maior">
-                    Maior PreÃ§o
+                    Maior Preço
                 </option>
 
             </select>
@@ -2032,7 +1882,7 @@ function atualizarUIAuth(user) {
             renderizarAbaFavoritos();
         }
 
-        // ==================== RENDERIZAÃ‡ÃƒO ====================
+        // ==================== RENDERIZAÇÃO ====================
         function construirEstrutura() {
             // Carrossel Ofertas Quentes
             const carrosselContainer = document.getElementById('carrossel-hot-deals');
@@ -2043,7 +1893,7 @@ function atualizarUIAuth(user) {
                 const produtosLoop = [...amostra, ...amostra];
               carrosselContainer.innerHTML = produtosLoop.map(prod => `
                     <div class="card-hot">
-                        <span class="tag-desconto">â° LIMITADO</span>
+                        <span class="tag-desconto">⏰ LIMITADO</span>
                         <img src="${prod.img}" class="produto-img">
                         <div class="produto-nome">${prod.nome}</div>
                         <div>
@@ -2079,7 +1929,7 @@ function atualizarUIAuth(user) {
                             <div class="avatar-fake" style="background:${dep.cor};">${dep.letra}</div>
                             <div>
                                 <h4 style="font-size:13px;">${dep.nome}</h4>
-                                <p style="font-size:11px;color:gray;">Verificado âœ…</p>
+                                <p style="font-size:11px;color:gray;">Verificado ✅</p>
                             </div>
                         </div>
                         <p style="font-size:12px;color:#444;font-style:italic;">${dep.texto}</p>
@@ -2100,7 +1950,7 @@ renderizarAbaFavoritos();
 atualizarIconesCoraoGlobais();
         }
 
-       let produtosMostradosHome = 9;   // â† comeÃ§a com 9 (3 linhas de 3)
+       let produtosMostradosHome = 9;   // ← começa com 9 (3 linhas de 3)
 
 function renderizarGridHome(lista) {
     const container = document.getElementById('grid-home-ofertas');
@@ -2114,7 +1964,7 @@ function renderizarGridHome(lista) {
     const exibicao = lista.slice(0, produtosMostradosHome);
     container.innerHTML = exibicao.map(prod => criarCardProduto(prod)).join('');
 
-    // Mostra/esconde o botÃ£o
+    // Mostra/esconde o botão
     const btn = document.getElementById('btn-ver-mais');
     if (btn) {
         btn.style.display = (produtosMostradosHome >= lista.length) ? 'none' : 'block';
@@ -2180,17 +2030,17 @@ function renderizarGridHome(lista) {
 }
 function tempoDecorrido(dataFirestore) {
     try {
-        // CASO 1: nÃ£o existe data (produtos antigos)
+        // CASO 1: não existe data (produtos antigos)
         if (!dataFirestore || !dataFirestore.toDate) {
-            return "hÃ¡ 1 mÃªs"; 
+            return "há 1 mês"; 
         }
 
         const agora = new Date();
         const postagem = dataFirestore.toDate();
 
-        // validaÃ§Ã£o extra (evita NaN)
+        // validação extra (evita NaN)
         if (isNaN(postagem.getTime())) {
-            return "hÃ¡ 1 mÃªs";
+            return "há 1 mês";
         }
 
         const diff = agora - postagem;
@@ -2204,15 +2054,15 @@ function tempoDecorrido(dataFirestore) {
         const anos = Math.floor(dias / 365);
 
         if (minutos < 1) return "agora";
-        if (minutos < 60) return `hÃ¡ ${minutos} min`;
-        if (horas < 24) return `hÃ¡ ${horas} h`;
-        if (dias < 30) return `hÃ¡ ${dias} d`;
-        if (meses < 12) return `hÃ¡ ${meses} mÃªs${meses > 1 ? "es" : ""}`;
+        if (minutos < 60) return `há ${minutos} min`;
+        if (horas < 24) return `há ${horas} h`;
+        if (dias < 30) return `há ${dias} d`;
+        if (meses < 12) return `há ${meses} mês${meses > 1 ? "es" : ""}`;
 
-        return `hÃ¡ ${anos} ano${anos > 1 ? "s" : ""}`;
+        return `há ${anos} ano${anos > 1 ? "s" : ""}`;
 
     } catch (e) {
-        return "hÃ¡ 1 mÃªs";
+        return "há 1 mês";
     }
 }
         function getAvaliacoesRandom() {
@@ -2289,7 +2139,7 @@ carrossel.addEventListener("touchend",()=>{
 });
 
 }
-        // ==================== NAVEGAÃ‡ÃƒO ====================
+        // ==================== NAVEGAÇÃO ====================
         function mudarAba(idAba, elementoBotao) {
             // Abas que exigem login
 if (
@@ -2317,7 +2167,7 @@ if (
 
         function limparFiltrosEMudarAba(elementoBotao) {
             categoriaAtiva = null;
-            document.getElementById('titulo-aba-ofertas').innerText = "ðŸ›’ Todas as Ofertas";
+            document.getElementById('titulo-aba-ofertas').innerText = "🛒 Todas as Ofertas";
             renderizarGridOfertas(PRODUTOS_LOJA);
             mudarAba('ofertas', elementoBotao);
         }
@@ -2328,8 +2178,8 @@ if (
 
     const info = CATEGORIAS_DADOS.find(c => c.id === idCategoria);
     if (info) {
-        let titulo = `ðŸ“‚ ${info.nome}`;
-        if (subcategoria) titulo += ` â†’ ${subcategoria}`;
+        let titulo = `📂 ${info.nome}`;
+        if (subcategoria) titulo += ` → ${subcategoria}`;
         document.getElementById('titulo-aba-ofertas').innerText = titulo;
     }
 
@@ -2446,7 +2296,7 @@ if (
         return lojaProd === lojaNormalizada;
     });
 
-    document.getElementById("titulo-aba-ofertas").innerText = `ðŸª ${loja.toUpperCase()}`;
+    document.getElementById("titulo-aba-ofertas").innerText = `🏪 ${loja.toUpperCase()}`;
     renderizarGridOfertas(produtosFiltrados);
     mudarAba("ofertas", document.querySelectorAll(".nav-item")[2]);
 }
@@ -2474,11 +2324,11 @@ if (
 
             if (termo.length > 0) {
                 if (activePage && activePage.id === 'aba-inicio') {
-                    // Esconde banners + outras seÃ§Ãµes
+                    // Esconde banners + outras seções
                     document.getElementById('banner-carousel').style.display = 'none';
                     document.getElementById('wrapper-ofertas-quentes').style.display = 'none';
                     document.getElementById('barra-beneficios').style.display = 'none';
-                    document.getElementById('titulo-grid-home').innerText = "ðŸ” Resultados da Busca";
+                    document.getElementById('titulo-grid-home').innerText = "🔍 Resultados da Busca";
                     document.getElementById('link-ver-todos-home').style.display = 'none';
                     document.getElementById('titulo-depoimentos').style.display = 'none';
                     document.getElementById('wrapper-depoimentos').style.display = 'none';
@@ -2534,7 +2384,7 @@ else {
             document.getElementById('banner-carousel').style.display = 'block';
             document.getElementById('wrapper-ofertas-quentes').style.display = 'block';
             document.getElementById('barra-beneficios').style.display = 'grid';
-            document.getElementById('titulo-grid-home').innerText = "âš¡ Ofertas ImperdÃ­veis";
+            document.getElementById('titulo-grid-home').innerText = "⚡ Ofertas Imperdíveis";
             document.getElementById('link-ver-todos-home').style.display = 'block';
             document.getElementById('titulo-depoimentos').style.display = 'flex';
             document.getElementById('wrapper-depoimentos').style.display = 'block';
@@ -2628,7 +2478,7 @@ function setTheme(tema) {
         }
     }
     
-    // Atualiza botÃµes ativos
+    // Atualiza botões ativos
     document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
     
     if (tema === 'claro') document.getElementById('btn-claro').classList.add('active');
@@ -2636,7 +2486,7 @@ function setTheme(tema) {
     else document.getElementById('btn-auto').classList.add('active');
 }
 
-// InicializaÃ§Ã£o do tema
+// Inicialização do tema
 function initTheme() {
     const savedTheme = localStorage.getItem("tema-site") || 'auto';
     setTheme(savedTheme);
@@ -2644,7 +2494,7 @@ function initTheme() {
 
 // Chame no final do DOMContentLoaded:
 document.addEventListener("DOMContentLoaded", () => {
-    // ... seu cÃ³digo existente
+    // ... seu código existente
     initTheme();
 });
 
@@ -2662,7 +2512,7 @@ document.addEventListener("DOMContentLoaded", () => {
             showBanner();
         }
 
-  // ==================== INICIALIZAÃ‡ÃƒO ====================
+  // ==================== INICIALIZAÇÃO ====================
         document.addEventListener("DOMContentLoaded", () => {
             carregarProdutosFirestore();
 
@@ -2746,80 +2596,7 @@ function abrirNotificacoes(){
     renderizarNotificacoes();
 
 }
-        function abrirCupons() {
-    mudarAba('cupons', null);
-    renderizarCupons();
-}
-
-function renderizarCupons() {
-    const container = document.getElementById('lista-cupons');
-    if (!container) return;
-
-    let html = `
-        <div style="padding:16px 16px 10px;">
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
-                <div style="background:#cc0a12; color:white; width:42px; height:42px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:bold;">%</div>
-                <div>
-                    <h2 style="margin:0; font-size:23px;">Cupons</h2>
-                    <p style="margin:4px 0 0; color:#555; font-size:14.5px;">Economize ainda mais com cupons de desconto exclusivos.</p>
-                </div>
-            </div>
-    `;
-
-    CUPONS.forEach(cupom => {
-        html += `
-        <div style="border: 2px dashed #cc0a12; border-radius: 16px; background: white; padding: 20px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-            
-            <div style="display: flex; gap: 16px; align-items: flex-start;">
-                <!-- Logo -->
-                <div style="width: 90px; flex-shrink: 0;">
-                    <img src="${obterLogoLoja(cupom.loja)}" style="max-height: 65px; width: auto;">
-                </div>
-
-                <!-- ConteÃºdo -->
-                <div style="flex: 1;">
-                    <div style="font-size: 22px; font-weight: 800; color: #cc0a12;">${cupom.desconto}</div>
-                    <div style="font-size: 14.8px; color: #333; margin: 8px 0 16px;">${cupom.descricao}</div>
-
-                    <!-- BotÃ£o -->
-                    <div style="margin-bottom: 12px;">
-                        <button onclick="copiarCodigo('${cupom.codigo}', this)" 
-                                style="background:#cc0a12; color:white; border:none; padding:12px 28px; border-radius:30px; font-weight:700; font-size:14.5px; cursor:pointer;">
-                            Copiar CÃ³digo
-                        </button>
-                    </div>
-
-                    <!-- CÃ³digo embaixo do botÃ£o -->
-                    <div style="text-align:center; background:#f8f9fa; padding:12px; border-radius:10px;">
-                        <small style="color:#666;">CÃ³digo</small><br>
-                        <strong style="font-size:17px; color:#cc0a12; letter-spacing:1.5px;">${cupom.codigo}</strong>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Validade -->
-            <small style="display:block; text-align:right; margin-top:14px; color:#777;">
-                VÃ¡lido atÃ© ${cupom.validoAte}
-            </small>
-        </div>`;
-    });
-
-    container.innerHTML = html;
-}
-
-function copiarCodigo(codigo, botao) {
-    navigator.clipboard.writeText(codigo).then(() => {
-        const textoOriginal = botao.textContent;
-        botao.textContent = "âœ“ Copiado!";
-        botao.style.background = "#28a745";
-        
-        setTimeout(() => {
-            botao.textContent = textoOriginal;
-            botao.style.background = "#cc0a12";
-        }, 2000);
-    });
-}
-    // ==================== NOVAS FUNÃ‡Ã•ES PARA DETALHES (COM MÃšLTIPLAS IMAGENS) ====================
+    // ==================== NOVAS FUNÇÕES PARA DETALHES (COM MÚLTIPLAS IMAGENS) ====================
 function mostrarDetalhesProduto(id) {
     const prod = PRODUTOS_LOJA.find(p => p.id === id);
     if (!prod) return;
@@ -2856,17 +2633,17 @@ function mostrarDetalhesProduto(id) {
         </div>
 
         <div class="aviso-afiliado">
-              âš ï¸ Este site Ã© apenas um agregador de ofertas. NÃ£o vendemos produtos.<br>
-            VocÃª serÃ¡ redirecionado para a loja <strong>${prod.loja.toUpperCase()}</strong>.
+              ⚠️ Este site é apenas um agregador de ofertas. Não vendemos produtos.<br>
+            Você será redirecionado para a loja <strong>${prod.loja.toUpperCase()}</strong>.
         </div>
 
         <div style="margin:20px 0; text-align:center;">
             <img src="${obterLogoLoja(prod.loja)}" style="height:50px; margin-bottom:10px;">
-            <p><strong>PromoÃ§Ã£o na ${prod.loja.toUpperCase()}</strong></p>
+            <p><strong>Promoção na ${prod.loja.toUpperCase()}</strong></p>
         </div>
 
         <a href="${prod.link}" target="_blank" class="btn-oferta" style="font-size:16px; padding:14px; margin:25px 0;">
-            ðŸ›’ Comprar na ${prod.loja.toUpperCase()}
+            🛒 Comprar na ${prod.loja.toUpperCase()}
         </a>
 
         <h4 style="margin:25px 0 12px;">Produtos Semelhantes</h4>
@@ -2881,7 +2658,7 @@ function mostrarDetalhesProduto(id) {
         </div>
 
         <small style="display:block; text-align:center; margin-top:25px; color:#888;">
-            PreÃ§os e estoque podem variar. Ãšltima atualizaÃ§Ã£o: agora.
+            Preços e estoque podem variar. Última atualização: agora.
         </small>
     `;
 
@@ -2889,7 +2666,7 @@ function mostrarDetalhesProduto(id) {
     document.getElementById('modal-produto').style.display = 'flex';
 }
 
-// FunÃ§Ã£o para trocar imagem ao clicar nas miniaturas
+// Função para trocar imagem ao clicar nas miniaturas
 function trocarImagemModal(elemento, novaSrc) {
     document.getElementById('imagem-principal-modal').src = novaSrc;
     
@@ -2947,8 +2724,8 @@ document.addEventListener('click', function(e) {
     <!-- Modal Cadastro -->
     <div id="modal-cadastro" class="modal-cadastro">
         <div class="modal-cadastro-box">
-            <h2>ðŸŽ‰ Crie sua conta grÃ¡tis</h2>
-            <p>Salve favoritos e receba promoÃ§Ãµes exclusivas.</p>
+            <h2>🎉 Crie sua conta grátis</h2>
+            <p>Salve favoritos e receba promoções exclusivas.</p>
             <input type="text" id="nome-usuario" placeholder="Seu nome">
             <input type="email" id="email-usuario" placeholder="Seu e-mail">
             <input type="password" id="senha-usuario" placeholder="Crie uma senha">
@@ -2956,20 +2733,20 @@ document.addEventListener('click', function(e) {
              <input type="checkbox" id="aceitou-termos">
 
 <label for="aceitou-termos">
-  Aceito a <a href="privacidade.html">PolÃ­tica de Privacidade</a>
+  Aceito a <a href="privacidade.html">Política de Privacidade</a>
 </label>
             </div>
             <button onclick="criarConta()">Criar Conta</button>
-            <button onclick="login()">JÃ¡ tenho conta - Entrar</button>
+            <button onclick="login()">Já tenho conta - Entrar</button>
             <button onclick="fecharCadastro()" class="btn-fechar-cadastro">Fechar</button>
         </div>
     </div>
 
-    <!-- Modal Login ObrigatÃ³rio -->
+    <!-- Modal Login Obrigatório -->
     <div id="modal-login-obrigatorio" class="modal-cadastro" style="display:none;">
         <div class="modal-cadastro-box" style="text-align:center;">
-            <h2>â¤ï¸ Salvar Favorito</h2>
-            <p>VocÃª precisa estar logado para salvar favoritos.</p>
+            <h2>❤️ Salvar Favorito</h2>
+            <p>Você precisa estar logado para salvar favoritos.</p>
             <button onclick="abrirLoginDoModal()" style="width:100%;margin:10px 0;">Fazer Login / Criar Conta</button>
             <button onclick="fecharModalLoginObrigatorio()" class="btn-fechar-cadastro" style="width:100%;">Cancelar</button>
         </div>
@@ -2978,20 +2755,20 @@ document.addEventListener('click', function(e) {
     <!-- Cookie Banner -->
     <div id="cookie-banner" class="cookie-banner" style="display:none;">
         <div class="cookie-texto">
-            ðŸª Utilizamos cookies para melhorar sua experiÃªncia.
+            🍪 Utilizamos cookies para melhorar sua experiência.
         </div>
         <button onclick="aceitarCookies()">Aceitar</button>
     </div>
     <div id="modal-notificacoes" class="modal-produto">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>NotificaÃ§Ãµes</h3>
+            <h3>Notificações</h3>
             <button onclick="fecharNotificacoes()" style="font-size:24px;background:none;border:none">&times;</button>
         </div>
         <div class="modal-body">
-            <p>ðŸ”” Nova oferta adicionada hoje</p>
-            <p>ðŸ”¥ Cupom liberado em Shopee</p>
-            <p>âš¡ Ãšltimas promoÃ§Ãµes do dia atualizadas</p>
+            <p>🔔 Nova oferta adicionada hoje</p>
+            <p>🔥 Cupom liberado em Shopee</p>
+            <p>⚡ Últimas promoções do dia atualizadas</p>
         </div>
     </div>
 </div>
