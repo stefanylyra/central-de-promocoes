@@ -1207,116 +1207,286 @@ body.tema-escuro .theme-btn {
     background: #1e1e1e;
     color: #ddd;
 }
-        /* Container dos Cupons */
-.lista-cupons {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 10px;
+/* ==================== PÁGINA DE CUPONS - ESTILO TICKET ==================== */
+
+#aba-cupons {
+    padding: 12px 16px 90px;
 }
 
-/* Card de Cupom Estilo "Ticket" */
-.cupom-card {
+.cupons-header {
     display: flex;
     align-items: center;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    position: relative;
-    overflow: hidden;
-    min-height: 100px;
-    border: 1px solid #eaeaea;
+    gap: 12px;
+    margin: 6px 0 18px;
 }
 
-/* Lado Esquerdo - Informações do Desconto */
-.cupom-esquerda {
-    flex: 1;
-    padding: 16px;
+.cupons-header-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 9px;
+    background: var(--cor-principal);
+    color: #ffffff;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    gap: 4px;
-}
-
-.cupom-porcentagem {
     font-size: 24px;
-    font-weight: 800;
-    color: var(--cor-principal); /* Vermelho */
-    line-height: 1;
+    font-weight: 900;
+    flex-shrink: 0;
 }
 
-.cupom-detalhe {
-    font-size: 14px;
-    font-weight: 600;
+.cupons-header-texto h2 {
+    font-size: 22px;
+    line-height: 1;
+    margin: 0 0 5px;
     color: var(--texto-escuro);
 }
 
-.cupom-regras {
-    font-size: 11px;
+.cupons-header-texto p {
+    font-size: 12px;
     color: var(--texto-mutado);
+    margin: 0;
 }
 
-/* Linha Divisória Pontilhada com os Recortes */
-.cupom-divisor {
-    width: 1px;
-    border-left: 2px dashed #e0e0e0;
-    height: 70%;
+.lista-cupons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+}
+
+.cupom-card {
     position: relative;
+    display: grid;
+    grid-template-columns: 82px 1fr 118px;
+    align-items: stretch;
+    min-height: 104px;
+    background: #ffffff;
+    border: 1.5px dashed rgba(204, 10, 18, 0.38);
+    border-radius: 14px;
+    overflow: visible;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.035);
 }
 
-/* Os semicírculos que dão o efeito de rasgo de ingresso */
 .cupom-card::before,
 .cupom-card::after {
-    content: '';
+    content: "";
     position: absolute;
-    width: 16px;
-    height: 16px;
-    background-color: var(--cor-fundo); /* Mesma cor do fundo do app */
+    left: 80px;
+    width: 14px;
+    height: 14px;
+    background: var(--cor-fundo);
+    border: 1.5px dashed rgba(204, 10, 18, 0.38);
     border-radius: 50%;
-    left: calc(100% - 108px); /* Alinha perfeitamente com a divisória do botão */
-    border: 1px solid #eaeaea;
-    z-index: 2;
+    z-index: 5;
 }
 
 .cupom-card::before {
     top: -8px;
-    box-shadow: inset 0 -3px 5px rgba(0,0,0,0.03);
 }
 
 .cupom-card::after {
     bottom: -8px;
-    box-shadow: inset 0 3px 5px rgba(0,0,0,0.03);
 }
 
-/* Lado Direito - Ação/Botão */
-.cupom-direita {
-    width: 100px;
+.cupom-logo-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    border-right: 1.5px dashed rgba(204, 10, 18, 0.28);
+}
+
+.cupom-logo-box {
+    width: 58px;
+    height: 58px;
+    border-radius: 9px;
+    border: 1px solid #eeeeee;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+}
+
+.cupom-logo-box img {
+    max-width: 100%;
+    max-height: 42px;
+    object-fit: contain;
+    display: block;
+}
+
+.cupom-info {
+    padding: 14px 8px 12px 14px;
+    min-width: 0;
+}
+
+.cupom-desconto {
+    color: var(--cor-principal);
+    font-size: 19px;
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 4px;
+}
+
+.cupom-descricao {
+    color: var(--texto-escuro);
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 4px;
+}
+
+.cupom-regras {
+    color: var(--texto-mutado);
+    font-size: 10.5px;
+    line-height: 1.25;
+    max-width: 170px;
+}
+
+.cupom-validade {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #777777;
+    font-size: 10px;
+    margin-top: 7px;
+}
+
+.cupom-acoes {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 16px;
-    z-index: 1;
+    gap: 9px;
+    padding: 12px 12px 12px 6px;
 }
 
-.btn-resgatar {
-    background-color: var(--cor-principal);
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
+.btn-copiar-cupom {
     width: 100%;
-    text-align: center;
-    transition: background 0.2s ease;
-    box-shadow: 0 3px 6px rgba(204, 10, 18, 0.2);
+    min-height: 34px;
+    border: none;
+    border-radius: 8px;
+    background: var(--cor-principal);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 3px 8px rgba(204, 10, 18, 0.22);
 }
 
-.btn-resgatar:hover {
-    background-color: #b0080f;
+.btn-copiar-cupom:hover {
+    background: #b0080f;
 }
+
+.cupom-codigo-box {
+    width: 100%;
+    min-height: 38px;
+    border: 1.5px dashed rgba(204, 10, 18, 0.45);
+    border-radius: 8px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cupom-codigo {
+    color: var(--cor-principal);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.4px;
+}
+
+/* Dica inferior igual à segunda imagem */
+.cupons-dica {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin: 12px 12px 0;
+    padding: 0;
+    color: #555555;
+    font-size: 10.5px;
+    line-height: 1.35;
+}
+
+.cupons-dica-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #ffe8e8;
+    color: var(--cor-principal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Modo escuro */
+body.tema-escuro .cupom-card,
+body.tema-escuro .cupom-logo-box,
+body.tema-escuro .cupom-codigo-box {
+    background: #1e1e1e;
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+body.tema-escuro .cupom-logo-area {
+    border-right-color: rgba(255, 255, 255, 0.18);
+}
+
+body.tema-escuro .cupom-descricao,
+body.tema-escuro .cupons-header-texto h2 {
+    color: #ffffff;
+}
+
+body.tema-escuro .cupons-dica {
+    color: #b0b0b0;
+}
+
+body.tema-escuro .cupons-dica-icon {
+    background: rgba(204, 10, 18, 0.2);
+}
+
+/* Ajuste para celulares menores */
+@media (max-width: 380px) {
+    .cupom-card {
+        grid-template-columns: 72px 1fr 104px;
+    }
+
+    .cupom-card::before,
+    .cupom-card::after {
+        left: 70px;
+    }
+
+    .cupom-logo-box {
+        width: 50px;
+        height: 50px;
+    }
+
+    .cupom-desconto {
+        font-size: 17px;
+    }
+
+    .cupom-descricao {
+        font-size: 11px;
+    }
+
+    .cupom-regras,
+    .cupom-validade {
+        font-size: 9.5px;
+    }
+
+    .btn-copiar-cupom {
+        font-size: 10px;
+    }
+
+    .cupom-codigo {
+        font-size: 11px;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -1489,13 +1659,19 @@ class="badge-notificacao">
 
     <div id="lista-notificacoes"></div>
 
-</main>
-        <main id="aba-cupons" class="app-page">
-    <div class="section-title">
-        <span>🎟️ Meus Cupons</span>
+<main id="aba-cupons" class="app-page">
+    <div class="cupons-header">
+        <div class="cupons-header-icon">%</div>
+
+        <div class="cupons-header-texto">
+            <h2>Cupons</h2>
+            <p>Economize ainda mais com cupons de desconto exclusivos.</p>
+        </div>
     </div>
-    <div id="lista-cupons" style="padding: 16px; display: flex; flex-direction: column; gap: 16px;"></div>
+
+    <div id="lista-cupons" class="lista-cupons"></div>
 </main>
+
         <main id="aba-conta" class="app-page">
             <div style="text-align: center; padding: 20px 0 30px 0;">
                 <div id="avatar-usuario" style="width:80px;height:80px;border-radius:50%;background:#cc0a12;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:40px;">
@@ -1634,7 +1810,8 @@ let CUPONS = [
         loja: "amazon",
         nome: "Amazon",
         desconto: "10% OFF",
-        descricao: "Em produtos selecionados",
+        titulo: "Em produtos selecionados",
+        descricao: "Válido para itens vendidos e entregues pela Amazon.",
         codigo: "AMZ10",
         validoAte: "30/06/2025"
     },
@@ -1642,7 +1819,8 @@ let CUPONS = [
         loja: "shopee",
         nome: "Shopee",
         desconto: "R$ 30,00 OFF",
-        descricao: "Compras acima de R$ 199",
+        titulo: "Compras acima de R$ 199",
+        descricao: "Válido em produtos selecionados na Shopee.",
         codigo: "SHOPEE30",
         validoAte: "01/07/2025"
     },
@@ -1650,18 +1828,22 @@ let CUPONS = [
         loja: "mercado-livre",
         nome: "Mercado Livre",
         desconto: "R$ 50,00 OFF",
-        descricao: "Compras acima de R$ 299",
+        titulo: "Compras acima de R$ 299",
+        descricao: "Válido em produtos selecionados no Mercado Livre.",
         codigo: "ML50",
         validoAte: "05/07/2025"
     },
     {
-       loja: "magalu",           // ← alterado
+        loja: "Magalu",
+        nome: "Magalu",
         desconto: "15% OFF",
-        descricao: "Em todo o site",
-        codigo: "MAG15",
+        titulo: "Em todo o site",
+        descricao: "Desconto máximo de R$ 100,00. Válido em produtos selecionados.",
+        codigo: "AME15",
         validoAte: "10/07/2025"
     }
 ];
+
         // ==================== DADOS ESTÁTICOS ====================
       const CATEGORIAS_DADOS = [
     {
@@ -2752,73 +2934,77 @@ function abrirNotificacoes(){
 }
 
 function renderizarCupons() {
-    const container = document.getElementById('lista-cupons');
+    const container = document.getElementById("lista-cupons");
     if (!container) return;
 
-    let html = `
-        <div style="padding:16px 16px 10px;">
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
-                <div style="background:#cc0a12; color:white; width:42px; height:42px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:bold;">%</div>
-                <div>
-                    <h2 style="margin:0; font-size:23px;">Cupons</h2>
-                    <p style="margin:4px 0 0; color:#555; font-size:14.5px;">Economize ainda mais com cupons de desconto exclusivos.</p>
+    const html = CUPONS.map(cupom => {
+        const titulo = cupom.titulo || cupom.descricao || "";
+        const descricao = cupom.descricao || "";
+
+        return `
+            <div class="cupom-card">
+                <div class="cupom-logo-area">
+                    <div class="cupom-logo-box">
+                        <img src="${obterLogoLoja(cupom.loja)}" alt="${cupom.nome}">
+                    </div>
+                </div>
+
+                <div class="cupom-info">
+                    <div class="cupom-desconto">${cupom.desconto}</div>
+                    <div class="cupom-descricao">${titulo}</div>
+                    <div class="cupom-regras">${descricao}</div>
+
+                    <div class="cupom-validade">
+                        <i class="fa-regular fa-clock"></i>
+                        <span>Válido até ${cupom.validoAte}</span>
+                    </div>
+                </div>
+
+                <div class="cupom-acoes">
+                    <button class="btn-copiar-cupom" onclick="copiarCodigo('${cupom.codigo}', this)">
+                        <i class="fa-regular fa-copy"></i>
+                        Copiar Código
+                    </button>
+
+                    <div class="cupom-codigo-box">
+                        <span class="cupom-codigo">${cupom.codigo}</span>
+                    </div>
                 </div>
             </div>
+        `;
+    }).join("");
+
+    container.innerHTML = `
+        ${html}
+
+        <div class="cupons-dica">
+            <div class="cupons-dica-icon">
+                <i class="fa-solid fa-tag"></i>
+            </div>
+
+            <p>
+                <strong>Dica:</strong> Os cupons podem ter regras específicas e são sujeitos à disponibilidade de estoque.
+            </p>
+        </div>
     `;
-
-    CUPONS.forEach(cupom => {
-        html += `
-        <div style="border: 2px dashed #cc0a12; border-radius: 16px; background: white; padding: 20px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-            
-            <div style="display: flex; gap: 16px; align-items: flex-start;">
-                <!-- Logo -->
-                <div style="width: 90px; flex-shrink: 0;">
-                    <img src="${obterLogoLoja(cupom.loja)}" style="max-height: 65px; width: auto;">
-                </div>
-
-                <!-- Conteúdo -->
-                <div style="flex: 1;">
-                    <div style="font-size: 22px; font-weight: 800; color: #cc0a12;">${cupom.desconto}</div>
-                    <div style="font-size: 14.8px; color: #333; margin: 8px 0 16px;">${cupom.descricao}</div>
-
-                    <!-- Botão -->
-                    <div style="margin-bottom: 12px;">
-                        <button onclick="copiarCodigo('${cupom.codigo}', this)" 
-                                style="background:#cc0a12; color:white; border:none; padding:12px 28px; border-radius:30px; font-weight:700; font-size:14.5px; cursor:pointer;">
-                            Copiar Código
-                        </button>
-                    </div>
-
-                    <!-- Código embaixo do botão -->
-                    <div style="text-align:center; background:#f8f9fa; padding:12px; border-radius:10px;">
-                        <small style="color:#666;">Código</small><br>
-                        <strong style="font-size:17px; color:#cc0a12; letter-spacing:1.5px;">${cupom.codigo}</strong>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Validade -->
-            <small style="display:block; text-align:right; margin-top:14px; color:#777;">
-                Válido até ${cupom.validoAte}
-            </small>
-        </div>`;
-    });
-
-    container.innerHTML = html;
 }
 
 function copiarCodigo(codigo, botao) {
     navigator.clipboard.writeText(codigo).then(() => {
-        const textoOriginal = botao.textContent;
-        botao.textContent = "✓ Copiado!";
+        const textoOriginal = botao.innerHTML;
+
+        botao.innerHTML = `<i class="fa-solid fa-check"></i> Copiado!`;
         botao.style.background = "#28a745";
-        
+
         setTimeout(() => {
-            botao.textContent = textoOriginal;
-            botao.style.background = "#cc0a12";
-        }, 2000);
+            botao.innerHTML = textoOriginal;
+            botao.style.background = "";
+        }, 1800);
+    }).catch(() => {
+        alert("Não foi possível copiar o código. Copie manualmente: " + codigo);
     });
 }
+
     // ==================== NOVAS FUNÇÕES PARA DETALHES (COM MÚLTIPLAS IMAGENS) ====================
 function mostrarDetalhesProduto(id) {
     const prod = PRODUTOS_LOJA.find(p => p.id === id);
