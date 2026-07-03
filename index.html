@@ -1002,9 +1002,11 @@ body.tema-escuro .categoria-glass-footer p {
         box-shadow: 0 0 20px rgba(0,0,0,0.05);
     }
     
-  .grid-produtos {
-        grid-template-columns: repeat(3, 1fr);   /* ← 3 colunas no celular */
-    }
+ .grid-produtos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
     
     .grid-categorias {
         grid-template-columns: repeat(3, 1fr);
