@@ -1207,6 +1207,116 @@ body.tema-escuro .theme-btn {
     background: #1e1e1e;
     color: #ddd;
 }
+        /* Container dos Cupons */
+.lista-cupons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 10px;
+}
+
+/* Card de Cupom Estilo "Ticket" */
+.cupom-card {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+    min-height: 100px;
+    border: 1px solid #eaeaea;
+}
+
+/* Lado Esquerdo - Informações do Desconto */
+.cupom-esquerda {
+    flex: 1;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+
+.cupom-porcentagem {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--cor-principal); /* Vermelho */
+    line-height: 1;
+}
+
+.cupom-detalhe {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--texto-escuro);
+}
+
+.cupom-regras {
+    font-size: 11px;
+    color: var(--texto-mutado);
+}
+
+/* Linha Divisória Pontilhada com os Recortes */
+.cupom-divisor {
+    width: 1px;
+    border-left: 2px dashed #e0e0e0;
+    height: 70%;
+    position: relative;
+}
+
+/* Os semicírculos que dão o efeito de rasgo de ingresso */
+.cupom-card::before,
+.cupom-card::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: var(--cor-fundo); /* Mesma cor do fundo do app */
+    border-radius: 50%;
+    left: calc(100% - 108px); /* Alinha perfeitamente com a divisória do botão */
+    border: 1px solid #eaeaea;
+    z-index: 2;
+}
+
+.cupom-card::before {
+    top: -8px;
+    box-shadow: inset 0 -3px 5px rgba(0,0,0,0.03);
+}
+
+.cupom-card::after {
+    bottom: -8px;
+    box-shadow: inset 0 3px 5px rgba(0,0,0,0.03);
+}
+
+/* Lado Direito - Ação/Botão */
+.cupom-direita {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 1;
+}
+
+.btn-resgatar {
+    background-color: var(--cor-principal);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: background 0.2s ease;
+    box-shadow: 0 3px 6px rgba(204, 10, 18, 0.2);
+}
+
+.btn-resgatar:hover {
+    background-color: #b0080f;
+}
     </style>
 </head>
 <body>
