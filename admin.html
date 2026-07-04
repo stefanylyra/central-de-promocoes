@@ -544,7 +544,7 @@ const SUBCATEGORIAS = {
 
         // ==================== EDITAR ====================
         function editar(id) {
-            db.collection("produtos").doc(id).get().then(doc => {
+           db.collection("produtos").doc(id).get().then(doc => {
                 if (!doc.exists) return;
                 const p = doc.data();
                 editingId = id;
@@ -799,7 +799,13 @@ renderizarPagina();
         let produtoAtualIA = null;
 
 function abrirIA(id) {
+
     produtoAtualIA = todosProdutos.find(p => p.doc === id);
+
+    if (!produtoAtualIA) {
+        alert("Produto ainda não carregou. Tente novamente.");
+        return;
+    }
 
     const p = produtoAtualIA.dados;
 
@@ -810,57 +816,20 @@ function abrirIA(id) {
     `;
 
     document.getElementById("resultadoIA").innerHTML = "";
-
     document.getElementById("modalIA").style.display = "flex";
 }
-
+        
 function fecharIA() {
     document.getElementById("modalIA").style.display = "none";
 }
-        function gerarConteudoIA() {
+       function gerarConteudoIA() {
+
+    if (!produtoAtualIA) {
+        alert("Nenhum produto selecionado");
+        return;
+    }
 
     const p = produtoAtualIA.dados;
-
-    const whatsapp = `
-🔥 ACHADINHO DO DIA
-
-👟 ${p.nome}
-
-💰 ${p.precoNovo}
-
-🛒 Garanta aqui:
-${p.link}
-`;
-
-    const instagram = `
-👟 ${p.nome}
-
-💰 ${p.precoNovo}
-
-🔥 Aproveite essa oferta!
-
-Link na bio.
-`;
-
-    const hashtags = `
-#promoção #oferta #achadinhos #desconto
-`;
-
-    document.getElementById("resultadoIA").innerHTML = `
-        <h3>📱 WhatsApp</h3>
-        <pre>${whatsapp}</pre>
-        <button onclick="copiar('${escapeHtml(whatsapp)}')">Copiar</button>
-
-        <h3>📷 Instagram</h3>
-        <pre>${instagram}</pre>
-        <button onclick="copiar('${escapeHtml(instagram)}')">Copiar</button>
-
-        <h3>🏷️ Hashtags</h3>
-        <pre>${hashtags}</pre>
-        <button onclick="copiar('${escapeHtml(hashtags)}')">Copiar</button>
-    `;
-}
-
 function copiar(texto) {
     navigator.clipboard.writeText(texto);
     alert("Copiado!");
