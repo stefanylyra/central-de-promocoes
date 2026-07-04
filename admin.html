@@ -830,6 +830,8 @@ function fecharIA() {
     }
 
     const p = produtoAtualIA.dados;
+    const doc = produtoAtualIA.doc;
+    const link = `https://SEUGITHUB.github.io/produto.html?id=${doc}`;
 
     const whatsapp = `
 🔥 OPPAA! OLHA ESSE ACHADINHO 👀
@@ -845,7 +847,7 @@ POR APENAS R$: *${p.precoNovo}*
 💥 Ideal pra quem quer economizar sem abrir mão de qualidade.
 
 🛒 GARANTA O SEU AQUI:
-${p.link}
+${link}
 
 🚨 Não deixa pra depois porque pode acabar a qualquer momento!
 `;
