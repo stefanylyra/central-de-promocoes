@@ -102,6 +102,12 @@
             text-decoration: line-through;
             color: #999;
         }
+        .btn-ia {
+    background: #6f42c1;
+    color: white;
+    border: none;
+    padding: 10px;
+}
     </style>
 </head>
 <body>
@@ -637,26 +643,27 @@ const pagina = produtosFiltrados.slice(inicio, fim);
 
                 </div>
 
-                <div class="acoes">
+             <div class="acoes">
 
-                    <button
-                        class="btn-editar"
-                        onclick="editar('${doc}')">
+    <button
+        class="btn-editar"
+        onclick="editar('${doc}')">
+        Editar
+    </button>
 
-                        Editar
+    <button
+        class="btn-excluir"
+        onclick="if(confirm('Excluir este produto?')) db.collection('produtos').doc('${doc}').delete()">
+        Excluir
+    </button>
 
-                    </button>
+    <button
+        class="btn-ia"
+        onclick="abrirIA('${doc}')">
+        ✨ IA
+    </button>
 
-                    <button
-                        class="btn-excluir"
-                        onclick="if(confirm('Excluir este produto?')) db.collection('produtos').doc('${doc}').delete()">
-
-                        Excluir
-
-                    </button>
-
-                </div>
-
+</div>
             </div>
         `;
 
@@ -789,7 +796,125 @@ produtosFiltrados = [...todosProdutos];
 renderizarPagina();
 
 });
+        let produtoAtualIA = null;
+
+function abrirIA(id) {
+    produtoAtualIA = todosProdutos.find(p => p.doc === id);
+
+    const p = produtoAtualIA.dados;
+
+    document.getElementById("infoProdutoIA").innerHTML = `
+        <b>${p.nome}</b><br>
+        💰 ${p.precoNovo}<br>
+        🏪 ${p.loja}<br>
+    `;
+
+    document.getElementById("resultadoIA").innerHTML = "";
+
+    document.getElementById("modalIA").style.display = "flex";
+}
+
+function fecharIA() {
+    document.getElementById("modalIA").style.display = "none";
+}
+        function gerarConteudoIA() {
+
+    const p = produtoAtualIA.dados;
+
+    const whatsapp = `
+🔥 ACHADINHO DO DIA
+
+👟 ${p.nome}
+
+💰 ${p.precoNovo}
+
+🛒 Garanta aqui:
+${p.link}
+`;
+
+    const instagram = `
+👟 ${p.nome}
+
+💰 ${p.precoNovo}
+
+🔥 Aproveite essa oferta!
+
+Link na bio.
+`;
+
+    const hashtags = `
+#promoção #oferta #achadinhos #desconto
+`;
+
+    document.getElementById("resultadoIA").innerHTML = `
+        <h3>📱 WhatsApp</h3>
+        <pre>${whatsapp}</pre>
+        <button onclick="copiar('${escapeHtml(whatsapp)}')">Copiar</button>
+
+        <h3>📷 Instagram</h3>
+        <pre>${instagram}</pre>
+        <button onclick="copiar('${escapeHtml(instagram)}')">Copiar</button>
+
+        <h3>🏷️ Hashtags</h3>
+        <pre>${hashtags}</pre>
+        <button onclick="copiar('${escapeHtml(hashtags)}')">Copiar</button>
+    `;
+}
+
+function copiar(texto) {
+    navigator.clipboard.writeText(texto);
+    alert("Copiado!");
+}
+
+function escapeHtml(text) {
+    return text.replace(/'/g, "\\'").replace(/\n/g, "\\n");
+}
         
     </script>
+        <div id="modalIA" style="display:none;
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.6);
+justify-content:center;
+align-items:center;
+z-index:9999;">
+
+    <div style="background:#fff;
+    width:90%;
+    max-width:600px;
+    padding:20px;
+    border-radius:12px;
+    max-height:90vh;
+    overflow:auto;">
+
+        <h2>✨ Central IA</h2>
+
+        <div id="infoProdutoIA"></div>
+
+        <hr>
+
+        <label><input type="checkbox" checked> WhatsApp</label><br>
+        <label><input type="checkbox" checked> Instagram</label><br>
+        <label><input type="checkbox"> Hashtags</label><br>
+        <label><input type="checkbox"> Story</label><br>
+
+        <br>
+
+        <button onclick="gerarConteudoIA()" style="background:#6f42c1;color:white;">
+            ✨ Gerar Conteúdo
+        </button>
+
+        <hr>
+
+        <div id="resultadoIA"></div>
+
+        <br>
+
+        <button onclick="fecharIA()">Fechar</button>
+
+    </div>
+
+</div>
 </body>
 </html>
