@@ -276,43 +276,6 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
         let editingId = null;
-        const COPY_CATEGORIAS = {
-  roupas: [
-    "🔥 LOOK PERFEITO PRA ARRASAR NO DIA A DIA 👗\n\n👟 {nome}\n💰 DE R$: ~{antigo}~ POR *{novo}*\n\n🛒 Corre que tá acabando: {link}",
-    
-    "✨ ESTILO + CONFORTO NO PRECINHO QUE CABE NO BOLSO 👕\n\n👟 {nome}\n💰 DE R$: ~{antigo}~ POR *{novo}*\n\n🚨 Oferta limitada! {link}",
-    
-    "🔥 PEÇA ESSENCIAL PRA QUEM AMA SE VESTIR BEM 😍\n\n👟 {nome}\n💰 DE R$: ~{antigo}~ POR *{novo}*\n\n🛍️ Garanta antes que acabe: {link}"
-  ],
-
-  sapatos: [
-    "👟 SEU LOOK COMEÇA PELOS PÉS 😍\n\n👟 {nome}\n💰 DE R$: ~{antigo}~ POR *{novo}*\n\n🔥 Aproveita: {link}",
-
-    "⚡ CONFORTO E ESTILO EM UM SÓ PAR 👟\n\n👟 {nome}\n💰 DE R$: ~{antigo}~ POR *{novo}*\n\n🛒 Não perde: {link}",
-
-    "🔥 O SAPATO QUE VAI TE SURPREENDER 😮\n\n👟 {nome}\n💰 DE R$: ~{antigo}~ POR *{novo}*\n\n🚨 Últimas unidades: {link}"
-  ],
-
-  eletrônicos: [
-    "⚡ TECNOLOGIA QUE FACILITA SUA VIDA 💻\n\n👟 {nome}\n💰 DE R$: ~{antigo}~ POR *{novo}*\n\n🔥 Garanta já: {link}",
-
-    "🚀 PERFORMANCE + PREÇO BOM É AQUI 👇\n\n👟 {nome}\n💰 DE R$: ~{antigo}~ POR *{novo}*\n\n🛒 Corre: {link}",
-
-    "📱 TOP DEMAIS POR ESSE PREÇO 😱\n\n👟 {nome}\n💰 DE R$: ~{antigo}~ POR *{novo}*\n\n⚠️ Pode acabar: {link}"
-  ]
-};
-        function gerarTextoCategoria(categoria, p) {
-
-    const base = COPY_CATEGORIAS[categoria] || COPY_CATEGORIAS["roupas"];
-
-    const texto = base[Math.floor(Math.random() * base.length)];
-
-    return texto
-        .replaceAll("{nome}", p.nome)
-        .replaceAll("{antigo}", p.precoAntigo)
-        .replaceAll("{novo}", p.precoNovo)
-        .replaceAll("{link}", p.link);
-}
         const PRODUTOS_POR_PAGINA = 50;
 
         let paginaAtual = 1;
@@ -867,9 +830,22 @@ function fecharIA() {
 
     const p = produtoAtualIA.dados;
 
-    const categoria = p.categoria || "roupas";
+    const whatsapp = `
+🔥 OPPAA! OLHA ESSE ACHADINHO 👀
 
-    const whatsapp = gerarTextoCategoria(categoria, p);
+👟 ${p.nome}
+
+💰 POR APENAS ${p.precoNovo}
+
+⚠️ ATENÇÃO: esse tipo de oferta acaba MUITO rápido!
+
+💥 Ideal pra quem quer economizar sem abrir mão de qualidade.
+
+🛒 GARANTA O SEU AQUI:
+${p.link}
+
+🚨 Não deixa pra depois porque pode acabar a qualquer momento!
+`;
 
     const instagram = `
 ✨ ${p.nome}
@@ -877,14 +853,16 @@ function fecharIA() {
 💰 ${p.precoNovo}
 
 🔥 Oferta especial por tempo limitado!
+
+👉 Link na bio
 `;
 
     const hashtags = `
-#promoção #oferta #desconto #achadinhos
+#oferta #promocao #achadinhos #desconto #comprasonline
 `;
 
     document.getElementById("resultadoIA").innerHTML = `
-        <h3>📲 WhatsApp</h3>
+        <h3>📲 WhatsApp (vendas)</h3>
         <pre>${whatsapp}</pre>
         <button onclick="copiar(\`${whatsapp}\`)">Copiar</button>
 
