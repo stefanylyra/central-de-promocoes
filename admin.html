@@ -822,7 +822,7 @@ function abrirIA(id) {
 function fecharIA() {
     document.getElementById("modalIA").style.display = "none";
 }
-       function gerarConteudoIA() {
+   function gerarConteudoIA() {
 
     if (!produtoAtualIA) {
         alert("Nenhum produto selecionado");
@@ -830,6 +830,41 @@ function fecharIA() {
     }
 
     const p = produtoAtualIA.dados;
+
+    const whatsapp = `
+🔥 ACHADINHO DO DIA
+
+👟 ${p.nome}
+💰 ${p.precoNovo}
+
+🛒 ${p.link}
+`;
+
+    const instagram = `
+👟 ${p.nome}
+💰 ${p.precoNovo}
+🔥 Oferta especial!
+Link na bio
+`;
+
+    const hashtags = `
+#promoção #oferta #desconto #achadinhos
+`;
+
+    document.getElementById("resultadoIA").innerHTML = `
+        <h3>WhatsApp</h3>
+        <pre>${whatsapp}</pre>
+        <button onclick="copiar(\`${whatsapp}\`)">Copiar</button>
+
+        <h3>Instagram</h3>
+        <pre>${instagram}</pre>
+        <button onclick="copiar(\`${instagram}\`)">Copiar</button>
+
+        <h3>Hashtags</h3>
+        <pre>${hashtags}</pre>
+        <button onclick="copiar(\`${hashtags}\`)">Copiar</button>
+    `;
+}
 function copiar(texto) {
     navigator.clipboard.writeText(texto);
     alert("Copiado!");
