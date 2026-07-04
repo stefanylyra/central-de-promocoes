@@ -832,35 +832,46 @@ function fecharIA() {
     const p = produtoAtualIA.dados;
 
     const whatsapp = `
-🔥 ACHADINHO DO DIA
+🔥 OPPAA! OLHA ESSE ACHADINHO 👀
 
 👟 ${p.nome}
-💰 ${p.precoNovo}
 
-🛒 ${p.link}
+💰 POR APENAS ${p.precoNovo}
+
+⚠️ ATENÇÃO: esse tipo de oferta acaba MUITO rápido!
+
+💥 Ideal pra quem quer economizar sem abrir mão de qualidade.
+
+🛒 GARANTA O SEU AQUI:
+${p.link}
+
+🚨 Não deixa pra depois porque pode acabar a qualquer momento!
 `;
 
     const instagram = `
-👟 ${p.nome}
+✨ ${p.nome}
+
 💰 ${p.precoNovo}
-🔥 Oferta especial!
-Link na bio
+
+🔥 Oferta especial por tempo limitado!
+
+👉 Link na bio
 `;
 
     const hashtags = `
-#promoção #oferta #desconto #achadinhos
+#oferta #promocao #achadinhos #desconto #comprasonline
 `;
 
     document.getElementById("resultadoIA").innerHTML = `
-        <h3>WhatsApp</h3>
+        <h3>📲 WhatsApp (vendas)</h3>
         <pre>${whatsapp}</pre>
         <button onclick="copiar(\`${whatsapp}\`)">Copiar</button>
 
-        <h3>Instagram</h3>
+        <h3>📸 Instagram</h3>
         <pre>${instagram}</pre>
         <button onclick="copiar(\`${instagram}\`)">Copiar</button>
 
-        <h3>Hashtags</h3>
+        <h3>🏷️ Hashtags</h3>
         <pre>${hashtags}</pre>
         <button onclick="copiar(\`${hashtags}\`)">Copiar</button>
     `;
