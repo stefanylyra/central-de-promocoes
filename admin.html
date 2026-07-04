@@ -264,6 +264,20 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script>
+        const frasesTopo = [
+    "🔥 OPPAA! OLHA ESSE ACHADINHO 👀",
+    "🚨 OLHA ISSO QUE VOCÊ PRECISA VER!",
+    "✨ ACHADINHO IMPERDÍVEL DO DIA!"
+];
+
+const frasesEstilo = [
+    "Produto perfeito pra quem quer economizar com estilo.",
+    "Ideal pra quem quer gastar pouco e continuar elegante.",
+    "Perfeito pra quem ama economia sem abrir mão da qualidade."
+];
+        function aleatorio(lista) {
+    return lista[Math.floor(Math.random() * lista.length)];
+}
         const firebaseConfig = {
             apiKey: "AIzaSyCydy0v27JxNvKBW3aqFa3Uel8Slkdtcx4",
             authDomain: "central-promocoes.firebaseapp.com",
@@ -830,23 +844,24 @@ function fecharIA() {
 
     const p = produtoAtualIA.dados;
 
-    const whatsapp = `
-🔥 OPPAA! OLHA ESSE ACHADINHO 👀
+   const whatsapp = `
+${aleatorio(frasesTopo)}
 
 👟 ${p.nome}
 
-💰 POR APENAS ${p.precoNovo}
+💰 DE R$: ~${p.precoAntigo}~
+POR APENAS R$: *${p.precoNovo}*
+
+💬 ${aleatorio(frasesEstilo)}
 
 ⚠️ ATENÇÃO: esse tipo de oferta acaba MUITO rápido!
-
-💥 Ideal pra quem quer economizar sem abrir mão de qualidade.
 
 🛒 GARANTA O SEU AQUI:
 ${p.link}
 
 🚨 Não deixa pra depois porque pode acabar a qualquer momento!
 `;
-
+      
     const instagram = `
 ✨ ${p.nome}
 
