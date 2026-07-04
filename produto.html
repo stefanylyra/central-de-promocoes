@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Produto</title>
+
+    <!-- 🔥 ESSENCIAL PRO WHATSAPP PEGAR IMAGEM -->
+    <meta property="og:title" content="Oferta Imperdível">
+    <meta property="og:description" content="Clique e veja a promoção">
+    <meta property="og:image" content="">
+</head>
+
+<body>
+
+<div id="produto"></div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+<script>
+const firebaseConfig = {
+    apiKey: "AIzaSyCydy0v27JxNvKBW3aqFa3Uel8Slkdtcx4",
+    authDomain: "central-promocoes.firebaseapp.com",
+    projectId: "central-promocoes"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+db.collection("produtos").doc(id).get().then(doc => {
+
+    const p = doc.data();
+
+    // 🔥 atualiza preview do WhatsApp
+    document.querySelector('meta[property="og:image"]').setAttribute("content", p.img);
+
+    document.getElementById("produto").innerHTML = `
+        <h1>${p.nome}</h1>
+        <img src="${p.img}" style="width:100%;max-width:400px;">
+        <h2>💰 ${p.precoNovo}</h2>
+
+        <a href="${p.link}" target="_blank">
+            <button style="padding:15px;background:#25D366;color:white;">
+                COMPRAR AGORA
+            </button>
+        </a>
+    `;
+});
+</script>
+
+</body>
+</html>
