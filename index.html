@@ -1014,51 +1014,22 @@ body.tema-escuro .categoria-glass-footer p {
 }
 
 /* DESKTOP - Layout mais amplo, mas com bottom nav visível */
-@media (min-width: 769px) {
-    body {
-        padding: 20px 0;
-        background: #f1f3f5;
+@media (min-width: 1200px) {
+
+    body{
+        background:#f4f5f7;
+        padding:0;
     }
-    
-    .app-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        border-radius: 16px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+
+    .app-container{
+        width:1450px;
+        max-width:1450px;
+        margin:0 auto;
+        background:#f4f5f7;
+        border-radius:0;
+        box-shadow:none;
     }
-    
-    .grid-produtos {
-        grid-template-columns: repeat(4, 1fr) !important;
-        gap: 24px;
-    }
-    
-    .grid-categorias {
-        grid-template-columns: repeat(5, 1fr) !important;
-    }
-    
-    .info-vendas-barra {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    
-    /* Bottom Navigation VISÍVEL no desktop também */
-    nav.bottom-nav {
-        display: flex !important;
-        max-width: 1200px;
-        border-radius: 0 0 16px 16px;
-        padding: 14px 0;
-    }
-    
-    .nav-item {
-        font-size: 13px;
-    }
-    
-    .btn-whatsapp {
-        bottom: 90px;
-        right: 40px;
-        width: 65px;
-        height: 65px;
-        font-size: 30px;
-    }
+
 }
         .header-icons i {
     cursor: pointer;
@@ -1217,6 +1188,116 @@ body.tema-escuro .theme-btn {
     background: #1e1e1e;
     color: #ddd;
 }
+        @media (min-width:1200px){
+
+.desktop-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:30px;
+
+    padding:20px 30px;
+
+    background:white;
+
+    border-radius:20px;
+
+    margin:20px;
+
+}
+
+.desktop-logo{
+
+    flex-shrink:0;
+
+}
+
+.desktop-menu{
+
+    display:flex;
+
+    gap:30px;
+
+}
+
+.desktop-menu a{
+
+    text-decoration:none;
+
+    color:#222;
+
+    font-weight:600;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+.desktop-search{
+
+    flex:1;
+
+    position:relative;
+
+}
+
+.desktop-search input{
+
+    width:100%;
+
+    padding:16px 50px 16px 20px;
+
+    border:none;
+
+    background:#f5f5f5;
+
+    border-radius:999px;
+
+    font-size:15px;
+
+}
+
+.desktop-search i{
+
+    position:absolute;
+
+    right:18px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+}
+
+.desktop-user{
+
+    display:flex;
+
+    gap:25px;
+
+    font-size:24px;
+
+}
+
+}
+        @media (min-width:1200px){
+
+.header-top{
+    display:none;
+}
+
+.search-container{
+    display:none;
+}
+
+}
     </style>
 </head>
 <body>
@@ -1225,6 +1306,60 @@ body.tema-escuro .theme-btn {
         
         <header>
             <div class="header-top">
+                <div class="desktop-header">
+
+    <div class="desktop-logo">
+
+        <a href="#" class="logo">
+            <span class="logo-tag">%</span>
+
+            <div class="logo-texto">
+                <span class="p1">central de</span>
+                <span class="p2">promoções</span>
+            </div>
+        </a>
+
+    </div>
+
+    <div class="desktop-menu">
+
+        <a href="#">
+            <i class="fa-solid fa-bars"></i>
+            Categorias
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-ticket"></i>
+            Cupons
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-circle-info"></i>
+            Sobre
+        </a>
+
+    </div>
+
+    <div class="desktop-search">
+
+        <input
+            type="text"
+            placeholder="Buscar produtos, marcas e ofertas..."
+        >
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+    </div>
+
+    <div class="desktop-user">
+
+        <i class="fa-regular fa-bell"></i>
+
+        <i class="fa-regular fa-circle-user"></i>
+
+    </div>
+
+</div>
                 <a href="#" class="logo" onclick="mudarAba('inicio', document.querySelector('.nav-item'))">
                     <span class="logo-tag">%</span>
                     <div class="logo-texto">
