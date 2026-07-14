@@ -1769,7 +1769,7 @@ Boas compras!`
     modal.style.display = "flex";
 
     try {
-        const snapshot = await db.collection("cupons").orderBy("criadoEm", "desc").get();
+       const snapshot = await db.collection("cupons").get();
         const hoje = new Date().toISOString().split('T')[0];
 
         let html = `
