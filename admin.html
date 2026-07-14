@@ -259,14 +259,32 @@
 
     <div id="resumoLojas"></div>
 </div>
-            <!-- ABA DE CUPONS -->
+        <!-- ABA DE CUPONS -->
 <div id="cupons" style="display:none;">
     <h2>🎟️ Gerenciar Cupons</h2>
     
-    <div style="margin-bottom:20px;">
-        <input id="cupomCodigo" placeholder="Código do Cupom (ex: CUPOM20)" style="width:30%;">
-        <input id="cupomDescricao" placeholder="Descrição do cupom" style="width:60%;">
-        <button onclick="salvarCupom()">Salvar Cupom</button>
+    <div style="background:#fff; padding:20px; border-radius:12px; margin-bottom:20px;">
+        <h3>Novo / Editar Cupom</h3>
+        
+        <select id="cupomLoja" style="width:100%; margin-bottom:8px;">
+            <option value="">Selecione a Loja</option>
+            <option value="amazon">Amazon</option>
+            <option value="shopee">Shopee</option>
+            <option value="magalu">Magazine Luiza</option>
+            <option value="mercado-livre">Mercado Livre</option>
+            <option value="shein">Shein</option>
+            <option value="aliexpress">AliExpress</option>
+        </select>
+        
+        <input id="cupomCodigo" placeholder="Código do Cupom (ex: CUPOM20)" style="width:100%; margin-bottom:8px;">
+        
+        <input id="cupomDescricao" placeholder="Descrição do cupom" style="width:100%; margin-bottom:8px;">
+        
+        <label>Data de Expiração:</label><br>
+        <input type="date" id="cupomExpiracao" style="width:100%; margin-bottom:12px;">
+        
+        <button onclick="salvarCupom()" style="background:#28a745; color:white; padding:12px;">Salvar Cupom</button>
+        <button onclick="limparFormularioCupom()" style="background:#ccc;">Cancelar</button>
     </div>
 
     <div id="lista-cupons" class="grid"></div>
@@ -918,22 +936,26 @@ function copiar(texto) {
 function escapeHtml(text) {
     return text.replace(/'/g, "\\'").replace(/\n/g, "\\n");
 }
-        // ==================== GERENCIAMENTO DE CUPONS ====================
+// ==================== GERENCIAMENTO DE CUPONS ====================
 
 let cuponsEditandoId = null;
 
 async function salvarCupom() {
+    const loja = document.getElementById("cupomLoja").value;
     const codigo = document.getElementById("cupomCodigo").value.trim().toUpperCase();
     const descricao = document.getElementById("cupomDescricao").value.trim();
+    const expiracao = document.getElementById("cupomExpiracao").value;
 
-    if (!codigo || !descricao) {
-        alert("Preencha o código e a descrição!");
+    if (!loja || !codigo || !descricao || !expiracao) {
+        alert("Preencha todos os campos!");
         return;
     }
 
     const cupom = {
+        loja: loja,
         codigo: codigo,
         descricao: descricao,
+        expiracao: expiracao,
         criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
         ativo: true
     };
@@ -941,10 +963,10 @@ async function salvarCupom() {
     try {
         if (cuponsEditandoId) {
             await db.collection("cupons").doc(cuponsEditandoId).update(cupom);
-            alert("Cupom atualizado!");
+            alert("✅ Cupom atualizado!");
         } else {
             await db.collection("cupons").add(cupom);
-            alert("Cupom salvo com sucesso!");
+            alert("✅ Cupom salvo!");
         }
         limparFormularioCupom();
         carregarCupons();
@@ -955,8 +977,10 @@ async function salvarCupom() {
 
 function limparFormularioCupom() {
     cuponsEditandoId = null;
+    document.getElementById("cupomLoja").value = "";
     document.getElementById("cupomCodigo").value = "";
     document.getElementById("cupomDescricao").value = "";
+    document.getElementById("cupomExpiracao").value = "";
 }
 
 async function carregarCupons() {
@@ -965,16 +989,24 @@ async function carregarCupons() {
 
     const snapshot = await db.collection("cupons").orderBy("criadoEm", "desc").get();
 
+    const hoje = new Date().toISOString().split('T')[0];
+
     snapshot.forEach(doc => {
         const c = doc.data();
+        const expirado = c.expiracao < hoje;
+
         const html = `
-            <div class="card">
-                <h3 style="color:#cc0a12;">${c.codigo}</h3>
+            <div class="card" style="${expirado ? 'opacity:0.7; border:2px solid #ccc;' : ''}">
+                <h3 style="color:#cc0a12; margin:0;">${c.codigo}</h3>
+                <p><strong>${c.loja.toUpperCase()}</strong></p>
                 <p>${c.descricao}</p>
-                <small>${c.ativo ? '✅ Ativo' : '❌ Inativo'}</small>
-                <div class="acoes" style="margin-top:10px;">
+                <small>Expira em: ${c.expiracao}</small>
+                ${expirado ? '<strong style="color:#dc3545;">⛔ EXPIRADO</strong>' : '<strong style="color:green;">✅ Ativo</strong>'}
+                
+                <div class="acoes" style="margin-top:12px;">
                     <button class="btn-editar" onclick="editarCupom('${doc.id}')">Editar</button>
                     <button class="btn-excluir" onclick="excluirCupom('${doc.id}')">Excluir</button>
+                    <button onclick="copiarCodigo('${c.codigo}')" style="background:#007bff;color:white;">📋 Copiar</button>
                 </div>
             </div>
         `;
@@ -987,18 +1019,24 @@ function editarCupom(id) {
         if (!doc.exists) return;
         const c = doc.data();
         cuponsEditandoId = id;
-        document.getElementById("cupomCodigo").value = c.codigo;
-        document.getElementById("cupomDescricao").value = c.descricao;
+        document.getElementById("cupomLoja").value = c.loja || "";
+        document.getElementById("cupomCodigo").value = c.codigo || "";
+        document.getElementById("cupomDescricao").value = c.descricao || "";
+        document.getElementById("cupomExpiracao").value = c.expiracao || "";
     });
 }
 
 async function excluirCupom(id) {
-    if (confirm("Excluir este cupom?")) {
+    if (confirm("Excluir este cupom permanentemente?")) {
         await db.collection("cupons").doc(id).delete();
         carregarCupons();
     }
 }
 
+function copiarCodigo(codigo) {
+    navigator.clipboard.writeText(codigo);
+    alert(`Código ${codigo} copiado!`);
+}
 // Atualizar a função tab() para carregar os cupons
 const tabOriginal = tab;
 tab = function(t) {
