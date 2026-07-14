@@ -1246,7 +1246,7 @@ class="badge-notificacao">
 </span>
 
 </div>
-                    <i class="fa-solid fa-ticket"></i>
+                    <i class="fa-solid fa-ticket" onclick="abrirCupons()" style="cursor:pointer;"></i>
                 </div>
             </div>
             <div class="search-container">
@@ -2797,6 +2797,13 @@ function gerarAvatar(nome) {
 
     return { letra, cor };
 }
+        function abrirCupons() {
+    document.getElementById("modal-cupons").style.display = "flex";
+}
+
+function fecharCupons() {
+    document.getElementById("modal-cupons").style.display = "none";
+}
     </script>
 
     <!-- Modal Cadastro -->
@@ -2847,6 +2854,37 @@ function gerarAvatar(nome) {
             <p>🔔 Nova oferta adicionada hoje</p>
             <p>🔥 Cupom liberado em Shopee</p>
             <p>⚡ Últimas promoções do dia atualizadas</p>
+        </div>
+    </div>
+</div>
+        <!-- MODAL DE CUPONS -->
+<div id="modal-cupons" class="modal-produto" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>🎟️ Meus Cupons e Promoções</h3>
+            <button onclick="fecharCupons()" style="font-size:24px; background:none; border:none; cursor:pointer;">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 20px;">
+            <p style="text-align:center; color:#555; margin-bottom:20px;">
+                Aqui aparecerão os cupons ativos e promoções exclusivas.
+            </p>
+            
+            <!-- Exemplo de cupons -->
+            <div style="background:#fff3cd; padding:15px; border-radius:12px; margin-bottom:12px;">
+                <strong>CUPOM20</strong><br>
+                <small>20% OFF em compras acima de R$ 99 na Shopee</small><br>
+                <small style="color:green;">Válido até 20/07/2026</small>
+            </div>
+
+            <div style="background:#fff3cd; padding:15px; border-radius:12px;">
+                <strong>FRETEGRATIS</strong><br>
+                <small>Frete grátis em pedidos acima de R$ 79 no Mercado Livre</small><br>
+                <small style="color:green;">Válido por tempo limitado</small>
+            </div>
+
+            <p style="text-align:center; margin-top:25px; font-size:13px; color:#888;">
+                Mais cupons são adicionados diariamente no Grupo VIP do WhatsApp.
+            </p>
         </div>
     </div>
 </div>
