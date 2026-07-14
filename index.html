@@ -2356,69 +2356,67 @@ if (
 
 }
 
-               function filtrarPesquisa() {
-                   console.log("Pesquisa funcionando");
-            const termo = document.getElementById('input-busca').value.toLowerCase().trim();
-            const activePage = document.querySelector('.app-page.active');
+  function filtrarPesquisa() {
+    console.log("Pesquisa funcionando");
+    
+    const termo = document.getElementById('input-busca').value.toLowerCase().trim();
+    const activePage = document.querySelector('.app-page.active');
 
-            if (termo.length > 0) {
-                if (activePage && activePage.id === 'aba-inicio') {
-                    // Esconde banners + outras seções
-                    document.getElementById('banner-carousel').style.display = 'none';
-                    document.getElementById('wrapper-ofertas-quentes').style.display = 'none';
-                    document.getElementById('barra-beneficios').style.display = 'none';
-                    document.getElementById('titulo-grid-home').innerText = "🔍 Resultados da Busca";
-                    document.getElementById('link-ver-todos-home').style.display = 'none';
-                    document.getElementById('titulo-depoimentos').style.display = 'none';
-                    document.getElementById('wrapper-depoimentos').style.display = 'none';
-const filtrados = PRODUTOS_LOJA.filter(p =>
-    p.nome.toLowerCase().includes(termo)
-);
-
-renderizarGridHome(filtrados);
-renderizarGridOfertas(filtrados);
-
-}                    
-
-// Se estiver na aba Categorias
-if (activePage && activePage.id === "aba-categorias") {
-
-    document.getElementById("mosaico-categorias-container").style.display = "none";
-
-    document.querySelector(".lojas-container").style.display = "none";
-
-    const gridBusca = document.getElementById("grid-busca-categorias");
-
-    gridBusca.style.display = "grid";
-
-    gridBusca.innerHTML = filtrados.map(prod => criarCardProduto(prod)).join("");
-
-    if (filtrados.length === 0) {
-        gridBusca.innerHTML =
-            `<div class="erro-busca">Nenhum produto encontrado.</div>`;
+    if (termo.length === 0) {
+        restaurarElementosEscondidos();
+        
+        // Volta ao estado normal
+        if (activePage && activePage.id === 'aba-inicio') {
+            renderizarGridHome(PRODUTOS_LOJA);
+        } else if (activePage && activePage.id === 'aba-categorias') {
+            document.getElementById("mosaico-categorias-container").style.display = "grid";
+            document.querySelector(".lojas-container").style.display = "block";
+            document.getElementById("grid-busca-categorias").style.display = "none";
+        } else if (categoriaAtiva) {
+            filtrarPorCategoria(categoriaAtiva);
+        } else {
+            renderizarGridOfertas(PRODUTOS_LOJA);
+        }
+        return;
     }
-}
-else {
 
-    restaurarElementosEscondidos();
-
-    renderizarGridHome(PRODUTOS_LOJA);
-
-    renderizarGridOfertas(
-        categoriaAtiva
-            ? PRODUTOS_LOJA.filter(p => p.categoria === categoriaAtiva)
-            : PRODUTOS_LOJA
+    // ==================== FILTRAGEM ====================
+    const filtrados = PRODUTOS_LOJA.filter(p => 
+        p.nome && p.nome.toLowerCase().includes(termo)
     );
 
-    document.getElementById("mosaico-categorias-container").style.display = "grid";
+    // ==================== ABA INÍCIO ====================
+    if (activePage && activePage.id === 'aba-inicio') {
+        // Esconde elementos da home
+        document.getElementById('banner-carousel').style.display = 'none';
+        document.getElementById('wrapper-ofertas-quentes').style.display = 'none';
+        document.getElementById('barra-beneficios').style.display = 'none';
+        document.getElementById('titulo-grid-home').innerText = "🔍 Resultados da Busca";
+        document.getElementById('link-ver-todos-home').style.display = 'none';
+        document.getElementById('titulo-depoimentos').style.display = 'none';
+        document.getElementById('wrapper-depoimentos').style.display = 'none';
 
-    document.querySelector(".lojas-container").style.display = "block";
+        renderizarGridHome(filtrados);
+        renderizarGridOfertas(filtrados); // opcional
 
-    document.getElementById("grid-busca-categorias").style.display = "none";
-}
-  }
+    // ==================== ABA CATEGORIAS ====================
+    } else if (activePage && activePage.id === "aba-categorias") {
+        document.getElementById("mosaico-categorias-container").style.display = "none";
+        document.querySelector(".lojas-container").style.display = "none";
+
+        const gridBusca = document.getElementById("grid-busca-categorias");
+        gridBusca.style.display = "grid";
+        gridBusca.innerHTML = filtrados.length 
+            ? filtrados.map(prod => criarCardProduto(prod)).join("")
+            : `<div class="erro-busca">Nenhum produto encontrado.</div>`;
+
+    // ==================== OUTRAS ABAS ====================
+    } else {
+        // Se estiver em Ofertas ou outra aba, mostra resultados na aba de ofertas
+        renderizarGridOfertas(filtrados);
+        mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
     }
-
+}          
         function restaurarElementosEscondidos() {
             document.getElementById('banner-carousel').style.display = 'block';
             document.getElementById('wrapper-ofertas-quentes').style.display = 'block';
