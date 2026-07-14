@@ -2198,8 +2198,9 @@ if (
                 document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
                 elementoBotao.classList.add('active');
             }
-            document.getElementById('input-busca').value = "";
-            restaurarElementosEscondidos();
+document.getElementById('input-busca').value = "";
+restaurarElementosEscondidos();
+controlarBarraDePesquisa();
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
@@ -2356,22 +2357,20 @@ if (
 
 }
 
-  function filtrarPesquisa() {
-    console.log("Pesquisa funcionando");
-    
+function filtrarPesquisa() {
     const termo = document.getElementById('input-busca').value.toLowerCase().trim();
     const activePage = document.querySelector('.app-page.active');
+
+    // ==================== ABA FAVORITOS E CONTA - NÃO FAZ NADA ====================
+    if (activePage && (activePage.id === 'aba-favoritos' || activePage.id === 'aba-conta')) {
+        return; // ignora a busca nessas abas
+    }
 
     if (termo.length === 0) {
         restaurarElementosEscondidos();
         
-        // Volta ao estado normal
         if (activePage && activePage.id === 'aba-inicio') {
             renderizarGridHome(PRODUTOS_LOJA);
-        } else if (activePage && activePage.id === 'aba-categorias') {
-            document.getElementById("mosaico-categorias-container").style.display = "grid";
-            document.querySelector(".lojas-container").style.display = "block";
-            document.getElementById("grid-busca-categorias").style.display = "none";
         } else if (categoriaAtiva) {
             filtrarPorCategoria(categoriaAtiva);
         } else {
@@ -2387,7 +2386,6 @@ if (
 
     // ==================== ABA INÍCIO ====================
     if (activePage && activePage.id === 'aba-inicio') {
-        // Esconde elementos da home
         document.getElementById('banner-carousel').style.display = 'none';
         document.getElementById('wrapper-ofertas-quentes').style.display = 'none';
         document.getElementById('barra-beneficios').style.display = 'none';
@@ -2397,10 +2395,9 @@ if (
         document.getElementById('wrapper-depoimentos').style.display = 'none';
 
         renderizarGridHome(filtrados);
-        renderizarGridOfertas(filtrados); // opcional
 
     // ==================== ABA CATEGORIAS ====================
-    } else if (activePage && activePage.id === "aba-categorias") {
+    } else if (activePage && activePage.id === 'aba-categorias') {
         document.getElementById("mosaico-categorias-container").style.display = "none";
         document.querySelector(".lojas-container").style.display = "none";
 
@@ -2408,15 +2405,24 @@ if (
         gridBusca.style.display = "grid";
         gridBusca.innerHTML = filtrados.length 
             ? filtrados.map(prod => criarCardProduto(prod)).join("")
-            : `<div class="erro-busca">Nenhum produto encontrado.</div>`;
+            : `<div class="erro-busca">Nenhum produto encontrado para "${termo}".</div>`;
 
-    // ==================== OUTRAS ABAS ====================
-    } else {
-        // Se estiver em Ofertas ou outra aba, mostra resultados na aba de ofertas
+    // ==================== ABA OFERTAS (principal) ====================
+    } else if (activePage && activePage.id === 'aba-ofertas') {
         renderizarGridOfertas(filtrados);
-        mudarAba('ofertas', document.querySelectorAll('.nav-item')[2]);
+        document.getElementById('titulo-aba-ofertas').innerText = `🔍 Resultados para "${termo}"`;
     }
-}          
+}
+        function controlarBarraDePesquisa() {
+    const inputBusca = document.getElementById('input-busca');
+    const activePage = document.querySelector('.app-page.active');
+
+    if (activePage && (activePage.id === 'aba-favoritos' || activePage.id === 'aba-conta')) {
+        inputBusca.style.display = 'none';
+    } else {
+        inputBusca.style.display = 'block';
+    }
+}
         function restaurarElementosEscondidos() {
             document.getElementById('banner-carousel').style.display = 'block';
             document.getElementById('wrapper-ofertas-quentes').style.display = 'block';
@@ -2538,8 +2544,10 @@ function initTheme() {
 
 // Chame no final do DOMContentLoaded:
 document.addEventListener("DOMContentLoaded", () => {
+    carregarProdutosFirestore();
     // ... seu código existente
     initTheme();
+    controlarBarraDePesquisa();
 });
 
 // ==================== CARROSSEL DE BANNERS ====================
