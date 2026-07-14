@@ -458,15 +458,22 @@ const SUBCATEGORIAS = {
         });
 
         // ==================== TABS ====================
-       function tab(t){
-    document.getElementById("novo").style.display =
-        t === "novo" ? "block" : "none";
+   function tab(t) {
+    // Esconde todas as abas
+    document.getElementById("novo").style.display = "none";
+    document.getElementById("lista").style.display = "none";
+    document.getElementById("analises").style.display = "none";
+    document.getElementById("cupons").style.display = "none";
 
-    document.getElementById("lista").style.display =
-        t === "lista" ? "block" : "none";
+    // Mostra a aba selecionada
+    if (document.getElementById(t)) {
+        document.getElementById(t).style.display = "block";
+    }
 
-    document.getElementById("analises").style.display =
-        t === "analises" ? "block" : "none";
+    // Carrega os cupons quando a aba for aberta
+    if (t === 'cupons') {
+        carregarCupons();
+    }
 }
 
     // outro ai
