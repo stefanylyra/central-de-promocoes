@@ -108,6 +108,44 @@
     border: none;
     padding: 10px;
 }
+        .cupom-card {
+    display:flex;
+    align-items:center;
+    gap:15px;
+    background:white;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,.1);
+}
+
+.cupom-logo img {
+    width:80px;
+    height:80px;
+    object-fit:contain;
+    border-radius:15px;
+}
+
+.cupom-info {
+    flex:1;
+}
+
+.cupom-desconto {
+    font-size:20px;
+    color:#cc0a12;
+}
+
+.cupom-acoes {
+    text-align:center;
+}
+
+.cupom-acoes button {
+    background:#28a745;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:10px;
+}
     </style>
 </head>
 <body>
@@ -267,6 +305,10 @@
         <h3>Novo / Editar Cupom</h3>
         
         <select id="cupomLoja" style="width:100%; margin-bottom:8px;">
+            <input 
+id="cupomImagem" 
+placeholder="URL da imagem/logo da loja"
+style="width:100%; margin-bottom:8px;">
             <option value="">Selecione a Loja</option>
             <option value="amazon">Amazon</option>
             <option value="shopee">Shopee</option>
@@ -945,17 +987,18 @@ async function salvarCupom() {
     const codigo = document.getElementById("cupomCodigo").value.trim().toUpperCase();
     const descricao = document.getElementById("cupomDescricao").value.trim();
     const expiracao = document.getElementById("cupomExpiracao").value;
+    const imagem = document.getElementById("cupomImagem").value.trim();
 
     if (!loja || !codigo || !descricao || !expiracao) {
         alert("Preencha todos os campos!");
         return;
     }
-
-    const cupom = {
-        loja: loja,
-        codigo: codigo,
-        descricao: descricao,
-        expiracao: expiracao,
+const cupom = {
+    loja: loja,
+    imagem: imagem,
+    codigo: codigo,
+    descricao: descricao,
+    expiracao: expiracao,
         criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
         ativo: true
     };
@@ -981,6 +1024,7 @@ function limparFormularioCupom() {
     document.getElementById("cupomCodigo").value = "";
     document.getElementById("cupomDescricao").value = "";
     document.getElementById("cupomExpiracao").value = "";
+    document.getElementById("cupomImagem").value = "";
 }
 
 async function carregarCupons() {
