@@ -4,23 +4,113 @@
     <meta charset="UTF-8">
     <title>Admin Marketplace Pro</title>
     <style>
-        body { margin: 0; font-family: Arial; background: #f4f6fb; }
-        #login { max-width: 380px; margin: 100px auto; background: #fff; padding: 20px; border-radius: 12px; }
-        #admin { display: none; min-height: 100vh; flex-direction: row; }
-        .sidebar { width: 220px; background: #111; color: #fff; padding: 15px; }
-        .sidebar button { width: 100%; margin: 5px 0; padding: 10px; }
-        .content { flex: 1; padding: 20px; overflow-y: auto; }
-        input, select, textarea { width: 100%; padding: 10px; margin: 8px 0; box-sizing: border-box; border: 1px solid #ddd; border-radius: 8px; }
-        button { cursor: pointer; padding: 10px; margin: 5px 0; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
-        .card { background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
-        .acoes { margin-top: 10px; display: flex; gap: 8px; }
-        .btn-editar { background: #28a745; color: white; border: none; }
-        .btn-excluir { background: #dc3545; color: white; border: none; }
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #f4f6fb;
+        }
+        #login {
+            max-width: 380px;
+            margin: 100px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        #admin {
+            display: none;
+            min-height: 100vh;
+            flex-direction: row;
+        }
+        .sidebar {
+            width: 220px;
+            background: #111;
+            color: #fff;
+            padding: 15px;
+        }
+        .sidebar button {
+            width: 100%;
+            margin: 5px 0;
+            padding: 10px;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        button {
+            cursor: pointer;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            align-items: stretch;
+        }
+        .card {
+            background: #fff;
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .nome-produto {
+            font-weight: bold;
+            line-height: 1.4;
+            height: 55px;
+            overflow: hidden;
+            display: block;
+        }
+        .info-produto {
+            flex: 1;
+        }
+        .acoes {
+            margin-top: auto;
+            display: flex;
+            gap: 8px;
+        }
+        .btn-editar {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+        }
+        .btn-excluir {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px;
+        }
+        .price-old {
+            text-decoration: line-through;
+            color: #999;
+        }
+        .btn-ia {
+    background: #6f42c1;
+    color: white;
+    border: none;
+    padding: 10px;
+}
     </style>
 </head>
 <body>
-
     <div id="login">
         <h2>Admin Login</h2>
         <input id="email" placeholder="email">
@@ -35,127 +125,324 @@
             <hr>
             <button onclick="tab('novo')">➕ Novo Produto</button>
             <button onclick="tab('lista')">📦 Produtos</button>
-            <button onclick="tab('cupons')">🎟️ Cupons</button>
             <button onclick="tab('analises')">📊 Análises</button>
         </div>
-
         <div class="content">
-            <!-- PRODUTOS (mantido igual) -->
-            <div id="novo" style="display:none;"> ... (seu formulário de produto atual) ... </div>
-            <div id="lista" style="display:none;"> ... (sua lista de produtos) ... </div>
+            <div id="novo">
+                <h2 id="formTitle">Novo Produto</h2>
+                <input id="nome" placeholder="Nome do produto" required>
+                <input id="precoAntigo" placeholder="Preço antigo (ex: 49.90)" onblur="formatPrice(this)">
+                <input id="precoNovo" placeholder="Preço novo (ex: 29.90)" onblur="formatPrice(this)">
+               <select id="categoria" onchange="carregarSubcategorias()">
 
-            <!-- NOVA ABA DE CUPONS -->
-            <div id="cupons" style="display:none;">
-                <h2>🎟️ Gerenciar Cupons</h2>
-                
-                <h3>Novo Cupom</h3>
-                <input id="cupomCodigo" placeholder="Código do Cupom (ex: CUPOM20)">
-                <input id="cupomDescricao" placeholder="Descrição">
-                <input id="cupomDesconto" placeholder="Desconto (ex: 20% OFF)">
-                <input id="cupomLoja" placeholder="Loja (ex: Shopee)">
-                <input id="cupomValidade" type="date" placeholder="Validade">
-                <button onclick="salvarCupom()">Salvar Cupom</button>
+    <option value="roupas-masculinas"> Roupas Masculinas</option>
+    <option value="roupas-femininas">Roupas Femininas</option>
+    <option value="roupas-infantis"> Roupas Infantis</option>
+    <option value="sapatos"> Sapatos</option>
+    <option value="relogios"> Relógios</option>
+    <option value="acessorios"> Acessórios</option>
+    <option value="bolsas"> Bolsas</option>
+    <option value="eletronicos"> Eletrônicos</option>
+    <option value="eletrodomesticos"> Eletrodomésticos</option>
+    <option value="fitness"> Fitness</option>
+    <option value="automotivo"> Automotivo</option>
+    <option value="livros"> Livros</option>
+    <option value="mae-bebe"> Mãe & Bebê</option>
+    <option value="alimentos"> Alimentos</option>
+    <option value="beleza"> Beleza</option>
+    <option value="pets"> Pets</option>
+    <option value="brinquedos"> Brinquedos</option>
+    <option value="papelaria"> Papelaria</option>
+    <option value="limpeza">Limpeza</option>
+    <option value="casa-construcao"> Casa & Construção</option>
+    <option value="viagens-bagagens"> Viagens</option>
+    <option value="festividades"> Festividades</option>
 
-                <hr>
-                <h3>Cupons Cadastrados</h3>
-                <div class="grid" id="gridCupons"></div>
+</select>
+                <select id="subcategoria">
+
+    <option value="">
+        Selecione uma subcategoria
+    </option>
+
+</select>
+               <select id="loja">
+    <option value="shopee">Shopee</option>
+    <option value="amazon">Amazon</option>
+    <option value="magalu">Magazine Luiza</option>     <!-- ALTERADO -->
+    <option value="mercado-livre">Mercado Livre</option>
+    <option value="shein">Shein</option>
+    <option value="aliexpress">AliExpress</option>
+</select>
+                <h4>Imagem Principal (obrigatória)</h4>
+                <input id="imgUrl" placeholder="URL da imagem principal" required>
+                <h4>Imagens Extras (opcionais - até 2)</h4>
+                <input id="imgExtra1" placeholder="URL da imagem extra 1 (opcional)">
+                <input id="imgExtra2" placeholder="URL da imagem extra 2 (opcional)">
+                <input id="link" placeholder="Link afiliado" required>
+                <button id="btnSalvar" onclick="salvar()">Salvar Produto</button>
+                <button onclick="cancelarEdicao()" style="background:#ccc;">Cancelar</button>
             </div>
 
-            <div id="analises" style="display:none;"> ... </div>
-        </div>
+         <div id="lista" style="display:none;">
+
+    <h2>Produtos Cadastrados</h2>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;">
+
+        <input
+            id="pesquisa"
+            placeholder="🔍 Pesquisar produto..."
+            oninput="aplicarFiltros()"
+            style="flex:2;">
+
+        <select
+            id="filtroCategoria"
+            onchange="aplicarFiltros()"
+            style="flex:1;">
+
+            <option value="">Todas Categorias</option>
+
+        </select>
+
+        <select
+            id="filtroLoja"
+            onchange="aplicarFiltros()"
+            style="flex:1;">
+
+            <option value="">Todas Lojas</option>
+
+            <option value="shopee">Shopee</option>
+            <option value="amazon">Amazon</option>
+            <option value="magalu">Magazine Luiza</option>
+            <option value="mercado-livre">Mercado Livre</option>
+            <option value="shein">Shein</option>
+            <option value="aliexpress">AliExpress</option>
+
+        </select>
+
+    </div>
+
+    <div class="grid" id="grid"></div>
+
+    <div
+        style="margin-top:20px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        gap:15px;">
+
+        <button onclick="paginaAnterior()">
+
+            ◀ Anterior
+
+        </button>
+
+        <span id="numeroPagina">
+
+            Página 1
+
+        </span>
+
+        <button onclick="proximaPagina()">
+
+            Próxima ▶
+
+        </button>
+
+    </div>
+
+</div>
+        <div id="analises" style="display:none;">
+    <h2>📊 Análises</h2>
+
+    <div id="resumoLojas"></div>
+</div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
     <script>
-        // === Firebase Config (mesmo do index) ===
-        const firebaseConfig = { /* seu config */ };
+        const frasesTopo = [
+    "🔥 OPPAA! OLHA ESSE ACHADINHO 👀",
+    "🚨 OLHA ISSO QUE VOCÊ PRECISA VER!",
+    "✨ ACHADINHO IMPERDÍVEL DO DIA!"
+];
+
+const frasesEstilo = [
+    "Produto perfeito pra quem quer economizar com estilo.",
+    "Ideal pra quem quer gastar pouco e continuar elegante.",
+    "Perfeito pra quem ama economia sem abrir mão da qualidade."
+];
+        function aleatorio(lista) {
+    return lista[Math.floor(Math.random() * lista.length)];
+}
+        const firebaseConfig = {
+            apiKey: "AIzaSyCydy0v27JxNvKBW3aqFa3Uel8Slkdtcx4",
+            authDomain: "central-promocoes.firebaseapp.com",
+            projectId: "central-promocoes",
+            storageBucket: "central-promocoes.firebasestorage.app",
+            messagingSenderId: "396856047778",
+            appId: "1:396856047778:web:8608a6b95f26f160d27ffb"
+        };
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
+        let editingId = null;
+        const PRODUTOS_POR_PAGINA = 50;
 
-        let editingCupomId = null;
+        let paginaAtual = 1;
+        let todosProdutos = [];
+        let produtosFiltrados = [];
 
-        // ==================== CUPONS ====================
-        function salvarCupom() {
-            const cupom = {
-                codigo: document.getElementById("cupomCodigo").value.trim().toUpperCase(),
-                descricao: document.getElementById("cupomDescricao").value,
-                desconto: document.getElementById("cupomDesconto").value,
-                loja: document.getElementById("cupomLoja").value,
-                validade: document.getElementById("cupomValidade").value,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            };
+        
+const SUBCATEGORIAS = {
 
-            if (!cupom.codigo || !cupom.descricao) {
-                alert("Código e descrição são obrigatórios!");
+            "sapatos": [
+                "Masculino",
+                "Feminino",
+                "Infantil"
+            ],
+            "roupas-infantis": [
+                "Masculino",
+                "Feminino"
+            ],
+            "beleza": [
+                "Maquiagem",
+                "Perfumaria",
+                "Cuidados capilares",
+                "Cuidados com a Pele"
+            ],
+            "eletronicos": [
+                "Fones",
+                "Eletroportáteis",
+                "Computadores",
+                "Caixa de Som",
+                "Games",
+                "Celulares",
+                "PC Gamer"
+            ],
+            "eletrodomesticos": [
+                "Máquina de Lavar",
+                "TV",
+                "Geladeira",
+                "Microondas",
+                "Forno",
+                "Fogão"
+            ],
+            "festividades": [
+                "Natal",
+                "Copa do Mundo",
+                "Halloween",
+                "Ano Novo",
+                "Aniversário"
+            ],
+        
+            "fitness": [
+                "Musculação",
+                "Suplementos",
+                "Roupas Fitness",
+                "Equipamentos"
+            ],
+            "automotivo": [
+                "Acessórios",
+                "Som Automotivo",
+                "Ferramentas",
+                "Cuidados"
+            ],
+            "acessorios": [
+                "Brincos",
+                "Cordões",
+                "Pulseiras"
+            ],
+            "livros": [
+                "Infantis",
+                "Ficção",
+                "Informativos"
+            ],
+            "roupas-masculinas": [
+                "Camisas",
+                "Casacos",
+                "Íntimas",
+                "Conjuntos",
+                "Calças"
+            ],
+                 
+           "casa-construcao": [
+               "Sala",
+               "Cozinha",
+               "Quarto",
+               "Banheiro",
+               "Outros"     
+                 ],
+
+    "bolsas": [ 
+
+        "Masculinas",
+        "Femininas"
+        ],
+                 
+            "roupas-femininas": [
+                "Camisas",
+                "Casacos",
+                "Íntimas",
+                "Calças",
+                "Shorts",
+                "Saias",
+                "Conjuntos",
+                "Vestidos"
+            ]
+
+};
+        // ==================== FORMATAÇÃO DE PREÇO ====================
+        function formatPrice(input) {
+            let valor = input.value.replace(/[^0-9,]/g, '').replace(',', '.');
+            if (!valor) return;
+            let numero = parseFloat(valor);
+            if (isNaN(numero)) return;
+            input.value = numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        // ==================== LOGIN ====================
+      function login() {
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+
+    auth.signInWithEmailAndPassword(email, senha)
+        .then(() => {
+            console.log("Login realizado.");
+        })
+        .catch((erro) => {
+            console.log("Código:", erro.code);
+            console.log("Mensagem:", erro.message);
+            console.log(erro);
+
+            alert(
+                "Código: " + erro.code +
+                "\n\nMensagem: " + erro.message
+            );
+        });
+}
+        function logout(){
+            auth.signOut();
+        }
+
+        auth.onAuthStateChanged(user => {
+            if(!user){
+                document.getElementById("login").style.display = "block";
+                document.getElementById("admin").style.display = "none";
                 return;
             }
-
-            if (editingCupomId) {
-                db.collection("cupons").doc(editingCupomId).update(cupom).then(() => {
-                    alert("Cupom atualizado!");
-                    cancelarEdicaoCupom();
-                    carregarCupons();
-                });
+            if(user.email === "tete1808sd@gmail.com"){
+                document.getElementById("login").style.display = "none";
+                document.getElementById("admin").style.display = "flex";
+                tab('lista');
             } else {
-                db.collection("cupons").add(cupom).then(() => {
-                    alert("Cupom salvo com sucesso!");
-                    cancelarEdicaoCupom();
-                    carregarCupons();
-                });
+                alert("Sem permissão");
+                auth.signOut();
             }
-        }
-
-        function carregarCupons() {
-            db.collection("cupons").orderBy("createdAt", "desc").get().then(snapshot => {
-                let html = "";
-                snapshot.forEach(doc => {
-                    const c = doc.data();
-                    html += `
-                        <div class="card">
-                            <strong>${c.codigo}</strong><br>
-                            <small>${c.descricao}</small><br>
-                            <small><b>${c.desconto}</b> • ${c.loja || 'Geral'}</small><br>
-                            <small>Validade: ${c.validade || 'Sem data'}</small>
-                            <div class="acoes">
-                                <button class="btn-editar" onclick="editarCupom('${doc.id}')">Editar</button>
-                                <button class="btn-excluir" onclick="if(confirm('Excluir?')) excluirCupom('${doc.id}')">Excluir</button>
-                            </div>
-                        </div>
-                    `;
-                });
-                document.getElementById("gridCupons").innerHTML = html || "<p>Nenhum cupom cadastrado ainda.</p>";
-            });
-        }
-
-        function editarCupom(id) {
-            db.collection("cupons").doc(id).get().then(doc => {
-                if (!doc.exists) return;
-                const c = doc.data();
-                editingCupomId = id;
-                document.getElementById("cupomCodigo").value = c.codigo;
-                document.getElementById("cupomDescricao").value = c.descricao;
-                document.getElementById("cupomDesconto").value = c.desconto;
-                document.getElementById("cupomLoja").value = c.loja || "";
-                document.getElementById("cupomValidade").value = c.validade || "";
-            });
-        }
-
-        function excluirCupom(id) {
-            db.collection("cupons").doc(id).delete().then(() => carregarCupons());
-        }
-
-        function cancelarEdicaoCupom() {
-            editingCupomId = null;
-            document.getElementById("cupomCodigo").value = "";
-            document.getElementById("cupomDescricao").value = "";
-            document.getElementById("cupomDesconto").value = "";
-            document.getElementById("cupomLoja").value = "";
-            document.getElementById("cupomValidade").value = "";
-        }
+        });
 
         // ==================== TABS ====================
        function tab(t){
