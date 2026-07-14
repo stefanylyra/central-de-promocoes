@@ -1771,6 +1771,11 @@ Boas compras!`
 
     try {
        const snapshot = await db.collection("cupons").get();
+        console.log("Quantidade de cupons:", snapshot.size);
+
+snapshot.forEach(doc => {
+    console.log(doc.id, doc.data());
+});
         const hoje = new Date().toISOString().split('T')[0];
 
         let html = `
