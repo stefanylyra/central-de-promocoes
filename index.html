@@ -1761,65 +1761,68 @@ Boas compras!`
                 construirEstrutura();
             });
         }
-         async function abrirCupons() {
-    const modalBody = document.querySelector("#modal-cupons .modal-body");
-    modalBody.innerHTML = `<p style="text-align:center;">Carregando cupons...</p>`;
+     async function abrirCupons() {
+    const modal = document.getElementById("modal-cupons");
+    const modalBody = modal.querySelector(".modal-body");
+    
+    modalBody.innerHTML = `<p style="text-align:center; padding:40px;">Carregando cupons...</p>`;
+    modal.style.display = "flex";
 
     try {
         const snapshot = await db.collection("cupons").orderBy("criadoEm", "desc").get();
-        CUPONS = [];
-        
         const hoje = new Date().toISOString().split('T')[0];
 
         let html = `
-            <p style="text-align:center; color:#555; margin-bottom:20px;">
-                🎟️ Cupons Ativos e Promoções Exclusivas
-            </p>
+            <h3 style="text-align:center; margin-bottom:20px;">🎟️ Cupons Ativos</h3>
         `;
+
+        let temCupom = false;
 
         snapshot.forEach(doc => {
             const c = doc.data();
-            CUPONS.push(c);
-            
             const expirado = c.expiracao < hoje;
-            
+            temCupom = true;
+
             html += `
                 <div style="background:${expirado ? '#f8f9fa' : '#fff3cd'}; 
-                            padding:16px; 
+                            padding:18px; 
                             border-radius:12px; 
-                            margin-bottom:12px;
-                            opacity: ${expirado ? '0.75' : '1'};">
-                    <div style="display:flex; justify-content:space-between; align-items:start;">
+                            margin-bottom:14px;
+                            border: 1px solid ${expirado ? '#ddd' : '#ffeaa7'};">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
                         <div>
-                            <strong style="font-size:18px; color:#cc0a12;">${c.codigo}</strong><br>
-                            <small><strong>${c.loja.toUpperCase()}</strong></small><br>
-                            <span>${c.descricao}</span>
+                            <strong style="font-size:19px; color:#cc0a12;">${c.codigo}</strong><br>
+                            <strong style="font-size:13px;">${c.loja.toUpperCase()}</strong><br>
+                            <span style="font-size:14px;">${c.descricao}</span>
                         </div>
-                        ${expirado ? 
-                            `<strong style="color:#dc3545; font-size:13px;">⛔ EXPIRADO</strong>` : 
-                            `<button onclick="copiarCupom('${c.codigo}')" 
-                                    style="background:#28a745; color:white; border:none; padding:8px 14px; border-radius:8px; cursor:pointer;">
-                                📋 Copiar
-                            </button>`
-                        }
+                        
+                        ${!expirado ? `
+                        <button onclick="copiarCupom('${c.codigo}')" 
+                                style="background:#28a745; color:white; border:none; padding:10px 16px; border-radius:8px; cursor:pointer; font-weight:600;">
+                            📋 Copiar
+                        </button>` : `
+                        <span style="color:#dc3545; font-weight:bold;">⛔ EXPIRADO</span>`}
                     </div>
-                    <small style="color:#666;">Válido até ${c.expiracao}</small>
+                    <small style="color:#666; display:block; margin-top:6px;">
+                        Válido até ${c.expiracao}
+                    </small>
                 </div>
             `;
         });
 
-        if (CUPONS.length === 0) {
-            html = `<p style="text-align:center; color:#888; padding:40px;">Nenhum cupom ativo no momento.</p>`;
+        if (!temCupom) {
+            html = `<p style="text-align:center; color:#888; padding:60px 20px;">
+                        Nenhum cupom ativo no momento.<br>
+                        <small>Novos cupons são adicionados frequentemente.</small>
+                    </p>`;
         }
 
         modalBody.innerHTML = html;
 
     } catch (e) {
-        modalBody.innerHTML = `<p style="color:red; text-align:center;">Erro ao carregar cupons.</p>`;
         console.error(e);
+        modalBody.innerHTML = `<p style="color:red; text-align:center; padding:40px;">Erro ao carregar cupons.</p>`;
     }
-
-    document.getElementById("modal-cupons").style.display = "flex";
 }
 
 function fecharCupons() {
