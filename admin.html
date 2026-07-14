@@ -125,6 +125,7 @@
             <hr>
             <button onclick="tab('novo')">➕ Novo Produto</button>
             <button onclick="tab('lista')">📦 Produtos</button>
+            <button onclick="tab('cupons')">🎟️ Cupons</button>
             <button onclick="tab('analises')">📊 Análises</button>
         </div>
         <div class="content">
@@ -257,6 +258,18 @@
     <h2>📊 Análises</h2>
 
     <div id="resumoLojas"></div>
+</div>
+            <!-- ABA DE CUPONS -->
+<div id="cupons" style="display:none;">
+    <h2>🎟️ Gerenciar Cupons</h2>
+    
+    <div style="margin-bottom:20px;">
+        <input id="cupomCodigo" placeholder="Código do Cupom (ex: CUPOM20)" style="width:30%;">
+        <input id="cupomDescricao" placeholder="Descrição do cupom" style="width:60%;">
+        <button onclick="salvarCupom()">Salvar Cupom</button>
+    </div>
+
+    <div id="lista-cupons" class="grid"></div>
 </div>
     </div>
 
@@ -898,6 +911,96 @@ function copiar(texto) {
 function escapeHtml(text) {
     return text.replace(/'/g, "\\'").replace(/\n/g, "\\n");
 }
+        // ==================== GERENCIAMENTO DE CUPONS ====================
+
+let cuponsEditandoId = null;
+
+async function salvarCupom() {
+    const codigo = document.getElementById("cupomCodigo").value.trim().toUpperCase();
+    const descricao = document.getElementById("cupomDescricao").value.trim();
+
+    if (!codigo || !descricao) {
+        alert("Preencha o código e a descrição!");
+        return;
+    }
+
+    const cupom = {
+        codigo: codigo,
+        descricao: descricao,
+        criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
+        ativo: true
+    };
+
+    try {
+        if (cuponsEditandoId) {
+            await db.collection("cupons").doc(cuponsEditandoId).update(cupom);
+            alert("Cupom atualizado!");
+        } else {
+            await db.collection("cupons").add(cupom);
+            alert("Cupom salvo com sucesso!");
+        }
+        limparFormularioCupom();
+        carregarCupons();
+    } catch (e) {
+        alert("Erro: " + e.message);
+    }
+}
+
+function limparFormularioCupom() {
+    cuponsEditandoId = null;
+    document.getElementById("cupomCodigo").value = "";
+    document.getElementById("cupomDescricao").value = "";
+}
+
+async function carregarCupons() {
+    const container = document.getElementById("lista-cupons");
+    container.innerHTML = "";
+
+    const snapshot = await db.collection("cupons").orderBy("criadoEm", "desc").get();
+
+    snapshot.forEach(doc => {
+        const c = doc.data();
+        const html = `
+            <div class="card">
+                <h3 style="color:#cc0a12;">${c.codigo}</h3>
+                <p>${c.descricao}</p>
+                <small>${c.ativo ? '✅ Ativo' : '❌ Inativo'}</small>
+                <div class="acoes" style="margin-top:10px;">
+                    <button class="btn-editar" onclick="editarCupom('${doc.id}')">Editar</button>
+                    <button class="btn-excluir" onclick="excluirCupom('${doc.id}')">Excluir</button>
+                </div>
+            </div>
+        `;
+        container.innerHTML += html;
+    });
+}
+
+function editarCupom(id) {
+    db.collection("cupons").doc(id).get().then(doc => {
+        if (!doc.exists) return;
+        const c = doc.data();
+        cuponsEditandoId = id;
+        document.getElementById("cupomCodigo").value = c.codigo;
+        document.getElementById("cupomDescricao").value = c.descricao;
+    });
+}
+
+async function excluirCupom(id) {
+    if (confirm("Excluir este cupom?")) {
+        await db.collection("cupons").doc(id).delete();
+        carregarCupons();
+    }
+}
+
+// Atualizar a função tab() para carregar os cupons
+const tabOriginal = tab;
+tab = function(t) {
+    tabOriginal(t);
+    
+    if (t === 'cupons') {
+        carregarCupons();
+    }
+};
         
     </script>
         <div id="modalIA" style="display:none;
