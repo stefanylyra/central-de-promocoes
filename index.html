@@ -1533,6 +1533,7 @@ Sempre confira preço e estoque antes da compra.
 Boas compras!`
 }
 ];
+        let CUPONS = [];
         // ==================== DADOS ESTÁTICOS ====================
       const CATEGORIAS_DADOS = [
     {
@@ -1760,12 +1761,74 @@ Boas compras!`
                 construirEstrutura();
             });
         }
-            function abrirCupons() {
+         async function abrirCupons() {
+    const modalBody = document.querySelector("#modal-cupons .modal-body");
+    modalBody.innerHTML = `<p style="text-align:center;">Carregando cupons...</p>`;
+
+    try {
+        const snapshot = await db.collection("cupons").orderBy("criadoEm", "desc").get();
+        CUPONS = [];
+        
+        const hoje = new Date().toISOString().split('T')[0];
+
+        let html = `
+            <p style="text-align:center; color:#555; margin-bottom:20px;">
+                🎟️ Cupons Ativos e Promoções Exclusivas
+            </p>
+        `;
+
+        snapshot.forEach(doc => {
+            const c = doc.data();
+            CUPONS.push(c);
+            
+            const expirado = c.expiracao < hoje;
+            
+            html += `
+                <div style="background:${expirado ? '#f8f9fa' : '#fff3cd'}; 
+                            padding:16px; 
+                            border-radius:12px; 
+                            margin-bottom:12px;
+                            opacity: ${expirado ? '0.75' : '1'};">
+                    <div style="display:flex; justify-content:space-between; align-items:start;">
+                        <div>
+                            <strong style="font-size:18px; color:#cc0a12;">${c.codigo}</strong><br>
+                            <small><strong>${c.loja.toUpperCase()}</strong></small><br>
+                            <span>${c.descricao}</span>
+                        </div>
+                        ${expirado ? 
+                            `<strong style="color:#dc3545; font-size:13px;">⛔ EXPIRADO</strong>` : 
+                            `<button onclick="copiarCupom('${c.codigo}')" 
+                                    style="background:#28a745; color:white; border:none; padding:8px 14px; border-radius:8px; cursor:pointer;">
+                                📋 Copiar
+                            </button>`
+                        }
+                    </div>
+                    <small style="color:#666;">Válido até ${c.expiracao}</small>
+                </div>
+            `;
+        });
+
+        if (CUPONS.length === 0) {
+            html = `<p style="text-align:center; color:#888; padding:40px;">Nenhum cupom ativo no momento.</p>`;
+        }
+
+        modalBody.innerHTML = html;
+
+    } catch (e) {
+        modalBody.innerHTML = `<p style="color:red; text-align:center;">Erro ao carregar cupons.</p>`;
+        console.error(e);
+    }
+
     document.getElementById("modal-cupons").style.display = "flex";
 }
 
 function fecharCupons() {
     document.getElementById("modal-cupons").style.display = "none";
+}
+        function copiarCupom(codigo) {
+    navigator.clipboard.writeText(codigo).then(() => {
+        alert(`✅ Código ${codigo} copiado para a área de transferência!`);
+    });
 }
 function mostrarSubcategorias(categoriaId){
 
