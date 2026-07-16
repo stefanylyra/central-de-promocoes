@@ -300,15 +300,11 @@
         <!-- ABA DE CUPONS -->
 <div id="cupons" style="display:none;">
     <h2>🎟️ Gerenciar Cupons</h2>
-    
+   
     <div style="background:#fff; padding:20px; border-radius:12px; margin-bottom:20px;">
         <h3>Novo / Editar Cupom</h3>
-        
-        <select id="cupomLoja" style="width:100%; margin-bottom:8px;">
-            <input 
-id="cupomImagem" 
-placeholder="URL da imagem/logo da loja"
-style="width:100%; margin-bottom:8px;">
+       
+        <select id="cupomLoja" style="width:100%; margin-bottom:12px;">
             <option value="">Selecione a Loja</option>
             <option value="amazon">Amazon</option>
             <option value="shopee">Shopee</option>
@@ -317,18 +313,17 @@ style="width:100%; margin-bottom:8px;">
             <option value="shein">Shein</option>
             <option value="aliexpress">AliExpress</option>
         </select>
-        
+       
         <input id="cupomCodigo" placeholder="Código do Cupom (ex: CUPOM20)" style="width:100%; margin-bottom:8px;">
-        
+       
         <input id="cupomDescricao" placeholder="Descrição do cupom" style="width:100%; margin-bottom:8px;">
-        
+       
         <label>Data de Expiração:</label><br>
         <input type="date" id="cupomExpiracao" style="width:100%; margin-bottom:12px;">
-        
+       
         <button onclick="salvarCupom()" style="background:#28a745; color:white; padding:12px;">Salvar Cupom</button>
         <button onclick="limparFormularioCupom()" style="background:#ccc;">Cancelar</button>
     </div>
-
     <div id="lista-cupons" class="grid"></div>
 </div>
     </div>
@@ -983,11 +978,10 @@ function escapeHtml(text) {
 let cuponsEditandoId = null;
 
 async function salvarCupom() {
-    const loja = document.getElementById("cupomLoja").value;
+     const loja = document.getElementById("cupomLoja").value;
     const codigo = document.getElementById("cupomCodigo").value.trim().toUpperCase();
     const descricao = document.getElementById("cupomDescricao").value.trim();
     const expiracao = document.getElementById("cupomExpiracao").value;
-    const imagem = document.getElementById("cupomImagem").value.trim();
 
     if (!loja || !codigo || !descricao || !expiracao) {
         alert("Preencha todos os campos!");
@@ -1024,7 +1018,6 @@ function limparFormularioCupom() {
     document.getElementById("cupomCodigo").value = "";
     document.getElementById("cupomDescricao").value = "";
     document.getElementById("cupomExpiracao").value = "";
-    document.getElementById("cupomImagem").value = "";
 }
 
 async function carregarCupons() {
@@ -1063,7 +1056,7 @@ function editarCupom(id) {
         if (!doc.exists) return;
         const c = doc.data();
         cuponsEditandoId = id;
-        document.getElementById("cupomLoja").value = c.loja || "";
+              document.getElementById("cupomLoja").value = c.loja || "";
         document.getElementById("cupomCodigo").value = c.codigo || "";
         document.getElementById("cupomDescricao").value = c.descricao || "";
         document.getElementById("cupomExpiracao").value = c.expiracao || "";
