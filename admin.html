@@ -978,21 +978,21 @@ function escapeHtml(text) {
 let cuponsEditandoId = null;
 
 async function salvarCupom() {
-     const loja = document.getElementById("cupomLoja").value;
+    const loja = document.getElementById("cupomLoja").value;
     const codigo = document.getElementById("cupomCodigo").value.trim().toUpperCase();
     const descricao = document.getElementById("cupomDescricao").value.trim();
     const expiracao = document.getElementById("cupomExpiracao").value;
 
     if (!loja || !codigo || !descricao || !expiracao) {
-        alert("Preencha todos os campos!");
+        alert("Preencha todos os campos obrigatórios!");
         return;
     }
-const cupom = {
-    loja: loja,
-    imagem: imagem,
-    codigo: codigo,
-    descricao: descricao,
-    expiracao: expiracao,
+
+    const cupom = {
+        loja: loja,
+        codigo: codigo,
+        descricao: descricao,
+        expiracao: expiracao,
         criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
         ativo: true
     };
@@ -1008,7 +1008,7 @@ const cupom = {
         limparFormularioCupom();
         carregarCupons();
     } catch (e) {
-        alert("Erro: " + e.message);
+        alert("Erro ao salvar: " + e.message);
     }
 }
 
